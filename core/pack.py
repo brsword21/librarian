@@ -1,0 +1,88 @@
+"""Ranked units -> Reactor passages under a character budget (measured on the exact message the kit's client sends)."""
+from __future__ import annotations
+
+from collections import OrderedDict
+
+from client import build_message, parse_question_date  # upstream kit (reactor/client.py)
+
+from core.types import Passage, Question
+
+DEFAULT_BUDGET = 12000
+_REF = "00000000"
+
+
+def question_text(q: Question, hint: str = "") -> str:
+    return f"{q.question}\n{hint.strip()}" if hint and hint.strip() else q.question
+
+
+def message_chars(q: Question, passages: list[Passage], hint: str = "") -> int:
+    ps = [{"id": p.id, "text": p.text, **({"date": p.date} if p.date else {})} for p in passages]
+    return len(build_message(question_text(q, hint), ps, _REF, parse_question_date(q.date_str)))
+
+
+def render(hx, uids: list[int], whole_turns: bool = False) -> tuple[str, set[str]]:
+    """Units of ONE session -> text: 'user: ...' / 'assistant: ...', '[...]' marks skipped material."""
+    if whole_turns:
+        turns = list(dict.fromkeys(hx.units[i].turn_id for i in sorted(uids)))
+        uids = [j for t in turns for j in hx.turn_units(t)]
+    uids = sorted(set(uids))
+    parts, turns_seen = [], set()
+    prev = None
+    for i in uids:
+        u = hx.units[i]
+        turns_seen.add(u.turn_id)
+        if prev is not None and i == prev + 1 and hx.units[prev].turn_id == u.turn_id:
+            parts[-1] += " " + u.text
+        else:
+            if prev is not None and i != prev + 1:
+                parts.append("[...]")
+            parts.append(f"{u.role}: {u.text}")
+        prev = i
+    return "\n".join(parts), turns_seen
+
+
+def build_pack(q: Question, hx, ranked, budget: int = DEFAULT_BUDGET, window: int = 1, order: str = "chrono",
+               hint: str = "", max_sessions: int | None = None, whole_turns: bool = False, max_units: int | None = None,
+               ) -> tuple[list[Passage], set[str], int]:
+    """Greedy: walk `ranked` (uids or (uid, score)), add each unit with +/-window neighbours from its session while the
+    full message stays within `budget` chars. Returns (passages, included_turn_ids, message_chars).
+    order='chrono' sorts passages by session date (LongMemEval reading tip); 'rank' keeps first-hit order."""
+    chosen: "OrderedDict[str, set[int]]" = OrderedDict()   # session_id -> uids, insertion = first-hit order
+    used = 0
+
+    def passages_for(sel) -> list[Passage]:
+        sids = list(sel)
+        if order == "chrono":
+            sids.sort(key=lambda s: hx.sess_by_id[s]["sess_idx"])
+        out = []
+        for sid in sids:
+            text, _ = render(hx, sorted(sel[sid]), whole_turns)
+            out.append(Passage(id=sid, date=hx.sess_by_id[sid]["date_str"], text=text))
+        return out
+
+    chars = message_chars(q, [], hint)
+    for item in ranked:
+        uid = item[0] if isinstance(item, (tuple, list)) else item
+        sid = hx.units[uid].session_id
+        if max_sessions is not None and sid not in chosen and len(chosen) >= max_sessions:
+            continue
+        add = set(hx.neighbors(uid, window, window)) if window else {uid}
+        trial = OrderedDict((k, set(v)) for k, v in chosen.items())
+        trial.setdefault(sid, set()).update(add)
+        c = message_chars(q, passages_for(trial), hint)
+        if c > budget:
+            if len(add) > 1:  # retry without neighbours
+                trial = OrderedDict((k, set(v)) for k, v in chosen.items())
+                trial.setdefault(sid, set()).add(uid)
+                c = message_chars(q, passages_for(trial), hint)
+            if c > budget:
+                continue
+        chosen, chars = trial, c
+        used += 1
+        if (max_units is not None and used >= max_units) or budget - chars < 150:
+            break
+    passages = passages_for(chosen)
+    included: set[str] = set()
+    for sid, uids in chosen.items():
+        included |= render(hx, sorted(uids), whole_turns)[1]
+    return passages, included, chars

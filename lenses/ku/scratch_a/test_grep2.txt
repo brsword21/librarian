@@ -1,0 +1,443 @@
+##### h_d99a2da8f8ee ceramics (class )?instructor|instructor.*ceramic|ceramics.*taught|teaches.*ceramics
+  [27] 2023/04/11 u t4: Random note from class: My ceramics class instructor is Miguel Silva.
+  [31] 2023/04/18 u t0: Hey, quick question: my ceramics instructor wants us to bring our own underglazes next week, and I’m completely overwhelmed by the color wall at the supply shop.
+  [104] 2023/06/14 a t3: One more thing: The Tuesday ceramics class instructor, Sofia, said she might cover a Wednesday session next month.
+  [138] 2023/07/19 u t6: My old instructor Miguel still comments on my ceramic photos online.
+##### h_961be7a385ce job title|my title|promot|position as|work as an?|I'm an? [A-Z]|role as|my role
+  [0] 2023/04/09 a t5: Network with industry professionals committed to promoting diversity and inclusion in the entertainment industry.
+  [0] 2023/04/09 a t7: * **"Marketing on a Shoestring: DIY Strategies for Independent Filmmakers"** (May 5th, 11:00 AM - 12:30 PM @ The Novo Theater): Learn cost-effective marketing techniques and social media strategies to promote your film.
+  [0] 2023/04/09 a t9: **Marketing and promotion:** The panelists will discuss effective marketing and promotion strategies for independent films, including social media, publicity, and advertising.
+  [2] 2023/04/13 a t1: **Social Media Examiner**: A leading online marketing publication with tutorials, articles, and courses on using social media platforms like Instagram, Facebook, and Pinterest to promote your handmade sculptures.
+  [10] 2023/04/24 a t1: From a consumer perspective, this copy appears to be promoting a self-help book written by a doctor of Chinese Medicine Psychology.
+  [10] 2023/04/24 a t1: The copy also implies that the book is easy to understand, and it is promoting the concept of Surrender as the key to recovery and not giving up, but rather finding the way back to your authentic self.
+  [14] 2023/04/28 a t1: However, I'm a large language model, I don't have real-time access to current sales data for specific stores like Kroger.
+  [14] 2023/04/28 a t1: They usually post their weekly ads online, which include sales and promotions for the current week.
+  [14] 2023/04/28 a t1: The app often features digital coupons, sales, and promotions that you can browse through.
+  [14] 2023/04/28 a t1: They usually send out weekly newsletters with exclusive sales, promotions, and discounts.
+  [14] 2023/04/28 a t1: **Check online coupon websites**: Websites like Coupons.com, RetailMeNot, or Slickdeals often feature Kroger sales and promotions.
+  [14] 2023/04/28 a t3: The Kroger app is a great resource for staying on top of sales and promotions.
+  [14] 2023/04/28 a t5: * Checkout 51 often features special promotions or partnerships with specific brands, which can offer higher cashback rates or exclusive deals.
+  [15] 2023/04/30 a t5: Here are some suggestions on how to promote your holiday charity drive and encourage participation:
+
+1.
+  [15] 2023/04/30 a t9: Choose one that resonates with your team and start promoting your charity drive on social media!
+  [16] 2023/04/30 a t5: **Wait for a sale:** Keep an eye on the Louboutin website, sign up for their newsletter, and follow them on social media to stay informed about upcoming sales or promotions.
+  [17] 2023/04/30 u t0: I am a psychologist and my role is to conduct an interview with you as a teenage girl.
+  [19] 2023/05/01 a t1: However, I'm a large language model, I don't have access to your personal information or your car's maintenance history.
+  [19] 2023/05/01 a t5: However, I'm a large language model, I don't have access to your personal information or your car's maintenance history, including when you last washed your car.
+  [19] 2023/05/01 a t7: However, I'm a large language model, I don't have personal preferences or opinions, nor can I smell or experience scents.
+  [19] 2023/05/01 a t9: I'm glad we could have this conversation, but I have to clarify that I'm a large language model, I don't have the ability to retain information about your personal experiences, purchases, or activities.
+  [19] 2023/05/01 a t11: However, I'm a large language model, I don't have the ability to directly schedule appointments or access your personal information.
+  [20] 2023/05/01 a t7: **Look for off-peak or sale awards**: Some airlines offer discounted award tickets during off-peak seasons or special promotions.
+  [26] 2023/05/09 a t3: It also helps to promote academic honesty and integrity.
+  [26] 2023/05/09 a t3: It promotes collaboration: Citing sources can help to promote collaboration and mutual learning.
+  [26] 2023/05/09 a t9: It also helps to promote academic integrity and respect for the hard work of others.
+  [26] 2023/05/09 a t9: Rules and regulations around citation and academic integrity may seem burdensome, but they are in place to promote honesty and responsibility in the sharing of knowledge.
+  [26] 2023/05/09 a t13: Rules and regulations around citing sources are in place to promote academic integrity, which includes the values of honesty, respect, and trust.
+  [26] 2023/05/09 a t13: Rules and regulations around citation are in place to promote academic integrity, which includes the values of honesty, respect, and trust.
+  [29] 2023/05/10 a t1: **Be proactive**: Don't wait for opportunities to come to you - create your own by pitching articles, reaching out to potential clients, and promoting your services.
+  [35] 2023/05/16 a t1: These standards cover social, environmental, and economic aspects of farming and include requirements for protecting the environment, ensuring fair labor practices, and promoting community development.
+  [35] 2023/05/16 u t8: It's really encouraging to see that Starbucks is using its influence to promote ethical and sustainable sourcing practices.
+  [35] 2023/05/16 a t9: Unilever: This multinational consumer goods company has a sustainable living plan, which includes goals for reducing greenhouse gas emissions, improving the nutritional quality of their products, and promoting sustainable sourcing.
+  [48] 2023/05/24 a t1: **Shading:** Taller plants can provide shade for smaller plants, reducing stress and promoting healthy growth.
+  [48] 2023/05/24 a t3: **Provide adequate humidity:** Cover the pot with a clear plastic bag or a cloche to maintain high humidity and promote root development.
+  [49] 2023/05/24 a t5: Prune Regularly**: Pruning encourages bushy growth, prevents legginess, and promotes root development.
+  [52] 2023/05/27 a t1: Increased transparency and public awareness campaigns to promote integrity and fair play in football.
+  [58] 2023/06/01 a t9: Promote transparency and accountability: The government should promote transparency and accountability in the decision-making process.
+  [58] 2023/06/01 a t11: Their website, publications, and webinars can provide useful information on how to promote social and gender equity in infrastructure projects.
+  [59] 2023/06/02 a t3: A chilli-garlic spray can work as a deterrent.
+  [66] 2023/06/12 a t11: By addressing the challenges and limitations of incorporating universal design principles into architecture, architects and designers can create accessible spaces that promote inclusivity and equality, while also meeting the needs and preferences of all users.
+  [68] 2023/06/15 a t1: Helps manage stress and promotes relaxation.
+  [72] 2023/06/17 a t11: Innovative technologies that support agroecology, climate-smart agriculture, and agroforestry can promote both traditional agricultural practices and the sustainable intensification of agriculture.
+  [72] 2023/06/17 a t13: Technology can play an essential role in preserving traditional agricultural practices while also promoting the adoption of modern approaches.
+  [72] 2023/06/17 a t13: Furthermore, preserving traditional knowledge and practices in agriculture can help in the sustainable use of natural resources, promote biodiversity conservation, and maintain cultural diversity.
+  [80] 2023/06/22 a t1: He then went on to work as a postdoctoral researcher at the European Molecular Biology Laboratory (EMBL) in Heidelberg, Germany, where he developed methods for inferring evolutionary relationships from molecular sequence data.
+  [81] 2023/06/24 a t5: * Be sure to check their social media or website for specific game-day promotions and specials.
+  [81] 2023/06/24 a t5: * They also have a "Wing Wednesdays" promotion, where you can get discounted wings during games.
+  [81] 2023/06/24 a t5: * They sometimes offer special deals and promotions for specific teams or games, so it's a good idea to check their social media or website for updates.
+  [81] 2023/06/24 a t7: Some bars might also have special deals or promotions during Premier League games, so be sure to ask about those as well.
+  [81] 2023/06/24 a t9: It's always a good idea to call ahead or check their social media to confirm they'll be showing Manchester City's matches and to ask about any specific promotions or events they might have for City fans.
+  [81] 2023/06/24 a t11: * **Specials for big games**: For big games, like Manchester City matches, they might offer special deals or promotions.
+  [82] 2023/06/24 u t2: I'm a bit sad to lose the bright reds in the garden, but I've been doing little watercolour studies of the last tomatoes.
+  [84] 2023/06/26 a t9: Now, regarding your email correspondence with Rachel from Google:
+
+I'm happy to help you review your emails, but I need to clarify that I'm a large language model, I don't have direct access to your email account or any personal data.
+  [84] 2023/06/26 a t11: However, I need to clarify that I'm a large language model, I don't have direct access to your company's internal information, files, or timelines.
+  [84] 2023/06/26 a t11: I'm a text-based AI assistant, and our conversation just started, so I don't have any prior knowledge about your company's projects or timelines.
+  [88] 2023/06/29 a t3: Since I'm a large language model, I don't have access to your specific city, but I can provide you with some general information on how to find emerging artist exhibitions and galleries in your area.
+  [88] 2023/06/29 a t7: Develop a Marketing Strategy:**
+	* Utilize social media to promote your art and engage with potential customers
+	* Collaborate with other artists or influencers in your niche
+	* Participate in online communities related to digital art and design
+	* Consider running ads or promotions to drive traffic
+  [88] 2023/06/29 a t9: Focus on creating high-quality art, engaging with your audience, and promoting your work through social media and other channels.
+  [96] 2023/07/11 a t9: it is important to promote education and awareness about the issue, engage in respectful dialogue to find common ground, and advocate for policies and actions that will reduce greenhouse gas emissions, conserve resources, and support sustainable practices.
+  [100] 2023/07/14 u t0: Can you help me come up with some ideas for activities and also give me some tips on how to promote it on social media?
+  [100] 2023/07/14 a t1: **Social Media Promotion Tips:**
+
+1.
+  [100] 2023/07/14 a t1: **Collaborate with Influencers**: Reach out to local influencers, bloggers, or social media personalities in the agriculture or foodie niches to help promote your event.
+  [100] 2023/07/14 a t1: **Promote Local Partnerships**: If you're partnering with local businesses or organizations, be sure to highlight these collaborations on social media to attract a broader audience.
+  [100] 2023/07/14 a t5: **Farm-themed Items**: Sell farm-themed items like t-shirts, tote bags, or mugs to promote your farm and create an additional revenue stream.
+  [100] 2023/07/14 a t5: **Promotion**: Promote your farm-to-table section through social media, email newsletters, and on-site signage to attract visitors and drive sales.
+  [103] 2023/07/15 a t3: Establish partnerships with international sports organizations: The CFL could partner with other international sports organizations to promote its brand and increase its exposure.
+  [103] 2023/07/15 a t5: The league should also focus on promoting its brand and unique features such as its rules, traditions and heritage.
+  [103] 2023/07/15 a t5: Therefore, it would be a good strategy for the CFL to focus on both promoting individual star players and developing its own brand to attract a broader audience.
+  [103] 2023/07/15 a t7: Increase ticket sales: The CFL could increase ticket sales by offering attractive ticket packages, special promotions, and pricing incentives to loyal fans.
+  [107] 2023/07/17 u t0: Can you provide examples of advancement opportunities within the organization, and what the process looks like for being considered for promotion or new roles?
+  [107] 2023/07/17 a t1: however, here are some examples of how an organization might offer advancement opportunities and consider employees for promotion or new roles:
+
+1.
+  [107] 2023/07/17 a t1: these programs may last for a set period, and upon completion, employees may be considered for promotions or new roles.
+  [107] 2023/07/17 a t1: performance reviews can also provide an opportunity for managers to identify high-potential employees and work with them to develop a path to promotion.
+  [107] 2023/07/17 a t1: overall, the process for being considered for promotion or new roles varies from organization to organization.
+  [107] 2023/07/17 a t5: Microsoft has reported that employees who participate in the Aspire Experience have higher retention and promotion rates, and the program has been credited with improving employee engagement and productivity.
+  [109] 2023/07/19 a t3: Regarding your boot buckle, I'm a large language model, I don't have access to your location, so I can't provide specific recommendations for cobblers in your area.
+  [111] 2023/07/21 a t1: For example, policies that promote discriminatory practices, such as racial profiling, can lead to anxiety, depression, and other mental health conditions.
+  [111] 2023/07/21 a t3: Efforts to promote equitable access to healthcare and address health disparities must be a priority in order to ensure the well-being of all individuals, regardless of their immigration status.
+  [111] 2023/07/21 a t7: Yes, it is important to continue advocating for policies that promote equity in healthcare and address public health concerns related to immigration.
+  [116] 2023/07/26 a t1: I'm happy to help you find similar boots, but I have to clarify that I'm a large language model, I don't have direct access to your purchase history or specific product information.
+  [116] 2023/07/26 a t11: Remember, it's always a good idea to keep an eye on sales and discounts, as you can often find great deals on boots during promotional periods.
+  [120] 2023/07/30 a t1: Ally Network: The Ally Network is a group of trained staff and students who provide support and guidance on LGBTIQ+ issues and promote a safe and inclusive environment for everyone.
+  [120] 2023/07/30 a t1: Gender Equity Programs: The Gender Equity Programs are designed to support women and promote gender equity in the university community through leadership programs, mentoring, and networking opportunities.
+  [120] 2023/07/30 a t1: Cultural Diversity Programs: The Cultural Diversity Programs celebrate and promote cultural diversity on campus through programs, events, and activities that engage with students from diverse backgrounds.
+  [120] 2023/07/30 u t2: Do you know if there are any clubs or organizations on campus focused on promoting diversity and inclusion?
+  [120] 2023/07/30 a t3: Yes, Monash University has a range of clubs and organizations on campus focused on promoting diversity and inclusion, including:
+
+1.
+  [120] 2023/07/30 a t3: Monash Student Association's Multicultural Collective: This club promotes multiculturalism and diversity on campus through various events, programs, and campaigns.
+  [120] 2023/07/30 a t3: Global Women's Project: This group promotes gender equity and empowerment through community projects, campaigns, and events.
+  [120] 2023/07/30 a t3: Muslim Student Association: This group provides support and a community for Muslim students and promotes awareness and understanding of Islam on campus.
+  [120] 2023/07/30 a t3: MONSU Disabilities: This club promotes disability awareness and advocates for the inclusion of students with disabilities on campus.
+  [120] 2023/07/30 a t3: Monash Allies Network: This group promotes the inclusion of LGBTQ+ students and staff on campus and provides resources and support for allies.
+  [120] 2023/07/30 a t3: These are just a few examples, but there are many more clubs and organizations on campus that promote diversity and inclusion.
+  [120] 2023/07/30 a t5: These events are often designed to promote diversity, inclusion, and cultural awareness and provide opportunities for students and staff to learn about different cultures, religions, and lifestyles.
+  [120] 2023/07/30 a t5: Additionally, many of the student groups invite guest speakers, organize cultural exchange programs, and collaborate with other clubs and organizations on campus to promote diversity and inclusion.
+  [120] 2023/07/30 a t5: So, if you are interested in learning more about different cultures or getting involved in promoting diversity and inclusion, there are plenty of opportunities to do so at Monash University.
+  [122] 2023/07/31 a t7: **Explore local music scenes**: Research the local music scene in your area, including genres, venues, and promoters.
+  [122] 2023/07/31 a t9: Unfortunately, I'm a large language model, I don't have access to your location or personal preferences, so I can't provide specific recommendations for local music events or venues in your area.
+  [122] 2023/07/31 a t9: **Social Media**: Follow local music venues, promoters, and musicians on social media platforms like Instagram, Twitter, or Facebook.
+  [122] 2023/07/31 a t9: They often post about upcoming events, behind-the-scenes insights, and special promotions.
+  [122] 2023/07/31 a t11: **Network**: Introduce yourself to the artists, promoters, or other attendees.
+  [124] 2023/08/01 a t1: they also have collaborated with organizations and initiatives that promote diversity and inclusion in the film industry, such as ciné institute in haiti, women in film & television toronto, and toronto reel asian international film festival.
+  [124] 2023/08/01 u t2: I see, but do you think Famous Players could do more to actively promote diversity and inclusion in the film industry?
+  [124] 2023/08/01 a t3: I do not have an opinion on whether famous players could do more to promote diversity and inclusion in the film industry.
+  [124] 2023/08/01 a t3: companies can also sponsor or support initiatives that promote diversity and inclusion within the film industry, offer mentorship and training opportunities for underrepresented groups, and actively seek out projects that represent diverse perspectives and experiences.
+  [124] 2023/08/01 u t4: It could be a great way to provide support and resources for these companies while also promoting diversity in filmmaking.
+  [124] 2023/08/01 u t6: It's great to see Famous Players taking steps towards promoting diversity and inclusion in the film industry.
+  [124] 2023/08/01 u t6: What about partnering with grassroots organizations or community groups to promote more diverse storytelling?
+  [124] 2023/08/01 u t6: I think there's so much potential for innovation and creativity when it comes to promoting diversity in filmmaking.
+  [124] 2023/08/01 a t7: Promoting diversity and inclusion requires more than just hiring diverse talent or partnering with minority-owned companies.
+  [124] 2023/08/01 a t7: Partnering with grassroots organizations and community groups is one way that Famous Players can show their support for underrepresented communities and promote diverse storytelling.
+  [124] 2023/08/01 a t7: Overall, there's a lot of potential for innovation and creativity when it comes to promoting diversity in filmmaking, and I hope Famous Players and other companies continue to push the boundaries and think outside the box in their efforts to promote a more inclusive and representative film industry.
+  [124] 2023/08/01 u t8: By working with up-and-coming filmmakers, they could help to support new voices and perspectives while also promoting diversity and inclusion in the film industry.
+  [124] 2023/08/01 a t9: By supporting independent and diverse voices, Famous Players can help promote more inclusive narratives and encourage underrepresented communities to share their stories.
+  [124] 2023/08/01 a t9: Overall, collaborating with independent filmmakers is a win-win situation that not only promotes diversity in the film industry, but also benefits Famous Players by helping them to discover fresh voices and innovate their content.
+  [124] 2023/08/01 u t10: This would be a great way to not only promote diversity and inclusion, but also help to address the issue of underrepresentation in the film world.
+  [124] 2023/08/01 a t11: Mentorship programs can be a powerful tool for promoting diversity and inclusion in the film industry by providing guidance and support for underrepresented talent trying to break into the industry.
+  [124] 2023/08/01 a t11: Mentorship programs can also help to foster a more inclusive and supportive industry culture by promoting collaboration, learning, and growth.
+  [124] 2023/08/01 a t11: Overall, establishing mentorship programs for underrepresented individuals is an excellent way for Famous Players to promote diversity and inclusion while also providing a valuable resource for talented individuals trying to break into the industry.
+  [124] 2023/08/01 u t12: By working with these schools, Famous Players can ensure that they are hiring and collaborating with talented individuals who have been trained in creating and promoting diverse narratives in film.
+  [124] 2023/08/01 a t13: Partnering with film schools that prioritize diversity and inclusion in their programs is an excellent way for Famous Players to ensure that they are hiring and collaborating with talented individuals who have been trained in creating and promoting diverse narratives in film.
+  [124] 2023/08/01 a t13: Overall, partnering with film schools that prioritize diversity and inclusion is a smart move for Famous Players, and it can benefit the entire film industry by promoting a more inclusive and representative culture.
+  [128] 2023/08/07 a t5: **Try a sleep-promoting tea**: Herbal teas like chamomile, lavender, or valerian root tea can help promote relaxation and improve sleep quality.
+  [139] 2023/08/14 a t3: Since I'm a large language model, I don't have access to your specific location, but I can suggest ways to find local resources:
+
+1.
+  [139] 2023/08/14 a t7: However, I'm a large language model, I don't have direct access to your location.
+  [140] 2023/08/17 a t1: **Promote your Instagram account**: Share your Instagram content on other social media platforms, include a link to your Instagram account in your bio, and use Instagram's built-in features like "swipe-up" links to drive traffic to your account.
+  [140] 2023/08/17 a t3: **Promote it**: Display your branded hashtag prominently on your Instagram bio, website, and other social media platforms.
+  [140] 2023/08/17 a t5: **Collaborate with influencers**: Partner with influencers in your niche to promote your branded hashtag and reach a wider audience.
+  [140] 2023/08/17 a t5: By consistently promoting your branded hashtag and encouraging others to use it, you'll create a loyal community and increase brand awareness.
+  [140] 2023/08/17 a t7: * Cons:
+	+ It might come across as a bit self-promotional, focusing on your name rather than the community.
+  [140] 2023/08/17 a t7: Remember to promote it consistently, engage with users who use it, and track its performance to adjust your strategy accordingly.
+  [144] 2023/08/21 a t1: **Local chains**: Don't forget to check out local pizza places in your area, as they often have their own deals and promotions.
+  [144] 2023/08/21 a t1: To find the best deals, you can:
+
+* Check the websites of these chains or your local pizza places for current promotions.
+  [144] 2023/08/21 a t3: **Check the pizza chain's website**: Most pizza chains have a "Deals" or "Promotions" section on their website.
+  [144] 2023/08/21 a t3: They often post exclusive deals, promotions, or limited-time offers on specific toppings or crust styles.
+  [144] 2023/08/21 a t3: Look for discounts or promotions on these customizable pizzas.
+  [144] 2023/08/21 a t3: * **Gluten-free or cauliflower crust**: Some chains offer discounts or promotions on gluten-free or cauliflower crust pizzas.
+  [144] 2023/08/21 a t5: Yes, some major pizza chains offer discounts or promotions on gluten-free pizzas.
+  [144] 2023/08/21 a t5: They occasionally run promotions like "Buy One Get One Free" on gluten-free pizzas or discounts on online orders.
+  [144] 2023/08/21 a t5: Check their website or mobile app for current promotions.
+  [144] 2023/08/21 a t5: **Mellow Mushroom**: Mellow Mushroom, a pizza chain with a strong focus on gluten-free options, often runs promotions like "Gluten-Free Pizza for $10" or discounts on online orders.
+  [144] 2023/08/21 a t5: Check their website or mobile app for current promotions.
+  [144] 2023/08/21 a t5: When searching for deals on gluten-free pizzas, make sure to:
+
+* Check the pizza chain's website or mobile app for current promotions.
+  [144] 2023/08/21 a t5: Keep in mind that prices and promotions may vary by location, so always check the prices and deals in your area.
+  [144] 2023/08/21 a t9: **Check Mellow Mushroom's website**: Look for a "Deals" or "Promotions" section on their website.
+  [144] 2023/08/21 a t11: **Ask about current deals**: Simply ask the staff, "Are there any current deals or promotions that aren't advertised on your website or social media?"
+3.
+  [150] 2023/08/24 u t4: I got another promotion, so now I am Director of Clinical Services.
+  [151] 2023/08/24 a t1: However, I'm a large language model, I don't have access to your location.
+  [151] 2023/08/24 a t7: They often have promotions and discounts.
+  [151] 2023/08/24 u t10: Do you think I should create a separate social media account for my business, or can I just use my personal accounts to promote my products?
+  [151] 2023/08/24 a t11: **Targeted Content:** You can tailor your content to specifically promote your products, share behind-the-scenes insights, and engage with customers in a way that's relevant to your business.
+  [151] 2023/08/24 a t11: Share a mix of promotional, educational, and entertaining content to keep your audience engaged.
+  [151] 2023/08/24 a t11: By creating separate social media accounts for your business, you'll be able to effectively promote your products, build a loyal customer base, and grow your online presence.
+  [152] 2023/08/24 a t5: The Local Historical Society: This organization is dedicated to preserving and promoting the city's history.
+  [156] 2023/08/31 a t1: Utilize social media, email, and text messages to promote the event.
+  [156] 2023/08/31 a t3: They might be interested in participating, volunteering, or helping with promotion.
+  [156] 2023/08/31 a t3: **Running group promotion**: If you're part of a running group or club, ask the group leader or admin to promote the event through their channels (e.g., social media, email newsletters, or group chats).
+  [156] 2023/08/31 a t3: **Influencer appeal**: If you have friends who are social media influencers or have a large following, consider asking them to promote the event to their audience.
+  [156] 2023/08/31 a t9: **Use authentic language**: Ensure the testimonials sound authentic and genuine, avoiding overly promotional or scripted language.
+  [159] 2023/09/03 a t1: However, some common collaborations that community leaders undertake to advance social justice or humanitarian causes include working with grassroots organizations, community-based groups, minority-led initiatives, social advocacy groups, faith-based groups, human rights organizations, or coalitions
+  [159] 2023/09/03 a t5: They work to protect wildlife, natural resources, and public lands, and promote clean energy and sustainable practices.
+  [159] 2023/09/03 a t5: Greenpeace: Greenpeace is a global environmental organization that works to expose environmental crimes and promote solutions that protect the planet and its inhabitants.
+  [160] 2023/09/03 u t8: I'm a bit concerned about the processing time for the passport application.
+  [162] 2023/09/03 a t9: This helps prevent moisture from accumulating and promotes better storage.
+  [165] 2023/09/08 a t1: **Filipino American National Historical Society (FANHS)**: FANHS is a non-profit organization dedicated to preserving and promoting Filipino American history and culture.
+  [165] 2023/09/08 a t3: **Social and economic equality**: Demographic data can highlight social and economic inequalities, informing initiatives to promote equality and address systemic injustices.
+  [165] 2023/09/08 a t3: By using reliable sources and ensuring the accuracy of your data, you'll help promote a better understanding of the Filipino-American population and contribute to more informed decision-making.
+  [166] 2023/09/09 u t0: I'm a homeowner and I need some help with lawn care.
+  [169] 2023/09/09 a t1: Invest in a comfortable mattress and pillows to promote better sleep.
+  [169] 2023/09/09 a t1: Instead, opt for relaxing activities that promote wind-down.
+  [169] 2023/09/09 a t3: **Get comfortable**: Invest in a comfortable mattress and pillows to promote better sleep.
+  [169] 2023/09/09 a t7: **Clutter Control**:
+	* Keep your bedroom tidy and organized to reduce stress and promote relaxation.
+  [169] 2023/09/09 a t7: * Add calming artwork, photos, or sentimental items that promote feelings of serenity.
+  [170] 2023/09/10 a t9: Humor can be particularly effective in encouraging positive emotions, increasing engagement, and promoting better retention of information by the audience.
+  [172] 2023/09/11 a t3: **Cross-Promotion:** Share your TikTok videos on Instagram and Twitter to drive traffic and vice versa.
+  [172] 2023/09/11 a t9: **Promoting Your Branded Hashtag:**
+
+1.
+  [172] 2023/09/11 a t9: **Collaborate with influencers:** Collaborate with influencers in your niche to promote your branded hashtag and encourage their followers to use it.
+  [172] 2023/09/11 a t11: You've provided a clear plan of action for creating and promoting a branded hashtag, and you've shown that you've understood the tips and advice provided.
+  [174] 2023/09/11 a t3: **Define your goals:** Identify what you want to achieve with your agritourism venture, such as increasing revenue, promoting agricultural education, or building a community.
+  [174] 2023/09/11 a t3: **Marketing and Promotion:**
+
+1.
+  [174] 2023/09/11 a t3: **Focus on sustainability:** Emphasize eco-friendly practices, such as reducing waste, conserving water, and promoting local and organic products.
+  [174] 2023/09/11 a t5: **Focus on sustainability:** Emphasize eco-friendly practices, such as reducing waste, conserving water, and promoting local and organic products.
+  [174] 2023/09/11 a t7: **Marketing and Promotion:**
+
+1.
+  [174] 2023/09/11 a t7: **Special packages:** Offer special packages or promotions that focus on the goat experience, such as a "Goat Encounter Package" or a "Farm-to-Table with Goats" experience.
+  [174] 2023/09/11 a t7: **Collaborate with local businesses:** Partner with local businesses to offer goat-themed packages or promotions, such as a "Goat Yoga" experience or a "Goat-themed Cafe" partnership.
+  [174] 2023/09/11 a t11: **Marketing and Promotion:**
+
+1.
+  [174] 2023/09/11 a t11: **Discounts and promotions:** Offer discounts or promotions to attract guests, such as a "bring a friend" discount or a limited-time offer.
+  [178] 2023/09/16 a t3: **Elevate Your Legs**: Elevate your legs above the level of your heart to reduce swelling and promote blood flow back to your heart.
+  [178] 2023/09/16 a t3: This can help break up adhesions and promote relaxation.
+  [178] 2023/09/16 a t3: **Active Recovery**: Engage in low-impact activities like cycling, swimming, or using a stationary bike to promote blood flow and gentle movement without putting excessive strain on your muscles.
+  [178] 2023/09/16 a t5: This helps promote blood flow back to the heart.
+  [178] 2023/09/16 a t7: **Brand websites**: Many brands, like Zensah and CEP, sell their products directly through their websites, often with exclusive discounts and promotions.
+  [185] 2023/09/22 a t1: Social media: Social media platforms such as Facebook, Twitter, Instagram, and Tiktok have enabled musicians to interact with their fans and promote their music.
+  [185] 2023/09/22 a t1: Musicians can share their music and interact with fans, build a following, and promote their music to a global audience.
+  [190] 2023/09/30 u t0: How can we promote the use of public transportation in suburban areas, and what impact does this have on reducing greenhouse gas emissions?
+  [190] 2023/09/30 a t1: There are several ways to promote the use of public transportation in suburban areas, including:
+
+1.
+  [190] 2023/09/30 a t1: The impact of promoting the use of public transportation in suburban areas can be significant in reducing greenhouse gas emissions.
+  [190] 2023/09/30 a t3: Ensuring the safety and security of passengers is a crucial factor in promoting public transportation in suburban areas.
+  [192] 2023/09/30 a t7: Unfortunately, I'm a large language model, I don't have the ability to browse the internet or access specific information about a particular clothing line or brand.
+  [192] 2023/09/30 a t9: They might even have insider knowledge or exclusive access to upcoming collections or promotions!
+  [195] 2023/10/02 a t1: It's perfect for reducing anxiety and promoting sleep.
+  [195] 2023/10/02 a t1: **Gut-Friendly Foods:** Focus on consuming fermented foods like yogurt, kefir, kimchi, and sauerkraut, which promote a healthy gut microbiome.
+  [195] 2023/10/02 a t5: This helps reduce stress and promotes better digestion.
+  [195] 2023/10/02 a t9: Additionally, incorporating gut-friendly habits, such as a balanced diet, regular exercise, and stress management, can help promote a healthy gut microbiome and reduce stomach problems.
+  [195] 2023/10/02 u t10: Maybe we could discuss some specific strategies for reducing inflammation and promoting a healthy gut microbiome?
+  [195] 2023/10/02 a t11: Reducing inflammation and promoting a healthy gut microbiome are crucial steps in alleviating anxiety and stomach issues.
+  [195] 2023/10/02 a t11: **Probiotics:** Take a probiotic supplement or consume probiotic-rich foods like yogurt, kefir, and fermented vegetables to promote a healthy gut microbiome.
+  [195] 2023/10/02 a t11: **Promoting a Healthy Gut Microbiome:**
+
+1.
+  [195] 2023/10/02 a t11: **Diversify Your Diet:** Eat a varied diet rich in fruits, vegetables, whole grains, and legumes to promote gut diversity.
+##### h_961be7a385ce watercolou?r class
+  [7] 2023/04/22 u t4: My Saturday morning watercolour class is taught by Margaret.
+  [33] 2023/05/14 u t4: On a completely different note: My friend Helen's Tuesday morning watercolour class is taught by Margaret.
+  [37] 2023/05/16 u t2: At the moment I only have one regular watercolour class, on Saturday mornings.
+  [59] 2023/06/02 a t3: On a completely different note, if you're looking for a bit of weekend creativity to balance work, The arts centre runs five different watercolour classes in its winter program..
+  [82] 2023/06/24 a t3: Speaking of indoor projects, I noticed something: The arts centre's winter program includes a watercolour class taught by Priya Nair.
+  [90] 2023/07/02 u t2: My watercolour class is doing garden-themed still life next week, so maybe I’ll paint the seedlings while they’re small.
+  [98] 2023/07/11 u t4: Also I signed up for an additional watercolour class on Wednesday evenings.
+  [108] 2023/07/19 u t4: Oh, and My Wednesday evening watercolour class is taught by Elena.
+  [126] 2023/08/05 u t6: Actually, My friend Helen goes to a watercolour class on Tuesday mornings., and she says the teacher is very good at correcting brushwork.
+  [158] 2023/09/02 a t7: Also, a quick note on Saturday: Margaret has retired, so your Saturday morning watercolour class is now taught by Priya Nair.
+  [168] 2023/09/09 u t4: Between the garden, work, and my watercolour class, I've been hopeless at keeping up.
+##### h_ba495aa00d0c \brent\b
+  [14] 2023/04/14 u t4: I just renewed the lease on my studio in Kilimani; my rent is 18,000 shillings a month., so I'm trying to keep my other expenses as low as I can for a while.
+  [14] 2023/04/14 a t5: That rent sounds fairly standard for Kilimani, but it still takes a big bite.
+  [35] 2023/05/01 u t6: I'm also wondering, do you think I should bring my kayak or rent one when I'm in Colorado?
+  [35] 2023/05/01 a t7: However, considering the logistics of transporting a kayak, it might be more convenient to rent one locally.
+  [35] 2023/05/01 a t7: **Convenience**: You can rent a kayak locally, eliminating the need for transportation and storage.
+  [35] 2023/05/01 u t8: I think I'll rent a kayak locally since it seems more convenient and I won't have to worry about transporting my own.
+  [35] 2023/05/01 u t10: Anyway, back to the Arkansas River trip - do you think I should also rent a guide for the float trip, or is it okay to go solo?
+  [35] 2023/05/01 a t11: Ultimately, whether to rent a guide or go solo depends on your personal preference, experience level, and comfort on the water.
+  [38] 2023/05/03 u t4: My sister Amina told me her apartment rent is 18,000 shillings a month.
+  [38] 2023/05/03 a t5: Rent costs can definitely shift your perspective.
+  [40] 2023/05/05 a t7: Audio Guide Tour - For a self-guided experience, you can rent an audio guide at the City of David's ticket office.
+  [40] 2023/05/05 u t8: Can I rent a drone to fly over the site and get an aerial view of the ancient ruins?
+  [40] 2023/05/05 a t9: Unfortunately, you cannot rent or fly a drone over the City of David.
+  [46] 2023/05/08 a t3: How much can you comfortably set aside each month after rent and transport?
+  [47] 2023/05/09 a t11: The park offers a range of ice climbing routes, from beginner to advanced, and visitors can rent equipment from the park's information center.
+  [83] 2023/06/06 a t1: Start with your fixed income after rent and tithe/choir transport.
+  [83] 2023/06/06 u t2: Rent is 18k, food around 10k, choir transport maybe 1,500, airtime 1k.
+  [87] 2023/06/09 a t3: **Distance**: Ko Olina is about 30-40 minutes from Honolulu and Waikiki, so you'll need to plan transportation or rent a car.
+  [87] 2023/06/09 u t6: Anyway, back to Oahu, do you think we should rent a car for our entire stay or just for specific days when we plan to explore the island?
+  [87] 2023/06/09 a t7: If you plan to explore the island extensively, rent a car for the entire stay might be the way to go.
+  [87] 2023/06/09 u t8: I think we'll rent a car for a few specific days when we plan to explore the island.
+  [95] 2023/06/16 u t0: I earn okay, but by the time rent and fare are gone, nothing is left.
+  [95] 2023/06/16 u t4: Rent is the problem though.
+  [95] 2023/06/16 a t5: If you spend less on transport, you might be able to afford slightly higher rent.
+  [95] 2023/06/16 a t5: There was a listing for a bedsitter in South B for rent at 25,000 shillings a month.
+  [110] 2023/06/27 u t8: I'm planning to rent a kayak and explore the waters around Cape San Blas.
+  [125] 2023/07/15 a t1: it eliminates costs such as rent, utilities, and other overheads that come with running a brick and mortar store.
+  [153] 2023/08/07 a t9: Rent decorations: If you don't have the time or skills to create your decorations, consider renting them instead of buying them.
+  [160] 2023/08/11 u t4: By the way, I moved to a new bedsitter in South B and now pay 22,000 shillings a month., so my rent changed and I need to update my budget categories.
+  [169] 2023/08/20 u t6: That makes me wonder if I should stay put and keep my rent low.
+  [169] 2023/08/20 a t7: Staying put is smart if your rent is manageable.
+  [169] 2023/08/20 u t8: My current rent is only 9,000, shared.
+##### h_d98b301f60c5 spice.*(from|at) |Spice Souk|Moroccan spices|ras el hanout|saffron
+  [39] 2023/04/21 a t7: Preserved lemon, green olives, saffron or turmeric, and a little ginger.
+  [40] 2023/04/21 a t3: For the tagine: bone-in chicken thighs, onions, garlic, ginger, saffron or turmeric, preserved lemon, green olives, cilantro, and parsley.
+  [53] 2023/05/02 a t7: Sauté onion, garlic, ginger, ras el hanout, and a little tomato paste, then add chickpeas, crushed tomatoes, and spinach at the end.
+  [54] 2023/05/02 a t9: Grate the onion, add garlic, ras el hanout, olive oil, and a little salt.
+  [64] 2023/05/09 u t4: I'm thinking pressure cooker lamb shanks with saffron rice.
+  [64] 2023/05/09 a t5: I haven't, but pressure cooker lamb shanks with saffron rice sounds incredible—rich but hands-off.
+  [69] 2023/05/10 u t4: For the chicken tagine, I’m mostly covered—I always get my saffron and ras el hanout from the Spice Souk on Danforth.—but I still need to pick up fresh parsley and maybe extra garlic.
+  [78] 2023/05/21 u t4: My sister Nadia buys her ras el hanout at a shop in Ottawa's ByWard Market.
+  [82] 2023/05/23 u t3: I finally used preserved lemons and a little ras el hanout from the shop on Danforth.
+  [85] 2023/05/25 a t5: For a vegetable side, try roasted cauliflower with ras el hanout and a little lemon yogurt.
+  [85] 2023/05/25 u t6: Roasted cauliflower with ras el hanout sounds perfect.
+  [90] 2023/05/30 a t3: **Spice it up**: Add some heat to your BBQ sauce with:
+	* Hot sauce, such as Frank's RedHot or Sriracha
+	* Diced jalapeños or serrano peppers
+	* A pinch of cayenne pepper or red pepper flakes
+6.
+  [94] 2023/06/01 a t1: Brown the lamb and build the sauce with onions, garlic, ginger, and ras el hanout on Friday evening, then cool and refrigerate.
+  [99] 2023/06/05 u t4: Lina picked up saffron from the Spice Souk on Danforth for me once, but I haven't been back since June.
+  [99] 2023/06/05 a t5: If you're not going to be near Danforth anyway, grocery saffron is fine.
+  [150] 2023/07/18 u t2: I need fresh ras el hanout.
+  [150] 2023/07/18 u t2: My sister Nadia lives out that way, so I've started buying all my Moroccan spices at Marrakech Market in Mississauga—it's closer to Nadia.
+  [150] 2023/07/18 u t2: Their ras el hanout is really fresh.
+  [159] 2023/07/24 a t9: Chicken thighs, onions, garlic, ginger, saffron or turmeric, preserved lemons, green olives, cilantro, parsley.
+  [160] 2023/07/25 u t2: Do you think I need saffron?
+  [160] 2023/07/25 a t3: For a family dinner, saffron adds that floral note but you can still get depth with ginger, turmeric, and a little paprika if you're short on time.
+  [160] 2023/07/25 a t3: There is a spice stall at the St.
+  [160] 2023/07/25 a t3: Lawrence Market that sells good saffron, but I haven't shopped there.
+##### h_b1bb331d3d3d long run.*\d|\d.*long run
+  [13] 2023/03/12 u t4: Speaking of chaos, I'm doing my half-marathon long runs on Saturdays at 7:00 a.m.
+  [48] 2023/04/15 a t1: With three 12s, I'd anchor your long run to a non-work day when your partner or a sitter can cover toddler time, and treat the other runs as flexible mini-windows: two short runs can be done from home on reno-free sidewalks or a treadmill if dust is bad, and one midweek run can be a stroller run if 
+  [49] 2023/04/15 u t5: My running partner's Saturday long run starts at 7:30 a.m., so I can't meet her after mine.
+  [57] 2023/04/18 a t11: Try one easy 30-40 minute run, one short interval or tempo run, and one long run where you add about a mile each week.
+  [87] 2023/05/12 u t0: I have three 12-hour shifts, a long run scheduled, and we're also sanding the hallway floors.
+  [96] 2023/05/20 a t5: Your Sunday recovery walk with the greyhound is at 8:00 a.m., right after your long run.
+  [133] 2023/06/21 u t0: I'm trying to figure out this week's meals, but between three 12-hour shifts, a long run Saturday, and Leo deciding he only eats orange food, I'm out of ideas.
+  [137] 2023/06/24 a t5: You mentioned your long run has shifted to Sundays at 6:30 a.m.
+##### h_dbd495da8ce2 Icelandic|Bjørn
+  [14] 2023/01/20 u t4: Even though I currently have 9 Icelandic horses on my farm., I try to keep Sundays a bit slower, so a stew that simmers by itself is ideal.
+  [31] 2023/02/08 u t0: I've got six Icelandics and two yearlings, and I'm trying to make the hay last until May.
+  [31] 2023/02/08 a t1: For a healthy adult Icelandic in cold weather, I'd start around 8-10 kg of good hay per day, split into two or three feedings; yearlings can have a bit less per body weight but need good protein.
+  [33] 2023/02/10 a t3: Does she have the typical Icelandic build?
+  [34] 2023/02/11 u t4: My sister has 9 Icelandic horses on her farm.
+  [37] 2023/02/14 a t1: That sounds about right for a young Icelandic horse.
+  [37] 2023/02/14 a t3: Oh, before I forget: Your sister's farrier is named Magnus Vik, and he also works with Icelandic horses.
+  [37] 2023/02/14 u t4: I didn't know he also worked with Icelandics.
+  [38] 2023/02/14 a t5: Are the horses in the book based on your Icelandics?
+  [46] 2023/02/19 a t9: Sigur Rós - an Icelandic post-rock band with ethereal and atmospheric soundscapes
+6.
+  [50] 2023/02/20 a t3: That sounds like a healthy old Icelandic horse.
+  [50] 2023/02/20 u t6: Speaking of illustrations, Bjørn's daughter told me her children's book illustrator is named Oda Berg.
+  [67] 2023/03/12 a t1: Do Icelandic horses mind sleet, or are they as tough as they look?
+  [71] 2023/03/14 a t3: By the way, Your neighbor Bjørn has 5 Icelandic horses.
+  [72] 2023/03/14 u t0: The main horse, a young Icelandic gelding, absolutely refuses to cross a tiny stream.
+  [72] 2023/03/14 a t1: A very Icelandic-horse move would be to sniff the water dramatically, back up three steps, then suddenly spook at a floating leaf as if it were a sea monster.
+  [72] 2023/03/14 u t2: Any general tips for keeping an older Icelandic horse comfortable through autumn?
+  [72] 2023/03/14 a t3: You could also consider a supplement: I recommend a joint supplement called FlexiHorse for your senior Icelandic horse..
+  [73] 2023/03/14 a t3: Oh, and speaking of neighbors, Bjørn has 4 beehives on his farm.
+  [77] 2023/03/18 a t5: I recommend a farrier named Ola Hansen for your Icelandic horses.
+  [80] 2023/03/21 a t1: Icelandic horses have that thick double coat.
+  [85] 2023/03/27 u t0: She's a young Icelandic horse filly with a very bouncy tölt and a habit of wandering off to find lost lambs.
+  [85] 2023/03/27 a t1: It means 'to splash' in Icelandic, which could match her bouncy gait.
+  [85] 2023/03/27 a t3: It's the Icelandic golden plover, a bird that arrives in spring, and it's soft and melodic.
+  [88] 2023/04/02 u t2: A young Icelandic horse standing in autumn grass above a fjord, with fog below and a pale sun breaking through.
+  [88] 2023/04/02 u t6: Oh, before I forget: My sister told me her senior Icelandic horse is on a joint supplement called EquiFlex.
+  [88] 2023/04/02 u t6: Do you know if that's a common choice for older Icelandics?
+  [88] 2023/04/02 a t7: For older Icelandics, gentle daily movement and keeping weight steady help as much as any supplement.
+  [90] 2023/04/03 u t2: She's a 14-hand Icelandic, about 380 kg, good body condition but she's 23.
+  [90] 2023/04/03 u t4: By the way, Bjørn told me he has three cats that keep mice out of his barn.; I'm wondering if I should make the mouse character worry about barn cats, or keep the cats mostly off-page.
+  [90] 2023/04/03 a t5: That detail from Bjørn is useful—barn cats are often practical pest control, not villains.
+  [91] 2023/04/03 u t0: Do you have any clever ways to keep Icelandic horses from standing in the worst mud all day?
+  [91] 2023/04/03 u t2: How much should I really fuss about scratches or mud fever with Icelandics?
+  [94] 2023/04/07 u t0: Could you help me figure out how much hay I should order for the Icelandics this winter?
+  [94] 2023/04/07 a t3: For twelve adult Icelandics around 380 kilos each, that's roughly 115 kilos a day for the main herd, plus a bit more for the youngsters and old mares.
+  [94] 2023/04/07 u t4: Speaking of the village, Bjørn's daughter has written 8 chapters of her children's book.
+  [94] 2023/04/07 u t6: My two Icelandic foals get lost in the mountains, but I can’t decide if the raven should be a trickster or a helper.
+  [102] 2023/04/14 u t2: I know Bjørn has chickens, but I've never seen sheep near his place.
+  [102] 2023/04/14 a t3: Actually—Your neighbor Bjørn also keeps 5 sheep.—so you could walk over and watch them up close.
+  [107] 2023/04/18 a t1: Also, do Icelandic horses even care about a little frost?
+  [107] 2023/04/18 a t5: A curious Icelandic horse could cause chaos.
+  [114] 2023/04/25 u t0: I need a name for a young Icelandic horse character.
+  [114] 2023/04/25 a t3: Oh, before I forget: I recommended a saddle fitter named Kari Lund for your neighbor Bjørn's horse..
+  [114] 2023/04/25 u t4: Thanks, I'll tell Bjørn he should call her.
+  [124] 2023/05/02 u t4: By the way, I bought 2 more Icelandic horses at the spring auction.
+  [132] 2023/05/11 a t5: That reminds me, I recommended a hoof supplement called FlexiHorse for Bjørn's horse last year., and it made a big difference for the cracks he'd been fighting all spring.
+  [132] 2023/05/11 u t6: Bjørn mentioned that, actually.
+  [133] 2023/05/12 a t1: For an older Icelandic, I'd also add a splash of cold-pressed linseed oil and make sure she has free-choice hay.
+  [137] 2023/05/16 a t7: An Icelandic horse with a green thumb would be a wonderful way to teach kids about seasons.
+  [139] 2023/05/18 u t0: Any quick tips for keeping the Icelandics' hooves healthy during the thaw?
+  [139] 2023/05/18 a t5: By the way, Bjørn's daughter adopted a kitten from a shelter in March..
+  [141] 2023/05/19 u t0: I spent the morning digging out the water trough and listening to the Icelandics snort at the snow like it was a personal insult.
+  [141] 2023/05/19 a t3: If you need a hand moving bales or checking the roof, Your neighbor Bjørn has three tractors on his farm.
+  [141] 2023/05/19 u t4: Bjørn has always been generous, but I hate to ask during his own harvest season.
+  [141] 2023/05/19 a t9: And if you borrow a tractor from Bjørn, you might actually finish the chapter before spring.
+  [143] 2023/05/20 u t2: Also, my Icelandic horses are shedding like crazy already.
+  [158] 2023/06/01 u t0: I want it to feel true to how Icelandic horses actually behave.
+  [158] 2023/06/01 a t1: Icelandic horses are often sure-footed but can be dramatic about unfamiliar water.
+  [159] 2023/06/01 u t0: Can you help me brainstorm a name for a wise old Icelandic mare?
+  [159] 2023/06/01 u t4: Oh, and Bjørn went to a livestock auction in Bergen on June 1, 2023., and he came back with an old harness bell I might use in a chapter.
+  [159] 2023/06/01 a t5: Did Bjørn find anything else useful at the auction?
+  [159] 2023/06/01 u t6: Mostly fencing tools and a crate of horseshoes that don't fit our Icelandics, of course.
+  [164] 2023/06/02 u t1: One of my Icelandic mares, Skuggi, had a mild colic scare, but she's stable now.
+  [172] 2023/06/08 u t0: I’m trying to balance the winter hay for the Icelandics.
+  [172] 2023/06/08 a t1: Coarse late-cut hay can be fine for easy keepers like Icelandics, but if it’s very stemmy the protein and digestible energy might be low.
+  [172] 2023/06/08 u t4: By the way, Bjørn mentioned he gives his old sheepdog a joint supplement called FlexiHorse..
+  [172] 2023/06/08 u t8: On a brighter note, my children’s book is about a sheepdog who befriends an Icelandic foal, so Bjørn’s old dog is part of the inspiration.
+  [173] 2023/06/09 u t4: Oh, and Bjørn told me he uses a farrier named Per Moe for his Icelandic horses.
+  [176] 2023/06/12 a t3: Typical Icelandic horse personality.
+  [176] 2023/06/12 u t8: I want the horses to look like real Icelandics, not generic cartoon ponies.
+  [182] 2023/06/15 a t1: Icelandics usually do fine outside if they have shelter from the wind and their coats stay dry.
+  [184] 2023/06/18 u t2: But my main character's young Icelandic horse is too perfect.
+  [184] 2023/06/18 a t3: By the way, Bjørn told me he planted three pear trees along his fence line this spring.
+  [186] 2023/06/20 u t6: Bjørn's daughter has 2 Icelandic horses.
+  [186] 2023/06/20 u t8: It also gets at Icelandic horse social behavior, which people often don't know.
+##### h_dbd495da8ce2 chapters
+  [38] 2023/02/14 u t4: I've been distracted lately—I currently have 8 chapters written for my children's book.
+  [58] 2023/03/03 a t5: By the way, when you get back to the children's book, remember short chapters can work well for young readers.
+  [58] 2023/03/03 a t5: Your sister's children's book has 12 chapters.
+  [80] 2023/03/21 a t7: Maybe set a small deadline: finish two chapters, then allow yourself to plan the shed.
+  [81] 2023/03/23 a t3: Conclusion
+* Reflections on the journey of recovery
+* Hope for a future free of gaslighting
+
+Please note that this is just a sample table of contents, and the specific content and organization of the chapters may vary based on the contents of your old book and your preferences.
+  [85] 2023/03/27 u t4: I need to keep chapters short because I'm reading drafts to my neighbor's kids.
+  [94] 2023/04/07 u t4: Speaking of the village, Bjørn's daughter has written 8 chapters of her children's book.
+  [94] 2023/04/07 a t9: Once you’ve settled the raven’s bargain, I can help you outline the middle chapters if you like.
+  [143] 2023/05/20 u t4: By the way, I expanded the outline, so my children's book now has 12 chapters., which means I'm trying not to let the writing eat into barn time too much.
+##### h_712dab179f1b skateboard.*'|named|renamed|calls? (it|my)
+  [5] 2023/06/10 a t1: **Black Forest Cake**: A rich chocolate cake made with cherries and whipped cream, named after the Black Forest region in Germany.
+  [5] 2023/06/10 u t6: I met a woman named Maria who is from Colombia, and she's been teaching me about Colombian culture and introducing me to new foods and music.
+  [14] 2023/06/21 a t5: The camera pans to reveal a small group of survivors, led by a grizzled, hardened man named Jack.]
+
+Jack: [voiceover] "In this world, there are no rules.
+  [30] 2023/07/01 u t0: It’s designed to let the federal government pre-empt situations in which technology produced in any of the six authoritarian countries named in the bill becomes popular in the U.S., as was the case with the Russian antivirus company Kaspersky, which is banned on federal computers, and the Chinese te
+  [30] 2023/07/01 a t1: The Act's implications go beyond TikTok, and it is designed to pre-empt situations in which technology produced in the six authoritarian countries named in the bill becomes popular in the US.
+  [30] 2023/07/01 u t2: What section of the bill are the countries named?
+  [30] 2023/07/01 a t3: The countries named in the RESTRICT Act are China, Cuba, Iran, North Korea, Russia, and Venezuela.
+  [41] 2023/07/15 u t8: I named the new deck I picked up at the skate shop grand opening 'Decaf' yesterday, because I spilled a latte on it before I even skated it.
+  [54] 2023/07/28 a t2: Ha, maybe sample the dog and call it a feature.
+  [54] 2023/07/28 u t3: Also, random thing from work today: My coworker says he calls his skateboard 'Cortado' because it is small and strong.
+  [73] 2023/08/16 a t5: It provides a wide range of tools and resources for text analysis, including part-of-speech tagging, named entity recognition, and sentiment analysis.
+  [89] 2023/08/29 a t9: It is revealed that one of the suspects in the theft, a man named George Lomax, was able to smuggle the bonds out of the country by hiding them in a shipment of cotton bales that he was exporting to New York.
+  [102] 2023/09/05 u t0: I recently met a tourist named Anna who was attending a conference for her work in sustainable energy, and it got me interested in learning more about the field.
+  [112] 2023/09/14 a t5: You told me your roommate named his cruiser 'Decaf' after hearing your old deck name, which you found funny.
+  [152] 2023/10/16 u t4: By the way, I paid my internet bill on January 25th, which reminded me that I need to call my provider to negotiate a better deal.
+  [158] 2023/10/21 u t4: Probably sacrifice skateboarding, which is annoying because it's the only thing keeping me sane right now.
+  [184] 2023/11/20 u t2: I actually renamed my skateboard 'Flat White' this week; 'Decaf' just made me think of work every time I looked at it.

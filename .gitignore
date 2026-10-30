@@ -1,0 +1,7 @@
+.venv/
+cache/
+runs/*
+!runs/leaderboard.csv
+__pycache__/
+*.pyc
+.DS_Store

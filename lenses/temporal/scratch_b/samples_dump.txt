@@ -1,0 +1,159 @@
+### dev q_584d0cd7ca07 2023/02/01 (Wed) 10:20 | abst False | nsess 48
+Q: How many days passed between my visit to the Museum of Modern Art (MoMA) and the 'Ancient Civilizations' exhibit at the Metropolitan Museum of Art?
+A: 7 days. 8 days (including the last day) is also acceptable.
+  GT 2023/01/08 (Sun) 12:49 user | I'm looking for some information on modern art movements. I just got back from a guided tour at the Museum of Modern Art focused on 20th-century modern art movements, and it really sparked my interest. Can you tell me more about the key artists associated with
+  GT 2023/01/15 (Sun) 00:27 user | That's fascinating! I had no idea that mummification was practiced in so many ancient cultures. I've always been interested in ancient civilizations, which is why I attended the "Ancient Civilizations" exhibit at the Metropolitan Museum of Art today. Speaking 
+### dev q_3ef6043f6898 2023/03/22 (Wed) 21:49 | abst False | nsess 47
+Q: Which three events happened in the order from first to last: the day I helped my friend prepare the nursery, the day I helped my cousin pick out stuff for her baby shower, and the day I ordered a customized phone case for my friend's birthday?
+A: First, I helped my friend prepare the nursery, then I helped my cousin pick out stuff for her baby shower, and lastly, I ordered a customized phone case for my friend's birthday.
+  GT 2023/02/05 (Sun) 18:29 user | I'm expecting a new baby in my social circle soon and I'm thinking of getting a gift. Can you recommend some popular baby stores or online marketplaces where I can find a wide range of baby supplies and decorations? By the way, I just helped my friend prepare 
+  GT 2023/02/10 (Fri) 21:05 user | I'm thinking of getting a baby gift for a coworker's new baby, and I was wondering if you could give me some recommendations for essential items that new parents usually need. By the way, I just helped my cousin pick out some stuff for her baby shower, and we 
+  GT 2023/02/20 (Mon) 13:12 user | I'm looking for some gift ideas for my siblings. Do you have any suggestions? By the way, I just ordered a customized phone case for my friend's birthday today, which she really loves.
+### dev q_2644ac815cc4 2023/04/01 (Sat) 08:09 | abst False | nsess 49
+Q: How many weeks ago did I meet up with my aunt and receive the crystal chandelier?
+A: 4
+  GT 2023/03/04 (Sat) 22:43 user | I'm looking for some advice on cleaning and maintaining my antique furniture. I recently acquired a beautiful vintage armchair from the 1950s and I want to make sure I'm taking good care of it. By the way, I also got a stunning crystal chandelier from my aunt 
+### dev q_f551480f330c 2023/04/18 (Tue) 03:31 | abst False | nsess 46
+Q: How many months have passed since I participated in two charity events in a row, on consecutive days?
+A: 2
+  GT 2023/01/30 (Mon) 13:00 user | I'm looking for some information on cancer research and the latest developments in the field. By the way, I attended a charity gala organized by the Cancer Research Foundation at a fancy hotel in downtown today, where the event raises over $100,000 for cancer 
+  GT 2023/02/14 (Tue) 09:06 user | I'm feeling a bit tired today, just got back from the "24-Hour Bike Ride" charity event, where I cycled for 4 hours non-stop to raise money for a local children's hospital. I was wondering if you could help me find some good stretches to relieve my leg muscles
+  GT 2023/02/15 (Wed) 19:39 user | Hi! I'm looking for some book recommendations for kids. I volunteered at the "Books for Kids" charity book drive event at my local library today, helping to sort and pack over 500 books for underprivileged kids in the neighborhood. Do you have any suggestions 
+  GT 2023/03/19 (Sun) 15:02 user | Hey, I'm looking for some healthy snack ideas that are easy to prepare. I just did the "Walk for Hunger" charity event today with my colleagues from work, walking 5 kilometers to raise money for the local food bank, and I want to refuel with something nutritio
+  GT 2023/03/19 (Sun) 15:02 user | I like the overnight oats idea. I've been doing a lot of charity events lately, and it's always great to have a healthy breakfast to start the day. Speaking of which, do you have any tips on how to stay hydrated during long walks like the "Walk for Hunger" eve
+### dev q_74e7322b9eee 2023/04/05 (Wed) 09:11 | abst False | nsess 46
+Q: How many days passed between the day I started playing along to my favorite songs on my old keyboard and the day I discovered a bluegrass band?
+A: 6 days. 7 days (including the last day) is also acceptable.
+  GT 2023/03/25 (Sat) 05:54 user | I'll definitely consider your advice on buying a ukulele. By the way, I started playing along to my favorite songs on my old keyboard today, and it was a lot of fun! I've been listening to a lot of music featuring the piano, which inspired me to dust off my ol
+  GT 2023/03/31 (Fri) 12:35 user | I'm thinking of exploring bluegrass music more, and I recently discovered a bluegrass band that features a banjo player and started enjoying their music today. Can you recommend some popular bluegrass artists or bands I should check out?
+### dev q_2403af78a507 2023/03/25 (Sat) 17:18 | abst False | nsess 49
+Q: How many months have passed since I last visited a museum with a friend?
+A: 5
+  GT 2022/10/22 (Sat) 18:38 user | That's a great idea! I'll definitely try searching online and checking out those directories. I'm sure I'll stumble upon some new museums or science centers that I haven't visited yet. By the way, I was thinking about my behind-the-scenes tour of the Science M
+  GT 2023/01/11 (Wed) 10:24 user | I'm planning a trip to Jordan and I'm really interested in visiting Petra. Can you tell me more about the history of the city and its significance? By the way, I just learned a lot about it in a lecture at the History Museum about ancient civilizations this mo
+  GT 2023/02/18 (Sat) 04:22 user | I'm looking for some information on dinosaurs. I attended a guided tour at the Natural History Museum yesterday with my dad and was really impressed by the fossil collection on display, especially the new T-Rex skeleton they acquired. Do you know more about th
+### dev q_d0493c620002 2022/12/01 (Thu) 21:26 | abst False | nsess 43
+Q: How many weeks ago did I attend the friends and family sale at Nordstrom?
+A: 2
+  GT 2022/11/18 (Fri) 17:03 user | I'm actually going to be using the TV in my living room, and I think a full-motion mount would be perfect. I've been doing some shopping lately and scored some great deals, by the way. Yesterday, I attended a friends and family sale at Nordstrom and picked up 
+### dev q_ad6f52f2ee7c 2023/10/01 (Sun) 07:41 | abst False | nsess 44
+Q: Which event happened first, my cousin's wedding or Michael's engagement party?
+A: Michael's engagement party
+  GT 2023/05/06 (Sat) 03:02 user | I'm thinking of planning a small ceremony for my own wedding next year. Can you give me some tips on how to choose the right venue? By the way, I just came back from Michael's engagement party at a trendy rooftop bar today, and it got me thinking about my own 
+  GT 2023/06/15 (Thu) 03:20 user | I'm getting ready to start planning my own wedding and I was wondering if you could give me some advice on how to choose the right wedding planner. By the way, I just walked down the aisle as a bridesmaid at my cousin's wedding today, and it got me thinking ab
+### dev q_689c84876e12 2023/04/10 (Mon) 10:28 | abst False | nsess 52
+Q: How many days ago did I attend the Maundy Thursday service at the Episcopal Church?
+A: 4 days.
+  GT 2023/04/06 (Thu) 22:22 user | Yes, I'd like to take the next step. Please provide me with the contact information and application form. I'm looking forward to volunteering at the food bank and making a difference in my community. By the way, I'm glad I got to attend the Maundy Thursday ser
+### dev q_37ce13400b8b 2022/04/15 (Fri) 18:46 | abst False | nsess 54
+Q: How many days ago did I attend a baking class at a local culinary school when I made my friend's birthday cake?
+A: 21 days. 22 days (including the last day) is also acceptable.
+  GT 2022/03/21 (Mon) 15:54 user | I've been obsessed with strawberries lately, especially after that amazing baking class I took at a local culinary school yesterday. I was thinking of making a strawberry shortcake. Do you have any tips on how to make the perfect shortcake?
+  GT 2022/04/10 (Sun) 14:14 user | I'm excited to try making croissants again, and I think I'll also make some banana bread for the dinner party. I recently made a batch with walnuts, and it turned out amazing. By the way, I just baked a chocolate cake for my friend's birthday party today that 
+### dev q_995c6a95ecbe 2023/04/18 (Tue) 10:43 | abst False | nsess 53
+Q: How many days passed between the day I started watering my herb garden and the day I harvested my first batch of fresh herbs?
+A: 24 days. 25 days (including the last day) is also acceptable.
+  GT 2023/03/22 (Wed) 11:41 user | I'm planning to make a salad for dinner tonight and I want to use some fresh herbs. Can you give me some advice on how to keep my herbs fresh for a longer period? By the way, I started watering my herb garden every morning today, and I'm excited to see them gr
+  GT 2023/04/15 (Sat) 17:48 user | I'm looking for some new recipe ideas that feature fresh herbs. I just harvested my first batch of fresh herbs from the herb garden kit today and I'm excited to use them in different dishes.
+### dev q_a243efd74486 2023/05/06 (Sat) 09:18 | abst False | nsess 45
+Q: How many weeks ago did I start using the cashback app 'Ibotta'?
+A: 3 weeks ago
+  GT 2023/04/16 (Sun) 02:19 user | I'm trying to plan my next grocery trip and I was wondering if you could help me make a list of essentials I should pick up. I've just downloaded Ibotta, a cashback app that gives you rebates on certain grocery items, and I want to make sure I get the most out
+### dev q_e9c73ef2e72c 2023/02/10 (Fri) 18:44 | abst False | nsess 44
+Q: How many days had passed since I finished reading 'The Seven Husbands of Evelyn Hugo' when I attended the book reading event at the local library, where the author of 'The Silent Patient' is discussing her latest thriller novel?
+A: 18 days. 19 days (including the last day) is also acceptable.
+  GT 2022/12/28 (Wed) 06:50 user | I'm looking for some book recommendations. I just finished a discussion on "The Seven Husbands of EvelynAGO" by Taylor Jenkins Reid in an online book club on Facebook, and I'm in the mood for something similar. Do you have any suggestions?
+  GT 2023/01/15 (Sun) 08:32 user | I'm looking for some book recommendations. I just attended a book reading event at the local library today, where the author of "The Silent Patient" was discussing her latest thriller novel. It got me thinking about other thrillers I might enjoy. Can you sugge
+### dev q_9e76770f0efd 2023/06/01 (Thu) 17:17 | abst False | nsess 51
+Q: How many days did I spend on my solo camping trip to Yosemite National Park?
+A: 2 days. 3 days (including the last day) is also acceptable.
+  GT 2023/05/15 (Mon) 04:28 user | I'm planning a trip to the Eastern Sierra in July or August and was wondering if you could recommend some scenic hiking trails in the area. By the way, I just started my solo camping trip to Yosemite National Park today and I'm really excited to explore the pa
+  GT 2023/05/17 (Wed) 19:56 user | I'm thinking of planning a trip to the Eastern Sierra in July or August and I was wondering if you could recommend some good camping spots and hiking trails in the area. By the way, I just got back from an amazing solo camping trip to Yosemite National Park to
+### dev q_a38535958059 2023/06/01 (Thu) 03:56 | abst False | nsess 52
+Q: What is the order of the three trips I took in the past three months, from earliest to latest?
+A: I went on a day hike to Muir Woods National Monument with my family, then I went on a road trip with friends to Big Sur and Monterey, and finally I started my solo camping trip to Yosemite National Park.
+  GT 2023/03/10 (Fri) 23:32 user | I've been thinking about getting a new backpack for my upcoming trip to the Eastern Sierra, and I was wondering if you could recommend some good options for a lightweight backpack that's suitable for 3-4 day trips? By the way, I just got back from a day hike t
+  GT 2023/04/20 (Thu) 04:17 user | I'm looking for some recommendations on camping gear. I recently got back from a solo camping trip to Yosemite and realized I need to upgrade some of my equipment. By the way, I just got back from a road trip with friends to Big Sur and Monterey today, and it 
+  GT 2023/05/15 (Mon) 09:54 user | I'm planning a trip to the Eastern Sierra and was wondering if you could recommend some good camping spots in the area. I just got back from a solo camping trip to Yosemite National Park today, and I'm looking for something similar.
+### dev q_d4906be5815c 2021/10/02 (Sat) 03:56 | abst False | nsess 48
+Q: How many months ago did I attend the Seattle International Film Festival?
+A: 4 months ago
+  GT 2021/06/01 (Tue) 01:58 user | I'm looking for some recommendations for romantic comedies. I just saw "Coda" at the Seattle International Film Festival today, and I loved it. I attended SIFF for a week, watched 8 films, and even sat in on a panel discussion about film distribution and marke
+### dev q_db21afcb4e1e 2023/03/25 (Sat) 02:46 | abst False | nsess 47
+Q: How many days ago did I buy a smoker?
+A: 10 days ago. 11 days (including the last day) is also acceptable.
+  GT 2023/03/15 (Wed) 06:05 user | I just got a smoker today and I'm excited to experiment with different types of wood and meats. I'm thinking of trying out a mix of hickory and apple wood, I've heard they pair well with pork and beef. What are some recommended meat and wood pairings that I sh
+### dev q_f63fdc3caf82 2023/05/10 (Wed) 21:38 | abst False | nsess 44
+Q: What is the order of the three events: 'I signed up for the rewards program at ShopRite', 'I used a Buy One Get One Free coupon on Luvs diapers at Walmart', and 'I redeemed $12 cashback for a $10 Amazon gift card from Ibotta'?
+A: First, I used a Buy One Get One Free coupon on Luvs diapers at Walmart. Then, I redeemed $12 cashback for a $10 Amazon gift card from Ibotta. Finally, I signed up for the rewards program at ShopRite.
+  GT 2023/04/01 (Sat) 06:23 user | I'm planning a trip to Walmart this weekend and I'm looking for some deals on baby essentials. Do you have any info on their current sales or promotions on diapers? By the way, I used a Buy One Get One Free coupon on Luvs diapers at Walmart today, which was a 
+  GT 2023/04/10 (Mon) 00:46 user | I'm planning a shopping trip to Target this weekend and I'm wondering if you have any info on their current sales and promotions. By the way, I just redeemed $12 cashback for a $10 Amazon gift card from Ibotta today, so I'm feeling pretty good about my savings
+  GT 2023/04/15 (Sat) 04:24 user | I'm trying to plan my grocery shopping trip for this week. Can you help me find any good deals or sales on diapers and formula at ShopRite? By the way, I signed up for their rewards program today, so I'm hoping to maximize my points and savings.
+### dev q_598710aeeca7 2022/04/30 (Sat) 13:22 | abst False | nsess 49
+Q: How many weeks in total do I spent on reading 'The Nightingale' and listening to 'Sapiens: A Brief History of Humankind' and 'The Power'?
+A: 2 weeks for 'The Nightingale', 4 weeks for 'Sapiens: A Brief History of Humankind', and 2 weeks for 'The Power', so a total of 8 weeks.
+  GT 2022/01/01 (Sat) 20:18 user | I'm looking for some book recommendations. I started reading 'The Nightingale' by Kristin Hannah today and I'm really into historical fiction right now. Can you suggest some other books in the same genre that you think I'd enjoy?
+  GT 2022/01/15 (Sat) 11:56 user | I'm looking for some book recommendations. I just finished reading "The Nightingale" by Kristin Hannah today, and I'm still reeling from the emotional impact. I'm open to trying out different genres, so feel free to suggest anything that you think I might enjo
+  GT 2022/02/01 (Tue) 18:18 user | That's really helpful, thanks! I think I can apply this to some of my own habits. Speaking of habits, I just started listening to 'Sapiens: A Brief History of Humankind' by Yuval Noah Harari today, and it got me thinking about how humans have developed certain
+  GT 2022/03/01 (Tue) 22:45 user | I just finished listening to 'Sapiens: A Brief History of Humankind' by Yuval Noah Harari today, and it got me thinking about the impact of technology on human evolution. Can you tell me more about the latest advancements in AI and its potential applications i
+  GT 2022/03/06 (Sun) 19:30 user | I'm interested in learning more about the themes of identity, culture, and power in "The Fifth Season" by N.K. Jemisin. I've been thinking a lot about how these themes relate to my own experiences as a woman, and I started listening to "The Power" by Naomi Ald
+  GT 2022/03/20 (Sun) 05:21 user | I'm looking for some book recommendations. I just finished listening to 'The Power' by Naomi Alderman today and it really made me think. I'm interested in exploring more books that challenge my perspectives. Do you have any suggestions?
+### dev q_cb2679b3474e 2023/03/18 (Sat) 00:06 | abst False | nsess 56
+Q: How many days passed between the day I cancelled my FarmFresh subscription and the day I did my online grocery shopping from Instacart?
+A: 54 days. 55 days (including the last day) is also acceptable.
+  GT 2023/01/05 (Thu) 18:23 user | I've been meaning to organize my pantry and kitchen cabinets for a while now, and your suggestions are super helpful. I'm excited to get started this weekend. By the way, I'm glad I cancelled my monthly grocery delivery subscription from FarmFresh, which I was
+  GT 2023/02/28 (Tue) 22:12 user | I'm planning to make some new recipes this week and I need some inspiration. Can you suggest some healthy dinner ideas that incorporate chicken breasts and ground beef? By the way, I just did an online grocery order from Instacart and had it delivered to my do
+### dev q_cb960d4f9ad5 2023/04/15 (Sat) 22:38 | abst False | nsess 61
+Q: How many weeks passed between the day I bought my new tennis racket and the day I received it?
+A: 1 week
+  GT 2023/03/10 (Fri) 12:43 user | I'm excited to start cycling more frequently and joining a local cycling group. I've been doing some solo cycling on Friday evenings along the river, and I'm looking forward to meeting new people who share my interest. By the way, I just bought a new tennis ra
+  GT 2023/03/17 (Fri) 09:54 user | I'm looking for some tips on how to improve my tennis serves. I just received my new tennis racket today and I'm excited to try out some new techniques.
+### dev q_8762cf18b347 2023/04/20 (Thu) 10:12 | abst False | nsess 44
+Q: How many days ago did I meet Emma?
+A: 9 days ago. 10 days (including the last day) is also acceptable.
+  GT 2023/04/11 (Tue) 23:18 user | I'm looking for some tips on social media advertising. I just attended a digital marketing workshop last week and the speaker, Rachel Lee, mentioned some interesting strategies. I was wondering if you could recommend some online resources or tutorials on the t
+### dev q_98ef5cbb295a 2023/03/10 (Fri) 08:15 | abst False | nsess 48
+Q: What is the order of the six museums I visited from earliest to latest?
+A: Science Museum, Museum of Contemporary Art, Metropolitan Museum of Art, Museum of History, Modern Art Museum, Natural History Museum
+  GT 2023/01/15 (Sun) 16:31 user | I'm planning a day out with my colleague and was thinking of visiting a science-related exhibition. I visited the Science Museum's "Space Exploration" exhibition today with my colleague, David, and we spent a good two hours exploring the interactive exhibits a
+  GT 2023/01/22 (Sun) 20:21 user | That's a great overview of Judy Chicago's work and significance. I've always been fascinated by The Dinner Party, and I appreciate how it's become an iconic symbol of feminist art. Speaking of feminist art, I just came back from a lecture series at the Museum 
+  GT 2023/02/10 (Fri) 22:26 user | I'm planning to write an essay about ancient civilizations and I was wondering if you could provide me with some information on the significance of Pharaoh Tutankhamun's golden mask. By the way, I saw it in person today at the Metropolitan Museum of Art's "Anc
+  GT 2023/02/15 (Wed) 12:20 user | I'm looking for some information on art conservation techniques. I participated in a behind-the-scenes tour of the Museum of History's conservation lab today, where I saw the meticulous process of preserving historical artifacts and even tried my hand at basic
+  GT 2023/02/20 (Mon) 22:50 user | I'm planning to visit the Modern Art Museum again soon and I was wondering if you could recommend any upcoming exhibitions or events that I shouldn't miss. By the way, I attended their guided tour of "The Evolution of Abstract Expressionism" today, led by Dr. 
+  GT 2023/03/04 (Sat) 19:42 user | I'm planning a family outing to a museum and I'm looking for some recommendations. I took my niece to the Natural History Museum to see the "Dinosaur Fossils" exhibition today, and she loved the life-sized T-Rex replica. Do you have any suggestions for other k
+### dev q_30820059a09d 2023/05/08 (Mon) 06:05 | abst False | nsess 48
+Q: How many days passed between the day I attended the gardening workshop and the day I planted the tomato saplings?
+A: 6 days. 7 days (including the last day) is also acceptable.
+  GT 2023/04/15 (Sat) 17:41 user | I'm trying to figure out what type of fertilizer to use for my herbs. I've been experimenting with different types of plants in my garden, including basil, mint, and parsley, and I want to make sure I'm giving them the right nutrients. By the way, I attended a
+  GT 2023/04/21 (Fri) 11:01 user | I'm looking for some advice on how to keep my tomato plants healthy and pest-free. By the way, I just planted 12 new tomato saplings today and I'm excited to see them grow.
+### dev q_20592238a2c4 2023/06/01 (Thu) 21:22 | abst False | nsess 45
+Q: How many days passed between the day I received feedback about my car's suspension and the day I tested my new suspension setup?
+A: 38 days. 39 days (including the last day) is also acceptable.
+  GT 2023/03/17 (Fri) 15:43 user | I'm planning to test my car's new suspension setup during an open track day at VIR, and I'm hoping to get a better feel for how it handles, especially in the fast corners. I've been getting feedback from judges that my car's suspension was too soft, affecting 
+  GT 2023/04/23 (Sun) 02:44 user | I'm preparing for an open track day at VIRginia International Raceway tomorrow, where I'll be testing my car's new suspension setup. What are some essential checks I should do before hitting the track?
+### dev q_61b832501174 2023/05/21 (Sun) 23:53 | abst True | nsess 50
+Q: Which task did I complete first, fixing the fence or purchasing three cows from Peter?
+A: The information provided is not enough. You mentioned fixing the fence but did not mention purchasing cows from Peter.
+  GT 2023/05/21 (Sun) 17:30 user | I'm thinking of hosting a farm open house event soon and I want to make sure everything is perfect. Can you help me come up with some ideas for activities and also give me some tips on how to promote it on social media? By the way, I just fixed that broken fen
+### dev q_a9ad1e39da72 2023/05/30 (Tue) 23:06 | abst True | nsess 44
+Q: How long have I been working before I started my current job at Google?
+A: The information provided is not enough. From the information provided, You haven't started working at Google yet.
+### dev q_5b0eb39aa184 2023/05/27 (Sat) 23:53 | abst True | nsess 44
+Q: When did I book the Airbnb in Sacramento?
+A: The information provided is not enough. You only mentioned booking Airbnb in San Francisco.
+  GT 2023/05/27 (Sat) 03:04 user | I'm planning a trip to San Francisco and was wondering if you could recommend some good neighborhoods to stay in. By the way, I've had a great experience with Airbnb in the past, like when I stayed in Haight-Ashbury for my best friend's wedding and had to book
+TEST h_d99a2da8f8ee 2023/09/17 (Sun) 00:00 | How many days apart were my son's school play and my daughter's orthodontist appointment?
+TEST h_961be7a385ce 2023/10/06 (Fri) 00:00 | How many days apart were the hospital's 'Run for Health' 5K and the annual charity gala I attended?
+TEST h_961be7a385ce 2023/10/06 (Fri) 00:00 | How many days apart were the watercolour society's annual exhibition opening and the hospital leadership conference I attended?
+TEST h_961be7a385ce 2023/10/06 (Fri) 00:00 | How many days apart were my trip to Adelaide to visit James and my trip to Brisbane to help Daniel settle in?
+TEST h_ba495aa00d0c 2023/09/25 (Mon) 00:00 | How many days apart were starting my Python for Data Analysis course and finishing my first Python data cleaning project?
+TEST h_ba495aa00d0c 2023/09/25 (Mon) 00:00 | How many days apart were my church choir retreat and my first used car test drive?
+TEST h_4fa7f122fcdb 2023/10/15 (Sun) 00:00 | How many days after I entered my alfajor recipe in the city baking contest were the winners announced?
+TEST h_4fa7f122fcdb 2023/10/15 (Sun) 00:00 | How many days after I bought my ticket to the Buenos Aires Tango Festival was the closing night?
+TEST h_3c02cbc43fc9 2023/07/27 (Thu) 00:00 | How many days apart were my monstera repotting and my lead-climbing course?
+TEST h_3c02cbc43fc9 2023/07/27 (Thu) 00:00 | How many days after submitting my visa application did I book my flight to Montreal?
+TEST h_3c02cbc43fc9 2023/07/27 (Thu) 00:00 | How many days after setting up my Montreal flat alerts did I sign a lease?
+TEST h_3c02cbc43fc9 2023/07/27 (Thu) 00:00 | How many days after buying my trail-running shoes did I do my first trail run?
+TEST h_3c02cbc43fc9 2023/07/27 (Thu) 00:00 | How many days after sending off my passport renewal did my renewed passport arrive?
+TEST h_3c02cbc43fc9 2023/07/27 (Thu) 00:00 | How many days after my pre-departure medical check-up did I get my travel vaccines?
+TEST h_3c02cbc43fc9 2023/07/27 (Thu) 00:00 | How many days after my last day of school before summer did I leave for my Ardèche canoe trip?
