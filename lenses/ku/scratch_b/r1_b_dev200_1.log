@@ -1,0 +1,9 @@
+26 questions x 3 variants on dev200 in 1043s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+pair_prf                   91.8 1.000 0.977 1.000 1.000 1.000     - 0.932   3752 19276.6 0.864 0
+   -> runs/r1-ku-b/ku/b_semantic/pair_prf/dev200
+pair_asst                  88.8 0.955 0.962 1.000 1.000 1.000     - 0.932   3781 57499.5 0.864 0
+   -> runs/r1-ku-b/ku/b_semantic/pair_asst/dev200
+wide                       91.3 1.000 1.000 1.000 1.000 1.000     - 1.000  11700    7.8 0.886 0
+   -> runs/r1-ku-b/ku/b_semantic/wide/dev200
+.venv/bin/python -m harness.sweep --lens lenses/ku/b_semantic.py --variants    11.07s user 0.67s system 1% cpu 17:22.82 total

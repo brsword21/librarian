@@ -1,0 +1,4 @@
+28 questions x 1 variants on dev200 in 112s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+hybrid_rr                  63.7 0.682 0.844 0.950 0.864 1.000     - 0.770  11947 3885.7 0.689 0
+   -> runs/r1-multi-b/multi/generic/hybrid_rr/dev200

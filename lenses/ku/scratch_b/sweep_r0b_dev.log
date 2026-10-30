@@ -1,0 +1,12 @@
+78 questions x 5 variants on dev in 119s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+pair                       93.0 1.000 0.961 1.000 1.000 1.000     - 0.972   3677 1890.6 0.826 0
+   -> runs/r0b/ku/b_semantic/pair/dev
+pair_prf                   93.0 1.000 0.961 1.000 1.000 1.000     - 0.972   3692 1007.1 0.826 0
+   -> runs/r0b/ku/b_semantic/pair_prf/dev
+pair_decay                 93.0 1.000 0.961 1.000 1.000 1.000     - 0.972   3692    6.3 0.826 0
+   -> runs/r0b/ku/b_semantic/pair_decay/dev
+tight                      90.7 0.958 0.933 0.972 0.944 0.983     - 0.972   2546    6.4 0.826 0
+   -> runs/r0b/ku/b_semantic/tight/dev
+wide                       90.5 1.000 0.982 1.000 1.000 1.000     - 0.972  11783    5.1 0.810 0
+   -> runs/r0b/ku/b_semantic/wide/dev

@@ -38,7 +38,30 @@ passages, included_turns, chars = build_pack(q, hx, ranked_uids, budget=12000, w
 
 from core.dates import extract_dates, days_between       # basic: ISO, "June 27, 2023", "23 April 2023", relative weekdays
 from core.router import route                            # route(question_text) -> (short_type, confidence)
+
+# added after round 1 (backward compatible)
+message_chars(q, passages, hint="") -> int                 # exact length of the Reactor message (question + hint + passages)
+build_pack(..., pinned=[uid, ...], max_chars_per_session=N) # pinned units enter first (no neighbours); per-session cap
+# build_pack walks `ranked` in priority order: a unit that does not fit is skipped, later ones may still enter.
+# window=0 plus explicit neighbour uids in `ranked` is the supported way to hand-pick context.
+HistoryIndex.rerank_texts(query, texts) -> list[float]     # cross-encoder on arbitrary strings (sentences), same cache
+HistoryIndex.dense_texts(query, texts) -> list[float]      # bge cosine on arbitrary strings, cached embeddings
 ```
+
+### Citations (read this)
+The submitted citations are whatever Reactor cites among the passages we send ([E#] -> session id). Whether our code may
+post-filter Reactor's citations with `cite_plan` is NOT confirmed by the organisers. CF1 is measured on `cite_plan` (our
+intent) and is optimistic when the pack carries decoy or context sessions. Every sweep now also prints
+`CF1all` / `Sall`: the same metrics if Reactor cites every passage we send (pessimistic bound, saved in summary.json and
+per_question.jsonl). Prefer packs whose sessions are close to the cite set; extra context sessions must earn their place.
+After round 1, routed dev: CF1 0.879 on cite_plan against 0.687 if every passage is cited (-5.8 S). Most of the loss
+is in multi (0.87 -> 0.44), temporal (0.83 -> 0.65) and ku (0.96 -> 0.64).
+
+### Harness additions after round 1
+- per_question.jsonl rows carry `included_turns`; `harness.failures` marks each gold turn IN / MISS.
+- `harness.audit` saves `route`, `cite_plan` and `debug` per test pack in test_packs.jsonl.
+- `configs/best.json` holds the current winner per route (the routed system is `lenses/pipeline.py`);
+  `configs/abstain.json` holds the abstention policy (no abstention hint to Reactor yet).
 
 ## Lens file contract
 ```python

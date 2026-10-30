@@ -61,14 +61,21 @@ def main(argv=None) -> None:
             chars = message_chars(q, pack.passages, pack.hint)
             f.write(json.dumps({"question_id": q.question_id, "question": q.question, "flags": fl, "chars": chars,
                                 "hint": pack.hint, "computed": pack.computed, "abstain_p": pack.abstain_p,
+                                "route": pack.route, "cite_plan": pack.planned_citations(),
+                                "debug": {k: v for k, v in (pack.debug or {}).items() if k != "ranking"}
+                                if isinstance(pack.debug, dict) else None,
                                 "passages": [{"id": p.id, "date": p.date, "text": p.text} for p in pack.passages]},
-                               ensure_ascii=False) + "\n")
+                               ensure_ascii=False, default=str) + "\n")
             print("=" * 100)
             print(f"{q.question}  (asked {q.date_str})  chars={chars} flags={fl}")
             if pack.hint:
                 print(f"HINT: {pack.hint[:400]}")
             if pack.computed is not None:
                 print(f"COMPUTED: {pack.computed}")
+            if isinstance(pack.debug, dict):
+                dbg = {k: v for k, v in pack.debug.items() if k != "ranking"}
+                if dbg:
+                    print(f"DEBUG: {str(dbg)[:600]}")
             for p in pack.passages[: (99 if a.full else 4)]:
                 print(f"  [{p.id} {p.date}] {p.text[: (3000 if a.full else 350)]!r}")
     print(f"\n{len(qs)} test questions, {n_flag} flagged -> {out}")

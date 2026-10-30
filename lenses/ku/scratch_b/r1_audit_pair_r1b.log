@@ -1,0 +1,136 @@
+====================================================================================================
+What is the name of my ceramics class instructor now?  (asked 2023/09/17 (Sun) 00:00)  chars=2567 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/04/11: "Random note from class: My ceramics class instructor is Miguel Silva."
+- 2023/07/19: "My old instructor Miguel still comments on my ceramic photos online."
+- 2023/08/03: "On another note: The studio hired Ana Ferreira to teach my Wednesday ceramics class after Miguel moved to Porto."
+If the value changed over time, answer with the 
+DEBUG: {'pair': ['s_37476ff1f7d6', 's_e5548745730d'], 'sess_rank': ['s_37476ff1f7d6', 's_e5548745730d', 's_651a8bb6626d', 's_ee1b897ffe2c', 's_6cf9ec54a255', 's_02e229aaa490', 's_43a744519dd2', 's_7f343e9fdd15'], 'mode': 'new', 'qd': 'my ceramics class instructor', 'miss': 0.0, 'absent': []}
+  [s_37476ff1f7d6 2023/04/11 (Tue) 08:34] "user: Good tip. I'll set some rules tonight. Random note from class: My ceramics class instructor is Miguel Silva. He offered to bring me some special glaze samples to try at home."
+  [s_ee1b897ffe2c 2023/04/18 (Tue) 20:39] 'user: Hey, quick question: my ceramics instructor wants us to bring our own underglazes next week, and I’m completely overwhelmed by the color wall at the supply shop.'
+  [s_651a8bb6626d 2023/07/19 (Wed) 10:49] "user: Sombra. She's a tiny black cat with too much confidence. I posted a glaze test bowl from Tuesday's class. My old instructor Miguel still comments on my ceramic photos online. It's motivating."
+  [s_e5548745730d 2023/08/03 (Thu) 13:18] "user: Good point. I forgot to close my studio door yesterday and she walked straight through a tray of wet clay, leaving tiny paw prints across the floor. On another note: The studio hired Ana Ferreira to teach my Wednesday ceramics class after Miguel moved to Porto. I'm relieved the time slot didn't change.\n[...]\nuser: It really is. With two teena"
+====================================================================================================
+What is the name of the accountant I'm using for my freelance taxes now?  (asked 2023/09/17 (Sun) 00:00)  chars=2781 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/04/18: "I finally organized my studio corner and stopped stressing about the admin side — I've been using Marta Nogueira to handle my freelance tax paperwork this year. — so I can focus on glazing without guilt."
+- 2023/07/24: "Also, regarding my accountant, Marta Nogueira went on maternity leave and referred me to her colleague Bruno Alme
+DEBUG: {'pair': ['s_baf4965f1481', 's_f1d12777eb9a'], 'sess_rank': ['s_baf4965f1481', 's_f1d12777eb9a', 's_7f343e9fdd15', 's_fc3da24995a3', 's_c490d696b602', 's_ebf6bd1466ec', 's_e5548745730d', 's_d20d2f946375'], 'mode': 'new', 'qd': "the accountant I'm using for my freelance taxes", 'miss': 0.307, 'absent': []}
+  [s_baf4965f1481 2023/04/18 (Tue) 09:45] "user: Better now that I have more time in the evenings. I finally organized my studio corner and stopped stressing about the admin side — I've been using Marta Nogueira to handle my freelance tax paperwork this year. — so I can focus on glazing without guilt."
+  [s_7f343e9fdd15 2023/05/30 (Tue) 11:23] 'user: I’m trying to get a better handle on my freelance hours. Between client projects, the kids’ school schedules, and ceramics on Thursdays, I keep losing track of what I actually worked on.\n[...]\nuser: That helps. I tried Clockify for a day and already noticed I’m probably undercharging for a packaging project. Is it normal to feel guilty about '
+  [s_fc3da24995a3 2023/06/14 (Wed) 11:39] 'user: Hey, can you help me figure out this week? I’m juggling freelance deadlines in Lisbon, two teens with different schedules, and a new cat that keeps walking across my keyboard.'
+  [s_f1d12777eb9a 2023/07/24 (Mon) 18:51] 'user: That could work. I can shop for everything Saturday morning. Also, regarding my accountant, Marta Nogueira went on maternity leave and referred me to her colleague Bruno Almeida for the rest of the year., so I need to scan all my receipts this weekend too.'
+====================================================================================================
+What is my current job title?  (asked 2023/10/06 (Fri) 00:00)  chars=3494 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/06/27: "This press release will also announce a new employee, Diane Frantz, that was previously a customer of App My Community and was a campground owner"
+If the value changed over time, answer with the MOST RECENT value the user states about their own situation; ignore values about other people, other places or past/hypothetical ones.
+Cit
+DEBUG: {'pair': ['s_2e822fd22f27', 's_1b8c83929a01'], 'sess_rank': ['s_2e822fd22f27', 's_1b8c83929a01', 's_576152f1facb', 's_11f15f3ce7c4', 's_a4bb8a642c93', 's_a198f8855ba1', 's_12114354b88f', 's_71842c4c2581'], 'mode': 'new', 'qd': 'my job title', 'miss': 0.546, 'absent': []}
+  [s_576152f1facb 2023/05/16 (Tue) 14:40] 'user: C)learnt to control their hand muscles through activities\nlike making jewellery with sea shells D)were clumsy, and thus incompetent in accomplishing\ncomplicated tasks E)used power grips even for tasks that required delicacy 52.It is stated in the passage that the hand bones\nof Neanderthals ----. A)were chunkier than those of early modern huma'
+  [s_2e822fd22f27 2023/06/27 (Tue) 18:12] 'user: This press release will also announce a new employee, Diane Frantz, that was previously a customer of App My Community and was a campground owner\n[...]\nuser: The reason for this service being offered is to address app deployment with the lack of time available to campground owners'
+  [s_1b8c83929a01 2023/09/11 (Mon) 21:07] "user: I'm interested in learning more about the role of a Marketing Director. Can you provide some information on the typical responsibilities and skills required for this position?\n[...]\nuser: I'd like to know more about the role of a Marketing Director in terms of the skills and qualities required to be successful in this position. Can you provid"
+  [s_11f15f3ce7c4 2023/09/24 (Sun) 06:21] "user: I don't see why I should have to wait until the end of the lecture to ask a question. If I have a question, it's the lecturer's job to answer it, even if it disrupts their flow. Isn't that why they're there?"
+====================================================================================================
+Who teaches my Saturday morning watercolour class now?  (asked 2023/10/06 (Fri) 00:00)  chars=2494 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/04/22: "My Saturday morning watercolour class is taught by Margaret."
+- 2023/09/02: "Also, a quick note on Saturday: Margaret has retired, so my Saturday morning watercolour class is now taught by Priya Nair."
+If the value changed over time, answer with the MOST RECENT value the user states about their own situation; ignore values about ot
+DEBUG: {'pair': ['s_694e7fbd5fda', 's_c89660cbaad4'], 'sess_rank': ['s_c89660cbaad4', 's_694e7fbd5fda', 's_44661e5c52f3', 's_57476d64ff43', 's_17baf1275f1c', 's_97ad42792cc6', 's_79fc677800e4', 's_b837677ec160'], 'mode': 'new', 'qd': 'teaches my Saturday morning watercolour class', 'miss': 0.272, 'absent': []}
+  [s_694e7fbd5fda 2023/04/22 (Sat) 17:42] "user: Perfect. I'll make a batch Saturday afternoon. My Saturday morning watercolour class is taught by Margaret. So the morning is already taken, but the afternoon is free for cooking."
+  [s_44661e5c52f3 2023/07/19 (Wed) 14:12] "user: Good idea. I need to use them before they turn into marrows. Oh, and My Wednesday evening watercolour class is taught by Elena. I told her I'd bring in a few tomatoes as still-life subjects."
+  [s_57476d64ff43 2023/08/05 (Sat) 14:45] 'user: Plenty, and the hospital break room has been getting a steady supply. Actually, My friend Helen goes to a watercolour class on Tuesday mornings., and she says the teacher is very good at correcting brushwork.'
+  [s_c89660cbaad4 2023/09/02 (Sat) 11:04] 'assistant: You mentioned your sons are coming on Sunday. Also, a quick note on Saturday: Margaret has retired, so your Saturday morning watercolour class is now taught by Priya Nair. I thought I’d mention it so you’re not caught off guard.\nuser: Oh, thanks for the heads-up. Margaret never mentioned it when I saw her last month. I’ll bring my usual '
+====================================================================================================
+What is my current monthly rent?  (asked 2023/09/25 (Mon) 00:00)  chars=2888 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/04/14: "I just renewed the lease on my studio in Kilimani; my rent is 18,000 shillings a month., so I'm trying to keep my other expenses as low as I can for a while."
+- 2023/08/11: "By the way, I moved to a new bedsitter in South B and now pay 22,000 shillings a month., so my rent changed and I need to update my budget categories."
+If the 
+DEBUG: {'pair': ['s_52bb6489d5a8', 's_88902b00305c'], 'sess_rank': ['s_52bb6489d5a8', 's_88902b00305c', 's_8729a1a905d8', 's_a5af953fa447', 's_0690cb1f14d1', 's_9766ef6a3317', 's_cfe19d4da7af', 's_5ee1e6055a5d'], 'mode': 'new', 'qd': 'my monthly rent', 'miss': 0.0, 'absent': []}
+  [s_52bb6489d5a8 2023/04/14 (Fri) 10:36] "user: Okay, that works. I just renewed the lease on my studio in Kilimani; my rent is 18,000 shillings a month., so I'm trying to keep my other expenses as low as I can for a while."
+  [s_a5af953fa447 2023/05/03 (Wed) 22:35] 'user: Sure, something like target = 250000, months = 12, monthly = target / months. Then I tried to add a 10% import or insurance estimate and it gave me 22916.666666666668.\n[...]\nuser: That makes sense. I’m also trying to balance this with my current transport and choir commitments. My sister Amina told me her apartment rent is 18,000 shillings a '
+  [s_88902b00305c 2023/08/11 (Fri) 08:09] "user: Hey, I'm trying to build a simple Python script to track my monthly expenses so I can save for a used car. Can you help me get started?\n[...]\nuser: Yes, please. By the way, I moved to a new bedsitter in South B and now pay 22,000 shillings a month., so my rent changed and I need to update my budget categories."
+  [s_8729a1a905d8 2023/08/20 (Sun) 17:14] "user: Yes, that would help. By the way, housing costs are on my mind because I was comparing areas. My brother Brian pays 22,000 shillings a month for his apartment in Nakuru. That makes me wonder if I should stay put and keep my rent low.\n[...]\nuser: Good point. My current rent is only 9,000, shared. I'll stay. Maybe I can use part of the data-ana"
+====================================================================================================
+What is the name of the store where I currently buy Moroccan spices?  (asked 2023/09/02 (Sat) 00:00)  chars=2818 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/07/18: "My sister Nadia lives out that way, so I've started buying all my Moroccan spices at Marrakech Market in Mississauga—it's closer to Nadia."
+If the value changed over time, answer with the MOST RECENT value the user states about their own situation; ignore values about other people, other places or past/hypothetical ones.
+Cite both 
+DEBUG: {'pair': ['s_dfdd379dd740', 's_5d33d4c0fd17'], 'sess_rank': ['s_5d33d4c0fd17', 's_dfdd379dd740', 's_09650474ef8e', 's_8c34565cb319', 's_0c4a4e0102b6', 's_22c0cde26eb9', 's_d7d50ed51233', 's_8c0c02e4c6f5'], 'mode': 'new', 'qd': 'the store where I buy Moroccan spices', 'miss': 0.226, 'absent': []}
+  [s_8c34565cb319 2023/04/29 (Sat) 10:46] 'user: I like that. I might do the harira Friday, then keep Saturday night simple: grilled chicken, roasted carrots, and a big herb salad. Oh, that reminds me. On 2023-04-29, I made Moroccan mint tea and almond cookies for a community potluck at my local community centre. People kept asking for the recipe for the almond cookies, so I should probably'
+  [s_dfdd379dd740 2023/05/02 (Tue) 14:33] "user: I'm hosting Friday dinner for about twelve relatives and I want to do a proper Moroccan spread: chicken tagine with preserved lemon, couscous, maybe two salads. Can you help me figure out what I can make ahead? I'm also trying to ease back into running after that calf strain.\n[...]\nuser: Perfect. I also need a vegetarian main for my niece. Wo"
+  [s_09650474ef8e 2023/05/23 (Tue) 21:42] 'user: I finally used preserved lemons and a little ras el hanout from the shop on Danforth. My aunt said it reminded her of Fez.\n[...]\nuser: Toronto half in May. I’m trying not to overdo it while work is busy—lots of visa applications right now. On 2023-05-20, Lina saw a Moroccan textile exhibit at the Royal Ontario Museum. She wants to drag me bac'
+  [s_5d33d4c0fd17 2023/07/18 (Tue) 18:46] "user: True. I'll do tagine. I need fresh ras el hanout. My sister Nadia lives out that way, so I've started buying all my Moroccan spices at Marrakech Market in Mississauga—it's closer to Nadia. Their ras el hanout is really fresh."
+====================================================================================================
+How many people are on my UX team now?  (asked 2023/08/22 (Tue) 00:00)  chars=2469 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/03/14: "My UX team has six people right now, and we are all on the project kickoff call."
+- 2023/06/19: "My UX team now has eight people after the two new hires started today."
+If the value changed over time, answer with the MOST RECENT value the user states about their own situation; ignore values about other people, other places or past/
+DEBUG: {'pair': ['s_412dc03b9790', 's_15d8da57c778'], 'sess_rank': ['s_412dc03b9790', 's_15d8da57c778', 's_ec1ac4ff48ba', 's_1eae726624ce', 's_2abca69445b8', 's_d35454b437d5', 's_a13130a421a0', 's_d2df7b2743eb'], 'mode': 'new', 'qd': 'people are on my UX team', 'miss': 0.0, 'absent': []}
+  [s_412dc03b9790 2023/03/14 (Tue) 19:49] "user: Still deciding. Work is chaotic today. My UX team has six people right now, and we are all on the project kickoff call. I haven't even looked at the book club poll yet. I just want something easy and fun for this month."
+  [s_1eae726624ce 2023/04/10 (Mon) 08:07] "user: That reminds me: My friend Clara's UX team has six people, which makes their research critiques very focused. Maybe I should borrow that idea for our book club: one facilitator, two minutes per person, then open discussion."
+  [s_15d8da57c778 2023/06/19 (Mon) 10:58] "user: We're reading The Cat Who Saved Books. It's short, which helps because work has been full on. My UX team now has eight people after the two new hires started today. So I told the group not to expect a perfectly tidy apartment, just tea and snacks.\n[...]\nuser: Honestly, hosting forces me to clear at least one room. And I booked a sailing lesso"
+  [s_ec1ac4ff48ba 2023/07/12 (Wed) 13:33] "user: That's smart. I already found three copies of Persuasion. Unrelated work thing: The UX team in the Munich office has eight people, but we only meet them quarterly. But back to moving—do you think I should hire a van or movers?"
+====================================================================================================
+What is my skateboard's name now?  (asked 2023/12/02 (Sat) 00:00)  chars=2730 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/08/20: "Oh, and side note: I painted my skateboard deck on August 20, 2023."
+- 2023/09/03: "Mostly vocals, a Minilogue, and sometimes my skateboard rolling by as unwanted texture."
+- 2023/11/20: "I actually renamed my skateboard 'Flat White' this week; 'Decaf' just made me think of work every time I looked at it."
+If the value changed over
+DEBUG: {'pair': ['s_feb4ef7c558b', 's_6295be2557d9'], 'sess_rank': ['s_6295be2557d9', 's_774400ddc6de', 's_feb4ef7c558b', 's_b590f9f649c2', 's_7506760ce20b', 's_fdff10023236', 's_1fc65b09cb81', 's_e92b1f740e32'], 'mode': 'new', 'qd': "my skateboard's name", 'miss': 0.0, 'absent': []}
+  [s_774400ddc6de 2023/07/15 (Sat) 12:03] "user: Yeah, it’s been a weird week. I named the new deck I picked up at the skate shop grand opening 'Decaf' yesterday, because I spilled a latte on it before I even skated it. So now it’s officially part coffee, part skateboard, fully cursed."
+  [s_b590f9f649c2 2023/08/20 (Sun) 12:57] 'user: Right now I’m reworking a lo-fi house track and trying to keep the bass from turning to mud on small speakers. Oh, and side note: I painted my skateboard deck on August 20, 2023. It’s held up okay, but the grip tape edge is peeling near the tail.'
+  [s_feb4ef7c558b 2023/09/03 (Sun) 12:53] 'user: Mostly vocals, a Minilogue, and sometimes my skateboard rolling by as unwanted texture. Budget is around $250 CAD.'
+  [s_6295be2557d9 2023/11/20 (Mon) 10:38] "user: Yeah, good call. I ended up cruising around the Plateau for a bit and it actually helped. I actually renamed my skateboard 'Flat White' this week; 'Decaf' just made me think of work every time I looked at it. My ride to the roastery feels less like punching in for a shift now.\n[...]\nuser: Spiritual rebrand for now, but I'm tempted to paint th"
+====================================================================================================
+What time does my long run start these days?  (asked 2023/08/26 (Sat) 00:00)  chars=2741 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/03/10: "Barely. Milo was up at 5:30, Juniper needed a walk before my shift, and I only got in four miles before daycare drop-off."
+- 2023/03/12: "Speaking of chaos, I'm doing my half-marathon long runs on Saturdays at 7:00 a.m. while my partner watches the toddler."
+- 2023/07/08: "The toddler's Sunday playgroup got moved to 9:00 a.m., so I
+DEBUG: {'pair': ['s_6982e7cc04a7', 's_88459a4efc85'], 'sess_rank': ['s_88459a4efc85', 's_6982e7cc04a7', 's_81f9c727f669', 's_6915b821e5a6', 's_878a7af2f5cc', 's_4c479b2c5b1a', 's_2fa18f8e87cc', 's_de9e8ef5a9ef'], 'mode': 'new', 'qd': 'time does my long run start', 'miss': 0.0, 'absent': []}
+  [s_6915b821e5a6 2023/03/10 (Fri) 15:59] 'user: Barely. Milo was up at 5:30, Juniper needed a walk before my shift, and I only got in four miles before daycare drop-off.'
+  [s_6982e7cc04a7 2023/03/12 (Sun) 16:02] "user: That might be the compromise. The bedrooms are in better shape anyway. Speaking of chaos, I'm doing my half-marathon long runs on Saturdays at 7:00 a.m. while my partner watches the toddler. So at least Saturday mornings are blocked out for running, and I’m not trying to keep the dog and toddler out of the room while comparing floor samples."
+  [s_81f9c727f669 2023/04/15 (Sat) 21:00] "user: Please. It’s been one of those weeks—kitchen sink is leaking again, Leo is boycotting naps, and Nova stole a whole sock pile.\n[...]\nuser: That sounds doable. Could you give me a short grocery list? I’m also trying to sort out Saturday morning timing. My running partner's Saturday long run starts at 7:30 a.m., so I can't meet her after mine. M"
+  [s_88459a4efc85 2023/07/08 (Sat) 22:00] "user: Decent, but Sunday is tight. The toddler's Sunday playgroup got moved to 9:00 a.m., so I need to keep my long-run start early. I'm thinking I'll start at 6:00, do eight miles, and still make it with damp hair."
+====================================================================================================
+How many Icelandic horses do my neighbor Bjørn and I have in total right now?  (asked 2023/07/04 (Tue) 00:00)  chars=2443 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/01/20: "Even though I currently have 9 Icelandic horses on my farm., I try to keep Sundays a bit slower, so a stew that simmers by itself is ideal."
+- 2023/06/20: "Bjørn's daughter has 2 Icelandic horses."
+If the value changed over time, answer with the MOST RECENT value the user states about their own situation; ignore values about other 
+DEBUG: {'pair': ['s_be7cd58eb335', 's_880391894d51'], 'sess_rank': ['s_880391894d51', 's_d4a23d434e08', 's_be7cd58eb335', 's_75d5885a4f04', 's_629d74b9620a', 's_5d4fb3f6ff82', 's_80044ec3e63d', 's_8c58b4c32258'], 'mode': 'new', 'qd': 'Icelandic horses do my neighbor Bjørn and I have', 'miss': 0.444, 'absent': []}
+  [s_be7cd58eb335 2023/01/20 (Fri) 21:52] "user: Perfect. I'll start it after evening chores. Even though I currently have 9 Icelandic horses on my farm., I try to keep Sundays a bit slower, so a stew that simmers by itself is ideal."
+  [s_d4a23d434e08 2023/04/14 (Fri) 21:15] "user: That's true. My yearling still snorts at the barn cat, and they've met a hundred times. How would sheep react to a foal, though? I know Bjørn has chickens, but I've never seen sheep near his place.\n[...]\nuser: Good idea, though I don't want to bother him over research. Maybe I'll just watch from the fence."
+  [s_75d5885a4f04 2023/05/02 (Tue) 08:14] "user: That's exactly the tone I want. By the way, I bought 2 more Icelandic horses at the spring auction. so the barn is feeling a bit fuller this week."
+  [s_880391894d51 2023/06/20 (Tue) 11:32] "user: I was at the stable earlier and had a good reminder of how children actually talk around horses. Bjørn's daughter has 2 Icelandic horses. She asked if their new gelding could share a paddock with the older mare.\n[...]\nuser: I like that. It also gets at Icelandic horse social behavior, which people often don't know."
+====================================================================================================
+How many chapters does my children's book have now?  (asked 2023/07/04 (Tue) 00:00)  chars=2966 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/02/14: "I've been distracted lately—I currently have 8 chapters written for my children's book. so my head is full of talking foxes and stubborn ponies."
+- 2023/04/18: "My children's book, however, is still stuck at chapter four."
+- 2023/04/25: "I'm stuck on chapter three of the children's book."
+- 2023/05/20: "By the way, I expanded the o
+DEBUG: {'pair': ['s_bffed6e26e01', 's_04f46bc85c4c'], 'sess_rank': ['s_04f46bc85c4c', 's_bffed6e26e01', 's_43aa0096315e', 's_02306915f27c', 's_a01b8930838c', 's_0ccccd69d613', 's_c743e10ac17a', 's_101108fcf260'], 'mode': 'new', 'qd': "chapters does my children's book have", 'miss': 0.0, 'absent': []}
+  [s_bffed6e26e01 2023/02/14 (Tue) 08:38] "user: Good point. I always forget about insulating the outside. I've been distracted lately—I currently have 8 chapters written for my children's book. so my head is full of talking foxes and stubborn ponies.\n[...]\nuser: A bit. The main pony is basically my mare Skjerva, just with more opinions. I was going to ask, do you know if carrots or apples "
+  [s_43aa0096315e 2023/04/18 (Tue) 21:16] "user: First hard frost hit last night, so I spent the morning covering the carrots and checking the water trough heater. The horses are fluffing up already. My children's book, however, is still stuck at chapter four."
+  [s_02306915f27c 2023/04/25 (Tue) 21:42] "user: I'm stuck on chapter three of the children's book. I need a name for a young Icelandic horse character. Something Norwegian, short, and easy for kids to say. Ideas?\n[...]\nuser: Thanks, I'll tell Bjørn he should call her. 'Dis' is lovely — I might use that. Now I need a simple plot problem for a children's chapter book. The filly is afraid of "
+  [s_04f46bc85c4c 2023/05/20 (Sat) 09:35] "user: I'll try the seed mat. By the way, I expanded the outline, so my children's book now has 12 chapters., which means I'm trying not to let the writing eat into barn time too much."
+====================================================================================================
+How many beehives do I have on my farm right now?  (asked 2023/07/04 (Tue) 00:00)  chars=2904 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/02/10: "The clover is finally blooming, and I have 3 beehives on my farm right now., so the garden has been full of buzzing while I write outside."
+- 2023/06/01: "I split one of my beehives, so now I have 4 beehives on my farm."
+If the value changed over time, answer with the MOST RECENT value the user states about their own situation; ign
+DEBUG: {'pair': ['s_77413de90637', 's_7d8d10cc0a90'], 'sess_rank': ['s_7d8d10cc0a90', 's_77413de90637', 's_43aa0096315e', 's_be7cd58eb335', 's_0a87f3626ed9', 's_d4a23d434e08', 's_b20fbc5bf336', 's_75d5885a4f04'], 'mode': 'new', 'qd': 'beehives I have on my farm', 'miss': 0.0, 'absent': []}
+  [s_be7cd58eb335 2023/01/20 (Fri) 21:52] "user: Perfect. I'll start it after evening chores. Even though I currently have 9 Icelandic horses on my farm., I try to keep Sundays a bit slower, so a stew that simmers by itself is ideal."
+  [s_77413de90637 2023/02/10 (Fri) 08:06] 'user: She does, and her mane is practically white against a dark bay coat. The clover is finally blooming, and I have 3 beehives on my farm right now., so the garden has been full of buzzing while I write outside.\n[...]\nuser: Mostly they help, except when the rams decide to shout at each other. I’ve rewritten one line four times today. Maybe I need'
+  [s_43aa0096315e 2023/04/18 (Tue) 21:16] 'user: There is an old orchard behind the barn. I wanted to make it more alive for real and for the book, so I tried something with pollination. Last autumn I had 3 beehives on my farm. The hives sat under the crooked apple trees, and the horses watched from the fence line.\n[...]\nuser: They were suspicious but sensible. Mostly they stood very still '
+  [s_7d8d10cc0a90 2023/06/01 (Thu) 08:29] 'user: I used that patience trick today with one of the yearlings. By the way, I’ve been so busy outside. I split one of my beehives, so now I have 4 beehives on my farm. I’m wondering if I should scale back before winter.\n[...]\nuser: True. I don’t want the bees to become a chore. The book has a deadline from a small publisher, and I need to protect'
+
+12 test questions, 0 flagged -> /Users/mikolaj/Developer/start-hackathon-2/librarian/runs/audit/ku/b_semantic/pair_r1b

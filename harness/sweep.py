@@ -39,7 +39,7 @@ def load_lens(path: str):
 def _pack_row(pack) -> dict:
     return {"passages": [{"id": p.id, "date": p.date, "text": p.text[:2500]} for p in pack.passages],
             "hint": pack.hint, "computed": pack.computed, "cite_plan": pack.planned_citations(),
-            "route": pack.route, "abstain_p": pack.abstain_p}
+            "route": pack.route, "abstain_p": pack.abstain_p, "included_turns": sorted(pack.included_turns or [])}
 
 
 def work(job: tuple) -> list[dict]:
@@ -160,6 +160,8 @@ def main(argv=None) -> int:
             print(f"{name:24s} {f_(s['S']):>6s} {f_(s['PA']):>5s} {f_(s['ATR']):>5s} {f_(s['SR']):>5s} {f_(s['ALL']):>5s} "
                   f"{f_(s['AC']):>5s} {f_(s['HA']):>5s} {f_(s['CF1']):>5s} {f_(s['chars_mean']):>6s} {f_(s['ms_mean']):>6s} "
                   f"{f_(s['abstain_auc']):>5s} {s['errors']}")
+            if s.get("Sall") is not None:
+                print(f"   if Reactor cites every passage: CF1all={s['CF1all']:.3f} Sall={s['Sall']:.1f}")
             print(f"   -> {out.relative_to(ROOT)}")
     errs = [r for r in rows if r.get("error")]
     if errs:

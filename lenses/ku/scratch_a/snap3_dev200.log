@@ -1,0 +1,4 @@
+26 questions x 1 variants on dev200 in 7s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+pkd                        93.1 1.000 0.955 1.000 1.000 1.000 0.778 0.977   3786  400.5 0.920 0
+   -> runs/r1-ku-a/ku/a_timeline_snap3/pkd/dev200

@@ -1,0 +1,129 @@
+====================================================================================================
+What is the name of my ceramics class instructor now?  (asked 2023/09/17 (Sun) 00:00)  chars=3235 flags=[]
+HINT: This asks for the CURRENT value. It changed over time: the most recent statement (latest session date) about the user's own value wins over older ones.
+Dated mentions found (oldest first):
+- 2023/04/11: "Random note from class: My ceramics class instructor is Miguel Silva."
+- 2023/07/19: "My old instructor Miguel still comments on my ceramic photos online."
+- 2023/08/03: "On another note: The stud
+  [s_37476ff1f7d6 2023/04/11 (Tue) 08:34] "assistant: Tell them to sit quietly nearby and let the cat come to them. They can offer treats or a soft toy. Sudden movements or chasing will make the hiding worse.\nuser: Good tip. I'll set some rules tonight. Random note from class: My ceramics class instructor is Miguel Silva. He offered to bring me some special glaze samples to try at home.\nass"
+  [s_ee1b897ffe2c 2023/04/18 (Tue) 20:39] 'user: Hey, quick question: my ceramics instructor wants us to bring our own underglazes next week, and I’m completely overwhelmed by the color wall at the supply shop.'
+  [s_651a8bb6626d 2023/07/19 (Wed) 10:49] "user: Sombra. She's a tiny black cat with too much confidence. I posted a glaze test bowl from Tuesday's class. My old instructor Miguel still comments on my ceramic photos online. It's motivating."
+  [s_e5548745730d 2023/08/03 (Thu) 13:18] 'assistant: A chart is a great idea. Keep the tasks small and visible—kids tend to do better when the routine is clear and they can check it off. For the cat, also make sure she has a cozy spot outside your room, like a cat bed or a worn t-shirt, so she feels less isolated.\nuser: Good point. I forgot to close my studio door yesterday and she walked '
+====================================================================================================
+What is the name of the accountant I'm using for my freelance taxes now?  (asked 2023/09/17 (Sun) 00:00)  chars=3029 flags=[]
+HINT: This asks for the CURRENT value. It changed over time: the most recent statement (latest session date) about the user's own value wins over older ones.
+Dated mentions found (oldest first):
+- 2023/04/18: "I finally organized my studio corner and stopped stressing about the admin side — I've been using Marta Nogueira to handle my freelance tax paperwork this year."
+- 2023/07/24: "Also, regarding my 
+  [s_baf4965f1481 2023/04/18 (Tue) 09:45] "assistant: Classic cat supervisor. How's the class project going?\nuser: Better now that I have more time in the evenings. I finally organized my studio corner and stopped stressing about the admin side — I've been using Marta Nogueira to handle my freelance tax paperwork this year. — so I can focus on glazing without guilt.\nassistant: That must be "
+  [s_578de11c6a81 2023/04/23 (Sun) 21:47] "user: Will do. On another note, I opened a Clockify account to track hours for a client, but I haven't explored it yet. I should probably watch a tutorial before Monday, because I keep mixing up project timelines."
+  [s_7f343e9fdd15 2023/05/30 (Tue) 11:23] 'user: I’m trying to get a better handle on my freelance hours. Between client projects, the kids’ school schedules, and ceramics on Thursdays, I keep losing track of what I actually worked on.'
+  [s_f1d12777eb9a 2023/07/24 (Mon) 18:51] 'assistant: That’s a full week. How about three batch-cook meals: a big tray of roasted vegetables and sausage, a pot of lentil soup, and a chicken and rice dish? Then you just reheat on busy nights.\nuser: That could work. I can shop for everything Saturday morning. Also, regarding my accountant, Marta Nogueira went on maternity leave and referred m'
+====================================================================================================
+What is my current job title?  (asked 2023/10/06 (Fri) 00:00)  chars=3989 flags=[]
+HINT: This asks for the CURRENT value. It changed over time: the most recent statement (latest session date) about the user's own value wins over older ones.
+Dated mentions found (oldest first):
+- 2023/08/24: "I got another promotion, so now I am Director of Clinical Services."
+- 2023/09/10: "I'm particularly drawn to "The Alice Network" and "The Red Tent"."
+- 2023/09/11: "I'd like to know more about th
+  [s_a198f8855ba1 2023/06/17 (Sat) 18:28] "assistant: The Palos Forest Preserve trails I mentioned earlier will offer a different, but still rewarding, hiking experience. The Midwest has its own unique beauty, with rolling hills, forests, and scenic vistas. Feel free to share more about your Yosemite adventure, and I'd be happy to chat with you about your experiences!\nuser: I actually took "
+  [s_01aca3a03579 2023/08/24 (Thu) 20:11] "user: Good idea. I’ll try that tomorrow. Between the garden and painting, I’m nearly back to normal after the hospital's accreditation visit. I got another promotion, so now I am Director of Clinical Services. My diary has been a bit full this fortnight."
+  [s_1b8c83929a01 2023/09/11 (Mon) 21:07] "user: I'm interested in learning more about the role of a Marketing Director. Can you provide some information on the typical responsibilities and skills required for this position?\n[...]\nassistant: Remember, the specific responsibilities and skills required for a Marketing Director role may vary depending on the organization, industry, and company"
+  [s_11f15f3ce7c4 2023/09/24 (Sun) 06:21] "user: I don't see why I should have to wait until the end of the lecture to ask a question. If I have a question, it's the lecturer's job to answer it, even if it disrupts their flow. Isn't that why they're there?"
+====================================================================================================
+Who teaches my Saturday morning watercolour class now?  (asked 2023/10/06 (Fri) 00:00)  chars=2914 flags=[]
+HINT: This asks for the CURRENT value. It changed over time: the most recent statement (latest session date) about the user's own value wins over older ones.
+Dated mentions found (oldest first):
+- 2023/04/22: "My Saturday morning watercolour class is taught by Margaret."
+- 2023/09/02 (assistant recap): "Also, a quick note on Saturday: Margaret has retired, so your Saturday morning watercolour class is n
+  [s_694e7fbd5fda 2023/04/22 (Sat) 17:42] "assistant: A simple yoghurt and lemon sauce works nicely, or even just a squeeze of lemon and cracked pepper. If he likes chilli, a bit of harissa on the side wouldn't hurt.\nuser: Perfect. I'll make a batch Saturday afternoon. My Saturday morning watercolour class is taught by Margaret. So the morning is already taken, but the afternoon is free for"
+  [s_17baf1275f1c 2023/05/16 (Tue) 14:55] 'user: Plenty of eggs, and some puff pastry in the freezer. I’m trying to avoid another soup. At the moment I only have one regular watercolour class, on Saturday mornings. So I can prep the filling Friday night and bake it after class.'
+  [s_44661e5c52f3 2023/07/19 (Wed) 14:12] "user: Good idea. I need to use them before they turn into marrows. Oh, and My Wednesday evening watercolour class is taught by Elena. I told her I'd bring in a few tomatoes as still-life subjects."
+  [s_c89660cbaad4 2023/09/02 (Sat) 11:04] 'user: Perfect. I’ll do that tonight. Can you remind me what else I’ve got on this weekend? My brain is still in hospital admin mode.\nassistant: You mentioned your sons are coming on Sunday. Also, a quick note on Saturday: Margaret has retired, so your Saturday morning watercolour class is now taught by Priya Nair. I thought I’d mention it so you’re'
+====================================================================================================
+What is my current monthly rent?  (asked 2023/09/25 (Mon) 00:00)  chars=3570 flags=[]
+HINT: This asks for the CURRENT value. It changed over time: the most recent statement (latest session date) about the user's own value wins over older ones.
+Dated mentions found (oldest first):
+- 2023/04/14: "I just renewed the lease on my studio in Kilimani; my rent is 18,000 shillings a month., so I'm trying to keep my other expenses as low as I can for a while."
+- 2023/08/11: "By the way, I moved to
+COMPUTED: 9,000
+  [s_52bb6489d5a8 2023/04/14 (Fri) 10:36] "user: Okay, that works. I just renewed the lease on my studio in Kilimani; my rent is 18,000 shillings a month., so I'm trying to keep my other expenses as low as I can for a while."
+  [s_ec5c45dda265 2023/05/01 (Mon) 23:58] "assistant: Keep in mind that fishing regulations, including gear restrictions and catch limits, can vary depending on the specific section of the Arkansas River you're fishing. Be sure to check the local fishing regulations and obtain any necessary permits before your trip. I hope this information helps you prepare for your fishing trip to the Arka"
+  [s_88902b00305c 2023/08/11 (Fri) 08:09] "assistant: That's a good plan. You could use the pandas library to read a CSV where each row has date, category, and amount. Then group by category to get monthly totals. Want a sample snippet?\nuser: Yes, please. By the way, I moved to a new bedsitter in South B and now pay 22,000 shillings a month., so my rent changed and I need to update my budge"
+  [s_8729a1a905d8 2023/08/20 (Sun) 17:14] 'assistant: Good idea. Even an extra 5,000 to 8,000 monthly would speed things up. Want a simple project idea to practice pandas with a budget dataset?\nuser: Yes, that would help. By the way, housing costs are on my mind because I was comparing areas. My brother Brian pays 22,000 shillings a month for his apartment in Nakuru. That makes me wonder if'
+====================================================================================================
+What is the name of the store where I currently buy Moroccan spices?  (asked 2023/09/02 (Sat) 00:00)  chars=2835 flags=[]
+HINT: This asks for the CURRENT value. It changed over time: the most recent statement (latest session date) about the user's own value wins over older ones.
+Dated mentions found (oldest first):
+- 2023/05/23: "I finally used preserved lemons and a little ras el hanout from the shop on Danforth."
+- 2023/07/18: "My sister Nadia lives out that way, so I've started buying all my Moroccan spices at Marrakech
+  [s_09650474ef8e 2023/05/23 (Tue) 21:42] 'user: Managed 18K along the lake, then spent Sunday prepping a lamb tagine for my parents and cousins. I’m still tired but happy.\nassistant: That sounds delicious. Did you try a new spice mix?\nuser: I finally used preserved lemons and a little ras el hanout from the shop on Danforth. My aunt said it reminded her of Fez.\nassistant: Family approval i'
+  [s_5d33d4c0fd17 2023/07/18 (Tue) 18:46] "assistant: Both are great. Given your schedule, tagine might be easier because it can simmer while you do other things.\nuser: True. I'll do tagine. I need fresh ras el hanout. My sister Nadia lives out that way, so I've started buying all my Moroccan spices at Marrakech Market in Mississauga—it's closer to Nadia. Their ras el hanout is really fresh"
+  [s_cc2d04074f1d 2023/07/23 (Sun) 05:04] "user: That's really helpful, thanks. I also want to ask about some advice on buying a new TV, since I recently got a great deal on a 4K smart TV from Best Buy during the Black Friday sales. Do you have any tips on how to set it up and get the most out of it?"
+  [s_f98e87be2af2 2023/08/08 (Tue) 18:39] 'user: I used to more often. In fact, I had a little picnic there once after a ferry ride. On 2023-08-08, I bought Moroccan almond cookies from a bakery near Toronto Island for a picnic. I should go back and find that bakery again.'
+====================================================================================================
+How many people are on my UX team now?  (asked 2023/08/22 (Tue) 00:00)  chars=3289 flags=[]
+HINT: This asks for the CURRENT value. It changed over time: the most recent statement (latest session date) about the user's own value wins over older ones.
+Dated mentions found (oldest first):
+- 2023/03/14: "My UX team has six people right now, and we are all on the project kickoff call."
+- 2023/05/02: "Plus My UX team uses six different research tools, which is too many to keep track of."
+- 2023/06/1
+COMPUTED: Six
+  [s_412dc03b9790 2023/03/14 (Tue) 19:49] "user: Still deciding. Work is chaotic today. My UX team has six people right now, and we are all on the project kickoff call. I haven't even looked at the book club poll yet. I just want something easy and fun for this month."
+  [s_2abca69445b8 2023/05/02 (Tue) 22:59] "user: Good point. Viewings have been exhausting, and honestly all the boxes are starting to blur together. Plus My UX team uses six different research tools, which is too many to keep track of. But I'm trying not to let work stress bleed into the move."
+  [s_15d8da57c778 2023/06/19 (Mon) 10:58] "assistant: Nice. Which book are you discussing? Maybe you can pack around a small 'book club shelf' so the space still feels intentional.\nuser: We're reading The Cat Who Saved Books. It's short, which helps because work has been full on. My UX team now has eight people after the two new hires started today. So I told the group not to expect a perfe"
+  [s_2d503296eedf 2023/07/20 (Thu) 20:17] "assistant: ‘Piranesi’ is perfect for a distracted mind—short and immersive. And you might not need to stress about the meeting turnout: The July book club reminder noted that 6 people had RSVP'd so far. At least there’s a quorum. How’s the new apartment search going, by the way?\nuser: Six people is solid for summer. I’ll still bribe them with water"
+====================================================================================================
+What is my skateboard's name now?  (asked 2023/12/02 (Sat) 00:00)  chars=3336 flags=[]
+HINT: This asks for the CURRENT value. It changed over time: the most recent statement (latest session date) about the user's own value wins over older ones.
+Dated mentions found (oldest first):
+- 2023/07/15: "I named the new deck I picked up at the skate shop grand opening 'Decaf' yesterday, because I spilled a latte on it before I even skated it."
+- 2023/07/28: "I've been layering synth bass under ska
+  [s_774400ddc6de 2023/07/15 (Sat) 12:03] "assistant: That pavement loop sounds like a good texture piece. Programs love when you use found sound with context.\nuser: Yeah, it’s been a weird week. I named the new deck I picked up at the skate shop grand opening 'Decaf' yesterday, because I spilled a latte on it before I even skated it. So now it’s officially part coffee, part skateboard, ful"
+  [s_7506760ce20b 2023/07/28 (Fri) 20:32] "user: Bit of both. I've been layering synth bass under skateboard wheel sounds I recorded at the park, but EQ-ing that noise is tricky. Also, random thing from work today: My coworker says he calls his skateboard 'Cortado' because it is small and strong. which made me laugh."
+  [s_a40d966bd463 2023/11/19 (Sun) 18:55] 'user: I like that framing. I already notice when the grinder is slightly off, which sounds insane but it’s true. Maybe I’ll write about how skateboarding and café noise taught me to listen to texture more than just melody.'
+  [s_6295be2557d9 2023/11/20 (Mon) 10:38] "assistant: Totally get that. I'd step away from screens for ten minutes, drink some water, and maybe do something physical but low-pressure—like a short walk or a quick skate. When you come back, listen to a reference track at low volume before touching your own mix.\nuser: Yeah, good call. I ended up cruising around the Plateau for a bit and it act"
+====================================================================================================
+What time does my long run start these days?  (asked 2023/08/26 (Sat) 00:00)  chars=3480 flags=[]
+HINT: This asks for the CURRENT value. It changed over time: the most recent statement (latest session date) about the user's own value wins over older ones.
+Dated mentions found (oldest first):
+- 2023/03/12: "Speaking of chaos, I'm doing my half-marathon long runs on Saturdays at 7:00 a.m."
+- 2023/07/08: "Decent, but Sunday is tight. The toddler's Sunday playgroup got moved to 9:00 a.m., so I need to k
+  [s_6982e7cc04a7 2023/03/12 (Sun) 16:02] 'assistant: Yeah, a glossy factory finish on engineered wood will hide scratches better than a fresh site finish on oak, honestly. You could also do the original oak in the bedrooms and engineered in the main living area if the transition is manageable. That way you keep the vintage feel where traffic is lighter.\nuser: That might be the compromise. '
+  [s_de9e8ef5a9ef 2023/06/15 (Thu) 16:19] 'assistant: That sounds exhausting. Let’s prioritize consistency over mileage. What does your ideal running week look like right now?\nuser: I’d love four runs: two easy, one interval, one long. But I’d settle for three if the long run happens.'
+  [s_212c3d3d95af 2023/06/24 (Sat) 19:21] 'user: That’s true—I keep forgetting Sunday is now my long run day. I like the idea of a post-run meal and then a big pot of something. What travels well for lunch at the hospital?'
+  [s_88459a4efc85 2023/07/08 (Sat) 22:00] "assistant: That sounds about right for a greyhound. How's half-marathon training fitting in with all of that?\nuser: Decent, but Sunday is tight. The toddler's Sunday playgroup got moved to 9:00 a.m., so I need to keep my long-run start early. I'm thinking I'll start at 6:00, do eight miles, and still make it with damp hair.\nassistant: That's early "
+====================================================================================================
+How many Icelandic horses do my neighbor Bjørn and I have in total right now?  (asked 2023/07/04 (Tue) 00:00)  chars=3358 flags=[]
+HINT: This asks for the CURRENT value. It changed over time: the most recent statement (latest session date) about the user's own value wins over older ones.
+Dated mentions found (oldest first):
+- 2023/01/20: "Even though I currently have 9 Icelandic horses on my farm., I try to keep Sundays a bit slower, so a stew that simmers by itself is ideal."
+- 2023/02/08: "I can already feel winter settling into 
+  [s_be7cd58eb335 2023/01/20 (Fri) 21:52] "user: Perfect. I'll start it after evening chores. Even though I currently have 9 Icelandic horses on my farm., I try to keep Sundays a bit slower, so a stew that simmers by itself is ideal."
+  [s_5d4fb3f6ff82 2023/02/08 (Wed) 20:13] "user: The temperature dropped hard tonight. I can already feel winter settling into the valley. I've got six Icelandics and two yearlings, and I'm trying to make the hay last until May. How many small bales per horse per day would you start with?\nassistant: For a healthy adult Icelandic in cold weather, I'd start around 8-10 kg of good hay per day,"
+  [s_75d5885a4f04 2023/05/02 (Tue) 08:14] "user: A raven is a good idea. I have plenty of ravens around the farm, so I can borrow their sounds. Maybe the raven speaks in short, cryptic sentences?\nassistant: Yes, and that can add humor. If the raven says things like 'Not lost. Just not home yet,' it feels mysterious but safe. You can also show the fox kit's curiosity more than fear.\nuser: Th"
+  [s_8c58b4c32258 2023/06/09 (Fri) 18:41] "user: The book is stuck on a scene where a foal learns to trust a farrier, actually. Molasses bars sound perfect. Oh, and Bjørn told me he uses a farrier named Per Moe for his Icelandic horses. I keep forgetting to write down his number before I lose the scrap of paper it's on."
+====================================================================================================
+How many chapters does my children's book have now?  (asked 2023/07/04 (Tue) 00:00)  chars=2963 flags=[]
+HINT: This asks for the CURRENT value. It changed over time: the most recent statement (latest session date) about the user's own value wins over older ones.
+Dated mentions found (oldest first):
+- 2023/04/03: "I'm trying to settle on how much extra hay to give my old mare now that it's staying below -10°C at night, and I'm also stuck on a chapter in the children's book."
+- 2023/04/18: "My children's boo
+COMPUTED: 12
+  [s_bffed6e26e01 2023/02/14 (Tue) 08:38] "user: Good point. I always forget about insulating the outside. I've been distracted lately—I currently have 8 chapters written for my children's book. so my head is full of talking foxes and stubborn ponies."
+  [s_9bb49e359afd 2023/04/03 (Mon) 11:33] "user: Could I pick your brain about two things? I'm trying to settle on how much extra hay to give my old mare now that it's staying below -10°C at night, and I'm also stuck on a chapter in the children's book.\nassistant: Of course, Ingrid. Let's start with the mare—what's her current weight like and how much hay does she normally get? For the book"
+  [s_02306915f27c 2023/04/25 (Tue) 21:42] "user: I'm stuck on chapter three of the children's book. I need a name for a young Icelandic horse character. Something Norwegian, short, and easy for kids to say. Ideas?"
+  [s_04f46bc85c4c 2023/05/20 (Sat) 09:35] "assistant: That's spring for you. For the starter, a simple proofing box with a seed mat can keep it at 22°C. For the horses, a shedding blade and maybe a bath when it's mild helps.\nuser: I'll try the seed mat. By the way, I expanded the outline, so my children's book now has 12 chapters., which means I'm trying not to let the writing eat into barn"
+====================================================================================================
+How many beehives do I have on my farm right now?  (asked 2023/07/04 (Tue) 00:00)  chars=3267 flags=[]
+HINT: This asks for the CURRENT value. It changed over time: the most recent statement (latest session date) about the user's own value wins over older ones.
+Dated mentions found (oldest first):
+- 2023/02/10: "The clover is finally blooming, and I have 3 beehives on my farm right now., so the garden has been full of buzzing while I write outside."
+- 2023/04/18: "Last autumn I had 3 beehives on my farm."
+COMPUTED: 4
+  [s_77413de90637 2023/02/10 (Fri) 08:06] 'assistant: Skjóna is a wonderful name. Does she have the typical Icelandic build? I imagine a child narrator would notice her thick mane and compact strength before anything else.\nuser: She does, and her mane is practically white against a dark bay coat. The clover is finally blooming, and I have 3 beehives on my farm right now., so the garden has '
+  [s_101108fcf260 2023/04/12 (Wed) 18:38] "assistant: Soup is perfect for that. You could also grate some into a salad with apples and walnuts. But for cold evenings, a thick soup with crusty bread is hard to beat. Do you bake bread?\nuser: I do, but my sourdough starter has been neglected lately. It's a bit chaotic here because I have two tractors on my farm right now.."
+  [s_43aa0096315e 2023/04/18 (Tue) 21:16] 'user: There is an old orchard behind the barn. I wanted to make it more alive for real and for the book, so I tried something with pollination. Last autumn I had 3 beehives on my farm. The hives sat under the crooked apple trees, and the horses watched from the fence line.'
+  [s_7d8d10cc0a90 2023/06/01 (Thu) 08:29] 'assistant: Yes, and you could show the child waiting quietly, maybe picking grass, until the foal decides to follow. That mirrors how horses read calm body language.\nuser: I used that patience trick today with one of the yearlings. By the way, I’ve been so busy outside. I split one of my beehives, so now I have 4 beehives on my farm. I’m wondering '
+
+12 test questions, 0 flagged -> /Users/mikolaj/Developer/start-hackathon-2/librarian/runs/audit/ku/a_timeline/pkd_b2

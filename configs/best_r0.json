@@ -1,0 +1,10 @@
+{
+  "routes": {
+    "ssu": {"lens": "lenses/generic.py", "variant": "hybrid_rr"},
+    "ssa": {"lens": "lenses/generic.py", "variant": "hybrid_rr"},
+    "multi": {"lens": "lenses/generic.py", "variant": "hybrid_rr"},
+    "ku": {"lens": "lenses/generic.py", "variant": "hybrid_rr"},
+    "temporal": {"lens": "lenses/generic.py", "variant": "hybrid_rr"}
+  },
+  "fallback": {"lens": "lenses/generic.py", "variant": "hybrid_rr"}
+}

@@ -1,0 +1,2 @@
+/Users/mikolaj/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/multiprocessing/resource_tracker.py:475: UserWarning: resource_tracker: There appear to be 7 leaked semaphore objects to clean up at shutdown: {'/mp-j1bjmr3y', '/mp-djc0am61', '/mp-52oaxhkz', '/mp-qwmsjp8_', '/mp-9q11r83y', '/mp-u5sxehb4', '/mp-ib_bjt_b'}
+  warnings.warn(

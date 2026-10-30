@@ -1,0 +1,21 @@
+78 questions x 9 variants on dev in 123s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+pair                       93.0 1.000 0.961 1.000 1.000 1.000     - 0.972   3662   56.5 0.875 0
+   -> runs/r1-ku-b/ku/b_semantic/pair/dev
+pair_prf                   93.2 1.000 0.961 1.000 1.000 1.000     - 0.979   3678    6.3 0.875 0
+   -> runs/r1-ku-b/ku/b_semantic/pair_prf/dev
+pair_decay                 93.2 1.000 0.961 1.000 1.000 1.000     - 0.979   3678    6.2 0.875 0
+   -> runs/r1-ku-b/ku/b_semantic/pair_decay/dev
+tight                      91.8 0.972 0.940 0.979 0.958 0.983     - 0.979   2524    6.1 0.875 0
+   -> runs/r1-ku-b/ku/b_semantic/tight/dev
+wide                       90.5 1.000 0.982 1.000 1.000 1.000     - 0.972  11792    4.7 0.873 0
+   -> runs/r1-ku-b/ku/b_semantic/wide/dev
+pair_asst                  93.2 1.000 0.961 1.000 1.000 1.000     - 0.979   3696  421.1 0.875 0
+   -> runs/r1-ku-b/ku/b_semantic/pair_asst/dev
+pair_stem                  93.2 1.000 0.965 1.000 1.000 1.000     - 0.979   3665 2590.2 0.887 0
+   -> runs/r1-ku-b/ku/b_semantic/pair_stem/dev
+pair_before                93.2 1.000 0.961 1.000 1.000 1.000     - 0.979   3678    6.8 0.875 0
+   -> runs/r1-ku-b/ku/b_semantic/pair_before/dev
+pair_r1                    93.2 1.000 0.965 1.000 1.000 1.000     - 0.979   3684    7.5 0.887 0
+   -> runs/r1-ku-b/ku/b_semantic/pair_r1/dev
+.venv/bin/python -m harness.sweep --lens lenses/ku/b_semantic.py --variants    11.74s user 0.42s system 9% cpu 2:03.25 total

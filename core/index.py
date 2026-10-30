@@ -120,3 +120,17 @@ class HistoryIndex:
         uids = list(dict.fromkeys(uids))
         s = models.rerank(query, [self.units[i].index_text for i in uids])
         return sorted(zip(uids, map(float, s)), key=lambda x: -x[1])
+
+    @staticmethod
+    def rerank_texts(query: str, texts: list[str]) -> list[float]:
+        """Cross-encoder logits for arbitrary strings (sentences, trimmed snippets), in input order. Same sqlite cache as
+        rerank() (keyed by model, query and text), so repeated sentence-level calls are free."""
+        return [float(x) for x in models.rerank(query, list(texts))] if texts else []
+
+    @staticmethod
+    def dense_texts(query: str, texts: list[str]) -> list[float]:
+        """bge-small cosine between the query and arbitrary strings, in input order (cached embeddings)."""
+        if not texts:
+            return []
+        qv = models.embed([query], query=True)[0]
+        return [float(x) for x in models.embed(list(texts)) @ qv]

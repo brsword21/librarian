@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import re
 
+import core.paths  # noqa: F401  (puts the upstream kit on sys.path)
 from score import answer_matched, evidence_f1, normalize  # upstream kit
 
 from core.gold_turns import gold_turns
@@ -47,10 +48,12 @@ def question_metrics(pack: EvidencePack, g: dict, hx, ms: float, chars: int) -> 
     ha = None
     if pack.computed is not None:
         gn, pn = first_number(g["answer"]), first_number(str(pack.computed))
+        text_hit = answer_matched(str(pack.computed), g) or (
+            len(normalize(str(pack.computed))) > 2 and normalize(str(pack.computed)) in normalize(g["answer"]))
         if gn is not None and pn is not None:
-            ha = float(pn == gn or (t == "temporal" and pn == gn + 1))
+            ha = float(text_hit or pn == gn or (t == "temporal" and pn == gn + 1))
         else:
-            ha = float(answer_matched(str(pack.computed), g))
+            ha = float(text_hit)
     cf1 = evidence_f1(pack.planned_citations(), list(G))
     newest = max(G, key=lambda s: hx.sess_by_id[s]["sess_idx"] if s in hx.sess_by_id else -1) if G else None
     if t in ("ssu", "ssa"):
@@ -62,8 +65,11 @@ def question_metrics(pack: EvidencePack, g: dict, hx, ms: float, chars: int) -> 
     else:  # temporal
         pa = allg == 1.0 and ((ha == 1.0) if ha is not None else atr == 1.0)
     pa = float(pa)
+    # pessimistic citation bound: Reactor cites every passage we send (post-filtering by cite_plan is not confirmed)
+    cf1_all = evidence_f1(pack.session_ids(), list(G))
     out.update(SR=sr, ALL=allg, ATR=atr, AC=ac, HA=ha, CF1=cf1, PA=pa,
-               S=100 * (0.65 * pa + 0.30 * cf1 - 0.05 * chars / 16000))
+               S=100 * (0.65 * pa + 0.30 * cf1 - 0.05 * chars / 16000),
+               CF1all=cf1_all, Sall=100 * (0.65 * pa + 0.30 * cf1_all - 0.05 * chars / 16000))
     ranking = pack.debug.get("ranking") if isinstance(pack.debug, dict) else None
     if ranking:
         gold_uids = {i for tid in A for i in hx.turn_units(tid)}
@@ -89,7 +95,7 @@ def summarize(rows: list[dict]) -> dict:
     return {
         "n": len(rows), "n_answerable": len(ans), "errors": sum(1 for r in rows if r.get("error")),
         "S": mean("S"), "PA": mean("PA"), "ATR": mean("ATR"), "SR": mean("SR"), "ALL": mean("ALL"), "AC": mean("AC"),
-        "HA": mean("HA"), "CF1": mean("CF1"),
+        "HA": mean("HA"), "CF1": mean("CF1"), "CF1all": mean("CF1all"), "Sall": mean("Sall"),
         "chars_mean": round(sum(chars) / len(chars)) if chars else None,
         "chars_p90": chars[int(0.9 * (len(chars) - 1))] if chars else None,
         "ms_mean": round(sum(r.get("ms", 0) for r in rows) / max(1, len(rows)), 1),

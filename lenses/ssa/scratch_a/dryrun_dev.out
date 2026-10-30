@@ -1,0 +1,38 @@
+bm25 raw               n=112 turn@1=0.670 turn@3=0.857 sess@1=1.000
+bm25 clean             n=112 turn@1=0.652 turn@3=0.848 sess@1=1.000
+struct only            n=112 turn@1=0.643 turn@3=0.848 sess@1=0.955
+bm25clean+struct w=1.0 n=112 turn@1=0.679 turn@3=0.839 sess@1=0.973
+bm25clean+struct w=0.3 n=112 turn@1=0.679 turn@3=0.848 sess@1=0.991
+bm25clean+struct w=0.6 n=112 turn@1=0.688 turn@3=0.848 sess@1=0.982
+bm25clean+struct w=1.5 n=112 turn@1=0.670 turn@3=0.875 sess@1=0.964
+
+fails (fused):
+   I'm checking our previous chat about the shift rotation sheet for GM social media agents. 
+   I'm planning to visit Bandung again and I was wondering if you could remind me of the name
+   Back in Bandung soon. Which restaurant in Cihampelas Walk does the great Nasi Goreng?
+   Which romantic Italian restaurant in Rome was it for dinner?
+   I think we discussed work from home jobs for seniors earlier. Can you remind me what was t
+   What was number 7 on the list of work-from-home jobs for seniors?
+   In our previous chat, you suggested 'sexual compulsions' and a few other options for alter
+   Besides 'sexual compulsions', what were the other four alternative terms?
+   Which song on the Fifth Album best shows the band's growth as artists?
+   I wanted to follow up on our previous conversation about front-end and back-end developmen
+   Which back-end languages should I learn for back-end development?
+   I was looking back at our previous conversation about Native American powwows and I was wo
+   Which traditional game is often performed by skilled dancers at powwows?
+   I'm planning to go back to the Natural Park of Moncayo mountain in Aragón and I was wonder
+   I'm going back to our previous conversation about the grant aim page on molecular subtypes
+   What were the three objectives in the grant aim page on molecular subtypes of endometrial 
+   What was the 27th of the 100 prompt parameters?
+   I'm looking back at our previous chess game and I was wondering, what was the move you mad
+   In the chess game, what move came after 27. Kg2 Bd5+?
+   I was going through our previous conversation about atmospheric correction methods, and I 
+   I was going through our previous conversation about making a classic French omelette, and 
+   How many eggs go into a classic French omelette again?
+   I wanted to follow up on our previous conversation about the fusion breakthrough at Lawren
+   Who was the President's Chief Advisor for Science and Technology in the article on the Law
+   I was going through our previous chat and I was wondering, what was Andy wearing in the sc
+dev rec        n=112 S=86.020 PA=0.893 ATR=0.982 AC=0.643 CF1=0.991 chars=5594
+dev rec_quote  n=112 S=86.018 PA=0.893 ATR=0.982 AC=0.643 CF1=0.991 chars=5600
+dev rec_tight  n=112 S=81.958 PA=0.821 ATR=0.911 AC=0.634 CF1=0.991 chars=3734
+dev topic      n=112 S=86.218 PA=0.893 ATR=0.982 AC=0.643 CF1=1.000 chars=5818

@@ -1,0 +1,4 @@
+78 questions x 1 variants on dev in 7s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+pkl_rerank                 91.0 0.972 0.940 0.993 0.986 0.966 0.800 0.965   3788  129.1 0.906 0
+   -> runs/r1-ku-a/ku/a_timeline_snap2/pkl_rerank/dev

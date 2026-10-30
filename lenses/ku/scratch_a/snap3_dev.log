@@ -1,0 +1,4 @@
+78 questions x 1 variants on dev in 6s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+pkd                        92.1 0.986 0.954 1.000 1.000 0.983 0.731 0.972   3787  122.1 0.904 0
+   -> runs/r1-ku-a/ku/a_timeline_snap3/pkd/dev

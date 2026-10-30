@@ -1,0 +1,51 @@
+{
+ "policy": "no_abstain_hint_yet",
+ "signal": "pack.abstain_p of the routed lens (each lens's own evidence-coverage signal)",
+ "threshold": 0.9,
+ "hint_to_reactor": false,
+ "hint_text_if_enabled": "If none of the passages states this about me, say that our conversations do not contain it.",
+ "measured": {
+  "routed_dev_auc": 0.719,
+  "routed_dev200_auc": 0.808,
+  "dev_plus_dev200_precision_at": {
+   "0.5": 0.18,
+   "0.7": 0.18,
+   "0.8": 0.23,
+   "0.9": 0.18
+  },
+  "dev_plus_dev200_recall_at": {
+   "0.5": 0.38,
+   "0.7": 0.31,
+   "0.8": 0.29,
+   "0.9": 0.16
+  },
+  "per_lens_auc_dev_dev200": {
+   "ssu b_sem best_rec": [
+    0.9,
+    0.95
+   ],
+   "ku b_semantic pair_r1b": [
+    0.89,
+    0.89
+   ],
+   "ku a_timeline pkd_b2": [
+    0.9,
+    0.94
+   ],
+   "temporal merged_r1": [
+    0.77,
+    0.97
+   ],
+   "multi b_sweep deep8_10k": [
+    0.64,
+    0.83
+   ],
+   "ssa": "no unanswerable questions in dev",
+   "ssu a_struct nb3t0 (routed)": [
+    0.91,
+    0.91
+   ]
+  }
+ },
+ "notes": "Do not tell Reactor to abstain from abstain_p yet. Over dev+dev200 (45 unanswerable vs 606 answerable) no threshold gets above about 0.25 precision: at 0.8 the final routed system has 13 true abstentions against 43 false ones. Lens scales also differ, so on test 6 of 45 ssu packs score 0.8 or more on questions that are probably answerable. One example is 'brand of the grill I last mentioned buying', where Big Green Egg is in the pack. Policy for now: send passages only and let Reactor decide from what they contain. abstain_p is used only for packing choices inside lenses. Re-enable a soft hint (hint_text_if_enabled, never a forced abstention) for a route once its own abstain_p reaches precision >= 0.7 at recall >= 0.4 on dev+dev200 together. The candidates are evidence-based signals: missing event or phrase-bigram coverage for ku and temporal, and the missing-facet check for multi. Lens agents should calibrate abstain_p as a probability on dev+dev200 pooled, since each split alone has too few positives."
+}

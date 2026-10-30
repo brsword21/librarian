@@ -1,0 +1,10 @@
+23 questions x 4 variants on dev200 in 123s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+owner                      87.3 0.955 0.955 0.955 0.955 0.950 1.000 0.909   6553 9269.7 0.909 0
+   -> runs/r1-ssu-a/ssu/a_owner/owner/dev200
+notes                      84.3 0.909 0.909 0.955 0.955 0.950 1.000 0.909   6587  253.9 0.909 0
+   -> runs/r1-ssu-a/ssu/a_owner/notes/dev200
+owner1                     82.2 0.864 0.864 0.909 0.909 0.900 1.000 0.909   3756  251.5 0.909 0
+   -> runs/r1-ssu-a/ssu/a_owner/owner1/dev200
+plain                      85.9 0.955 0.955 0.955 0.955 1.000     - 0.864   6431  211.0 0.955 0
+   -> runs/r1-ssu-a/ssu/a_owner/plain/dev200

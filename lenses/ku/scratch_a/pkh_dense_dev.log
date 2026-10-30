@@ -1,0 +1,6 @@
+78 questions x 2 variants on dev in 545s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+pkh_hybrid                 90.8 0.972 0.933 0.993 0.986 0.966 0.708 0.958   3790 6442.6 0.859 0
+   -> runs/r1-ku-a/ku/a_timeline_snapshot_pkh/pkh_hybrid/dev
+pkh_rerank                 91.0 0.972 0.940 0.993 0.986 0.966 0.792 0.965   3794 7312.3 0.863 0
+   -> runs/r1-ku-a/ku/a_timeline_snapshot_pkh/pkh_rerank/dev

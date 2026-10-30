@@ -1,0 +1,150 @@
+26 ku dev; abstain 4
+===== q_12c38e74c86f 2023/04/12 (Wed) 21:03 n= 200 
+Q: Did I finish reading 'The Nightingale' by Kristin Hannah?
+A: Yes | aliases []
+EV: [('s_39ff448ef3c4', 14), ('s_4b5a43ef6180', 151)]
+  GT [14] 2023/01/21 (Sat) 06:05 turn2 user: 'I\'m glad I picked up "The Song of Achilles" based on the staff recommendation; now I\'m even more excited to dive into these new titles. By the way, I\'ve been meaning to get back to "The Nightingale" by Kristin Hannah, which I put down temporarily because it was getting too emotional - do you think I\'ll be able to finish it in time for our next book club discussion if I dedicate my daily commute to it?'
+  GT [151] 2023/03/30 (Thu) 18:58 turn0 user: 'I\'m looking for some book recommendations. I\'ve been into historical fiction lately, and I just finished reading "The Seven Husbands of Evelyn Hugo". I also recently finished "The Nightingale" by Kristin Hannah, which was amazing, by the way. Do you have any suggestions for something similar?'
+===== q_06b3cfdaf136 2023/08/22 (Tue) 22:29 n= 200 
+Q: What was my previous personal best time for the charity 5K run?
+A: 27 minutes and 45 seconds | aliases []
+EV: [('s_47be49a14584', 22), ('s_fe9f7e41488e', 136)]
+  GT [22] 2023/04/11 (Tue) 02:23 turn2 user: "I'm available to train on weekdays from 7-9 am and weekends from 8 am-12 pm. For frequency and duration, I'd like to do yoga 2 times a week for 45 minutes, cycling 1 time a week for 2 hours, soccer 1 time a week for 1.5 hours, and triathlon training 3 times a week with varying durations. I'd like to prioritize triathlon training on weekends. I want to take 1 rest day per week. As for specific goals, I'm training for a sprint triathlon on June 24th and I've recently completed a charity 5K run with a personal best time of 27 minutes and 45 seconds. My current fitness level is intermediate for yoga and cycling, beginner for swimming, and advanced for running."
+  GT [136] 2023/07/30 (Sun) 05:49 turn8 user: "That looks like a solid plan! I'm excited to get started. One question: how does my previous charity 5K run performance factor into this plan? You know, the one where I finished with a personal best time of 26 minutes and 30 seconds? Should I adjust my expectations for the 10K based on that performance?"
+===== q_60831ded5934 2023/07/29 (Sat) 21:12 n= 200 
+Q: How many issues of National Geographic have I finished reading?
+A: Five | aliases []
+EV: [('s_40f39bd5e058', 143), ('s_bed720ae2419', 182)]
+  GT [143] 2023/04/20 (Thu) 18:38 turn2 user: "I usually read news, science, and entertainment magazines. For newspapers, I've been reading The New York Times and The Daily News regularly. I've been enjoying The New Yorker for their fiction and National Geographic for their in-depth articles on science and nature - I just finished my third issue, and I'm currently on my fourth."
+  GT [143] 2023/04/20 (Thu) 18:38 turn10 user: "Can you help me fill in the National Geographic section of the spreadsheet? I remember finishing three issues and I'm currently on my fourth."
+  GT [182] 2023/07/15 (Sat) 11:36 turn6 user: "I've been reading about the Amazon rainforest and its indigenous communities in National Geographic, and I just finished my fifth issue. I'm really interested in learning more about their cultures and traditions. Can you recommend some documentaries or films that focus on the daily lives of indigenous communities in the Amazon?"
+===== q_caf8db8008c5 2023/06/09 (Fri) 21:33 n= 200 
+Q: How many times have I worn my new black Converse Chuck Taylor All Star sneakers?
+A: six | aliases []
+EV: [('s_1cdf2a750481', 27), ('s_26dda3828e03', 188)]
+  GT [27] 2023/05/20 (Sat) 18:07 turn10 user: "I'm glad I could help with the cleaning tips. I think I'll also sort my shoes by type and color, it'll make it easier to find what I need. And, I'm happy to report that I've worn my new black Converse Chuck Taylor All Star sneakers four times already, including to my friend's birthday party last Saturday. They're so comfortable and I love how they go with my jeans and dresses."
+  GT [188] 2023/05/26 (Fri) 16:32 turn0 user: "I need help finding a good cobbler to fix my brown leather boots. Do you have any recommendations? Also, I was thinking of getting a shoe cleaning kit to make cleaning my shoes easier, do you have any suggestions? By the way, I just wore my new black Converse to run some errands yesterday, so that's six times now that I've worn them."
+===== q_0fc530dd5882 2023/06/02 (Fri) 20:36 n= 200 
+Q: What time do I wake up on Saturday mornings?
+A: 7:30 am | aliases []
+EV: [('s_b73495a7379c', 47), ('s_91cc74d42cd4', 174)]
+  GT [47] 2023/05/28 (Sun) 12:27 turn2 user: "I like the yoga or stretching idea. I've been waking up around 8:30 am on Saturdays, which gives me enough time to fit in a 30-minute jog before showering and getting ready for the day. Maybe I can try incorporating some yoga or stretching on Sundays to loosen up after a week of sitting at a desk. Do you think it's a good idea to prioritize yoga or stretching over other exercises, considering my goal is to establish a consistent morning routine?"
+  GT [174] 2023/05/30 (Tue) 21:59 turn2 user: "I'll check the forecast later, thanks. Do you have any jogging route suggestions around my neighborhood? Also, what time do you think I should aim to start my jog, considering I like to wake up at 7:30 am on Saturdays and fit in a cup of coffee beforehand?"
+===== q_3dc608395f82 2023/06/23 (Fri) 17:28 n= 200 
+Q: What new kitchen gadget did I invest in before getting the Air Fryer?
+A: Instant Pot | aliases []
+EV: [('s_b94722a3ed73', 8), ('s_7ebd927e7fb1', 32)]
+  GT [8] 2023/05/20 (Sat) 09:06 turn2 user: "I'm actually thinking of using my new Instant Pot to make some of these soups and stews. Do you have any recipes that are specifically designed for pressure cooking?"
+  GT [32] 2023/05/25 (Thu) 04:57 turn2 user: "I'm actually thinking of using the Air Fryer I got yesterday to make some crispy sweet potato fries to go with the meals. Do you have any tips on how to get the best results with it?"
+===== q_09a4d7c6d4f9 2023/06/04 (Sun) 08:16 n= 200 
+Q: How many free night's stays can I redeem at any Hilton property with my accumulated points?
+A: Two | aliases []
+EV: [('s_b69be8e14562', 171), ('s_fa242ca05b77', 146)]
+  GT [171] 2023/05/26 (Fri) 10:42 turn4 user: "I've accumulated enough points for a single free night's stay at any Hilton property. Since Hilton Lake Las Vegas Resort is a Category 5 hotel, I'm good to redeem my points for a weekend getaway."
+  GT [146] 2023/05/26 (Fri) 01:35 turn0 user: "I'm planning a trip to Europe in November and considering hotels in Paris with an Eiffel Tower view. Can you help me find some options within my budget? By the way, I've accumulated enough points for two free night's stays at any Hilton property, so I might use that for a separate trip to Las Vegas."
+===== q_58048035c85c 2023/06/12 (Mon) 22:49 n= 200 
+Q: How many of Emma's recipes have I tried out?
+A: 3 | aliases []
+EV: [('s_5326ef0ba3a1', 33), ('s_ec7fffa554d9', 177)]
+  GT [33] 2023/05/25 (Thu) 18:21 turn0 user: "I'm thinking of trying out some new recipes this weekend. Can you give me some suggestions for vegan dessert recipes? Also, by the way, I've been loving Emma's recipes on her channel, I've already tried out two of them."
+  GT [177] 2023/05/29 (Mon) 22:42 turn2 user: "I'm actually thinking of visiting Europe, maybe Spain or Italy. Do you have any specific tips for those countries? Also, I've been trying out some new recipes lately, and I was wondering if you have any recommendations for vegan restaurants in those areas? By the way, I've tried out 3 of Emma's recipes so far, and they're all amazing!"
+===== q_e88175bc40ba 2023/11/30 (Thu) 22:59 n= 200 
+Q: How long have I had my cat, Luna?
+A: 9 months | aliases []
+EV: [('s_6d5d1ac8561c', 2), ('s_eceaf844ef9a', 175)]
+  GT [2] 2023/08/11 (Fri) 03:53 turn10 user: "I've had Luna for about 6 months now, and I've been meaning to get her microchipped for a while. I've heard horror stories about pets getting lost, and I don't want to take any chances. I've already scheduled an appointment for next Friday to get it done."
+  GT [175] 2023/11/30 (Thu) 02:32 turn6 user: "I've had my cat, Luna, for about 9 months now, and I've been trying to keep her active and engaged. I've set up her cat tree, and she loves climbing up and down it. I've also been rotating her toys every week to keep things fresh for her. Do you think the interactive toys you recommended would be a good addition to her playtime routine?"
+===== q_223cc2b01b65 2023/09/30 (Sat) 23:59 n= 200 
+Q: How long have I been sticking to my daily tidying routine?
+A: 4 weeks | aliases []
+EV: [('s_771ceae0c128', 77), ('s_8bfd9c38884a', 154)]
+  GT [77] 2023/06/11 (Sun) 22:08 turn0 user: "I need help organizing my garage this weekend. Can you give me some tips on how to sort through all the boxes and storage bins? Oh, and by the way, I've been feeling really proud of myself for sticking to my daily tidying routine - it's already been 3 weeks!"
+  GT [154] 2023/09/30 (Sat) 14:22 turn0 user: "I'm planning to clean out the garage this weekend, but I need some advice on how to organize all the storage bins and boxes. Do you have any tips? By the way, I've been sticking to my daily tidying routine for 4 weeks now, and it's amazing how much of a difference it's made in my apartment."
+===== q_4fcfd775ffd7 2023/05/23 (Tue) 23:58 n= 200 abst
+Q: How many autographed football have I added to my collection in the first three months of collection?
+A: The information provided is not enough. You mentioned collecting autographed baseball but not football. | aliases []
+EV: []
+===== q_332eb7451ef1 2023/06/28 (Wed) 15:17 n= 200 abst
+Q: How many Italian restaurants have I tried in my city?
+A: The information provided is not enough. You mentioned trying Korean restaurants but not Italian restaurants. | aliases []
+EV: []
+===== q_78568797d4ee 2023/10/31 (Tue) 23:51 n= 200 
+Q: How many sessions of the bereavement support group did I attend?
+A: five | aliases []
+EV: [('s_03e34545a1ed', 100), ('s_be92d9aff3c0', 176)]
+  GT [100] 2023/05/11 (Thu) 23:20 turn4 user: "I did attend three sessions of the bereavement support group, and it really helped me process my emotions. I was wondering if you can provide more information on how to create a memorial or ritual to honor my loved ones. I'm not sure where to start or what kind of ritual would be meaningful to me."
+  GT [176] 2023/10/30 (Mon) 19:09 turn6 user: 'I think I\'ll start with "Wild: From Lost to Found on the Pacific Crest Trail" by Cheryl Strayed. I\'ve heard great things about it and I\'ve always been interested in memoirs. I\'m also curious about the self-help books you mentioned, especially "Daring Greatly" by Brené Brown. I\'ve heard her TED talks and found them really inspiring. I\'ll probably check out her book as well. By the way, I was thinking about the bereavement support group I attended last year. I remember attending five sessions and finding it really helpful in processing my emotions.'
+===== q_f17b5555d4b5 2023/08/01 (Tue) 23:59 n= 200 
+Q: How many stars do I need to reach the gold level on my Starbucks Rewards app?
+A: 120 | aliases []
+EV: [('s_730a957f1aa5', 15), ('s_d0f8021cabe1', 112)]
+  GT [15] 2023/07/11 (Tue) 22:31 turn10 user: 'Wait, I apologize for the mistake earlier! To correct myself, I actually need **125 stars** to reach the Gold level on the Starbucks Rewards app, not 400.'
+  GT [112] 2023/07/30 (Sun) 13:35 turn6 user: "Actually, I need 120 stars to reach the gold level, not 300. Anyway, thanks for the tips on earning stars. I'll try to make the most out of my Starbucks visits. By the way, do you know what's the best way to organize my loyalty cards and rewards points? I've been using a spreadsheet, but I'm open to other suggestions."
+===== q_2732c282f971 2023/06/12 (Mon) 23:53 n= 200 
+Q: How many videos of Corey Schafer's Python programming series have I completed so far?
+A: 30 | aliases []
+EV: [('s_3d225caa8438', 9), ('s_d0fefaecd46d', 31)]
+  GT [9] 2023/05/25 (Thu) 18:01 turn0 user: "I'm trying to work on a project that involves text analysis and sentiment analysis. Can you recommend some popular NLP libraries in Python that I can use for this project? By the way, I've been brushing up on my Python skills by watching Corey Schafer's Python programming series on YouTube, and I've completed 20 videos so far."
+  GT [31] 2023/05/27 (Sat) 17:33 turn2 user: "I've completed 30 videos so far for Corey's series and I'll start with the DataCamp course, it seems like a good starting point. Can you help me with setting up a project environment for NLP tasks, including installing necessary libraries and tools?"
+===== q_65592a9b9a18 2023/07/24 (Mon) 23:33 n= 200 
+Q: How many women are on the team led by my former manager Rachel?
+A: 6 | aliases []
+EV: [('s_237909396f15', 122), ('s_9f79498f9824', 189)]
+  GT [122] 2023/01/18 (Wed) 15:03 turn2 user: "That's really helpful! Speaking of diverse teams, I just caught up with my former manager, Rachel, who's now leading a team of 10 people, and I was impressed to learn that half of them are women. Do you think that's a good representation of women in leadership positions in my industry, considering what I learned at the seminar about women holding only 25% of executive positions?"
+  GT [189] 2023/07/20 (Thu) 19:51 turn0 user: "I'm looking for some information on companies that are doing a good job of promoting gender diversity in the workplace. Do you have any examples or resources you can share? By the way, it's interesting to think about this in the context of my own experiences - for instance, my former manager Rachel's team is a great example of a diverse team, with 6 women out of 10 people."
+===== q_d6ef8ceece42 2023/06/28 (Wed) 21:00 n= 200 
+Q: What day of the week did I meet with my previous language exchange tutor Juan?
+A: Wednesday | aliases []
+EV: [('s_bd7ada4ed96f', 42), ('s_e78dc713f532', 106)]
+  GT [42] 2023/05/28 (Sun) 07:41 turn8 user: "I had a language exchange class at a local language school, where I'm paired with a Colombian tutor named Juan. We meet every Wednesday evening, and he helps me with my Spanish pronunciation and grammar while I assist him with his English vocabulary. Now I remember! My language exchange class with Juan is on Wednesday evening."
+  GT [106] 2023/05/30 (Tue) 20:52 turn2 user: "I'm actually meeting Maria on Thursday,. Could you help me with some common phrases for shopping in Colombia?"
+===== q_72b41788bda2 2023/12/17 (Sun) 03:33 n= 200 
+Q: How many largemouth bass did I catch with Alex on the earlier fishing trip to Lake Michigan before the 7/22 trip?
+A: 7 | aliases []
+EV: [('s_d32f49622e1a', 7), ('s_dca456b9459a', 198)]
+  GT [7] 2023/08/11 (Fri) 01:34 turn2 user: 'I was thinking of getting a tree stand for deer hunting this season. Can you tell me what to consider when buying one, and do you have any recommendations for a good beginner stand? Oh, and by the way, I caught 7 largemouth bass on my trip to Lake Michigan with Alex on 7/10 - that was a great day!'
+  GT [198] 2023/11/30 (Thu) 07:51 turn2 user: "I'm planning to fish from Illinois, probably around the Waukegan harbor area. By the way, I'm thinking of using spinnerbaits and plastic worms as lures again, since they worked so well when I was there with Alex on 7/22 - we caught 9 largemouth bass that day."
+===== q_16eb282b5706 2023/06/03 (Sat) 08:17 n= 200 
+Q: How many trips have I taken my Canon EOS 80D camera on?
+A: five | aliases []
+EV: [('s_7bed09a65417', 17), ('s_ab00d753ce58', 199)]
+  GT [17] 2023/03/16 (Thu) 13:59 turn2 user: "I'm actually considering the Really Right Stuff tripod. I've heard great things about it. Do you know if it's compatible with my Canon EOS 80D camera? By the way, I've taken my camera on quite a few adventures, including three trips to Yellowstone, Yosemite, and the Grand Canyon, and I'm excited to take it on many more with a new tripod!"
+  GT [199] 2023/05/30 (Tue) 10:12 turn0 user: "I'm planning a trip to Zion National Park and want to capture some great landscape shots. Can you recommend any tips for shooting in bright sunlight and high contrast environments? By the way, I've had my Canon EOS 80D with me on five trips now, and it's been a beast!"
+===== q_be00952fefe3 2023/10/20 (Fri) 23:40 n= 200 
+Q: What was my previous goal for my Apex Legends level before I updated my goal?
+A: level 100 | aliases []
+EV: [('s_3163f6f4d2b6', 45), ('s_836bbcd83f7e', 121)]
+  GT [45] 2023/06/16 (Fri) 02:52 turn0 user: "I'm thinking of getting a new gaming mouse to pair with my new keyboard. Can you recommend some good options for FPS games like Apex Legends? By the way, I've been playing a lot of Apex lately and I'm determined to reach level 100 before the end of the year."
+  GT [121] 2023/09/30 (Sat) 01:42 turn4 user: "I think we'll just play for fun and not worry too much about leveling up. But, I'm still aiming to hit level 150 eventually, it's just not the main focus this weekend. Do you have any tips on how to improve my overall gameplay and communication with my team?"
+===== q_aba87108c154 2023/06/12 (Mon) 21:00 n= 200 
+Q: How many followers do I have on Instagram now?
+A: 1300 | aliases []
+EV: [('s_75d9160a42c0', 99), ('s_f12e4b278a57', 152)]
+  GT [99] 2023/05/22 (Mon) 16:38 turn2 user: "I've been doing some of these already, like posting regularly and using a consistent aesthetic. It's great to know I'm on the right track. Speaking of which, I'm curious to know if there's a way to see which posts are performing well and which ones aren't. Do you know if Instagram Insights can help me with that? And by the way, I've got 1250 followers on Instagram now, so it'd be great to get some insights on how to optimize my content for them."
+  GT [152] 2023/05/30 (Tue) 15:16 turn0 user: "I'm looking to create a new Instagram post about a recent industry event I attended. Can you help me come up with a catchy caption that will encourage engagement, considering my audience is mostly from the US, UK, and Australia? By the way, I've been meaning to check my current follower count - I think I'm close to 1300 now."
+===== q_7d9672c558b5 2023/06/28 (Wed) 17:27 n= 200 abst
+Q: How many engineers do I lead when I just started my new role as Software Engineer Manager?
+A: The information provided is not enough. You mentioned starting the role as Senior Software Engineer but not Software Engineer Manager. | aliases []
+EV: []
+===== q_f55b829aee94 2023/06/15 (Thu) 19:27 n= 200 
+Q: What is my current highest score in Ticket to Ride?
+A: 132 points | aliases []
+EV: [('s_cd2b1ab072ec', 68), ('s_f6615757cd40', 126)]
+  GT [68] 2023/05/27 (Sat) 23:35 turn2 user: "I'm interested in trying out Carcassonne, I've heard great things about it. Do you think it's a good game for a group of 6-8 people, or is it better suited for smaller groups? Also, by the way, I've been crushing it in Ticket to Ride lately - my highest score so far is 124 points, and I'm eager to keep improving."
+  GT [126] 2023/05/29 (Mon) 08:44 turn8 user: 'Building structures and trading resources is indeed a crucial part of the game. By the way, speaking of building and creating things, I just got my highest score in Ticket to Ride - 132 points! Anyway, back to Scythe... Do you want to know more about how to maximize your trade opportunities with other players?'
+===== q_61a19ce280f4 2023/05/13 (Sat) 21:11 n= 200 
+Q: Is my mom using the same grocery list method as me?
+A: Yes. | aliases []
+EV: [('s_e983d0ba00e7', 44), ('s_24a6fcdbdab6', 171)]
+  GT [44] 2023/03/11 (Sat) 06:02 turn8 user: "That sounds like a great recipe! I'm definitely going to give it a try. By the way, I'm glad I'm not the only one who's a fan of that new grocery list app. I've been trying to get my mom to use it too, but she's still stuck on her old paper list. Anyway, back to the recipe - do you have any suggestions for a simple sauce to go with the cauliflower gnocchi?"
+  GT [171] 2023/04/30 (Sun) 14:43 turn4 user: "By the way, I was just thinking, my mom is actually using the same grocery list app as me now, so we can easily share lists and keep track of what we need. Anyway, thanks for the fajita tips, I think I'm all set for tonight's dinner!"
+===== q_466e22735f43 2023/08/21 (Mon) 22:24 n= 200 
+Q: Do I have a spare screwdriver for opening up my laptop?
+A: Yes | aliases []
+EV: [('s_917891734470', 51), ('s_c6d87129d33a', 123)]
+  GT [51] 2023/08/11 (Fri) 07:12 turn4 user: "I think I'll go ahead with the 100 GB plan, that should be enough for my working files. By the way, I've been meaning to open up my laptop to upgrade the RAM, but I realized I misplaced the small screwdriver I use for that. I'll need to pick one up next time I'm out."
+  GT [123] 2023/08/15 (Tue) 04:01 turn6 user: "I actually have a spare screwdriver that I picked up when I organized my computer desk a while back, so I'm all set there. Now, about that cable organizer... I think I'll go with the Anker one, it seems like it'll fit nicely in my bag."
+===== q_d87a7efc7c46 2023/10/15 (Sun) 23:51 n= 200 abst
+Q: How long have I been living in my current apartment in Shinjuku?
+A: The information provided is not enough. You mentioned living in Harajuku but not Shinjuku. | aliases []
+EV: []

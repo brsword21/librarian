@@ -1,0 +1,8 @@
+22 questions x 3 variants on dev200 in 4s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+session10k1_rr             93.1 1.000 1.000 1.000 1.000 1.000     - 1.000   5941  198.5     - 0
+   -> runs/r1-ssa-b/ssa/b_semantic/session10k1_rr/dev200
+session8k1_rr              93.3 1.000 1.000 1.000 1.000 1.000     - 1.000   5537    5.1     - 0
+   -> runs/r1-ssa-b/ssa/b_semantic/session8k1_rr/dev200
+turns_rr                   87.4 0.909 0.909 1.000 1.000 1.000     - 1.000   5461    4.7     - 0
+   -> runs/r1-ssa-b/ssa/b_semantic/turns_rr/dev200

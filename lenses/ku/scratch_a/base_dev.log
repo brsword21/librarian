@@ -1,0 +1,4 @@
+78 questions x 1 variants on dev in 1384s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+hybrid_rr                  83.8 0.972 0.979 0.986 0.972 0.983     - 0.812  11936 35362.1 0.806 0
+   -> runs/r1-ku-a/ku/generic/hybrid_rr/dev

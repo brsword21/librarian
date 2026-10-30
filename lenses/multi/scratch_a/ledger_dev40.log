@@ -1,0 +1,4 @@
+40 questions x 1 variants on dev in 110s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+ledger                     83.2 0.950 0.981 1.000 1.000 1.000     - 0.837  11888 4550.1     - 0
+   -> runs/r1-multi-a-hyb/multi/a_tally/ledger/dev

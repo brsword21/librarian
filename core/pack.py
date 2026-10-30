@@ -43,10 +43,15 @@ def render(hx, uids: list[int], whole_turns: bool = False) -> tuple[str, set[str
 
 def build_pack(q: Question, hx, ranked, budget: int = DEFAULT_BUDGET, window: int = 1, order: str = "chrono",
                hint: str = "", max_sessions: int | None = None, whole_turns: bool = False, max_units: int | None = None,
+               pinned=None, max_chars_per_session: int | None = None,
                ) -> tuple[list[Passage], set[str], int]:
     """Greedy: walk `ranked` (uids or (uid, score)), add each unit with +/-window neighbours from its session while the
     full message stays within `budget` chars. Returns (passages, included_turn_ids, message_chars).
-    order='chrono' sorts passages by session date (LongMemEval reading tip); 'rank' keeps first-hit order."""
+    order='chrono' sorts passages by session date (LongMemEval reading tip); 'rank' keeps first-hit order.
+    Priority is the order of `ranked`: a unit that does not fit is skipped and later (smaller) ones may still enter.
+    pinned: uids added first, without neighbours (e.g. the cited pair's sentences), before `ranked` is walked.
+    max_chars_per_session: cap on one session's rendered text, so a chatty session cannot eat the budget.
+    window=0 with explicit neighbour uids in `ranked` is the supported way to hand-pick context."""
     chosen: "OrderedDict[str, set[int]]" = OrderedDict()   # session_id -> uids, insertion = first-hit order
     used = 0
 
@@ -61,12 +66,23 @@ def build_pack(q: Question, hx, ranked, budget: int = DEFAULT_BUDGET, window: in
         return out
 
     chars = message_chars(q, [], hint)
-    for item in ranked:
+    n_pin = 0
+    if pinned:
+        pinned = [p[0] if isinstance(p, (tuple, list)) else p for p in pinned]
+        n_pin = len(pinned)
+        ranked = list(pinned) + list(ranked)
+    for pos, item in enumerate(ranked):
         uid = item[0] if isinstance(item, (tuple, list)) else item
         sid = hx.units[uid].session_id
         if max_sessions is not None and sid not in chosen and len(chosen) >= max_sessions:
             continue
-        add = set(hx.neighbors(uid, window, window)) if window else {uid}
+        add = set(hx.neighbors(uid, window, window)) if (window and pos >= n_pin) else {uid}
+        if max_chars_per_session is not None:
+            have = chosen.get(sid, set())
+            if len(render(hx, sorted(have | add), whole_turns)[0]) > max_chars_per_session:
+                add = {uid}
+                if have and len(render(hx, sorted(have | add), whole_turns)[0]) > max_chars_per_session:
+                    continue
         trial = OrderedDict((k, set(v)) for k, v in chosen.items())
         trial.setdefault(sid, set()).update(add)
         c = message_chars(q, passages_for(trial), hint)

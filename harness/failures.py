@@ -45,9 +45,11 @@ def main(argv=None) -> None:
             mark = "IN " if sid in taken else "MISSING"
             s = sess.get(sid)
             print(f"  gold session {sid} #{idx.get(sid)} {s['date'] if s else '?'} {mark}")
+            inc = set(r.get("included_turns") or [])
             for t in (s["turns"] if s else []):
                 if t["turn_id"] in set(gt.get(r["question_id"], [])):
-                    print(f"     {t['role']}: {t['content'][:cut]!r}")
+                    tag = ("IN " if t["turn_id"] in inc else "MISS") if "included_turns" in r else ""
+                    print(f"     {tag} {t['role']}: {t['content'][:cut]!r}")
         print(f"  our passages ({len(r.get('passages', []))}): " +
               ", ".join(f"{p['id']}#{idx.get(p['id'])}" for p in r.get("passages", [])))
         for p in r.get("passages", [])[: (99 if a.full else 3)]:

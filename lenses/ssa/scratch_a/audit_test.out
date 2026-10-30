@@ -1,0 +1,125 @@
+
+## What was the name of that time-tracking app you recommended for my freelance work? | abstain_p 0.05
+    1.42 [127] cue=1.0 3rd=False con=False :: For tracking your freelance design hours, I'd recommend Toggl Track.
+    0.93 [136] cue=0.6 3rd=False con=False :: When choosing a tool, consider the following factors: * Ease of use and learning curve * Features and functionality * Integration with other tools and
+    0.72 [6] cue=0.6 3rd=False con=False :: * Consider using a morning routine app, like Habitica or HabitBull, to track your progress and stay motivated.
+
+## What was the name of that coworking space you recommended to me in Lisbon? | abstain_p 0.05
+    0.81 [29] cue=0.6 3rd=False con=False :: If you ever need a quiet place outside the house, Heden in Baixa has a good day pass.
+    0.81 [116] cue=0.6 3rd=False con=False :: If you plan to explore the city extensively, consider purchasing a **Port Authority's 1-Day Pass** or a **3-Day Pass** for unlimited rides.
+    0.81 [171] cue=0.6 3rd=False con=False :: Try giving Pixel her own 'desk'—a small box or a folded blanket right next to your laptop.
+
+## What was the name of the restaurant you recommended for dinner with my sons? | abstain_p 0.05
+    3.16 [73] cue=1.0 3rd=False con=False :: For dinner with your sons, I'd recommend Matilda 159 Domain in South Yarra.; it has a wood-fired focus and a good drinks list, and it's easy to reach 
+    1.77 [53] cue=1.0 3rd=False con=False :: Oh, and before I forget: For your birthday dinner, I'd recommend Supernormal in the city.
+    1.31 [109] cue=0.6 3rd=False con=False :: * Loafers: Loafers are a great option for a dressier casual dinner.
+
+## Which Python library did you recommend for my data cleaning project? | abstain_p 0.05
+    2.25 [54] cue=1.0 3rd=False con=False :: For your Python data cleaning project, I recommend using pandas because it is great for cleaning messy tabular data.
+    0.98 [114] cue=0.6 3rd=False con=False :: When selecting a tool or library, consider the following factors: * Ease of integration with your existing platform or infrastructure * Accuracy and p
+    0.93 [139] cue=0.6 3rd=False con=False :: **Allocate some time for other areas**: In addition to your probability and statistics course, try to allocate some time (e.g., 30 minutes to 1 hour p
+
+## Which code editor did you recommend I use for my Python practice scripts? | abstain_p 0.05
+    3.04 [21] cue=1.0 3rd=False con=False :: I recommend using Visual Studio Code for your Python practice scripts because it has a built-in terminal and great Python extensions.
+    1.14 [24] cue=1.0 3rd=False con=False :: The potential impact of artificial intelligence on the present context of elder care: Code: AI To integrate these codes with the codes from the previo
+    0.86 [64] cue=0.6 3rd=False con=False :: Try 25 minutes of code, then a 5-minute break.
+
+## What was the name of that French flour brand you recommended for my croissants? | abstain_p 0.05
+    3.16 [132] cue=1.0 3rd=False con=False :: For your croissants, I recommend the French flour brand Moulin de Versailles.
+    1.41 [132] cue=0.6 3rd=False con=False :: Maybe treat the croissant test as your reward after French class—weekend mornings are ideal for laminating dough anyway.
+    0.95 [151] cue=0.6 3rd=False con=False :: **Reheat to refresh**: If you notice the croissants becoming stale, try reheating them in the oven at 350°F (180°C) for 5-7 minutes to refresh them.
+
+## What value did you recommend for the audio coupling capacitor in my Panasonic RF-2200? | abstain_p 0.05
+    2.70 [101] cue=1.0 3rd=False con=False :: Oh, For the audio coupling capacitor in your Panasonic RF-2200, I'd use a 0.022 µF film capacitor.
+    1.78 [99] cue=1.0 3rd=False con=False :: For the AGC resistor in your Panasonic RF-2200, I'd use a 33k-ohm value.
+    0.87 [118] cue=1.0 3rd=False con=False :: For the screen grid resistor in your National R-77's audio output stage, I'd use a 10k-ohm value.
+
+## What was the name of the bank you recommended for my year in Canada? | abstain_p 0.05
+    3.16 [156] cue=1.0 3rd=False con=False :: On a practical note: For your year in Canada, I'd recommend opening an account with Scotiabank because they have a good newcomer package.
+    0.98 [151] cue=1.0 3rd=False con=False :: And little tip for when you land: For your mobile plan in Canada, I'd recommend checking out Fizz for cheap data.
+    0.77 [12] cue=0.6 3rd=False con=False :: Try to keep your power bank's battery level above 20% when not in use.
+
+## What was the name of the swim club you recommended for cross-training? | abstain_p 0.05
+    2.60 [54] cue=1.0 3rd=False con=False :: For low-impact cross-training while your legs recover, I recommend the Masters Swim Club at the Toronto Pan Am Sports Centre.
+    0.78 [53] cue=1.0 3rd=False con=False :: For structured speedwork now that your legs are feeling better, I recommend Coach Miriam at the Toronto Lakeshore Running Club.
+    0.78 [94] cue=1.0 3rd=False con=False :: For strength and mobility work, I recommend Coach Elena at the Toronto Lakeshore Running Club.
+
+## What was the name of the coach you recommended for my speedwork? | abstain_p 0.05
+    2.60 [53] cue=1.0 3rd=False con=False :: For structured speedwork now that your legs are feeling better, I recommend Coach Miriam at the Toronto Lakeshore Running Club.
+    1.11 [94] cue=1.0 3rd=False con=False :: For strength and mobility work, I recommend Coach Elena at the Toronto Lakeshore Running Club.
+    0.84 [5] cue=0.6 3rd=False con=False :: Fixing mistakes: If they saw that a team was losing due to mistakes made by the players or coaches, they could go back in time and try to fix those mi
+
+## What was the name of the park you recommended for hill repeats? | abstain_p 0.05
+    3.16 [52] cue=1.0 3rd=False con=False :: For hill repeats, I recommend Riverdale Park East—it has a good long slope and is close to you.
+    0.81 [64] cue=0.6 3rd=False con=False :: Try shorter hill repeats and a dynamic warm-up before the run.
+    0.69 [75] cue=0.6 3rd=False con=False :: If you're unsure about a trail's difficulty or suitability, consider consulting with a local guide or park ranger.
+
+## What was the name of that adhesive you recommended for repairing canvas tears? | abstain_p 0.05
+    1.88 [94] cue=1.0 3rd=False con=False :: For repairing old canvas tears, I recommend BEVA 371.
+    0.54 [86] cue=0.6 3rd=False con=False :: * **Canvas**: Canvas is a great choice if you want to practice with acrylics or oils.
+    0.52 [161] cue=0.0 3rd=False con=False :: If the problem is the wooden support, I'd stay traditional: For repairing wooden panel supports, hide glue is the traditional adhesive.
+
+## What was the name of the café you recommended for my remote work days? | abstain_p 0.05
+    3.16 [53] cue=1.0 3rd=False con=False :: For your remote work days, I recommend Café Blau in Mitte; it has stable wifi and large tables.
+    1.06 [16] cue=0.6 3rd=False con=False :: **Gradually adjust your wake-up time**: Since you're moving your coffee break 1 hour earlier, try setting your alarm 15-30 minutes earlier each day to
+    1.06 [34] cue=0.6 3rd=False con=False :: **Gradual Transition**: If you're used to a daily coffee, try switching to a half-caf or decaf coffee for a few days before transitioning to a herbal 
+
+## What is the name of the dentist you recommended for my check-up? | abstain_p 0.05
+    2.60 [125] cue=1.0 3rd=False con=False :: For your next dental check-up, I recommend Dr. Vogel; the practice is near Kottbusser Tor.
+    0.90 [19] cue=0.6 3rd=False con=False :: **Add-ons**: Consider additional coverage for things like dental care, wellness exams, or pet-sitting fees.
+    0.90 [168] cue=0.6 3rd=False con=False :: Some popular models to consider: * Clarks Cloud Steppers * UGG Ansley * Dr. Martens Pascal * Sam Edelman Hazel * Vince Camuto Benton Remember to try o
+
+## What was the name of the plugin you recommended for organizing my drum samples? | abstain_p 0.05
+    2.38 [124] cue=1.0 3rd=False con=False :: And for the drum stuff, I recommend XO by XLN Audio for organizing your drum samples because it lays them out visually by similarity.; it’ll save you 
+    0.71 [141] cue=0.6 3rd=False con=False :: * Consider a plugin suite like FabFilter or Waves, or virtual instruments like Toontrack's EZdrummer or Native Instruments' Komplete.
+    0.45 [77] cue=0.0 3rd=False con=False :: One thing that helps is lowering the barrier: set a tiny goal like opening your DAW for 15 minutes and doing one small task, even just organizing samp
+
+## What was the name of the microphone you recommended for recording vocals at home? | abstain_p 0.05
+    2.39 [49] cue=1.0 3rd=False con=False :: For your setup, I recommend the Shure SM58 for recording vocals at home because it is rugged and handles an untreated room well.
+    0.70 [141] cue=0.0 3rd=False con=False :: However, some USB microphones might be more geared towards vocals or podcasting, so make sure to choose one that's suitable for instrument recording.
+    0.70 [42] cue=0.6 3rd=False con=False :: Try a low shelf around 120 Hz on the room mic, or sidechain the bass to the kick if you have separate stems.
+
+## What was the name of the studio headphones you recommended for long mixing sessions? | abstain_p 0.05
+    2.21 [88] cue=1.0 3rd=False con=False :: For long mixing sessions in your apartment, I recommend the Beyerdynamic DT 770 Pro because they are closed-back, comfortable, and isolate street nois
+    0.82 [120] cue=0.6 3rd=False con=False :: **Consider goggles with ventilation**: Ventilation can help prevent fogging and keep your eyes cool during long carving sessions.
+    0.74 [38] cue=0.6 3rd=False con=False :: Also, skating is great for clearing your head after long mixing sessions.
+
+## What opening did you recommend I try against 1.e4? I forgot the name. | abstain_p 0.05
+    2.60 [27] cue=1.0 3rd=False con=False :: By the way, if you want a mental break later, I recommend the Caro-Kann Defense against 1.e4 because it is solid and quite easy to learn.
+    0.85 [49] cue=0.0 3rd=False con=False :: The French Defense is also solid against 1.e4, but it can lead to a cramped position.
+    0.84 [168] cue=0.6 3rd=False con=False :: If you want a positional game with White, the Italian Game after 1.e4 e5 is a good choice.
+
+## What was the name of the route planning software you recommended for my logistics work? I forgot. | abstain_p 0.05
+    1.48 [65] cue=1.0 3rd=False con=False :: By the way, speaking of logistics, I recommend RouteXL for your daily delivery planning; it handles multiple stops and avoids the worst Rotterdam city
+    1.10 [186] cue=1.0 3rd=False con=False :: To get the exact route with turn-by-turn directions, I recommend using online mapping tools like: * Google Maps (web or mobile app) * MapMyRide (web o
+    0.82 [7] cue=1.0 3rd=False con=False :: For removing mats and tangles, I recommend using a tool specifically designed for detangling, such as: 1.
+
+## What was the title of that book you recommended about improving supply chain efficiency? I forgot. | abstain_p 0.05
+    2.38 [67] cue=1.0 3rd=False con=False :: Also, I recommend 'The Goal' by Eliyahu Goldratt; it is a classic about bottlenecks and improving supply chain efficiency.
+    0.68 [60] cue=1.0 3rd=False con=False :: **Tips for Attending the Berlinale** * If you're planning to attend the Berlinale, I recommend booking your accommodations and travel arrangements wel
+    0.53 [51] cue=0.6 3rd=False con=False :: **Fit and comfort**: If you've had issues with sneaker fit or comfort in the past, you might want to try on a pair or read reviews from others with si
+
+## What was the name of the coffee shop you recommended for grading papers? | abstain_p 0.05
+    1.11 [35] cue=0.6 3rd=False con=False :: You might like Octane Coffee in Midtown for a quiet place to grade papers..
+    0.85 [7] cue=0.6 3rd=False con=False :: **Freezing Coffee Beans:** If you need to store coffee beans for a longer period, freezing is a good option.
+    0.81 [99] cue=1.0 3rd=False con=False :: Considering your colleague's love for coffee, I'd suggest a personalized item that still acknowledges her coffee enthusiasm.
+
+## What was the name of the homebrew supply shop you recommended? | abstain_p 0.05
+    1.06 [66] cue=0.6 3rd=False con=False :: If you want to bring something you made, You should check out Peachtree Brew Supply in Decatur for your next batch.
+    0.74 [179] cue=0.6 3rd=False con=False :: **Purge and Donate**: Consider purging any supplies that are no longer useful or donating them to local art schools or organizations.
+    0.74 [179] cue=0.6 3rd=False con=False :: **Consider a Cart or Island**: If you have a dedicated art space, consider using a cart or island with storage to keep supplies organized and within r
+
+## What was the name of the farrier you recommended for my Icelandic horses? | abstain_p 0.05
+    3.16 [77] cue=1.0 3rd=False con=False :: I recommend a farrier named Ola Hansen for your Icelandic horses.
+    1.65 [72] cue=1.0 3rd=False con=False :: You could also consider a supplement: I recommend a joint supplement called FlexiHorse for your senior Icelandic horse..
+    0.85 [37] cue=0.0 3rd=False con=False :: Oh, before I forget: Your sister's farrier is named Magnus Vik, and he also works with Icelandic horses.
+
+## What was the name of the joint supplement you recommended for my senior Icelandic horse? | abstain_p 0.05
+    3.16 [72] cue=1.0 3rd=False con=False :: You could also consider a supplement: I recommend a joint supplement called FlexiHorse for your senior Icelandic horse..
+    1.08 [77] cue=1.0 3rd=False con=False :: I recommend a farrier named Ola Hansen for your Icelandic horses.
+    0.76 [190] cue=1.0 3rd=False con=False :: To ensure you're providing the best care for Henrietta, I recommend consulting with your veterinarian to discuss: * The specific calcium supplement pr
+
+## What was the name of the illustrator you recommended for my children's book? | abstain_p 0.05
+    3.16 [182] cue=1.0 3rd=False con=False :: By the way, I recommend an illustrator named Silje Dahl for your children's book.
+    0.85 [133] cue=0.0 3rd=False con=False :: Speaking of illustrators: Your sister's children's book illustrator is named Maja Lie.
+    0.82 [76] cue=1.0 3rd=False con=False :: To ensure you get a room with a hot tub on the balcony facing the Space Needle, I recommend booking one of these suites specifically.

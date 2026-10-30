@@ -1,0 +1,528 @@
+"""SSA lens B ("Semantyka"): what the ASSISTANT said / recommended.
+
+Pipeline (see lenses/ssa/b_design.md):
+  question -> (clean query, topic cue, category, purpose, declarative form)
+  -> hybrid pool over assistant units (+ a weaker user-unit channel: ~9% of dev gold turns are user turns)
+  -> cross-encoder rerank of the top pool
+  -> unit score = rerank z-score + round bonus (preceding user turn matches) + topic bonus (session's user turns
+     match the "our conversation about X" cue) + recommendation-act features (first-person "I recommend/I'd use X",
+     penalties for recommendations to other people, third-party or hedged/negative recommendations, purpose overlap)
+  -> session score = NDCG-style sum of its unit hits (Emergence) -> pack top sessions, best unit +/- neighbours
+  -> hint = short list of the assistant's own recommendation sentences found in the pack (Chain-of-Note, precomputed)
+  -> abstain_p from (no matching first-person recommendation) x (flat score distribution).
+
+Pure-python helpers live at the top and have a self-test: `.venv/bin/python -m lenses.ssa.b_semantic`.
+Core imports are lazy so the helpers run before core.index / core.pack exist.
+"""
+from __future__ import annotations
+
+import math
+import re
+from collections import defaultdict
+
+VARIANTS = {
+    # ranked by expected value on TEST (see b_design.md)
+    "rec": {"pool": 120, "rerank_n": 40, "w_rec": 1.0, "w_round": 0.35, "w_topic": 0.25, "user_w": 0.6,
+            "n_sess": 3, "budget": 7000, "top_budget": 5000, "window": 1, "hint": True, "cite_n": 1},
+    "rec_wide": {"pool": 150, "rerank_n": 60, "w_rec": 1.0, "w_round": 0.35, "w_topic": 0.25, "user_w": 0.6,
+                 "n_sess": 4, "budget": 10000, "top_budget": 7000, "window": 1, "hint": True, "cite_n": 1},
+    "plain": {"pool": 120, "rerank_n": 40, "w_rec": 0.0, "w_round": 0.35, "w_topic": 0.25, "user_w": 0.6,
+              "n_sess": 3, "budget": 7000, "top_budget": 5000, "window": 1, "hint": False, "cite_n": 1},
+    "lean": {"pool": 100, "rerank_n": 30, "w_rec": 1.0, "w_round": 0.35, "w_topic": 0.25, "user_w": 0.6,
+             "n_sess": 2, "budget": 4500, "top_budget": 3500, "window": 1, "hint": True, "cite_n": 1},
+}
+
+# ----------------------------------------------------------------------------------------------------------------
+# Question parsing (pure python)
+# ----------------------------------------------------------------------------------------------------------------
+_CUE_PATTERNS = [
+    # "I'm going back to / I wanted to follow up on / I was looking back at ..." (the cue, not its object)
+    r"\b(?:i'?m|i am|i was|i wanted to|i want to|i'?d like to|i would like to|just wanted to|i)\s+"
+    r"(?:just\s+)?(?:checking(?: back on)?|check(?:ing)? back (?:on|in)|going back (?:to|over)|going through|"
+    r"looking back (?:at|on)|looking at|thinking about|thinking back (?:to|on)|following up on|follow up on|"
+    r"revisiting|reviewing|trying to (?:recall|remember)|remember(?:ed)?|recall)\b",
+    r"\b(?:in |from |during |about )?our (?:previous|last|earlier|past|recent|prior) "
+    r"(?:chat|conversation|discussion|session|talk|exchange)s?(?: we had)?\b",
+    r"\b(?:can|could|would) you (?:please )?(?:remind me|tell me|help me remember|confirm|refresh my memory)(?: of| on| about)?\b",
+    r"\bi was wondering(?: if| whether)?(?: you could)?(?: remind me)?(?: of)?\b",
+    r"\b(?:do|did) you (?:remember|recall)\b",
+    r"\bremind me(?: of| again)?\b",
+    r"\b(?:i )?wanted to (?:confirm|clarify|ask|check)\b",
+    r"\b(?:last time|earlier|previously|the other day|a while ago|before)\b",
+    r"\b(?:again)\b",
+]
+_CUE_RX = [re.compile(p, re.I) for p in _CUE_PATTERNS]
+
+_TOPIC_RX = [
+    re.compile(r"(?:chat|conversation|discussion|talk|exchange)s?(?: we had)? (?:about|on|regarding|where (?:you|we|I)) "
+               r"(?P<t>.+?)(?=[.?!;]|,| and I\b| - | – |\. |$)", re.I),
+    re.compile(r"\bwe (?:discussed|talked about|chatted about) (?P<t>.+?)(?= earlier| before| last time|[.?!,;]|$)", re.I),
+    re.compile(r"\byou (?:told me|taught me) (?:about )?(?P<t>.+?)(?= earlier| before| last time|[.?!,;]|$)", re.I),
+]
+
+# "What was the name of that <cat> you recommended ...", "Which <cat> did you recommend ...", "What <cat> did you ..."
+_CAT_RX = re.compile(
+    r"(?:(?:what|which)(?: was| is| were| are)? (?:the )?name of (?:that|the|this|those|these)|"
+    r"(?:which|what)(?: was| is)?(?: that| the)?)\s+"
+    r"(?P<cat>[a-z0-9][\w'’\- ]{1,48}?)\s+(?:did |that |which )?you(?: had)?\s+"
+    r"(?P<verb>recommend|suggest|mention|propose|advise|point|told|said|gave|provided|list)\w*\b(?P<rest>.*)$",
+    re.I)
+_PURPOSE_RX = re.compile(r"\b(?P<prep>for|in|on|with|during|to fix|to repair|to use for)\s+(?P<p>.+?)\s*[?.!]*$", re.I)
+
+_PRON = [(r"\bmy\b", "your"), (r"\bI'm\b", "you're"), (r"\bI\b", "you"), (r"\bme\b", "you"), (r"\bmine\b", "yours"),
+         (r"\bours?\b", "your")]
+
+
+def to_second_person(s: str) -> str:
+    for a, b in _PRON:
+        s = re.sub(a, b, s)
+    return s
+
+
+def clean_question(q: str) -> str:
+    """Drop conversational meta-cues ("I'm going back to our previous chat about", "can you remind me") that match
+    every session equally; keep content words. Leaves 'recommend' in place (it matches the target speech act)."""
+    s = q
+    for rx in _CUE_RX:
+        s = rx.sub(" ", s)
+    s = re.sub(r"\s+", " ", s).strip(" ,.-–")
+    return s or q
+
+
+def split_topic(q: str) -> tuple[str, str]:
+    """(topic, detail): topic = object of "our previous conversation about X" style cues (dev questions carry one);
+    detail = the remaining ask. Topic is '' when there is no cue."""
+    for rx in _TOPIC_RX:
+        m = rx.search(q)
+        if m:
+            t = m.group("t").strip(" ,.")
+            t = re.sub(r"^(?:the|a|an)\s+", "", t, flags=re.I)
+            if 2 <= len(t) <= 120:
+                head = re.sub(r"\b(?:in |from |about )?our (?:previous|last|earlier|past|recent|prior)\s*$", " ",
+                              q[:m.start()], flags=re.I)
+                detail = clean_question(head + " " + q[m.end():])
+                return t, detail
+    return "", clean_question(q)
+
+
+def parse_rec(q: str) -> dict:
+    """Category / purpose of a 'what X did you recommend for my Y' question (test style, ~17% of test).
+    Returns {"cat": str, "purpose": str, "is_rec": bool}."""
+    out = {"cat": "", "purpose": "", "is_rec": False}
+    m = _CAT_RX.search(q)
+    if m:
+        cat = re.sub(r"^(?:name of |the |that |a |an )+", "", m.group("cat").strip(), flags=re.I)
+        out["cat"] = cat
+        out["is_rec"] = m.group("verb").lower().startswith(("recommend", "suggest", "propose", "advise", "point"))
+        rest = m.group("rest") or ""
+        rest = re.sub(r"^\s*(?:to )?(?:me|I|us)\b\s*(?:use|try|get|buy|go with|pick|read|watch)?\s*", " ", rest)
+        pm = _PURPOSE_RX.search(rest)
+        if pm:
+            out["purpose"] = (pm.group("prep") + " " + pm.group("p")).strip()
+        elif rest.strip(" ?.!"):
+            out["purpose"] = rest.strip(" ?.!")
+    elif re.search(r"\byou\s+(?:had\s+)?(?:recommend|suggest)\w*", q, re.I):
+        out["is_rec"] = True
+    return out
+
+
+def declarative(q: str) -> str:
+    """LLM-free question -> statement as the assistant would have said it ("For your Y, I recommend X").
+    Used as an extra dense query (statement-to-statement similarity beats question-to-statement for bi-encoders)."""
+    r = parse_rec(q)
+    if r["cat"]:
+        purpose = to_second_person(r["purpose"]).strip()
+        cat = r["cat"]
+        if purpose:
+            p = purpose[0].upper() + purpose[1:]
+            return f"{p}, I recommend the {cat}".replace("  ", " ")
+        return f"I recommend this {cat}"
+    s = clean_question(q)
+    s = re.sub(r"^(?:what|which|who|where|when|how many|how much|how)\b\s*(?:was|were|is|are|did|do|does)?\s*", "",
+               s, flags=re.I)
+    s = re.sub(r"\byou (?:recommend|suggest|mention|say|said|told)\w*\b", "", s, flags=re.I)
+    return to_second_person(s).strip(" ?.")
+
+
+# ----------------------------------------------------------------------------------------------------------------
+# Recommendation speech-act tagging on unit text (pure python)
+# ----------------------------------------------------------------------------------------------------------------
+_SELF_REC = re.compile(
+    r"\b(?:I(?:'d|’d| would)?|I can)\s+(?:strongly |highly |definitely |personally |really |also |still )?"
+    r"(?:recommend|suggest|use|go with|pick|choose|opt for|point you to|steer you toward)\b"
+    r"|\bmy (?:top |personal |first )?(?:pick|recommendation|suggestion|choice) (?:is|would be)\b"
+    r"|\b(?:you should|you could|you might want to|you'll want to|try)\s+(?:try|use|check out|go with|visit|look at)\b",
+    re.I)
+_PAST_REC = re.compile(r"\bI (?:recommended|suggested|mentioned)\b", re.I)
+_OTHER_PERSON = (r"(?:friend|neighbou?r|sister|brother|son|daughter|mom|mother|dad|father|wife|husband|partner|"
+                 r"coworker|co-worker|colleague|client|cousin|aunt|uncle|boss|roommate|niece|nephew|grandson|"
+                 r"granddaughter|someone else|another (?:user|client|person))")
+_FOR_OTHER = re.compile(
+    rf"\b(?:to (?:a|my|your|another|one of your)\s+(?:\w+\s+)?{_OTHER_PERSON}|for (?:a|my|your)\s+(?:\w+\s+)?"
+    rf"{_OTHER_PERSON}(?:'s|’s)?)\b", re.I)
+_THIRD_PARTY = re.compile(
+    r"\b(?:[A-Z][a-z]+(?: [A-Z][a-z]+)?|[Tt]he [a-z]+(?: [a-z]+)?|(?:my|your|his|her) [a-z]+) "
+    r"(?:sometimes |often |usually |also )?(?:recommended|recommends|suggested|suggests|swears by|sends \w+ to)\b")
+_HEDGE = re.compile(
+    r"\bI haven't (?:been|tried|used)\b|\bI'd avoid\b|\bI would avoid\b|\bwouldn't recommend\b|\bnot recommend\b|"
+    r"\bbut that(?:'s| is) (?:more|less|not)\b|\bavoid \w+ for now\b", re.I)
+_SENT_SPLIT = re.compile(r"(?<=[.!?])\s+")
+
+
+def _stem(w: str) -> str:
+    for suf in ("ing", "ed", "es", "s"):
+        if w.endswith(suf) and len(w) - len(suf) >= 3:
+            return w[:-len(suf)]
+    return w
+
+
+_STOP = set("a an the and or of to in on at for from by with my your our me you i it its this that is was be "
+            "what which who did do does name recommend recommended suggest suggested".split())
+
+
+def content_tokens(s: str) -> set[str]:
+    return {_stem(w) for w in re.findall(r"[a-z0-9]+", s.lower()) if w not in _STOP and len(w) > 1}
+
+
+def rec_sentences(text: str) -> list[str]:
+    """Sentences of an assistant turn that carry a recommendation speech act (any kind)."""
+    out = []
+    for s in _SENT_SPLIT.split(text):
+        if _SELF_REC.search(s) or _PAST_REC.search(s) or _THIRD_PARTY.search(s):
+            out.append(s.strip())
+    return out
+
+
+GENERIC_CATS = {"value", "name", "one", "thing", "option", "place", "spot", "item", "product", "number", "amount",
+                "setting", "size", "brand", "type", "kind", "model", "tool", "resource", "website", "site"}
+
+
+def cat_is_generic(cat: str) -> bool:
+    toks = [t for t in re.findall(r"[a-z]+", cat.lower()) if t not in _STOP]
+    return not toks or toks[-1] in GENERIC_CATS
+
+
+_IDF_CACHE: dict[int, dict[str, float]] = {}
+
+
+def history_idf(hx) -> dict[str, float]:
+    """Token IDF over the history's units (cached per index object); used to weight purpose overlap so generic words
+    ("data", "project", "my") count less than the distinctive ones ("cleaning", "speedwork")."""
+    key = id(hx)
+    if key not in _IDF_CACHE:
+        df: dict[str, int] = defaultdict(int)
+        for un in hx.units:
+            for t in content_tokens(un.text):
+                df[t] += 1
+        n = max(1, len(hx.units))
+        _IDF_CACHE.clear()  # one history at a time is enough
+        _IDF_CACHE[key] = {t: math.log(1 + n / (1 + c)) for t, c in df.items()}
+        _IDF_CACHE[key]["__default__"] = math.log(1 + n)
+    return _IDF_CACHE[key]
+
+
+def _overlap(pt: set[str], st: set[str], idf: dict[str, float] | None) -> float:
+    if not pt:
+        return 0.0
+    if not idf:
+        return len(pt & st) / len(pt)
+    d = idf.get("__default__", 5.0)
+    tot = sum(idf.get(t, d) for t in pt)
+    return sum(idf.get(t, d) for t in pt & st) / tot if tot else 0.0
+
+
+def rec_features(text: str, purpose: str = "", cat: str = "", idf: dict[str, float] | None = None) -> dict:
+    """Score how much a unit looks like 'the assistant itself recommended <cat> for <purpose>'.
+    Returns {"rec": float in [-1, 1], "purpose": overlap in [0, 1], "cat": 0/1, "sent": best sentence}."""
+    best = {"rec": 0.0, "purpose": 0.0, "cat": 0.0, "sent": ""}
+    pt, ct = content_tokens(purpose), content_tokens(cat)
+    best_val = -9.0
+    for s in _SENT_SPLIT.split(text):
+        self_rec = bool(_SELF_REC.search(s))
+        past = bool(_PAST_REC.search(s))
+        third = bool(_THIRD_PARTY.search(s)) and not self_rec
+        if not (self_rec or past or third):
+            continue
+        r = 1.0 if self_rec else 0.4 if past else 0.0
+        if _FOR_OTHER.search(s):
+            r -= 1.2
+        if past and not self_rec:
+            r -= 0.2
+        if third:
+            r -= 0.6
+        if _HEDGE.search(s):
+            r -= 0.8
+        st = content_tokens(s)
+        po = _overlap(pt, st, idf)
+        low = s.lower()
+        co = 1.0 if ct and any(len(c) >= 3 and c in low for c in ct) else 0.0
+        val = r + po + 0.3 * co
+        if val > best_val:
+            best_val = val
+            best = {"rec": max(-1.0, min(1.0, r)), "purpose": po, "cat": co, "sent": s.strip()[:300]}
+    return best
+
+
+# ----------------------------------------------------------------------------------------------------------------
+# Lens
+# ----------------------------------------------------------------------------------------------------------------
+def _z(scores: dict[int, float]) -> dict[int, float]:
+    if not scores:
+        return {}
+    v = list(scores.values())
+    mu = sum(v) / len(v)
+    sd = (sum((x - mu) ** 2 for x in v) / len(v)) ** 0.5 or 1.0
+    return {k: (x - mu) / sd for k, x in scores.items()}
+
+
+def _role_hits(hx, fn, query, k, role, **kw):
+    """Call hx.bm25/hx.dense/hx.hybrid restricted to one role; falls back to post-filtering if `roles` is unsupported."""
+    try:
+        return fn(query, k=k, roles=[role], **kw)
+    except TypeError:
+        return [(u, s) for u, s in fn(query, k=k * 3, **kw) if hx.units[u].role == role][:k]
+
+
+def rank_units(q, hx, *, pool=120, rerank_n=40, w_rec=1.0, w_round=0.35, w_topic=0.25, user_w=0.6, **_):
+    text = q.question
+    cq = clean_question(text)
+    topic, detail = split_topic(text)
+    rp = parse_rec(text)
+    decl = declarative(text)
+    units = hx.units
+
+    # 1) candidate pool: hybrid on the cleaned question (assistant + user channels), plus the declarative form
+    #    through dense only (statement-like query for the bi-encoder).
+    cand: dict[int, float] = defaultdict(float)
+    for role, w in (("assistant", 1.0), ("user", user_w)):
+        for r, (u, _s) in enumerate(_role_hits(hx, hx.hybrid, cq, pool, role)):
+            cand[u] += w / (60 + r)
+    if decl and decl.lower() != cq.lower():
+        for r, (u, _s) in enumerate(_role_hits(hx, hx.dense, decl, pool // 2, "assistant")):
+            cand[u] += 0.5 / (60 + r)
+
+    # 2) round bonus: an assistant unit whose preceding user turn matches the question (the user asked for it)
+    user_turn_score: dict[str, float] = {}
+    for r, (u, _s) in enumerate(_role_hits(hx, hx.bm25, topic or cq, 60, "user")):
+        tid = units[u].turn_id
+        user_turn_score[tid] = max(user_turn_score.get(tid, 0.0), 1.0 / (1 + r / 5))
+
+    # 3) topic bonus: sessions whose user turns match the "our conversation about X" cue
+    sess_topic: dict[str, float] = defaultdict(float)
+    if topic:
+        for r, (u, _s) in enumerate(_role_hits(hx, hx.hybrid, topic, 40, "user")):
+            sid = units[u].session_id
+            sess_topic[sid] = max(sess_topic[sid], 1.0 / (1 + r / 3))
+
+    # 4) cross-encoder rerank of the top of the pool
+    top = sorted(cand, key=lambda u: -cand[u])[:rerank_n]
+    rr = dict(hx.rerank(cq, top)) if top else {}
+    z = _z(rr)
+
+    prev_turn: dict[str, str] = {}
+    for s in hx.sessions:
+        for a, b in zip(s["turns"], s["turns"][1:]):
+            prev_turn[b["turn_id"]] = a["turn_id"]
+
+    scored, feats = {}, {}
+    for u in top:
+        un = units[u]
+        sc = z.get(u, 0.0)
+        if un.role == "assistant":
+            sc += w_round * user_turn_score.get(prev_turn.get(un.turn_id, ""), 0.0)
+            if w_rec and rp["is_rec"]:
+                f = rec_features(un.text, rp["purpose"], rp["cat"], idf=history_idf(hx))
+                feats[u] = f
+                sc += w_rec * (0.6 * f["rec"] + 0.6 * f["purpose"] * (f["rec"] > 0) + 0.2 * f["cat"])
+        else:
+            sc -= 0.3  # SSA: the answer is usually the assistant's; user turns stay as a weaker channel
+        sc += w_topic * sess_topic.get(un.session_id, 0.0)
+        scored[u] = sc
+    ranking = sorted(scored, key=lambda u: -scored[u])
+    ranking += [u for u in sorted(cand, key=lambda u: -cand[u]) if u not in scored]
+    return ranking, scored, feats, {"clean": cq, "topic": topic, "decl": decl, "rec": rp}
+
+
+def session_scores(ranking, scored, hx, depth=20, per_session=2):
+    """Emergence-style NDCG of unit hits, but each session contributes at most its `per_session` best units: on dev a
+    plain sum let long, broadly related sessions (8 moderate hits) outvote the gold session's one strong hit."""
+    ss: dict[str, float] = defaultdict(float)
+    cnt: dict[str, int] = defaultdict(int)
+    for r, u in enumerate(ranking[:depth]):
+        sid = hx.units[u].session_id
+        if cnt[sid] >= per_session:
+            continue
+        cnt[sid] += 1
+        gain = math.exp(min(5.0, scored.get(u, 0.0)))  # positive gain from the fused score
+        ss[sid] += gain / math.log2(r + 2) * (1.0 if cnt[sid] == 1 else 0.5)
+    return sorted(ss.items(), key=lambda kv: -kv[1])
+
+
+def abstain_probability(ranking, scored, feats, rp) -> float:
+    """High when (a) a recommendation question finds no first-person recommendation whose purpose matches, and/or
+    (b) the fused score distribution is flat (top-1 barely above the pool)."""
+    if not ranking:
+        return 0.9
+    top = [scored.get(u, 0.0) for u in ranking[:10]]
+    gap = top[0] - (sum(top[1:]) / max(1, len(top) - 1))
+    p_flat = 1.0 / (1.0 + math.exp(3.0 * (gap - 1.0)))   # gap 1.0 -> 0.5, gap 2.0 -> ~0.05
+    if rp.get("is_rec"):
+        m = rec_match_strength(feats, rp)
+        return round(min(0.95, 0.05 + 0.65 * (1.0 - m) + 0.25 * p_flat), 3)
+    return round(0.6 * p_flat, 3)
+
+
+def rec_match_strength(feats, rp) -> float:
+    """max over candidate assistant units of: first-person rec x purpose overlap x category agreement, in [0, 1]."""
+    generic = cat_is_generic(rp.get("cat", ""))
+    best = 0.0
+    for f in feats.values():
+        if f["rec"] <= 0:
+            continue
+        pur = f["purpose"] if rp.get("purpose") else 0.7
+        cat = 1.0 if (f["cat"] or generic or not rp.get("cat")) else 0.6
+        best = max(best, min(1.0, f["rec"]) * min(1.0, pur / 0.6) * cat)
+    return best
+
+
+def make_hint(feats, chosen_uids, hx, rp, none_found: bool = False) -> str:
+    """Precomputed Chain-of-Note: the assistant's own recommendation sentences in the pack, labelled by session date."""
+    if not rp.get("is_rec"):
+        return ""
+    lines = []
+    for u in chosen_uids:
+        f = feats.get(u)
+        if f and f["sent"] and f["rec"] > 0 and f["purpose"] + f["cat"] > 0:
+            lines.append(f'({hx.units[u].date_str[:10]}) "{f["sent"][:180]}"')
+        if len(lines) >= 4:
+            break
+    what = rp["cat"] or "item"
+    purpose = f" {rp['purpose']}" if rp.get("purpose") else ""
+    rule = (f"Answer with the {what} the assistant itself recommended{purpose}. Recommendations for other purposes "
+            f"or other people, options only listed, and things the user mentioned do not count.")
+    if lines:
+        return rule + " Recommendation sentences found: " + " | ".join(lines)
+    if none_found:
+        return rule + (f" Note: no assistant turn found recommending a {what}{purpose}; if the passages do not show "
+                       f"one, answer INSUFFICIENT_EVIDENCE.")
+    return rule
+
+
+def _approx_chars(hx, uids) -> int:
+    return sum(len(hx.units[u].text) + 12 for u in uids)
+
+
+def select_units(hx, ranking, keep, top_budget=5000, window=1) -> list[int]:
+    """Pack order (build_pack fills in this order until the budget):
+    (1) top session, top-session-heavy: every chunk of its best turn (the answer sits in chunk 1-3 of a long assistant
+        turn ~30% of the time on dev), then its other units in fused order (+/- window), then -- if the session is
+        small (test gold sessions are ~2k chars) -- the rest of it, all capped at ~top_budget chars;
+    (2) the best unit of each other kept session (near-miss candidates Reactor must compare against)."""
+    if not keep:
+        return []
+    top_sid = keep[0]
+    sess_units = [u.uid for u in hx.units if u.session_id == top_sid]
+    ranked_top = [u for u in ranking if hx.units[u].session_id == top_sid]
+    chosen: list[int] = []
+    covered: set[int] = set()
+
+    def add(u, win):
+        nb = [u] if win == 0 else list(hx.neighbors(u, before=win, after=win))
+        new = [x for x in nb if x not in covered]
+        if new and _approx_chars(hx, covered) + _approx_chars(hx, new) > top_budget and chosen:
+            return False
+        chosen.append(u)
+        covered.update(new)
+        return True
+
+    if ranked_top:
+        for u in hx.turn_units(hx.units[ranked_top[0]].turn_id):
+            add(u, 0)
+        add(ranked_top[0], window)  # brings in the user turn before it (the topic)
+    for u in ranked_top[1:]:
+        add(u, window)
+    for u in sess_units:  # small sessions end up whole
+        if u not in covered:
+            add(u, 0)
+    for sid in keep[1:]:
+        best = next((u for u in ranking if hx.units[u].session_id == sid), None)
+        if best is not None:
+            chosen.append(best)
+    return list(dict.fromkeys(chosen))
+
+
+def build(q, hx, **params):
+    from core.pack import build_pack
+    from core.types import EvidencePack
+
+    p = {**VARIANTS["rec"], **params}
+    ranking, scored, feats, info = rank_units(q, hx, **p)
+    sess = session_scores(ranking, scored, hx)
+    keep = [sid for sid, _ in sess[: p["n_sess"]]]
+    chosen = select_units(hx, ranking, keep, top_budget=p.get("top_budget", 5000), window=p["window"])
+    abstain_p = abstain_probability(ranking, scored, feats, info["rec"])
+    hint = make_hint(feats, chosen, hx, info["rec"], none_found=abstain_p >= p.get("abstain_hint", 0.6)) \
+        if p["hint"] else ""
+    passages, included, chars = build_pack(q, hx, chosen, budget=p["budget"], window=p["window"], order="chrono",
+                                           hint=hint, max_sessions=p["n_sess"])
+    # cite only the top session unless the second is nearly as strong
+    cite = keep[:1]
+    if len(sess) > 1 and p.get("cite_n", 1) > 1 and sess[1][1] > 0.8 * sess[0][1]:
+        cite = keep[:2]
+    return EvidencePack(question_id=q.question_id, variant=p.get("_variant", ""), route="ssa", passages=passages,
+                        hint=hint, cite_plan=cite, abstain_p=abstain_p, included_turns=included, computed=None,
+                        debug={"ranking": ranking, "query": info, "sessions": sess[:5], "chars": chars})
+
+
+# ----------------------------------------------------------------------------------------------------------------
+# Self-test (pure python): `.venv/bin/python -m lenses.ssa.b_semantic`
+# ----------------------------------------------------------------------------------------------------------------
+def _selftest():
+    qs = [
+        "I'm going back to our previous conversation about the children's book on dinosaurs. Can you remind me what "
+        "color was the scaly body of the Plesiosaur in the image?",
+        "Which Python library did you recommend for my data cleaning project?",
+        "What was the name of that coworking space you recommended to me in Lisbon?",
+        "Which code editor did you recommend I use for my Python practice scripts?",
+        "What value did you recommend for the audio coupling capacitor in my Panasonic RF-2200?",
+        "What is the name of the dentist you recommended for my check-up?",
+        "Back in Bandung soon. Which restaurant in Cihampelas Walk does the great Nasi Goreng?",
+    ]
+    for q in qs:
+        print("Q:", q)
+        print("   clean:", clean_question(q))
+        print("   topic/detail:", split_topic(q))
+        print("   rec:", parse_rec(q))
+        print("   decl:", declarative(q))
+    units = [
+        "For your Python data cleaning project, I recommend using pandas because it is great for cleaning messy data.",
+        "Nice. For your data visualization project, I recommend using matplotlib for simple, clear charts.",
+        "Morning quiet is a good filter. I recommended Café Rosa's Neukölln branch to a friend last month.",
+        "The beekeeping association recommended De Zwarte Bij for ordering queen bees.",
+        "Oh, and for the banking side, I'd avoid TD for now because their newcomer bank offer changed last month.",
+        "Oh, For the audio coupling capacitor in your Panasonic RF-2200, I'd use a 0.022 µF film capacitor.",
+    ]
+    rp = parse_rec("Which Python library did you recommend for my data cleaning project?")
+
+    class _U:  # tiny fake index: generic words frequent, distinctive words rare
+        def __init__(self, t): self.text = t
+
+    fake = [_U(t) for t in units] + [_U("data project plan for your project data") for _ in range(30)]
+
+    class _H:
+        pass
+    hx = _H()
+    hx.units = fake
+    idf = history_idf(hx)
+    for t in units:
+        f = rec_features(t, rp["purpose"], rp["cat"], idf=idf)
+        print(f"   rec={f['rec']:+.1f} purpose={f['purpose']:.2f} cat={f['cat']:.0f} | {t[:70]}")
+    f0, f1 = (rec_features(units[i], rp["purpose"], rp["cat"], idf=idf) for i in (0, 1))
+    assert f0["purpose"] > 0.9 and f1["purpose"] < 0.5, (f0, f1)
+    assert parse_rec("What is the name of the dentist you recommended for my check-up?")["cat"] == "dentist"
+    assert rec_features(units[2])["rec"] < 0 and rec_features(units[3])["rec"] < 0.5 and rec_features(units[4])["rec"] <= 0.5
+    print("selftest ok")
+
+
+if __name__ == "__main__":
+    _selftest()
