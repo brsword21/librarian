@@ -35,7 +35,7 @@ import re
 import core.paths  # noqa: F401  (puts the upstream kit on sys.path)
 from score import normalize  # upstream kit
 
-_LABELS = re.compile(r"\s*\[\s*E\d+(?:\s*[,;]\s*E\d+)*\s*\]")
+from predictions import _LABELS  # noqa: E402  upstream kit (reactor/predictions.py)
 _NUM = re.compile(r"-?\d+(?:\.\d+)?")
 _PAREN = re.compile(r"\s*\([^)]*\)")
 _STOP = set("""a an the of to in on at for and or by with from my your i you me we our it its is was were be been

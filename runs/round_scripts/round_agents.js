@@ -21,7 +21,7 @@ phase('Lenses')
 const res = await parallel(TYPES.map(t => () => agent(
 `You are lens agent ${letter.toUpperCase()} — ${ROLE[letter]} — for question type **${t.long}** (\`${t.short}\`, ${t.share}) in the "Librarian" hackathon project. This is ROUND ${round}: implement, evaluate, iterate.
 
-Working directory: /Users/mikolaj/Developer/start-hackathon-2/librarian (run every command from there; Python = .venv/bin/python).
+Working directory: ../librarian (run every command from there; Python = .venv/bin/python).
 The core is LIVE: everything documented in CONTRACT.md exists (core/index.py, core/pack.py, core/dates.py, core/router.py, harness/sweep.py, harness/failures.py, harness/audit.py). Re-read CONTRACT.md (API, lens contract, metrics, HARD RULES) — it is the source of truth; if your Round-0 draft assumed something different, adapt your draft.
 The shared model server is running on 127.0.0.1:8765: never start, stop or restart it, never import torch/sentence-transformers. Embeddings are cached; a background job is still filling dev/dev200 caches, so the FIRST dense call on a cold history can take seconds — iterate with \`--limit 40\`, run full sweeps for decisions.
 

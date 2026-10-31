@@ -7,7 +7,7 @@ An independent frontend variant. It does not replace the other demo frontends or
 From any directory:
 
 ```sh
-/Users/mikolaj/Developer/start-hackathon-2/librarian/demo/web_library/run.sh
+sh demo/web_library/run.sh   # from librarian/; without a venv: python3 -m demo.server --web demo/web_library --port 8804
 ```
 
 Open http://127.0.0.1:8804/. Override the port with `PORT=8805 ./run.sh`.

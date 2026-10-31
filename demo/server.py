@@ -21,7 +21,6 @@ from pathlib import Path
 
 import core.paths  # noqa: F401
 from core.data import questions
-from core.pack import question_text
 from core.paths import BASE, ROOT
 from core.types import Question
 
@@ -55,6 +54,7 @@ def pack_for(body: dict) -> dict:
         PIPE = load_lens("lenses/pipeline.py")
     split, q = make_question(body)
     from core.index import HistoryIndex
+    from core.pack import question_text   # needs the organisers' kit next to the repo
     hx = HistoryIndex.load(split, q.history_id)
     t0 = datetime.now()
     pack = PIPE.build(q, hx, config="configs/best.json")

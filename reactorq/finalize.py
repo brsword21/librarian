@@ -37,7 +37,7 @@ from score import normalize, validate  # upstream kit
 from core.data import questions, read_jsonl, session_ids_file
 from core.paths import KIT
 
-_LABELS = re.compile(r"\s*\[\s*E\d+(?:\s*[,;]\s*E\d+)*\s*\]")
+from predictions import _LABELS  # noqa: E402  upstream kit (reactor/predictions.py)
 
 
 def _num(s: str) -> str | None:

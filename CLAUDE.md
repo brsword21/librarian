@@ -20,5 +20,5 @@ event context. Team language: Polish.
 - Measure through the harness only (harness.sweep -> runs/leaderboard.csv), at most 2 worker processes.
 - Accept a variant only with >= +2 S on dev and no loss on dev200; on a tie the shorter pack wins.
 - Test questions have no gold: use harness.audit for qualitative checks, never tune to a single test question.
-- Any change to test packs means re-asking Reactor (~105 s per question): diff packs first (harness.audit --diff).
+- Any change to test packs means re-asking Reactor (~105 s per question): diff packs first (.venv/bin/python -m harness.audit --diff OLD.jsonl NEW.jsonl).
 - Edit only files your task owns; core/ and configs/best.json changes need a heads-up to the team.

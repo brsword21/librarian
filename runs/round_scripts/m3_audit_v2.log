@@ -1137,7 +1137,7 @@ DEBUG: {'pair': ['s_be7cd58eb335', 's_7d8d10cc0a90'], 'sess_rank': ['s_7d8d10cc0
   [s_77413de90637 2023/02/10 (Fri) 08:06] 'user: She does, and her mane is practically white against a dark bay coat. The clover is finally blooming, and I have 3 beehives on my farm right now., so the garden has been full of buzzing while I write outside.\n[...]\nuser: Mostly they help, except when the rams decide to shout at each other. I’ve rewritten one line four times today. Maybe I need'
   [s_7d8d10cc0a90 2023/06/01 (Thu) 08:29] 'user: I used that patience trick today with one of the yearlings. By the way, I’ve been so busy outside. I split one of my beehives, so now I have 4 beehives on my farm. I’m wondering if I should scale back before winter.'
 
-146 test questions, 4 flagged -> /Users/mikolaj/Developer/start-hackathon-2/librarian/runs/audit/all/pipeline/routed_v2
+146 test questions, 4 flagged -> runs/audit/all/pipeline/routed_v2
 ku       q_b3e5afe916c8 cite ['s_1b8c83929a01', 's_2e822fd22f27'] -> ['s_01aca3a03579', 's_2e822fd22f27']; passages 3->3 (kept 2); hint | What is my current job title?
 ku       q_074ae81650db hint | How many laps do I swim each morning these days?
 temporal q_0f66a8b016b8 cite ['s_b47946a3f65e'] -> ['s_2c3ca144e804', 's_c9e38f62941b']; passages 2->2 (kept 0); hint | computed None -> 40; abstain_p 0.62 -> 0.05 | How many years did I serve as a firefighter?

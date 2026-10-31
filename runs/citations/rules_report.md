@@ -3,9 +3,9 @@
 The study was read-only. Nothing in `reactorq/`, `configs/`, `lenses/`, `core/` or `runs/final/` was changed. Reactor was never called, and the model server was not touched.
 
 Files saved:
-- `/Users/mikolaj/Developer/start-hackathon-2/librarian/runs/citations/cit_rules.py`: all policies. Run from `librarian/` with `.venv/bin/python runs/citations/cit_rules.py calib|test|sim|calib2|test2|sim2 [results.jsonl]`.
-- `/Users/mikolaj/Developer/start-hackathon-2/librarian/runs/citations/finalize_proposed.py`: `finalize.py` with the proposed rules.
-- `/Users/mikolaj/Developer/start-hackathon-2/librarian/runs/citations/finalize.diff`: the diff (also in the recommendation field).
+- `runs/citations/cit_rules.py`: all policies. Run from `librarian/` with `.venv/bin/python runs/citations/cit_rules.py calib|test|sim|calib2|test2|sim2 [results.jsonl]`.
+- `runs/citations/finalize_proposed.py`: `finalize.py` with the proposed rules.
+- `runs/citations/finalize.diff`: the diff (also in the recommendation field).
 
 Inputs:
 - **Test answers:** a snapshot of `runs/final/v1_results.jsonl` at 75 rows: 64 answered, 11 INSUFFICIENT_EVIDENCE. Each answer was joined by `pack_hash` to the pack Reactor actually saw (v3, then v2, v1, …). All 75 joined by hash.
@@ -274,7 +274,7 @@ Expected effect:
 - e1b answered F1 0.853 → 0.904; e1 answers without labels 0.625 → 0.875.
 - On the current test answers, 1 answer changes (watercolour, reply-rows) and 2 doubtful ku-chain additions are removed.
 
-Do not edit `finalize.py` until the queue is done, and re-run `.venv/bin/python runs/citations/cit_rules.py test2 runs/final/v1_results.jsonl` on the final results first. The diff below is also saved as `/Users/mikolaj/Developer/start-hackathon-2/librarian/runs/citations/finalize.diff`, and the full file as `/Users/mikolaj/Developer/start-hackathon-2/librarian/runs/citations/finalize_proposed.py`. A dry run on the 75-row test snapshot gave 0 format errors.
+Do not edit `finalize.py` until the queue is done, and re-run `.venv/bin/python runs/citations/cit_rules.py test2 runs/final/v1_results.jsonl` on the final results first. The diff below is also saved as `runs/citations/finalize.diff`, and the full file as `runs/citations/finalize_proposed.py`. A dry run on the 75-row test snapshot gave 0 format errors.
 
 ```diff
 --- a/reactorq/finalize.py

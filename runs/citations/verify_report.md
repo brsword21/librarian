@@ -12,7 +12,7 @@ Use the rules, not the learned model. Take finalize_proposed (rec2) with 3 fixes
 - reply_rows=False (REJECTED by default). Its only test firing (q_6dd9e5e4fb97) adds 2 sessions that do not contain "2" and are not our computation, and one of them says "only have one ... class". The rule was also validated only on the single e1b case it was built from. If the team later accepts "Reactor's own working" as support, enable it only for packs matched by pack_hash (FIX 3), and read every firing first.
 - Keep: Reactor's own citations are never removed. No plan-union (d). No drop-unsupported (f).
 - Learned model (reactorq/attribution.py): do not wire into finalize.
-- Patched reference implementation: /private/tmp/claude-501/-Users-mikolaj/1db5489f-85a5-4e53-963c-621650086fb0/scratchpad/finalize_verified.py (finalize_proposed.py + the 3 fixes). It gives the same numbers as rec2 on e1, e1b, dev and dev200. Its dry run on 87 test rows had 0 format errors.
+- Patched reference implementation: runs/citations/verify/finalize_verified.py (finalize_proposed.py + the 3 fixes). It gives the same numbers as rec2 on e1, e1b, dev and dev200. Its dry run on 87 test rows had 0 format errors.
 
 ## Violations found
 
@@ -55,7 +55,7 @@ Expect only a small gain on test.
 
 **Do not touch reactorq/finalize.py while the queue runs.** After the queue finishes:
 
-**1.** Replace reactorq/finalize.py with /private/tmp/claude-501/-Users-mikolaj/1db5489f-85a5-4e53-963c-621650086fb0/scratchpad/finalize_verified.py. That file is runs/citations/finalize_proposed.py (= runs/citations/finalize.diff applied) plus 3 fixes:
+**1.** Replace reactorq/finalize.py with runs/citations/verify/finalize_verified.py. That file is runs/citations/finalize_proposed.py (= runs/citations/finalize.diff applied) plus 3 fixes:
 
 (a) in `_supports`:
 ```python
@@ -90,7 +90,7 @@ and pass `reply=(r.get("reply") or "") if hash_ok else ""`.
 
 **4.** Before submitting, rerun the check on the final results:
 ```
-.venv/bin/python /private/tmp/claude-501/-Users-mikolaj/1db5489f-85a5-4e53-963c-621650086fb0/scratchpad/verify_test_v.py runs/final/v1_results.jsonl
+.venv/bin/python runs/citations/verify/verify_test_v.py runs/final/v1_results.jsonl
 ```
 It lists every added session with contains/computed-source flags. Read every addition that has `contains=False` and `comp_src=False`; on a correct run the only ones should be single-cite ku-chain additions.
 
@@ -102,6 +102,6 @@ Then run `.venv/bin/python -m reactorq.finalize ...` as in after_v3.sh, and chec
 - `e1.py` / `e1_v.py`: real e1 and e1b answers.
 - `reasons.py`: why the model adds each session.
 
-All are in /private/tmp/claude-501/-Users-mikolaj/1db5489f-85a5-4e53-963c-621650086fb0/scratchpad/.
+All are in runs/citations/verify/.
 
 Nothing in reactorq/, configs/, lenses/, core/ or runs/final/ was modified. Reactor was not called.

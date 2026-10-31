@@ -32,7 +32,7 @@
   "multi": "lenses/multi/merged_r4.py r4: frozen v2 multi route + first-changed-wins over [multi/a_r4_route vlbhc6 (verb-class instance rescue), multi/b_r4_inst vc2 (quantity-bearing own instance rescue)]. v2 notes: unchanged b_tight p08c35_aor via merged_r2 tight_role9, role detector -> lenses/ssa/a_r3_role.py (0 test change). b_r3_full ufull_h (untrimmed user units) NOT taken: -0.3/-0.4 S, 15 of 20 test packs change, and on test the added text is chatter or planted decoys (PhD 'five journal articles' for a books count, orchid repotting in the grandchildren pack); revisit after a Reactor check.",
   "ku": "lenses/ku/merged_r4.py r4: frozen v2 ku route (a_r3 r3w) + first-changed-wins over [ku/a_r4 r4 (attr, decoy-session extras, head absence), ku/b_r4_ku nolate_c (drop uncited later sessions)].",
   "temporal": "lenses/temporal/a_r3_gap.py span_own (= v1 merged_r2 evA_mixB + span computation for 'how many years did I serve' + own-cut for gap questions with no own statement). 4 test packs change, 0 dev answerable questions affected.",
-  "routed": "routed v2: dev 86.9 (Sall 85.3), dev200 87.0 (Sall 85.2); v1 same run 86.0 (84.9) / 84.9 (83.2).",
+  "routed": "routed v3: dev 87.1 (Sall 85.4), dev200 87.0 (Sall 85.3); v2 same run 86.9 (85.3) / 87.0 (85.2); v1 86.0 (84.9) / 84.9 (83.2).",
   "test_diff": "v3 vs v2: runs/final/v3_changed.tsv"
  }
 }

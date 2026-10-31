@@ -2,7 +2,7 @@
 pack hash so re-runs and delta runs only ask what changed.
 
     python -m reactorq.queue --packs runs/final/test_packs.jsonl --out runs/final/results.jsonl [--timeout 240] [--limit N]
-Needs ../reactor.env filled and the key in the keychain (see ../CONTEXT.md); calls ../reactor.sh.
+Needs ../reactor.env filled and the key in the keychain (see docs/NIGHT_LOG.md, ONBOARDING.md level 2); calls ../reactor.sh.
 """
 from __future__ import annotations
 

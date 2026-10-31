@@ -8,7 +8,7 @@ from reactorq import attribution as A
 from reactorq import finalize as CUR
 import numpy as np
 from sklearn.linear_model import LogisticRegression
-spec=importlib.util.spec_from_file_location("fprop","/private/tmp/claude-501/-Users-mikolaj/1db5489f-85a5-4e53-963c-621650086fb0/scratchpad/finalize_verified.py"); R=importlib.util.module_from_spec(spec); spec.loader.exec_module(R)
+spec=importlib.util.spec_from_file_location("fprop",__import__('os').path.join(__import__('os').path.dirname(__file__), 'finalize_verified.py')); R=importlib.util.module_from_spec(spec); spec.loader.exec_module(R)
 G=gold("dev")
 dev=[json.loads(l) for l in open("runs/citations/feats_dev.jsonl")]
 for name in ("e1","e1b"):

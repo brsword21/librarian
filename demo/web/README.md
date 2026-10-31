@@ -16,7 +16,7 @@ From `librarian/`:
 - `presentation.js` drives the five illustrated method chapters, keyboard tab navigation, librarian poses, modal focus containment and tour pause when scrolling away.
 - `app.js` retains the original evidence selection display, recorded answers, candidate checks, citation mapping, guided tour and live endpoints. Edits cover visual helpers, terminology, method navigation, keyboard accessibility and reduced motion. The decorative particle loop is no longer started.
 
-The separate frontend on port 8804 is unchanged. Before-edit copies of the original port-8800 files are in `demo/web_before_library_style/`.
+The separate frontend on port 8804 is unchanged. Before-edit copies of the original port-8800 files are only on Mikołaj's machine (not in git); `demo/web_arcane` is the pre-restyle winner.
 
 ## Presentation
 

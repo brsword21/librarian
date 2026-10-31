@@ -11,7 +11,7 @@ phase('Merge')
 const out = await agent(
 `You are the INTEGRATOR ("scalacz") of the "Librarian" hackathon project after lens ROUND ${round}. You alone own core/, harness/, configs/ and lenses/pipeline.py; lens agents own lenses/<type>/<a|b>_*.
 
-Working directory: /Users/mikolaj/Developer/start-hackathon-2/librarian (Python = .venv/bin/python, run commands from there). Read CONTRACT.md, RESEARCH.md, ../CONTEXT.md, every lenses/*/[ab]_report.md, runs/leaderboard.csv. The model server on 127.0.0.1:8765 is shared: never stop/restart it, never import torch. Never call Reactor or any external model API.
+Working directory: ../librarian (Python = .venv/bin/python, run commands from there). Read CONTRACT.md, RESEARCH.md, ../CONTEXT.md, every lenses/*/[ab]_report.md, runs/leaderboard.csv. The model server on 127.0.0.1:8765 is shared: never stop/restart it, never import torch. Never call Reactor or any external model API.
 
 Structured results returned by the 10 lens agents this round are in ${resultsFile} (JSON list; read it).
 
@@ -28,7 +28,7 @@ Tasks, in order (time box ~40 minutes; use --workers 3 at most):
 4. Abstention: look at abstain_p AUC per winner and on the routed run; propose (do not hard-code into Reactor calls yet) a global policy: which signal, which threshold, and whether to pass it to Reactor as a hint. Write it into configs/abstain.json {"policy": ..., "threshold": ..., "notes": ...}.
 5. CORE REQUESTs from the reports: implement the cheap, safe ones in core/ or harness/, keeping the API backward compatible; re-run anything affected; note what you declined and why.
 6. Audit the routed system on test (no gold): .venv/bin/python -m harness.audit --lens lenses/pipeline.py --variant routed --n 146 | tail -5, then read runs/audit/all/pipeline/routed/test_packs.jsonl for flagged items and a sample per route. Fix only general problems.
-7. Commit: git add -A && git commit -m "Round ${round} merge" (author: git -c user.name="Mikołaj" -c user.email="mikolaj@receptionos.com"; add the line "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" at the end of the message).
+7. Commit: git add -A && git commit -m "Round ${round} merge" (author: git -c user.name="Mikołaj" -c user.email="brsword21@users.noreply.github.com"; add the line "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" at the end of the message).
 8. Write runs/SYNTHESIS_r${round}.md: per type the winner + S/PA/CF1/chars on dev and dev200; routed-system metrics; router accuracy; abstention policy; what worked and what failed; and a BRIEF for the next round: for each type and role (a/b), 2-4 concrete things to try next.
 
 Return the structured summary (the brief texts will be passed verbatim to the next round's agents).`,

@@ -21,3 +21,10 @@ runs/proxy/packs/v3_*.jsonl
 runs/proxy/packs/multideep8_*.jsonl
 runs/proxy/packs/ssabsem_*.jsonl
 demo/web_before_library_style/
+# local config: the rxk_ key lives only in the macOS keychain, never in a file
+reactor.env
+*.env
+.env*
+# team cache / proxy kit archives (contain organiser kit code and data)
+*.tar
+*.tar.gz
