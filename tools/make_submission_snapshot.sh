@@ -9,7 +9,7 @@ OUT="${TMPDIR:-/tmp}/librarian-submission"
 rm -rf "$OUT" && mkdir -p "$OUT"
 git -C "$LIB" archive HEAD | tar -x -C "$OUT"
 cd "$OUT"
-rm -f docs/NIGHT_LOG.md ONBOARDING.md
+rm -f docs/NIGHT_LOG.md ONBOARDING.md tools/make_submission_snapshot.sh
 find lenses -path '*/scratch_*' -type f \( -name '*.log' -o -name '*.txt' -o -name '*.out' -o -name '*.jsonl' \
   -o -name '*.tsv' -o -name '*.pkl' -o -name '*.done' \) -delete
 rm -f demo/*/qa/*.png demo/*/source-art/*.png
