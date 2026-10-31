@@ -16,7 +16,7 @@ from pathlib import Path
 import core.paths  # noqa: F401  (puts the upstream kit on sys.path)
 from score import validate  # upstream kit
 
-from core.data import questions, read_jsonl
+from core.data import questions, read_jsonl, session_ids_file
 from core.paths import KIT, SPLIT_DIRS
 
 
@@ -42,7 +42,7 @@ def main(argv=None) -> int:
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     proc = subprocess.run([sys.executable, str(KIT / "reactor" / "predictions.py"), tmp.name, "--histories",
-                           str(SPLIT_DIRS[a.split] / "histories.jsonl"), "--out", str(out),
+                           str(session_ids_file(a.split)), "--out", str(out),
                            "--abstain-on", "agent,no-answer"], capture_output=True, text=True)
     print(proc.stderr.strip()[-2000:])
     preds = list(read_jsonl(out))

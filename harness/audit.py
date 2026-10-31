@@ -2,6 +2,9 @@
 
     python -m harness.audit --lens lenses/temporal/a_calendar.py --variant base --type temporal [--n 10] [--full]
 Writes runs/audit/<type>/<lens>/<variant>/test_packs.jsonl.
+    --compare OLD.jsonl  after the audit, list the test packs whose route, cite_plan or passage set changed against an
+                         older test_packs.jsonl (or compare two files without building: python -m harness.audit
+                         --diff OLD.jsonl NEW.jsonl).
 """
 from __future__ import annotations
 
@@ -45,6 +48,7 @@ def main(argv=None) -> None:
     ap.add_argument("--type")
     ap.add_argument("--n", type=int, default=999)
     ap.add_argument("--full", action="store_true")
+    ap.add_argument("--compare", help="older test_packs.jsonl to diff the new packs against")
     a = ap.parse_args(argv)
     lens = load_lens(a.lens)
     params = dict(lens.VARIANTS[a.variant])
@@ -79,7 +83,41 @@ def main(argv=None) -> None:
             for p in pack.passages[: (99 if a.full else 4)]:
                 print(f"  [{p.id} {p.date}] {p.text[: (3000 if a.full else 350)]!r}")
     print(f"\n{len(qs)} test questions, {n_flag} flagged -> {out}")
+    if a.compare:
+        compare(a.compare, out / "test_packs.jsonl")
+
+
+def compare(old_path, new_path) -> int:
+    """Print every question whose route, cite_plan or passage set differs between two test_packs.jsonl files."""
+    def load(p):
+        return {r["question_id"]: r for r in map(json.loads, open(p, encoding="utf-8"))}
+    old, new = load(old_path), load(new_path)
+    n = 0
+    for qid, b in new.items():
+        o = old.get(qid)
+        if o is None:
+            print(f"NEW   {qid} {b['question'][:100]}")
+            n += 1
+            continue
+        ps_o, ps_b = [p["id"] for p in o["passages"]], [p["id"] for p in b["passages"]]
+        ch = []
+        if o.get("route") != b.get("route"):
+            ch.append(f"route {o.get('route')} -> {b.get('route')}")
+        if sorted(o.get("cite_plan") or []) != sorted(b.get("cite_plan") or []):
+            ch.append(f"cite {len(o.get('cite_plan') or [])}->{len(b.get('cite_plan') or [])} "
+                      f"(kept {len(set(o.get('cite_plan') or []) & set(b.get('cite_plan') or []))})")
+        if sorted(ps_o) != sorted(ps_b):
+            ch.append(f"passages {len(ps_o)}->{len(ps_b)} (kept {len(set(ps_o) & set(ps_b))})")
+        if ch:
+            n += 1
+            print(f"{b.get('route') or '?':8s} {qid} {'; '.join(ch)} | {b['question'][:90]}")
+    print(f"{n} of {len(new)} packs changed against {old_path}")
+    return n
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    if len(sys.argv) == 4 and sys.argv[1] == "--diff":
+        compare(sys.argv[2], sys.argv[3])
+    else:
+        main()

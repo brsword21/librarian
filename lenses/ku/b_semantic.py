@@ -87,6 +87,7 @@ except Exception:  # pragma: no cover
     _SNOW = None
 USE_SNOWBALL = [False]
 PREV_MERGE = [False]   # set per build() from the variant params (module-level so the pure helpers stay simple)
+OWN_NAME = [False]     # r2 (lenses/ku/b_r2.py): bare-name subject without first person = someone else's value
 
 
 def _stem(w: str) -> str:
@@ -169,6 +170,9 @@ OTHER_SCOPE = re.compile(r"\b(?:the|their|his|her)\s+[\w\s-]{0,30}?\s+(?:in|at)\
 FIRST_PERSON = re.compile(r"\b(?:I|I'm|I've|I'd|I'll|my|My|we|We|our|Our|me)\b")
 PAST_OTHER = re.compile(r"\b(?:used to|last (?:autumn|fall|spring|summer|winter)|years ago|"
                         r"when I was|hypothetical(?:ly)?|if I (?:had|were))\b", re.I)
+NAME_SUBJ = re.compile(r"(?:^|[.;:]\s+|\b(?:and|but|while|because)\s+)\W*([A-Z][a-zÀ-ſ]+(?:\s+[A-Z][a-zÀ-ſ]+)?)\s+"
+                       r"(?:also\s+|still\s+|now\s+|usually\s+)?(?:has|have|had|drinks|pays|owns|uses|takes|keeps|swims|"
+                       r"walks|runs|buys|gets|earns|eats|lives|works|plays|reads|does|teaches)\b")
 _PERSON_IN_Q = re.compile(rf"\b(?:{_REL})\b|\b[A-Z][a-zÀ-ſ]+\b", re.I)
 
 
@@ -188,6 +192,12 @@ def ownership(sent: str, question: str) -> float:
         if any(re.search(rf"\b{re.escape(w.lower())}\b", q_low) for w in who):
             return 0.5
         return -1.0
+    if OWN_NAME[0] and not FIRST_PERSON.search(sent) and re.match(r"\s*how\s+(?:many|much|often|long|far)\b", question, re.I):
+        # quantity questions only: in 'who teaches / what is the name' questions the named person IS the value
+        # 'Carlos drinks three cups of coffee every morning.' (a named person's habit / possession, no I/my)
+        nm = NAME_SUBJ.search(sent)
+        if nm and not any(re.search(rf"\b{re.escape(w.lower())}\b", q_low) for w in nm.group(1).split()):
+            return -1.0
     if PAST_OTHER.search(sent):
         return -0.3
     return 1.0 if FIRST_PERSON.search(sent) else 0.0
@@ -394,6 +404,7 @@ def analyze(q, hx, **p) -> dict:
     question = q.question
     USE_SNOWBALL[0] = bool(p.get("snowball"))
     PREV_MERGE[0] = bool(p.get("prev_merge"))
+    OWN_NAME[0] = bool(p.get("own_name"))
     mode = question_mode(question)
     qd = declarative(question)
     qs = strip_cues(question)

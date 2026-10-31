@@ -42,8 +42,25 @@ VARIANTS = {
     # cross-encoder (top-40, raw-question query = cache-compatible with the generic lens) for the session/unit order
     "session8k1_rr": dict(_B, mode="session", n_sess=1, budget=8000, rerank_n=40, w_clean=0.0),
     "session10k1_rr": dict(_B, mode="session", n_sess=1, budget=10000, rerank_n=40, w_clean=0.0),
+    # round 2: + recommendation-sentence pool (assistant units with a first-person recommendation sharing a
+    # category/purpose token) added to the cross-encoder pool
+    "session10k1_rrp": dict(_B, mode="session", n_sess=1, budget=10000, rerank_n=40, w_clean=0.0, rec_pool=30),
+    # round 2: CE-trimmed top session (best turn + its request whole, the rest in CE order) cut at 4k / 5k / 6k
+    "trim4k": dict(_B, mode="trim", n_sess=1, budget=4000, rerank_n=40, w_clean=0.0),
+    "trim5k": dict(_B, mode="trim", n_sess=1, budget=5000, rerank_n=40, w_clean=0.0),
+    "trim6k": dict(_B, mode="trim", n_sess=1, budget=6000, rerank_n=40, w_clean=0.0),
+    "trim5k_cq": dict(_B, mode="trim", n_sess=1, budget=5000, rerank_n=40, w_clean=0.0, trim_query="clean"),
+    "trim6k_cq": dict(_B, mode="trim", n_sess=1, budget=6000, rerank_n=40, w_clean=0.0, trim_query="clean"),
+    # sentence-level CE (max over a unit's sentences, cleaned question) orders the non-best units
+    "trim5k_s": dict(_B, mode="trim", n_sess=1, budget=5000, rerank_n=40, w_clean=0.0, trim_query="clean",
+                     unit_score="sent"),
+    "trim6k_s": dict(_B, mode="trim", n_sess=1, budget=6000, rerank_n=40, w_clean=0.0, trim_query="clean",
+                     unit_score="sent"),
+    "trim5k_sb": dict(_B, mode="trim", n_sess=1, budget=5000, rerank_n=40, w_clean=0.0, trim_query="clean",
+                      unit_score="sent", best="sent"),
+    "trim4k_nohead": dict(_B, mode="trim", n_sess=1, budget=4000, rerank_n=40, w_clean=0.0, head=False),
 }
-DEFAULT = "session10k1_rr"  # best after round 1 (see b_report.md)
+DEFAULT = "session10k1_rr"  # best after rounds 1 and 2 (see b_report.md)
 
 # ----------------------------------------------------------------------------------------------------------------
 # Question parsing (pure python)
@@ -164,7 +181,8 @@ _SELF_REC = re.compile(
     r"\b(?:I(?:'d|’d| would)?|I can)\s+(?:strongly |highly |definitely |personally |really |also |still )?"
     r"(?:recommend|suggest|use|go with|pick|choose|opt for|point you to|steer you toward)\b"
     r"|\bmy (?:top |personal |first )?(?:pick|recommendation|suggestion|choice) (?:is|would be)\b"
-    r"|\b(?:you should|you could|you might want to|you'll want to|try)\s+(?:try|use|check out|go with|visit|look at)\b",
+    r"|\b(?:you should|you could|you might want to|you'll want to|try)\s+(?:try|use|check out|go with|visit|look at)\b"
+    r"|\byou (?:might|may|would|'d|will|'ll) (?:really )?(?:like|love|enjoy)\b",
     re.I)
 _PAST_REC = re.compile(r"\bI (?:recommended|suggested|mentioned)\b", re.I)
 _OTHER_PERSON = (r"(?:friend|neighbou?r|sister|brother|son|daughter|mom|mother|dad|father|wife|husband|partner|"
@@ -302,8 +320,33 @@ def _user_asks_own(q: str) -> bool:
                           r"\bmy (?:example|question|list|description)\b", q, re.I))
 
 
+def rec_pool_units(hx, rp: dict, limit: int = 30) -> list[int]:
+    """Round 2 (idea shared with lens A's recommendation-sentence scan): every assistant unit with a first-person
+    recommendation sentence that shares a distinctive category/purpose token with the question. These enter the
+    cross-encoder pool even when hybrid retrieval ranks them low ("You should check out Peachtree Brew Supply"
+    for "the homebrew supply shop you recommended" sat at hybrid rank 99)."""
+    want = {t for t in content_tokens(rp.get("cat", "") + " " + rp.get("purpose", "")) if t not in GENERIC_CATS}
+    if not want:
+        return []
+    idf = history_idf(hx)
+    d = idf.get("__default__", 5.0)
+    hits = []
+    for un in hx.units:
+        if un.role != "assistant" or not _SELF_REC.search(un.text):
+            continue
+        best = 0.0
+        for snt in _SENT_SPLIT.split(un.text):
+            if _SELF_REC.search(snt):
+                ov = sum(idf.get(t, d) for t in want & content_tokens(snt))
+                best = max(best, ov)
+        if best > 0:
+            hits.append((best, un.uid))
+    hits.sort(key=lambda x: -x[0])
+    return [u for _, u in hits[:limit]]
+
+
 def rank_units(q, hx, *, pool=100, rerank_n=40, w_rec=1.0, w_round=0.35, w_topic=0.25, user_w=0.6,
-               w_clean=0.5, w_decl=0.0, rr_query="raw", **_):
+               w_clean=0.5, w_decl=0.0, rr_query="raw", rec_pool=0, **_):
     """Candidate pool = hx.hybrid(question) (same call as the generic lens: its dense query + rerank pairs are cached)
     plus a BM25 channel on the cleaned question restricted to assistant units; optional declarative dense channel.
     Scores = cross-encoder z-score (rerank_n > 0) or fused-RRF z-score (rerank_n == 0), plus semantic features."""
@@ -340,6 +383,8 @@ def rank_units(q, hx, *, pool=100, rerank_n=40, w_rec=1.0, w_round=0.35, w_topic
     order = sorted(cand, key=lambda u: -cand[u])
     if rerank_n:
         top = order[:rerank_n]
+        if rec_pool and rp["is_rec"]:
+            top += [u for u in rec_pool_units(hx, rp, rec_pool) if u not in top]
         rr = dict(hx.rerank(text if rr_query == "raw" else cq, top))
         z = _z(rr)
     else:
@@ -495,6 +540,66 @@ def select_units(hx, ranking, scored, keep, mode="turns", top_budget=4000, extra
     return list(dict.fromkeys(chosen))
 
 
+_SENT_NL = re.compile(r"(?<=[.!?])\s+|\n+")
+
+
+def unit_sentence_scores(hx, query: str, uids: list[int]) -> dict[int, float]:
+    """Unit score = max cross-encoder logit over its sentences (hx.rerank_texts, cached). Sharper than scoring the
+    whole <=700-char unit: one answer sentence inside a list or a long recipe is not diluted by its neighbours."""
+    sents, owner = [], []
+    for u in uids:
+        for snt in _SENT_NL.split(hx.units[u].text):
+            snt = snt.strip()
+            if len(snt) >= 12:
+                sents.append(snt[:400])
+                owner.append(u)
+    out = {u: -99.0 for u in uids}
+    if sents:
+        for u, sc in zip(owner, hx.rerank_texts(query, sents)):
+            out[u] = max(out[u], sc)
+    return out
+
+
+def trim_units(q, hx, ranking, keep, head=True, prev_user=True, trim_query="raw", unit_score="unit",
+               best="rank") -> list[int]:
+    """Round 2: CE-trimmed top session. Priority order for build_pack(window=0), which cuts at `budget`:
+    1. the best turn of the top session (turn of the best-ranked unit there), whole;
+    2. the user turn right before it (the request it answers), when prev_user;
+    3. every other unit of the top session in cross-encoder order (hx.rerank on all session units, raw question;
+       cached), each preceded by its turn's first unit when head (chunk 0 carries the turn's topic sentence).
+    The pack is rendered chronologically, '[...]' marks dropped material."""
+    if not keep:
+        return []
+    top_sid = keep[0]
+    sess = hx.sess_by_id[top_sid]
+    sess_units = [j for t in sess["turns"] for j in hx.turn_units(t["turn_id"])]
+    ranked_top = [u for u in ranking if hx.units[u].session_id == top_sid]
+    tq = q.question if trim_query == "raw" else (split_topic(q.question)[1] or clean_question(q.question))
+    sscore = unit_sentence_scores(hx, tq, sess_units) if unit_score == "sent" else {}
+    if best == "sent" and sscore:
+        best_tid = hx.units[max(sess_units, key=lambda x: sscore[x])].turn_id
+    else:
+        best_tid = hx.units[ranked_top[0]].turn_id if ranked_top else sess["turns"][0]["turn_id"]
+    tids = [t["turn_id"] for t in sess["turns"]]
+    out = list(hx.turn_units(best_tid))
+    i = tids.index(best_tid)
+    if prev_user and i > 0 and hx.units[hx.turn_units(tids[i - 1])[0]].role == "user":
+        out += hx.turn_units(tids[i - 1])
+    rest = [u for u in sess_units if u not in out]
+    if sscore:
+        ce = {u: sscore[u] for u in rest}
+    else:
+        ce = dict(hx.rerank(tq, rest)) if rest else {}
+    for u in sorted(rest, key=lambda x: -ce.get(x, -99.0)):
+        if head:
+            h = hx.turn_units(hx.units[u].turn_id)[0]
+            if h not in out:
+                out.append(h)
+        if u not in out:
+            out.append(u)
+    return out
+
+
 def build(q, hx, **params):
     from core.pack import build_pack
     from core.types import EvidencePack
@@ -503,10 +608,15 @@ def build(q, hx, **params):
     ranking, scored, feats, info = rank_units(q, hx, **p)
     sess = session_scores(ranking, scored, hx)
     keep = [sid for sid, _ in sess[: p["n_sess"]]]
-    chosen = select_units(hx, ranking, scored, keep, mode=p["mode"], top_budget=p["top_budget"],
-                          extra=p.get("extra", 1))
+    if p["mode"] == "trim":
+        chosen = trim_units(q, hx, ranking, keep, head=p.get("head", True), prev_user=p.get("prev_user", True),
+                            trim_query=p.get("trim_query", "raw"), unit_score=p.get("unit_score", "unit"),
+                            best=p.get("best", "rank"))
+    else:
+        chosen = select_units(hx, ranking, scored, keep, mode=p["mode"], top_budget=p["top_budget"],
+                              extra=p.get("extra", 1))
     abstain_p = abstain_probability(ranking, scored, feats, info["rec"])
-    hint = make_hint(feats, chosen, hx, info["rec"], none_found=abstain_p >= p.get("abstain_hint", 0.6)) \
+    hint = make_hint(feats, chosen, hx, info["rec"], none_found=abstain_p >= p.get("abstain_hint", 9.0)) \
         if p["hint"] else ""
     passages, included, chars = build_pack(q, hx, chosen, budget=p["budget"], window=0, order="chrono",
                                            hint=hint, max_sessions=p["n_sess"])

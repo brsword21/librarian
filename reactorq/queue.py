@@ -97,8 +97,16 @@ def main(argv=None) -> int:
                         args += ["--evidence", str(ev)]
                     t0 = time.time()
                     res = call(*args, timeout=a.timeout)
-                    if res.get("status") == "refused" and res.get("code") == "history_changed":
-                        rh = None
+                    for attempt in range(2):  # closed / error / timeout / refused: start a fresh history, ask again
+                        if res.get("status") == "answered":
+                            break
+                        print(f"   retry {p['question_id']} after {res.get('status')} {res.get('code') or ''}", flush=True)
+                        time.sleep(5)
+                        nh = call("--new-history", timeout=120)
+                        if nh.get("status") == "history":
+                            rh = nh["history_id"]
+                            args[1] = rh
+                        res = call(*args, timeout=a.timeout)
                     res.update(question_id=p["question_id"], pack_hash=p["pack_hash"], dataset_history=hid,
                                wall_s=round(time.time() - t0, 1))
                     fc.write(json.dumps(res) + "\n")

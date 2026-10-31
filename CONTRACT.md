@@ -63,6 +63,19 @@ is in multi (0.87 -> 0.44), temporal (0.83 -> 0.65) and ku (0.96 -> 0.64).
 - `configs/best.json` holds the current winner per route (the routed system is `lenses/pipeline.py`);
   `configs/abstain.json` holds the abstention policy (no abstention hint to Reactor yet).
 
+### Harness additions after round 2
+- `harness.sweep --qfilter REGEX`: run only questions whose text matches (case-insensitive), e.g. the gap subset.
+- `harness.sweep --route --type X` now writes to `runs/<tag>/X-routed/...` (no longer overwrites the gold-type run).
+- Sweeps over several gold types (no `--type`, or `--route`) print a per-gold-type breakdown (S, Sall, PA, CF1, route mix).
+- `summary.json` carries `passages_mean`.
+- `harness.audit ... --compare OLD.jsonl` lists test packs whose route / cite_plan / passage set changed;
+  `python -m harness.audit --diff OLD.jsonl NEW.jsonl` does the same for two existing files.
+- Hand-offs after the text router live in the route lenses (`lenses/ssu/merged_r2.py`: role_guess >= 0.8 -> ssa;
+  `lenses/multi/merged_r2.py`: role_guess >= 0.9 -> ssa), because `reactorq.build_packs` routes by text only. The
+  final route is in `pack.route` / `debug.route_final`. `configs/best_r1.json` = round-1 system (`--variants routed_r1`).
+- Router r2: "how many days did I spend ... (in total / and / trips)" and "the most / the least / compared to" go to
+  multi when the base rules say ssu or temporal (0 test questions affected).
+
 ## Lens file contract
 ```python
 # lenses/<type>/<a|b>_<name>.py

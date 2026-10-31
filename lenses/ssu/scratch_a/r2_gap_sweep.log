@@ -1,0 +1,24 @@
+70 questions x 2 variants on dev in 11s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+r3g4                       93.4 1.000 1.000 1.000 1.000 1.000 1.000 0.984   3577  167.2 0.919 0
+   if Reactor cites every passage: CF1all=0.964 Sall=92.8
+r3g3                       93.4 1.000 1.000 1.000 1.000 1.000 1.000 0.984   3534   96.4 0.919 0
+   if Reactor cites every passage: CF1all=0.969 Sall=93.0
+144 questions x 2 variants on dev in 21s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+r3g4                       82.6 0.882 0.925 0.967 0.934 0.947 1.000 0.883   3917  160.5 0.895 0
+   if Reactor cites every passage: CF1all=0.938 Sall=84.3
+r3g3                       81.7 0.868 0.918 0.960 0.919 0.947 1.000 0.883   3846   92.9 0.895 0
+   if Reactor cites every passage: CF1all=0.942 Sall=83.5
+23 questions x 2 variants on dev200 in 10s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+r3g4                       92.5 1.000 1.000 1.000 1.000 1.000 1.000 0.955   3859  472.1 0.955 0
+   if Reactor cites every passage: CF1all=0.864 Sall=89.7
+r3g3                       92.5 1.000 1.000 1.000 1.000 1.000 1.000 0.955   3805  224.1 0.955 0
+   if Reactor cites every passage: CF1all=0.864 Sall=89.7
+40 questions x 2 variants on dev200 in 14s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+r3g4                       76.8 0.811 0.874 0.914 0.838 0.893 1.000 0.844   3953  395.7 0.874 0
+   if Reactor cites every passage: CF1all=0.856 Sall=77.2
+r3g3                       76.8 0.811 0.874 0.914 0.838 0.893 1.000 0.844   3922  197.0 0.874 0
+   if Reactor cites every passage: CF1all=0.856 Sall=77.2

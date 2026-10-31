@@ -28,7 +28,22 @@ _AGG = re.compile(r"\b(in total|total|combined|altogether|all together|sum|diffe
 _OWNERS = re.compile(r"\band I\b", re.I)
 
 
+# r2 (integrator): aggregate questions the temporal / ssu rules used to catch. Applied only when the base rules say ssu
+# or temporal. dev+dev200: spend 8 multi fixed, 0 broken; most 5 multi fixed, 2 temporal (already misrouted to ssu)
+# moved to multi. 0 test questions match either rule.
+_SPEND = re.compile(r"^how many (days|weeks|months|hours) did (I|it take me)\b(?!.*\b(ago|apart|after|before|between|passed"
+                    r"|since)\b).*(\bin total\b|\ball\b|\band\b|trips\b|activities\b|breaks\b|,)", re.I)
+_MOST = re.compile(r"\b(the most|the least|compared to)\b", re.I)
+
+
 def route(question: str) -> tuple[str, float]:
+    r = _route_base(question)
+    if r[0] in ("ssu", "temporal") and (_SPEND.search(question.strip()) or _MOST.search(question)):
+        return "multi", 0.6
+    return r
+
+
+def _route_base(question: str) -> tuple[str, float]:
     q = question.strip()
     if _A.search(q) or (_YOU.search(q) and not _TOLD_YOU.search(q)):
         return "ssa", 0.9

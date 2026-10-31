@@ -1,0 +1,245 @@
+==============================================================================================================
+2023/09/17 How many days apart were my son's school play and my daughter's orthodontist appointment?
+   computed=14 raw=14 conf=True abst=0.05 np=2 cite=2 why=None
+      ("my son's school play", '2023-06-10', 1.206, 0.443, [])
+      ("my daughter's orthodontist appointment", '2023-06-24', 1.208, 0.621, [])
+      H: - "my son's school play" = 2023-06-10 (date written; session 2023/05/28: "Oh, one more thing: My son's school play is on 2023-06-10, so I need to shift a client call that Friday.")
+      H: - "my daughter's orthodontist appointment" = 2023-06-24 (date written; session 2023/06/01: "Also, My daughter's orthodontist appointment is on 2023-06-24, right in the middle of a client deadline.")
+==============================================================================================================
+2023/10/06 How many days apart were the hospital's 'Run for Health' 5K and the annual charity gala I attended?
+   computed=139 raw=139 conf=True abst=0.05 np=2 cite=2 why=None
+      ("the hospital's 'Run for Health' 5K", '2023-04-23', 1.46, 0.968, [])
+      ('the annual charity gala I attended', '2023-09-09', 1.21, 0.56, [])
+      H: - "the hospital's 'Run for Health' 5K" = 2023-04-23 (date written; session 2023/04/23: "On a completely different note, I ran in the hospital's 'Run for Health' 5K fundraiser on 23 April 2023.")
+      H: - "the annual charity gala I attended" = 2023-09-09 (date written; session 2023/09/09: "Oh, before I forget, I attended the hospital's annual charity gala on 9 September 2023.")
+==============================================================================================================
+2023/10/06 How many days apart were the watercolour society's annual exhibition opening and the hospital leadership conference I attended?
+   computed=83 raw=83 conf=True abst=0.05 np=2 cite=2 why=None
+      ("the watercolour society's annual exhibition opening", '2023-08-12', 1.206, 0.4, [])
+      ('the hospital leadership conference I attended', '2023-05-21', 1.21, 0.454, [])
+      H: - "the watercolour society's annual exhibition opening" = 2023-08-12 (date written; session 2023/08/12: "By the way, I went to the watercolour society's annual exhibition opening on 12 August 2023.—it was lovely to…")
+      H: - "the hospital leadership conference I attended" = 2023-05-21 (date written; session 2023/05/21: "Actually, I attended the hospital leadership conference on 21 May 2023.")
+==============================================================================================================
+2023/10/06 How many days apart were my trip to Adelaide to visit James and my trip to Brisbane to help Daniel settle in?
+   computed=71 raw=71 conf=True abst=0.05 np=2 cite=2 why=None
+      ('my trip to Adelaide to visit James', '2023-06-10', 1.06, 0.596, [])
+      ('my trip to Brisbane to help Daniel settle in', '2023-08-20', 1.177, 0.599, [])
+      H: - "my trip to Adelaide to visit James" = 2023-06-10 (date written; session 2023/06/12: "I flew to Adelaide to spend the long weekend with my older son James and his wife on 10 June 2023.")
+      H: - "my trip to Brisbane to help Daniel settle in" = 2023-08-20 (date written; session 2023/08/22: "I flew to Brisbane to help my younger son Daniel settle into his new apartment on 20 August 2023.")
+==============================================================================================================
+2023/09/25 How many days apart were starting my Python for Data Analysis course and finishing my first Python data cleaning project?
+   computed=43 raw=43 conf=True abst=0.05 np=2 cite=2 why=None
+      ('starting my Python for Data Analysis course', '2023-05-08', 1.448, 0.44, [])
+      ('finishing my first Python data cleaning project', '2023-06-20', 1.21, 0.354, [])
+      H: - "starting my Python for Data Analysis course" = 2023-05-08 (date written; session 2023/05/08: "Also, I started the Python for Data Analysis course on 2023-05-08. and I'm trying to stay consistent with the…")
+      H: - "finishing my first Python data cleaning project" = 2023-06-20 (date written; session 2023/06/20: "Actually, I finished my first Python data cleaning project on 2023-06-20. so I treated myself to some mandazi.")
+==============================================================================================================
+2023/09/25 How many days apart were my church choir retreat and my first used car test drive?
+   computed=14 raw=14 conf=True abst=0.05 np=2 cite=2 why=None
+      ('my church choir retreat', '2023-07-08', 1.21, 0.472, [])
+      ('my first used car test drive', '2023-07-22', 1.21, 0.681, [])
+      H: - "my church choir retreat" = 2023-07-08 (date written; session 2023/07/08: "Also, honestly, I went on a church choir retreat on 2023-07-08. and it was so refreshing, so I’m just getting…")
+      H: - "my first used car test drive" = 2023-07-22 (date written; session 2023/07/22: "Also, I went for my first used car test drive on 2023-07-22; it was a Toyota Corolla.")
+==============================================================================================================
+2023/10/15 How many days after I entered my alfajor recipe in the city baking contest were the winners announced?
+   computed=104 raw=104 conf=True abst=0.05 np=2 cite=2 why=None
+      ('I entered my alfajor recipe in the city baking contest', '2023-06-02', 1.21, 0.452, [])
+      ('the winners announced', '2023-09-14', 1.158, 0.378, [])
+      H: - "I entered my alfajor recipe in the city baking contest" = 2023-06-02 (date written; session 2023/05/29: "I am entering my alfajor recipe in the city baking contest on June 2, 2023.")
+      H: - "the winners announced" = 2023-09-14 (date written; session 2023/09/16: "The winners of the city baking contest were announced on September 14, 2023.")
+==============================================================================================================
+2023/10/15 How many days after I bought my ticket to the Buenos Aires Tango Festival was the closing night?
+   computed=10 raw=10 conf=True abst=0.05 np=2 cite=2 why=None
+      ('I bought my ticket to the Buenos Aires Tango Festival', '2023-08-10', 1.454, 0.312, [])
+      ('the closing night', '2023-08-20', 1.16, 0.556, [])
+      H: - "I bought my ticket to the Buenos Aires Tango Festival" = 2023-08-10 (date written; session 2023/08/11: "Also, I bought my ticket to the Buenos Aires Tango Festival on August 10, 2023., so I’ll need to prep some me…")
+      H: - "the closing night" = 2023-08-20 (date written; session 2023/08/21: "The closing night of the Buenos Aires Tango Festival was on August 20, 2023.")
+==============================================================================================================
+2023/07/27 How many days apart were my monstera repotting and my lead-climbing course?
+   computed=69 raw=69 conf=True abst=0.05 np=3 cite=2 why=None
+      ('my monstera repotting', '2023-03-12', 1.2, 0.232, [])
+      ('my lead-climbing course', '2023-05-20', 1.21, 0.993, [])
+      H: - "my monstera repotting" = 2023-03-12 (date written; session 2023/03/12: "I finally repotted my monstera on 2023-03-12, and it already has a new leaf unfurling.")
+      H: - "my lead-climbing course" = 2023-05-20 (date written; session 2023/05/20: "I did a lead-climbing course in Lyon on 2023-05-20, and my forearms were wrecked for two days.")
+==============================================================================================================
+2023/07/27 How many days after submitting my visa application did I book my flight to Montreal?
+   computed=72 raw=72 conf=True abst=0.05 np=2 cite=2 why=None
+      ('submitting my visa application', '2023-03-01', 1.17, 0.454, [])
+      ('book my flight to Montreal', '2023-05-12', 1.17, 0.452, [])
+      H: - "submitting my visa application" = 2023-03-01 (relative to the session date; session 2023/03/01: "I'm trying to figure out what to do with my monstera while I'm away, and I finally submitted my working holid…")
+      H: - "book my flight to Montreal" = 2023-05-12 (relative to the session date; session 2023/05/12: "Oh, and I booked my flight to Montreal for the start of September this morning.")
+==============================================================================================================
+2023/07/27 How many days after setting up my Montreal flat alerts did I sign a lease?
+   computed=45 raw=45 conf=True abst=0.05 np=3 cite=2 why=None
+      ('setting up my Montreal flat alerts', '2023-03-18', 1.17, 0.192, [])
+      ('sign a lease', '2023-05-02', 1.17, 0.454, [])
+      H: - "setting up my Montreal flat alerts" = 2023-03-18 (relative to the session date; session 2023/03/18: "I set up alerts for shared flats in Montreal tonight.")
+      H: - "sign a lease" = 2023-05-02 (relative to the session date; session 2023/05/02: "Oh, and I signed a lease for a room in a shared flat in Montreal today.")
+==============================================================================================================
+2023/07/27 How many days after buying my trail-running shoes did I do my first trail run?
+   computed=None raw=102 conf=False abst=0.7 np=5 cite=3 why=sign
+      ('buying my trail-running shoes', '2023-06-21', 0.77, 0.05, [])
+      ('do my first trail run', '2023-03-11', 0.61, 0.138, ['asst-session-date'])
+      H: - "buying my trail-running shoes" = 2023-06-21 (relative to the session date; session 2023/06/22: "Oh, before I forget: You mentioned watching a trail-running film at the outdoor cinema last night..")
+      H: - "do my first trail run" = 2023-03-11 (said as happening on the session date; session 2023/03/11: "Some examples of volunteer opportunities you might find include: * Animal shelters * Parks and recreation dep…")
+==============================================================================================================
+2023/07/27 How many days after sending off my passport renewal did my renewed passport arrive?
+   computed=43 raw=43 conf=True abst=0.05 np=2 cite=2 why=None
+      ('sending off my passport renewal', '2023-03-06', 1.21, 0.457, [])
+      ('my renewed passport arrive', '2023-04-18', 1.21, 0.702, [])
+      H: - "sending off my passport renewal" = 2023-03-06 (date written; session 2023/03/06: "I sent off my passport renewal application on 2023-03-06.")
+      H: - "my renewed passport arrive" = 2023-04-18 (date written; session 2023/04/18: "Oh, and random life admin: I renewed my national ID card on 2023-04-18, the same day my passport arrived. so …")
+==============================================================================================================
+2023/07/27 How many days after my pre-departure medical check-up did I get my travel vaccines?
+   computed=None raw=79 conf=False abst=0.7 np=4 cite=2 why=who:other
+      ('my pre-departure medical check-up', '2023-03-21', 0.72, 0.564, ['other'])
+      ('get my travel vaccines', '2023-06-08', 1.124, 0.578, [])
+      H: - "my pre-departure medical check-up" = 2023-03-21 (relative to the session date; session 2023/03/21: "Camille had her pre-departure medical check-up today and said it was mostly paperwork.")
+      H: - "get my travel vaccines" = 2023-06-08 (said as happening on the session date; session 2023/06/08: "And I still need to sort out my travel vaccines.")
+==============================================================================================================
+2023/07/27 How many days after my last day of school before summer did I leave for my Ardèche canoe trip?
+   computed=5 raw=5 conf=True abst=0.05 np=2 cite=2 why=None
+      ('my last day of school before summer', '2023-07-07', 1.208, 0.356, [])
+      ('leave for my Ardèche canoe trip', '2023-07-12', 1.03, 0.706, [])
+      H: - "my last day of school before summer" = 2023-07-07 (date written; session 2023/07/07: "Oh, and about the basil on my kitchen windowsill—My last day of school before the summer break was on 2023-07…")
+      H: - "leave for my Ardèche canoe trip" = 2023-07-12 (date written; session 2023/07/12: "That reminds me of something: You left for your Ardèche canoe trip on 2023-07-12, and I remember you said the…")
+==============================================================================================================
+2023/07/27 How many days after getting my sourdough starter did I bake my first loaf?
+   computed=None raw=58 conf=False abst=0.6 np=4 cite=3 why=sign
+      ('getting my sourdough starter', '2023-06-29', 0.869, 0.008, [])
+      ('bake my first loaf', '2023-05-02', 0.44, 0.245, ['asst-session-date'])
+      H: - "getting my sourdough starter" = 2023-06-29 (said as happening on the session date; session 2023/06/29: "Since I've already attended a baking workshop earlier in the month where I learned how to make traditional cr…")
+      H: - "bake my first loaf" = 2023-05-02 (said as happening on the session date; session 2023/05/02: "**Meatloaf with Roasted Vegetables**: Mix the ground beef with egg, oats, and your favorite herbs, then shape…")
+==============================================================================================================
+2023/09/02 How many days apart were my Toronto Marathon and the big Moroccan family dinner I cooked?
+   computed=73 raw=73 conf=True abst=0.05 np=3 cite=2 why=None
+      ('my Toronto Marathon', '2023-04-16', 1.458, 0.682, [])
+      ('the big Moroccan family dinner I cooked', '2023-06-28', 1.208, 0.222, [])
+      H: - "my Toronto Marathon" = 2023-04-16 (date written; session 2023/04/16: "On 2023-04-16, I ran the Toronto Marathon and my legs were sore for days.")
+      H: - "the big Moroccan family dinner I cooked" = 2023-06-28 (date written; session 2023/06/28: "Last week was chaotic, but On 2023-06-28, I cooked a Moroccan lamb tagine for our big family dinner.")
+==============================================================================================================
+2023/09/02 How many days apart were the community potluck where I made Moroccan mint tea and the family picnic on Toronto Island where I cooked fish tagine?
+   computed=100 raw=100 conf=True abst=0.05 np=2 cite=2 why=None
+      ('the community potluck where I made Moroccan mint tea', '2023-04-29', 1.21, 0.405, [])
+      ('the family picnic on Toronto Island where I cooked fish tagine', '2023-08-07', 1.46, 0.482, [])
+      H: - "the community potluck where I made Moroccan mint tea" = 2023-04-29 (date written; session 2023/04/29: "On 2023-04-29, I made Moroccan mint tea and almond cookies for a community potluck at my local community cent…")
+      H: - "the family picnic on Toronto Island where I cooked fish tagine" = 2023-08-07 (date written; session 2023/08/07: "On 2023-08-07, I cooked a Moroccan fish tagine for a family picnic on Toronto Island.")
+==============================================================================================================
+2023/09/02 How many days apart were my visit to the Aga Khan Museum and the Moroccan pastilla cooking class I took?
+   computed=21 raw=21 conf=True abst=0.05 np=2 cite=2 why=None
+      ('my visit to the Aga Khan Museum', '2023-05-21', 1.46, 0.454, [])
+      ('the Moroccan pastilla cooking class I took', '2023-06-11', 1.21, 0.37, [])
+      H: - "my visit to the Aga Khan Museum" = 2023-05-21 (date written; session 2023/05/22: "On 2023-05-21, I visited the Aga Khan Museum with Lina to see a Moroccan textile exhibit.")
+      H: - "the Moroccan pastilla cooking class I took" = 2023-06-11 (date written; session 2023/06/12: "On 2023-06-11, I took a Moroccan pastilla cooking class at a community kitchen.")
+==============================================================================================================
+2023/09/02 How many days apart were the immigration law conference I attended in Ottawa and the citizenship workshop I led at the Toronto Public Library?
+   computed=77 raw=77 conf=True abst=0.05 np=2 cite=2 why=None
+      ('the immigration law conference I attended in Ottawa', '2023-05-06', 1.21, 0.658, [])
+      ('the citizenship workshop I led at the Toronto Public Library', '2023-07-22', 1.46, 0.803, [])
+      H: - "the immigration law conference I attended in Ottawa" = 2023-05-06 (date written; session 2023/05/06: "On 2023-05-06, I attended an immigration law conference in Ottawa and came back exhausted but inspired.")
+      H: - "the citizenship workshop I led at the Toronto Public Library" = 2023-07-22 (date written; session 2023/07/22: "On 2023-07-22, you led a citizenship workshop at the Toronto Public Library for new permanent residents.")
+==============================================================================================================
+2023/11/07 How many days after I registered for my part-time PhD did I have my first supervision meeting?
+   computed=108 raw=108 conf=True abst=0.05 np=2 cite=2 why=None
+      ('I registered for my part-time PhD', '2023-06-12', 1.208, 0.798, [])
+      ('have my first supervision meeting', '2023-09-28', 1.208, 0.784, [])
+      H: - "I registered for my part-time PhD" = 2023-06-12 (date written; session 2023/06/12: "Also, I registered for my part-time PhD on 2023-06-12. and the admin side is finally settling down.")
+      H: - "have my first supervision meeting" = 2023-09-28 (date written; session 2023/09/28: "Oh, and I had my first supervision meeting for the PhD on 2023-09-28., which was a bit nerve-wracking but als…")
+==============================================================================================================
+2023/11/07 How many days after I attended the fresco conservation workshop in Arezzo did I visit the exhibition of restored altarpieces at the Uffizi?
+   computed=46 raw=46 conf=True abst=0.05 np=2 cite=2 why=None
+      ('I attended the fresco conservation workshop in Arezzo', '2023-06-20', 1.206, 0.448, [])
+      ('visit the exhibition of restored altarpieces at the Uffizi', '2023-08-05', 1.21, 0.43, [])
+      H: - "I attended the fresco conservation workshop in Arezzo" = 2023-06-20 (date written; session 2023/06/20: "Oh, I attended a fresco conservation workshop in Arezzo on 2023-06-20.")
+      H: - "visit the exhibition of restored altarpieces at the Uffizi" = 2023-08-05 (date written; session 2023/08/05: "I visited the exhibition of restored altarpieces at the Uffizi on 2023-08-05.")
+==============================================================================================================
+2023/08/22 How many days after my introductory pottery workshop is the glaze-firing workshop?
+   computed=14 raw=14 conf=True abst=0.05 np=2 cite=2 why=None
+      ('my introductory pottery workshop', '2023-04-05', 1.17, 0.585, [])
+      ('the glaze-firing workshop', '2023-04-19', 1.12, 1.081, [])
+      H: - "my introductory pottery workshop" = 2023-04-05 (date written, year inferred; session 2023/03/01: "Also, I signed up for an introductory pottery workshop that starts on April 5.")
+      H: - "the glaze-firing workshop" = 2023-04-19 (date written, year inferred; session 2023/03/14: "The glaze-firing workshop is on April 19.")
+==============================================================================================================
+2023/12/02 How many days after the skate shop grand opening was my audio engineering program interview?
+   computed=51 raw=51 conf=True abst=0.05 np=2 cite=2 why=None
+      ('the skate shop grand opening', '2023-07-14', 1.208, 0.797, [])
+      ('my audio engineering program interview', '2023-09-03', 1.21, 0.359, [])
+      H: - "the skate shop grand opening" = 2023-07-14 (date written; session 2023/07/14: "By the way, I went to the skate shop grand opening on July 14, 2023 and picked up a new deck.")
+      H: - "my audio engineering program interview" = 2023-09-03 (date written; session 2023/09/03: "My interview for the audio engineering program was on September 3, 2023.")
+==============================================================================================================
+2023/12/02 How many days after I passed my driver's written test did I buy my MIDI keyboard?
+   computed=134 raw=134 conf=True abst=0.05 np=2 cite=2 why=None
+      ("I passed my driver's written test", '2023-06-27', 1.208, 0.327, [])
+      ('buy my MIDI keyboard', '2023-11-08', 1.204, 0.452, [])
+      H: - "I passed my driver's written test" = 2023-06-27 (date written; session 2023/06/27: "Random adulting update: I passed my driver's written test on June 27, 2023, after studying the manual for a w…")
+      H: - "buy my MIDI keyboard" = 2023-11-08 (date written; session 2023/11/08: "Also, small gear update: I finally bought a MIDI keyboard for my home studio on November 8, 2023.")
+==============================================================================================================
+2023/12/02 How many days after my latte art throwdown did I finish mixing my demo EP?
+   computed=99 raw=99 conf=True abst=0.05 np=2 cite=2 why=None
+      ('my latte art throwdown', '2023-06-18', 1.208, 0.452, [])
+      ('finish mixing my demo EP', '2023-09-25', 1.21, 0.634, [])
+      H: - "my latte art throwdown" = 2023-06-18 (date written; session 2023/06/18: "Oh, random but I competed in my first latte art throwdown at the café on June 18, 2023. and I still can't bel…")
+      H: - "finish mixing my demo EP" = 2023-09-25 (date written; session 2023/09/25: "I finished the final mix of my three-track demo EP on September 25, 2023.")
+==============================================================================================================
+2023/12/02 How many days after my first open mic set did I finish installing my acoustic panels?
+   computed=101 raw=101 conf=True abst=0.05 np=2 cite=2 why=None
+      ('my first open mic set', '2023-07-09', 1.21, 0.65, [])
+      ('finish installing my acoustic panels', '2023-10-18', 1.21, 0.415, [])
+      H: - "my first open mic set" = 2023-07-09 (date written; session 2023/07/09: "I played my first open mic set at a café in Mile End on July 9, 2023, and it went better than I expected.")
+      H: - "finish installing my acoustic panels" = 2023-10-18 (date written; session 2023/10/18: "I finally finished installing the acoustic panels in my home studio on October 18, 2023, so the room sounds m…")
+==============================================================================================================
+2023/12/02 How many days after the synthesizer workshop did I buy my first hardware synth?
+   computed=28 raw=28 conf=True abst=0.05 np=2 cite=2 why=None
+      ('the synthesizer workshop', '2023-07-22', 1.21, 0.827, [])
+      ('buy my first hardware synth', '2023-08-19', 1.208, 0.833, [])
+      H: - "the synthesizer workshop" = 2023-07-22 (date written; session 2023/07/22: "Actually, I attended a free synthesizer workshop at the music store on July 22, 2023, and got to play a Korg …")
+      H: - "buy my first hardware synth" = 2023-08-19 (date written; session 2023/08/19: "Also, I ended up buying my first hardware synth, a Korg Minilogue, on August 19, 2023. and I've been learning…")
+==============================================================================================================
+2023/10/18 How many days apart were my daughter's wedding dress fitting and the cake tasting?
+   computed=7 raw=7 conf=True abst=0.05 np=2 cite=2 why=None
+      ("my daughter's wedding dress fitting", '2023-09-05', 1.208, 0.584, [])
+      ('the cake tasting', '2023-09-12', 1.208, 0.452, [])
+      H: - "my daughter's wedding dress fitting" = 2023-09-05 (date written; session 2023/05/03: "I've been a bit distracted: My daughter's wedding dress fitting is scheduled for 2023-09-05 at the bridal sho…")
+      H: - "the cake tasting" = 2023-09-12 (date written; session 2023/05/10: "Quick reminder: The cake tasting appointment for your daughter's wedding is on 2023-09-12.")
+==============================================================================================================
+2023/10/18 How many days apart were my first hive inspection and the varroa treatment?
+   computed=14 raw=14 conf=True abst=0.05 np=3 cite=2 why=None
+      ('my first hive inspection', '2023-05-01', 1.206, 0.323, [])
+      ('the varroa treatment', '2023-05-15', 1.154, 0.176, [])
+      H: - "my first hive inspection" = 2023-05-01 (date written; session 2023/04/28: "Also, I almost forgot: My first full hive inspection this year is scheduled for 2023-05-01.")
+      H: - "the varroa treatment" = 2023-05-15 (date written; session 2023/05/02: "Quick update on the bee side: The varroa treatment is now booked for 2023-05-15.")
+==============================================================================================================
+2023/10/18 How many days apart were my car's tire change appointment and the annual car inspection? I lost track.
+   computed=14 raw=14 conf=True abst=0.05 np=3 cite=2 why=None
+      ("my car's tire change appointment", '2023-07-03', 1.21, 0.652, [])
+      ('the annual car inspection', '2023-07-17', 1.21, 0.152, [])
+      H: - "my car's tire change appointment" = 2023-07-03 (date written; session 2023/06/15: "Also on Monday I have a tire change appointment for my car at the Rotterdam garage on 2023-07-03., so Monday …")
+      H: - "the annual car inspection" = 2023-07-17 (date written; session 2023/06/22: "The annual car inspection for my car is booked for 2023-07-17 at the same garage.")
+==============================================================================================================
+2023/07/05 How many days after Opening Day for my son's baseball team was the league jamboree?
+   computed=35 raw=35 conf=True abst=0.05 np=3 cite=2 why=None
+      ("Opening Day for my son's baseball team", '2023-03-18', 1.46, 0.578, [])
+      ('the league jamboree', '2023-04-22', 1.204, 0.164, [])
+      H: - "Opening Day for my son's baseball team" = 2023-03-18 (date written; session 2023/02/15: "Opening Day for my son's baseball team is March 18, 2023.")
+      H: - "the league jamboree" = 2023-04-22 (date written; session 2023/03/02: "The league jamboree is on April 22, 2023., so I need to have the cooler and snack plan ready for the early ga…")
+==============================================================================================================
+2023/07/05 How many days after my wife's birthday was our anniversary this year?
+   computed=50 raw=50 conf=True abst=0.05 np=3 cite=2 why=None
+      ("my wife's birthday", '2023-05-02', 1.21, 0.584, [])
+      ('our anniversary', '2023-06-21', 1.2, 0.22, [])
+      H: - "my wife's birthday" = 2023-05-02 (date written; session 2023/01/20: "My wife's birthday is May 2, 2023, so I should start planning a nice dinner.")
+      H: - "our anniversary" = 2023-06-21 (date written; session 2023/03/14: "Your anniversary is June 21, 2023, so you'll want to book a table early.")
+==============================================================================================================
+2023/08/26 How many days after I adopted Juniper did she have her first vet appointment?
+   computed=7 raw=7 conf=True abst=0.05 np=2 cite=2 why=None
+      ('I adopted Juniper', '2023-04-14', 1.208, 0.257, [])
+      ('have her first vet appointment', '2023-04-21', 1.208, 0.41, [])
+      H: - "I adopted Juniper" = 2023-04-14 (date written; session 2023/04/15: "Also, quick dog update: We adopted Juniper from the rescue on 2023-04-14, and she's already hiding under the …")
+      H: - "have her first vet appointment" = 2023-04-21 (date written; session 2023/04/22: "You mentioned Juniper's first vet appointment was on 2023-04-21, so she is all checked out now.")
+==============================================================================================================
+2023/07/04 How many days apart were my trip to Bergen and my trip to Trondheim?
+   computed=73 raw=73 conf=True abst=0.05 np=3 cite=2 why=None
+      ('my trip to Bergen', '2023-03-10', 1.115, 0.464, [])
+      ('my trip to Trondheim', '2023-05-22', 1.118, 0.146, [])
+      H: - "my trip to Bergen" = 2023-03-10 (date written; session 2023/03/12: "By the way, I went to a veterinary conference in Bergen on March 10, 2023., and I still think about this one …")
+      H: - "my trip to Trondheim" = 2023-05-22 (date written; session 2023/05/24: "By the way, I visited the Trondheim horse fair on May 22, 2023.")

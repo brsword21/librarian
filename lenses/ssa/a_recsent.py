@@ -8,7 +8,11 @@ ONE session, and tell Reactor what is NOT the answer. Ordinal questions ("the 7t
 computed in code. See lenses/ssa/a_design.md.
 
 Round 1 best variant: `recqs_cf7` (BM25 + role-BM25 + structural scan, no model server; quoted key line; shape boost;
-cue floor 0.7). dev S 93.3 / dev200 S 93.3, PA 1.0, CF1 1.0, ~5.5k chars. See lenses/ssa/a_report.md.
+cue floor 0.7). dev S 93.3 / dev200 S 93.3, PA 1.0, CF1 1.0, ~5.5k chars.
+Round 2 best variant: `r2_conf2` = recqs_cf7 + one session only (pack == cite set, Sall = S) + confidence-tiered budget
+(best-turn margin >= 1.3 -> 3000, >= 1.2 -> 4500, else 6000) + kind gate on abstain_p. dev 93.6 / dev200 93.7, PA 1.0,
+CF1 = CF1all = 1.0, 4.5k / 4.2k chars. Also new: `role_features` / `role_guess` (is the answer in an assistant turn?),
+used by lenses/ssa/a_handoff.py on the ssu route. See lenses/ssa/a_report.md.
 
 Self-test (pure python, no core.index / models needed):  .venv/bin/python -m lenses.ssa.a_recsent
 """
@@ -43,6 +47,27 @@ VARIANTS = {
     # budget cuts: lose PA (best turn != gold turn in ~1/3 of questions; the session fill saves them)
     "recqs_b5": dict(_BASE, channels="bm25", rerank_n=0, hint_mode="quote", shape_boost=1.0, budget=5000),
     "recqs_b4": dict(_BASE, channels="bm25", rerank_n=0, hint_mode="quote", shape_boost=1.0, budget=4000),
+    # ---- round 2 (all on top of recqs_cf7; kind_gate only changes abstain_p) ----
+    # no runner-up session (near-miss insurance off): the pack is exactly the cite set (Sall = S)
+    "r2_solo": dict(_BASE, channels="bm25", rerank_n=0, hint_mode="quote", shape_boost=1.0, cue_floor=0.7,
+                    tie=1.01, kind_gate=True),
+    # budget 6000 (dev turn_rank: lens order keeps the gold turn at 6k, 5.0k chars on average)
+    "r2_b6": dict(_BASE, channels="bm25", rerank_n=0, hint_mode="quote", shape_boost=1.0, cue_floor=0.7,
+                  budget=6000, kind_gate=True),
+    "r2_solo_b6": dict(_BASE, channels="bm25", rerank_n=0, hint_mode="quote", shape_boost=1.0, cue_floor=0.7,
+                       tie=1.01, budget=6000, kind_gate=True),
+    # + budget 5000 only when the best TURN is clearly ahead inside its session (turn_margin >= 1.3: best turn ==
+    #   gold turn 16/16 dev, 4/4 dev200), else 6000
+    "r2_conf": dict(_BASE, channels="bm25", rerank_n=0, hint_mode="quote", shape_boost=1.0, cue_floor=0.7,
+                    tie=1.01, budget=6000, kind_gate=True, conf_budget=(1.3, 3500)),
+    # two tiers: margin >= 1.3 -> 3000, >= 1.2 -> 4500, else 6000
+    "r2_conf2": dict(_BASE, channels="bm25", rerank_n=0, hint_mode="quote", shape_boost=1.0, cue_floor=0.7,
+                     tie=1.01, budget=6000, kind_gate=True, conf_budget=((1.3, 3000), (1.2, 4500))),
+    # three tiers: >= 1.3 -> 2500, >= 1.2 -> 4000, >= 1.1 -> 5000, else 6000
+    "r2_conf3": dict(_BASE, channels="bm25", rerank_n=0, hint_mode="quote", shape_boost=1.0, cue_floor=0.7,
+                     tie=1.01, budget=6000, kind_gate=True, conf_budget=((1.3, 2500), (1.2, 4000), (1.1, 5000))),
+    "r2_s55": dict(_BASE, channels="bm25", rerank_n=0, hint_mode="quote", shape_boost=1.0, cue_floor=0.7,
+                   tie=1.01, budget=5500, kind_gate=True),
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -420,6 +445,10 @@ def abstain_estimate(qp: dict, best: dict | None) -> float:
         p = {1.0: 0.05, 0.5: 0.35, 0.25: 0.6}.get(best.get("shape", 0.0), 0.8)
         if not f.get("cue"):
             p += 0.1
+        # round 2 gate: a weak shape is evidence of absence only when the asked category (head noun or a synonym)
+        # is also missing from the top session; if the session talks about that kind of thing, cap at 0.35
+        if best.get("kind_in_top") is True and p > 0.35:
+            p = 0.35
         return round(min(p, 0.95), 3)
     p = 0.05 + (0.25 if f.get("ov", 0) < 0.25 else 0.0)
     return round(min(p, 0.95), 3)
@@ -454,6 +483,60 @@ def unit_struct(hx, uid: int, qp: dict, idf: dict) -> tuple[float, dict]:
         best *= 0.5 if qp["role"] == "assistant" else 0.7
     bf["sentence"] = bs
     return best, bf
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# role guess (round 2): is the answer in an ASSISTANT turn? For routing cue-less questions ("Back in Bandung soon.
+# Which restaurant in Cihampelas Walk does the great Nasi Goreng?") that the text router sends to ssu.
+# ---------------------------------------------------------------------------------------------------------------------
+_FIRST = re.compile(r"\b(?:i|my|me|mine|i'm|i've|i'd|myself)\b", re.I)
+
+
+def role_features(q, hx, use_ce: bool = False) -> dict:
+    """Evidence-based role features. Lexical by default (BM25 per role); use_ce adds a cross-encoder over the top
+    hybrid units. All features grow with 'the answer is in an assistant turn'."""
+    qp = parse_question(q.question)
+    query = retrieval_query(qp)
+    first = len(_FIRST.findall(fold(q.question).replace("remind me", "")))
+    ba = hx.bm25(query, k=5, roles="assistant")
+    bu = hx.bm25(query, k=5, roles="user")
+    sa = ba[0][1] if ba else 0.0
+    su = bu[0][1] if bu else 0.0
+    top = hx.bm25(query, k=5)
+    frac = sum(hx.units[u].role == "assistant" for u, _ in top) / max(1, len(top))
+    ours = len(re.findall(r"\b(?:our|ours)\b", fold(q.question).replace("our previous", "").replace("our last", "")
+                          .replace("our earlier", "")))
+    advice = bool(re.search(r"\b(?:should i|should my|do i need to)\b", fold(q.question)))   # asks for the assistant's advice
+    f = {"q_nofirst": -float(first), "q_ours": float(ours), "q_advice": float(advice), "bm_diff": math.log1p(sa) - math.log1p(su), "top5_a": frac,
+         "top1_a": float(bool(top) and hx.units[top[0][0]].role == "assistant")}
+    # within the best BM25 session: are the question terms said by the user at all?
+    if top:
+        sid = hx.units[top[0][0]].session_id
+        terms = set(qp["terms"])
+        su_t = set()
+        sa_t = set()
+        for t in hx.sess_by_id[sid]["turns"]:
+            (sa_t if t["role"] == "assistant" else su_t).update(content_stems(t["content"]))
+        f["sess_cov_diff"] = (len(terms & sa_t) - len(terms & su_t)) / max(1, len(terms))
+    else:
+        f["sess_cov_diff"] = 0.0
+    if use_ce:
+        cand = [u for u, _ in hx.hybrid(q.question, k=20)]
+        rr = hx.rerank(q.question, cand) if cand else []
+        ca = max((s for u, s in rr if hx.units[u].role == "assistant"), default=-12.0)
+        cu = max((s for u, s in rr if hx.units[u].role == "user"), default=-12.0)
+        f["ce_diff"] = ca - cu
+        f["ce_top1_a"] = float(bool(rr) and hx.units[rr[0][0]].role == "assistant")
+    z = 0.9 * f["bm_diff"] + 1.2 * f["sess_cov_diff"] - 0.6 * first + 0.8 * f["top5_a"]
+    if use_ce:
+        z += 0.25 * max(-6.0, min(6.0, f["ce_diff"]))
+    f["p_assistant"] = 1.0 / (1.0 + math.exp(-z))
+    return f
+
+
+def role_guess(q, hx, use_ce: bool = False) -> float:
+    """P(the answer is in an assistant turn) for a question the text router could not place (see role_eval.py)."""
+    return round(role_features(q, hx, use_ce)["p_assistant"], 3)
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -561,6 +644,12 @@ def build(q, hx, **params) -> EvidencePack:
                                   and best_info["margin"] >= params.get("quote_margin", 1.3))
     best_info["shape"] = max((rec_shape(v[1], qp) for i, v in struct.items() if hx.units[i].role == "assistant"),
                              default=0.0) if qp["rec_style"] else None
+    if params.get("kind_gate") and qp["rec_style"] and (qp["kind_stems"] or qp["syn"]):
+        a_text = " ".join(t["content"] for t in turns if t["role"] == "assistant")
+        a_st = set(content_stems(a_text))
+        fa = fold(a_text)
+        best_info["kind_in_top"] = bool((qp["head"] and qp["head"] in a_st) or any(
+            re.search(r"(?<![a-z])" + re.escape(x) + r"(?![a-z])", fa) for x in qp["syn"]))
     computed = None
     if qp["ordinal"]:
         # the list turn: first turn of the best session, in ranking order, whose list is long enough for n
@@ -578,6 +667,16 @@ def build(q, hx, **params) -> EvidencePack:
             best_info["ord_label"] = "last" if qp["ordinal"] == -1 else f"#{qp['ordinal']}"
             computed = item
 
+    # confidence of the best TURN inside the best session: fused score of the best unit vs the best unit of any other
+    # turn of that session (debug + optional confidence-gated budget)
+    t2 = next((i for i in ranking if hx.units[i].session_id == best_sid and hx.units[i].turn_id != bu.turn_id), None)
+    best_info["turn_margin"] = round(final[b] / final[t2], 3) if t2 is not None and final[t2] > 0 else 99.0
+    cb = params.get("conf_budget")
+    tiers = [cb] if cb and not isinstance(cb[0], (tuple, list)) else (cb or [])
+    for thr_m, bud in tiers:              # tiers sorted by threshold, highest first
+        if best_info["turn_margin"] >= thr_m:
+            budget = min(budget, bud)
+            break
     hint = build_hint(qp, best_info, hint_mode)
     passages, included, chars = build_pack(q, hx, order, budget=budget, window=params.get("window", 0),
                                            order="chrono", hint=hint, max_sessions=len(sids), whole_turns=False)

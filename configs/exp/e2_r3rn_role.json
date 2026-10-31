@@ -1,0 +1,38 @@
+{
+ "round": "r2",
+ "routes": {
+  "ssu": {
+   "lens": "lenses/ssu/a_struct2.py",
+   "variant": "r3rn"
+  },
+  "ssa": {
+   "lens": "lenses/ssa/a_recsent.py",
+   "variant": "r2_conf2"
+  },
+  "multi": {
+   "lens": "lenses/multi/b_tight.py",
+   "variant": "p08c35_aor"
+  },
+  "ku": {
+   "lens": "lenses/ku/b_r2.py",
+   "variant": "r2b"
+  },
+  "temporal": {
+   "lens": "lenses/temporal/merged_r2.py",
+   "variant": "evA_mixB"
+  }
+ },
+ "fallback": {
+  "lens": "lenses/generic.py",
+  "variant": "hybrid_rr"
+ },
+ "handoff": {
+  "role": {
+   "module": "lenses/ssa/b_role.py",
+   "thr": {
+    "ssu": 0.8,
+    "multi": 0.9
+   }
+  }
+ }
+}

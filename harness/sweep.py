@@ -1,7 +1,10 @@
 """Run lens variants over a split and score them offline.
 
     python -m harness.sweep --lens lenses/temporal/a_calendar.py --variants all --split dev --type temporal --tag r1 --workers 2
-Options: --route (select questions by the router instead of gold type), --limit N, --no-abstain (skip unanswerable).
+Options: --route (select questions by the router instead of gold type; results go to runs/<tag>/<type>-routed/...),
+--qfilter REGEX (keep questions whose text matches, case-insensitive), --limit N, --no-abstain (skip unanswerable).
+Runs over several gold types (no --type, or --route) also print a per-gold-type breakdown (S, Sall, PA, CF1, route mix).
+summary.json carries passages_mean (number of passages = sessions sent to Reactor).
 """
 from __future__ import annotations
 
@@ -9,6 +12,7 @@ import argparse
 import csv
 import importlib.util
 import json
+import re
 import subprocess
 import sys
 import time
@@ -86,6 +90,25 @@ def git_hash() -> str:
         return "-"
 
 
+def print_by_type(vr: list[dict]) -> None:
+    """Per-gold-type breakdown of one variant's rows (answerable questions; route mix over all of them)."""
+    by = defaultdict(list)
+    for r in vr:
+        if r.get("type"):
+            by[r["type"]].append(r)
+    for t in ["ssu", "ssa", "multi", "ku", "temporal"]:
+        rs = by.get(t, [])
+        ans = [r for r in rs if not r.get("abstain_gold") and r.get("S") is not None]
+        if not rs:
+            continue
+        m = lambda k: sum(r.get(k) or 0.0 for r in ans) / len(ans) if ans else float("nan")
+        mix = defaultdict(int)
+        for r in rs:
+            mix[r.get("route")] += 1
+        print(f"     {t:9s} n={len(rs):3d} S={m('S'):5.1f} Sall={m('Sall'):5.1f} PA={m('PA'):.3f} CF1={m('CF1'):.3f} "
+              f"routes={dict(mix)}")
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--lens", required=True)
@@ -95,6 +118,7 @@ def main(argv=None) -> int:
     ap.add_argument("--route", action="store_true", help="select questions by router prediction instead of gold type")
     ap.add_argument("--no-abstain", action="store_true")
     ap.add_argument("--limit", type=int)
+    ap.add_argument("--qfilter", help="regex on the question text (case-insensitive); only matching questions run")
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--tag", default="adhoc")
     a = ap.parse_args(argv)
@@ -115,6 +139,8 @@ def main(argv=None) -> int:
                 continue
         if a.no_abstain and g.get(q.question_id, {}).get("abstain"):
             continue
+        if a.qfilter and not re.search(a.qfilter, q.question, re.I):
+            continue
         qs.append(q)
     if a.limit:
         qs = qs[: a.limit]
@@ -134,7 +160,7 @@ def main(argv=None) -> int:
             for r in ex.map(work, jobs):
                 rows += r
     lens_name = Path(a.lens).stem
-    typ = a.type or "all"
+    typ = (a.type or "all") + ("-routed" if a.route and a.type else "")
     when = datetime.now().strftime("%m-%d %H:%M")
     lb = RUNS / "leaderboard.csv"
     new = not lb.exists()
@@ -153,6 +179,8 @@ def main(argv=None) -> int:
                 for r in vr:
                     fq.write(json.dumps(r, ensure_ascii=False, default=str) + "\n")
             s = summarize(vr)
+            okr = [r for r in vr if "passages" in r]
+            s["passages_mean"] = round(sum(len(r["passages"]) for r in okr) / len(okr), 2) if okr else None
             (out / "summary.json").write_text(json.dumps(s, indent=1))
             w.writerow({"when": when, "tag": a.tag, "type": typ, "lens": lens_name, "variant": name, "split": a.split,
                         "git": gh, **{k: s.get(k) for k in FIELDS if k in s}})
@@ -163,6 +191,8 @@ def main(argv=None) -> int:
             if s.get("Sall") is not None:
                 print(f"   if Reactor cites every passage: CF1all={s['CF1all']:.3f} Sall={s['Sall']:.1f}")
             print(f"   -> {out.relative_to(ROOT)}")
+            if not a.type or a.route:
+                print_by_type(vr)
     errs = [r for r in rows if r.get("error")]
     if errs:
         print(f"\n{len(errs)} errors; first:\n{errs[0]['error']}")

@@ -1,51 +1,156 @@
 {
- "policy": "no_abstain_hint_yet",
- "signal": "pack.abstain_p of the routed lens (each lens's own evidence-coverage signal)",
- "threshold": 0.9,
+ "policy": "no_abstain_hint",
+ "signal": "pack.abstain_p of the routed lens (each lens's own evidence-coverage signal); logged per pack, never sent to Reactor",
+ "threshold": null,
  "hint_to_reactor": false,
  "hint_text_if_enabled": "If none of the passages states this about me, say that our conversations do not contain it.",
- "measured": {
-  "routed_dev_auc": 0.719,
-  "routed_dev200_auc": 0.808,
-  "dev_plus_dev200_precision_at": {
-   "0.5": 0.18,
-   "0.7": 0.18,
-   "0.8": 0.23,
-   "0.9": 0.18
+ "enable_rule": "Re-enable a soft hint (hint_text_if_enabled, never a forced abstention) for a route only when its abstain_p reaches precision >= 0.7 at recall >= 0.4 on dev+dev200 pooled. Never on the temporal route (21 answerable packs at abstain_p >= 0.8).",
+ "measured_r2": {
+  "routed_dev_auc": 0.814,
+  "routed_dev200_auc": 0.855,
+  "pooled_auc": 0.822,
+  "pooled_45_unanswerable_vs_606_answerable": {
+   "0.5": {
+    "tp": 16,
+    "fp": 40,
+    "precision": 0.29,
+    "recall": 0.36
+   },
+   "0.8": {
+    "tp": 9,
+    "fp": 22,
+    "precision": 0.29,
+    "recall": 0.2
+   },
+   "0.9": {
+    "tp": 4,
+    "fp": 15,
+    "precision": 0.21,
+    "recall": 0.09
+   }
   },
-  "dev_plus_dev200_recall_at": {
-   "0.5": 0.38,
-   "0.7": 0.31,
-   "0.8": 0.29,
-   "0.9": 0.16
+  "per_route_pooled": {
+   "ssu": {
+    "n": 135,
+    "pos": 11,
+    "auc": 0.892,
+    "tp_fp_at_0.8": [
+     1,
+     0
+    ]
+   },
+   "multi": {
+    "n": 208,
+    "pos": 20,
+    "auc": 0.794,
+    "tp_fp_at_0.8": [
+     0,
+     1
+    ]
+   },
+   "ku": {
+    "n": 21,
+    "pos": 0,
+    "auc": null,
+    "tp_fp_at_0.8": [
+     0,
+     0
+    ]
+   },
+   "temporal": {
+    "n": 169,
+    "pos": 14,
+    "auc": 0.825,
+    "tp_fp_at_0.8": [
+     8,
+     21
+    ]
+   },
+   "ssa": {
+    "n": 118,
+    "pos": 0,
+    "auc": null,
+    "tp_fp_at_0.8": [
+     0,
+     0
+    ]
+   }
   },
-  "per_lens_auc_dev_dev200": {
-   "ssu b_sem best_rec": [
-    0.9,
-    0.95
+  "per_lens_gold_type_auc_dev_dev200": {
+   "ku b_r2 r2b": [
+    0.926,
+    0.898
    ],
-   "ku b_semantic pair_r1b": [
-    0.89,
-    0.89
+   "ku a_r2 cenq5_dp": [
+    0.904,
+    0.943
    ],
-   "ku a_timeline pkd_b2": [
-    0.9,
-    0.94
+   "ssu a_struct2 r3rn": [
+    0.919,
+    0.955
    ],
-   "temporal merged_r1": [
-    0.77,
-    0.97
+   "temporal merged_r2 evA_mixB": [
+    0.839,
+    0.966
    ],
-   "multi b_sweep deep8_10k": [
-    0.64,
-    0.83
-   ],
-   "ssa": "no unanswerable questions in dev",
-   "ssu a_struct nb3t0 (routed)": [
-    0.91,
-    0.91
+   "multi b_tight p08c35_aor": [
+    0.731,
+    0.795
    ]
-  }
+  },
+  "run": "runs/merge2/all/pipeline/routed/{dev,dev200} (final v1 config, router r2)"
  },
- "notes": "Do not tell Reactor to abstain from abstain_p yet. Over dev+dev200 (45 unanswerable vs 606 answerable) no threshold gets above about 0.25 precision: at 0.8 the final routed system has 13 true abstentions against 43 false ones. Lens scales also differ, so on test 6 of 45 ssu packs score 0.8 or more on questions that are probably answerable. One example is 'brand of the grill I last mentioned buying', where Big Green Egg is in the pack. Policy for now: send passages only and let Reactor decide from what they contain. abstain_p is used only for packing choices inside lenses. Re-enable a soft hint (hint_text_if_enabled, never a forced abstention) for a route once its own abstain_p reaches precision >= 0.7 at recall >= 0.4 on dev+dev200 together. The candidates are evidence-based signals: missing event or phrase-bigram coverage for ku and temporal, and the missing-facet check for multi. Lens agents should calibrate abstain_p as a probability on dev+dev200 pooled, since each split alone has too few positives."
+ "reactor_evidence": "Calibration E1 (12 dev questions): Reactor abstained correctly on 3/3 unanswerable questions without any hint, and wrongly abstained (INSUFFICIENT_EVIDENCE) on 1 multi-session question. The current failure mode is over-abstention on multi, not under-abstention, so an abstain hint would push the wrong way.",
+ "notes": "Policy for v1: send passages only, no abstention hint; Reactor decides. AUC rose from 0.72 / 0.81 to 0.81 / 0.86 on dev / dev200 (role hand-off + ku b_r2 + temporal merged_r2), but no global threshold gets above about 0.3 precision (0.29 at 0.5 and at 0.8), so any hint would cost more false abstentions (each = wrong answer + CF1 0) than it saves. abstain_p is used only inside lenses (packing choices). Candidate for later: a counter-hint on the multi route when the pack holds >= 2 instance sentences ('the passages list items; count what they show'), only after a Reactor spot check, since one real multi question was over-abstained. Lens scales differ (temporal-A is discrete 0.05/0.25/0.6/0.75/0.8), so a per-route isotonic calibration on dev+dev200 pooled is the next step before any threshold.",
+ "previous_r1": {
+  "policy": "no_abstain_hint_yet",
+  "signal": "pack.abstain_p of the routed lens (each lens's own evidence-coverage signal)",
+  "threshold": 0.9,
+  "hint_to_reactor": false,
+  "hint_text_if_enabled": "If none of the passages states this about me, say that our conversations do not contain it.",
+  "measured": {
+   "routed_dev_auc": 0.719,
+   "routed_dev200_auc": 0.808,
+   "dev_plus_dev200_precision_at": {
+    "0.5": 0.18,
+    "0.7": 0.18,
+    "0.8": 0.23,
+    "0.9": 0.18
+   },
+   "dev_plus_dev200_recall_at": {
+    "0.5": 0.38,
+    "0.7": 0.31,
+    "0.8": 0.29,
+    "0.9": 0.16
+   },
+   "per_lens_auc_dev_dev200": {
+    "ssu b_sem best_rec": [
+     0.9,
+     0.95
+    ],
+    "ku b_semantic pair_r1b": [
+     0.89,
+     0.89
+    ],
+    "ku a_timeline pkd_b2": [
+     0.9,
+     0.94
+    ],
+    "temporal merged_r1": [
+     0.77,
+     0.97
+    ],
+    "multi b_sweep deep8_10k": [
+     0.64,
+     0.83
+    ],
+    "ssa": "no unanswerable questions in dev",
+    "ssu a_struct nb3t0 (routed)": [
+     0.91,
+     0.91
+    ]
+   }
+  },
+  "notes": "Do not tell Reactor to abstain from abstain_p yet. Over dev+dev200 (45 unanswerable vs 606 answerable) no threshold gets above about 0.25 precision: at 0.8 the final routed system has 13 true abstentions against 43 false ones. Lens scales also differ, so on test 6 of 45 ssu packs score 0.8 or more on questions that are probably answerable. One example is 'brand of the grill I last mentioned buying', where Big Green Egg is in the pack. Policy for now: send passages only and let Reactor decide from what they contain. abstain_p is used only for packing choices inside lenses. Re-enable a soft hint (hint_text_if_enabled, never a forced abstention) for a route once its own abstain_p reaches precision >= 0.7 at recall >= 0.4 on dev+dev200 together. The candidates are evidence-based signals: missing event or phrase-bigram coverage for ku and temporal, and the missing-facet check for multi. Lens agents should calibrate abstain_p as a probability on dev+dev200 pooled, since each split alone has too few positives."
+ }
 }

@@ -1,75 +1,116 @@
-# SSU lens B "Semantyka": round 1 report
+# SSU lens B "Semantyka": round 2 report
 
-Lens: `lenses/ssu/b_sem.py`. **Best variant: `best_rec`.** On metrics it ties `sem_cu5r`. It adds the own-statement hint, light decoy tags and a recency cite, which are meant to help on test.
-Round-0 draft (`b_mentions.py`) was swept for reference only. Scratch: `scratch_b/dump.py` (dumps features), `exp.py` (offline ranking grid), `abst.py` (abstention features), `audit_best_rec.txt`.
+Lens: `lenses/ssu/b_merge.py`. **Best variant: `best`** (same parameters as `k11ru2u3`).
+It combines B's all-role retrieval and user sweep with A's owner / polarity / tense classifier, decoy hint and abstention gates. A's code is imported unchanged from `a_owner.py` and `a_struct.py`.
+Round-1 report: `b_report_r1.md`. Scratch: `scratch_b/why.py` explains session choices on any split (test included, no gold). Test audits: `scratch_b/audit_{k11p,k11,k11ru,k11s5,k11ru2,k11ru2u2,k11ru2u3,best}.txt`.
+Runs: `runs/r2-ssu-b/ssu/...` (gold type) and `runs/r2-ssu-b-route/ssu/...` (`--route --type ssu`, the questions the router sends to ssu).
 
-## Key findings
-1. **The assistant echo is the strongest session signal.** Rerank over ALL roles and max-pool per session: top-1 session P@1 is 0.984 on dev and 0.955 on dev200. A user-only pool gives only 0.969 and 0.864 (offline, `exp.py`). Penalising assistant units by 1 logit costs 4 S on dev200 (`sem_asst1`).
-2. **The gold USER unit often ranks below its own session's assistant echo.** Examples: yoga is at rank 13, the dog breed at 11-15. So the pack must take the best *user* units of the cited session, and those must be reranked. The session sweep reranks every user unit of the top 3 sessions, and up to 5 user units of the cited session are packed. This took PA from 0.969 to 1.0.
-3. **CF1 is the big lever.** Cite only the top session (`cite_plan=[top]`), not every passage: CF1 rises from 0.51/0.41 to 0.98/0.96, worth about +15 S. Citing the runner-up when the margin is under 1 logit loses on dev200.
-4. **The preceding assistant chunk is needed only for short replies.** Adding it for every unit costs about 1.7k chars. With the conditional (`before="reply"`: chunk 0, under 200 chars, ctx ends with "?") the pack is about 3.2k chars and PA does not drop.
-5. **Pool depth and fusion are flat on dev and dev200.** The cached generic pool (hybrid all-roles top-100, rerank) is enough, so sweeps are about 100% cache hits. Adding z-scored dense or BM25 to the logit moves P@1 by at most 1 question either way (`exp.py`), so it was not adopted.
+## Headline (dev / dev200)
+| system | gold ssu S | gold ssu Sall | routed ssu S | routed ssu Sall | test passages/q | test chars |
+|---|---|---|---|---|---|---|
+| generic hybrid_rr | 76.6 / 73.5 | 76.6 / 73.5 | - | - | - | - |
+| A a_struct nb3t0 (r1 winner) | 93.5 / 92.5 | 93.2 / 90.7 | 74.4 / 72.6 | 75.8 / 73.8 | 2.71 | 3138 |
+| B b_sem best_rec (r1) | 93.5 / 92.6 | 89.1 / 86.0 | 72.4 / 75.3 | 72.9 / 74.4 | 5.92 | 3341 |
+| **B b_merge best** | **93.5 / 92.5** | **92.1 / 90.2** | **80.3 / 76.9** | **82.3 / 78.7** | **2.13** | **3031** |
 
-## Variants (one line each)
+- **Routed ssu route against A:** +5.9 S on dev and +4.3 on dev200; Sall +6.5 and +4.9.
+- **Gold ssu:** S ties A. Sall is −1.1 on dev and −0.5 on dev200, inside the 2-point limit. The cost comes from KU-cued ssu questions that keep 2–3 sessions.
+- **Test audit:** the test packs carry 2.13 passages per question, against 2.71 for A and 5.92 for my round-1 lens.
+- **Agreement with A on test:** the primary cite agrees with A on 44 of 45 test ssu questions. A's cites were judged right in the round-1 audit (younger son Daniel, pilau, Big Green Egg).
+- **Where the routed gain comes from** (dev, best vs A):
+
+  | gold type | PA best | PA A | S best | S A |
+  |---|---|---|---|---|
+  | ssa misroutes (50 q) | 0.82 | 0.64 | 82.4 | 70.1 |
+  | ku misroutes (25 q) | 0.92 | 0.80 | 77.5 | 69.7 |
+  | temporal (6 q) | 0.50 | 0.33 | – | – |
+
+  Multi misroutes lose: S 36.8 against 43.3 for A (10 q).
+- **dev200 ku → ssu:** S 76.4 against 47.6 for A.
+
+## Variants tried (one line each; all in `b_merge.py`)
 | variant | idea / params |
 |---|---|
-| sem_nosweep | all-role hybrid top-100 → rerank → max-pool sessions; cite top-1; pack the best user unit of 6 sessions, budget 6000 |
-| sem | + session sweep: rerank every user unit of the top 3 sessions |
-| sem_cu5 / sem_cu8 | + 5 / 8 user units of the cited session, no logit cut |
-| sem_cu5r | sem_cu5 + preceding assistant chunk only for short replies |
-| sem_cu5r0 | sem_cu5r without the cited unit's next chunk (the gold is sometimes the assistant restatement) |
-| sem_tags | sem_cu5r + b_mentions decoy tags (other / negated / tentative) as logit penalties |
-| sem_abp / sem_abp2 | + abstention from prefix-df: rarest question term absent from user turns → +0.6; absent from the top-3 user units → +0.3 (abp2: other temperature) |
-| best | sem_abp + own-statement hint (~150 chars) |
-| **best_rec** | best + recency ("end up / now / last … I mentioned"): cite the latest session within 2 logits of the top, hint "most recent wins" |
-| sem_m1 | sem_cu5r + cite the runner-up when the margin is under 1 logit |
-| sem_asst1 | sem_cu5r + assistant units −1 logit in session scoring |
-| (draft) b_mentions mention / plain / … | user-only pool + tags; dev S 92.8 / 92.9, PA 0.984 |
+| m5 | B pool (all-role hybrid 100, rerank, user sweep of the top 3 sessions) + A structure. Pack the sessions within 5 logits (max 3), cite the primary. Pack the best assistant unit when it beats every user unit. |
+| m5_noasst | m5 without assistant units. Shows the ssa-misroute fix: routed dev 69.6 → 77.5. |
+| m5_plain | m5 without structure or hint (control). Better on routed (79.5), so the plan penalty demotes KU/multi facts. |
+| m3 / m8 / m0 | competitor window of 3 / 8 / 0 logits (m0 = 1 session). m3 and m0 lose the dev200 Japan gold (gap 4.8). |
+| m5_pair | m5 + cite clean sessions within 3 logits. |
+| m5r | m5 + other sessions' units by raw CE logit, 3 units each. |
+| k11 | KU cue (present-tense state or habit, previous / before / most recently / still / now / same) widens the window to 11 logits. Raw-logit units, ou=3. |
+| k11p | k11 + cite the KU-cued sessions within 5 logits. +1.3 routed dev, but on test it cites 2–3 R-77 decoy sessions. Rejected. |
+| k11pa / k11pa8 | + rerank the assistant units of the top session, pack the best one within 4 / 8 logits of the best user unit. Worse: more chars, budget crowding. |
+| k11c2 / k11c0 | cap the assistant echo at 2 / 0 logits above the session's best user unit. Loses on gold dev200 (−1.4 / −4.3). |
+| k11v | +1 for name questions whose unit holds an extracted name. Neutral on dev; not enough on test alone. |
+| k11s / k11s5 | sentence-level CE (`hx.rerank_texts`) on the top 12 user units, unit score → best sentence (w 1 / 0.5). +1.7 routed dev, but dev200 loses the Japan gold: the "planning a trip to Japan" sentence wins. Rejected. |
+| k11ru | recency cue picks the latest session by its best clean **user** unit, not by the session score. Neutral on dev. On test it fixes the R-77 "end up" cites, which pointed at the assistant's own suggestion session. |
+| k11ru2 | k11ru + at most 2 sessions (3 under a KU cue). Test passages fall from 2.76 to 2.13. |
+| k11ru2p | k11ru2 + cite a KU pair within 2 logits. Small dev gain, same test risk as k11p. |
+| k11ru2u2 / **k11ru2u3 = best** | k11ru2 + user-backed primary. When the top session wins on an assistant unit, take the session within 2 / 3 logits whose best clean user statement is strongest. It must match the head noun and not be a question to the assistant. Neutral on dev/dev200. On test it fixes 5 assistant-echo cites. |
+| best_k2 / best_k8 | KU mode with 2 sessions / 8-logit window. Better gold Sall (+0.3 / +0.6), but routed dev200 drops by 3.5 / 1.8. |
 
-## Results (dev: 70 q / 64 answerable; dev200: 23 q / 22 answerable)
-| variant | split | S | PA | ATR | SR | CF1 | chars | AUC |
-|---|---|---|---|---|---|---|---|---|
-| generic hybrid_rr (baseline) | dev | 76.6 | 1.000 | 1.000 | 1.000 | 0.512 | 11934 | 0.924 |
-| generic hybrid_rr (baseline) | dev200 | 73.5 | 1.000 | 1.000 | 1.000 | 0.407 | 11933 | 0.955 |
-| sem_nosweep | dev | 91.6 | 0.969 | 0.969 | 1.000 | 0.984 | 3041 | 0.885 |
-| sem_nosweep | dev200 | 89.7 | 0.955 | 0.955 | 1.000 | 0.955 | 3352 | 0.955 |
-| sem | dev | 91.6 | 0.969 | 0.969 | 1.000 | 0.984 | 3036 | 0.883 |
-| sem_cu5 | dev | 93.1 | 1.000 | 1.000 | 1.000 | 0.984 | 4783 | 0.888 |
-| sem_cu5 | dev200 | 92.1 | 1.000 | 1.000 | 1.000 | 0.955 | 5015 | 0.955 |
-| sem_cu8 | dev | 92.9 | 1.000 | 1.000 | 1.000 | 0.984 | 5162 | 0.888 |
-| sem_cu5r | dev | 93.6 | 1.000 | 1.000 | 1.000 | 0.984 | 3155 | 0.885 |
-| sem_cu5r | dev200 | 92.6 | 1.000 | 1.000 | 1.000 | 0.955 | 3279 | 0.955 |
-| sem_cu5r0 | dev | 91.7 | 0.969 | 0.984 | 1.000 | 0.984 | 2522 | 0.885 |
-| sem_tags | dev | 93.6 | 1.000 | 1.000 | 1.000 | 0.984 | 3152 | 0.888 |
-| sem_tags | dev200 | 92.6 | 1.000 | 1.000 | 1.000 | 0.955 | 3277 | 0.955 |
-| sem_abp | dev | 93.6 | 1.000 | 1.000 | 1.000 | 0.984 | 3152 | 0.901 |
-| sem_abp | dev200 | 92.6 | 1.000 | 1.000 | 1.000 | 0.955 | 3277 | 0.955 |
-| sem_m1 | dev | 93.6 | 1.000 | 1.000 | 1.000 | 0.984 | 3165 | 0.888 |
-| sem_m1 | dev200 | 92.2 | 1.000 | 1.000 | 1.000 | 0.939 | 3328 | 0.955 |
-| sem_asst1 | dev | 93.6 | 1.000 | 1.000 | 1.000 | 0.984 | 3161 | 0.888 |
-| sem_asst1 | dev200 | 88.4 | 0.955 | 0.955 | 1.000 | 0.909 | 3126 | 0.955 |
-| best | dev | 93.5 | 1.000 | 1.000 | 1.000 | 0.984 | 3298 | 0.901 |
-| best | dev200 | 92.6 | 1.000 | 1.000 | 1.000 | 0.955 | 3423 | 0.955 |
-| **best_rec** | dev | **93.5** | 1.000 | 1.000 | 1.000 | 0.984 | 3302 | 0.901 |
-| **best_rec** | dev200 | **92.6** | 1.000 | 1.000 | 1.000 | 0.955 | 3427 | 0.955 |
+## Results (gold ssu = 70 dev q (64 answerable), 23 dev200 q (22); routed = 144 dev q, 40 dev200 q)
+| variant | split | S | Sall | PA | ATR | SR | CF1 | CF1all | chars | AUC | routed S | routed Sall | routed PA |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| generic hybrid_rr (baseline) | dev | 76.6 | 76.6 | 1.000 | 1.000 | 1.000 | 0.512 | 0.512 | 11934 | 0.924 | - | - | - |
+| generic hybrid_rr (baseline) | dev200 | 73.5 | 73.5 | 1.000 | 1.000 | 1.000 | 0.407 | 0.407 | 11933 | 0.955 | - | - | - |
+| A a_struct nb3t0 (r1 winner) | dev | 93.5 | 93.2 | 1.000 | 1.000 | 1.000 | 0.984 | 0.974 | 3489 | 0.911 | 74.4 | 75.8 | 0.757 |
+| A a_struct nb3t0 (r1 winner) | dev200 | 92.5 | 90.7 | 1.000 | 1.000 | 1.000 | 0.955 | 0.894 | 3589 | 0.909 | 72.6 | 73.8 | 0.757 |
+| B b_sem best_rec (r1) | dev | 93.5 | 89.1 | 1.000 | 1.000 | 1.000 | 0.984 | 0.837 | 3302 | 0.901 | 72.4 | 72.9 | 0.721 |
+| B b_sem best_rec (r1) | dev200 | 92.6 | 86.0 | 1.000 | 1.000 | 1.000 | 0.955 | 0.734 | 3427 | 0.955 | 75.3 | 74.4 | 0.784 |
+| m5 | dev | 93.5 | 93.3 | 1.000 | 1.000 | 1.000 | 0.984 | 0.977 | 3273 | 0.911 | 77.5 | 79.5 | 0.801 |
+| m5 | dev200 | 92.6 | 91.5 | 1.000 | 1.000 | 1.000 | 0.955 | 0.917 | 3419 | 0.909 | 71.7 | 72.6 | 0.730 |
+| m5_noasst | dev | 93.6 | 93.4 | 1.000 | 1.000 | 1.000 | 0.984 | 0.977 | 3036 | 0.911 | 69.6 | 71.6 | 0.676 |
+| m5_plain | dev | 93.6 | 93.3 | 1.000 | 1.000 | 1.000 | 0.984 | 0.977 | 3163 | 0.911 | 79.5 | 81.5 | 0.831 |
+| m5_plain | dev200 | 92.6 | 91.0 | 1.000 | 1.000 | 1.000 | 0.955 | 0.901 | 3384 | 0.909 | 73.5 | 74.4 | 0.757 |
+| m3 | dev200 | 89.7 | 88.3 | 0.955 | 0.955 | 0.955 | 0.955 | 0.909 | 3234 | 0.909 | - | - | - |
+| m8 | dev | 93.5 | 91.7 | 1.000 | 1.000 | 1.000 | 0.984 | 0.924 | 3530 | 0.911 | 80.3 | 81.9 | 0.846 |
+| m8 | dev200 | 92.5 | 90.5 | 1.000 | 1.000 | 1.000 | 0.955 | 0.886 | 3607 | 0.909 | 76.9 | 77.9 | 0.811 |
+| m0 | dev200 | 89.7 | 89.7 | 0.955 | 0.955 | 0.955 | 0.955 | 0.955 | 3116 | 0.909 | - | - | - |
+| m5_pair | dev200 | 91.2 | 91.5 | 1.000 | 1.000 | 1.000 | 0.909 | 0.917 | 3419 | 0.909 | 71.9 | 72.6 | 0.730 |
+| k11 | dev | 93.5 | 92.0 | 1.000 | 1.000 | 1.000 | 0.984 | 0.935 | 3582 | 0.911 | 80.8 | 82.8 | 0.853 |
+| k11 | dev200 | 92.5 | 90.0 | 1.000 | 1.000 | 1.000 | 0.955 | 0.871 | 3751 | 0.909 | 76.9 | 78.4 | 0.811 |
+| k11p | dev | 93.8 | 92.0 | 1.000 | 1.000 | 1.000 | 0.995 | 0.935 | 3578 | 0.911 | 82.6 | 83.3 | 0.860 |
+| k11p | dev200 | 92.0 | 90.0 | 1.000 | 1.000 | 1.000 | 0.939 | 0.871 | 3751 | 0.909 | 77.4 | 78.4 | 0.811 |
+| k11pa | dev200 | 91.9 | 89.9 | 1.000 | 1.000 | 1.000 | 0.939 | 0.871 | 4021 | 0.909 | 75.3 | 76.3 | 0.784 |
+| k11c2 | dev200 | 91.1 | 90.0 | 1.000 | 1.000 | 1.000 | 0.909 | 0.871 | 3684 | 0.909 | 77.8 | 80.0 | 0.838 |
+| k11c0 | dev200 | 88.2 | 87.1 | 0.955 | 0.955 | 1.000 | 0.909 | 0.871 | 3637 | 0.909 | 73.5 | 76.0 | 0.784 |
+| k11s5 | dev | 93.5 | 92.2 | 1.000 | 1.000 | 1.000 | 0.984 | 0.940 | 3476 | 0.911 | 82.5 | 84.3 | 0.875 |
+| k11s5 | dev200 | 89.6 | 86.6 | 0.955 | 0.955 | 0.955 | 0.955 | 0.856 | 3574 | 0.909 | 76.9 | 78.0 | 0.811 |
+| k11ru2 | dev | 93.5 | 92.1 | 1.000 | 1.000 | 1.000 | 0.984 | 0.938 | 3501 | 0.911 | 80.3 | 82.3 | 0.846 |
+| k11ru2 | dev200 | 92.5 | 90.2 | 1.000 | 1.000 | 1.000 | 0.955 | 0.879 | 3711 | 0.909 | 76.9 | 78.7 | 0.811 |
+| **best (= k11ru2u3)** | dev | **93.5** | **92.1** | 1.000 | 1.000 | 1.000 | 0.984 | 0.938 | 3501 | 0.911 | **80.3** | **82.3** | 0.846 |
+| **best (= k11ru2u3)** | dev200 | **92.5** | **90.2** | 1.000 | 1.000 | 1.000 | 0.955 | 0.879 | 3711 | 0.909 | **76.9** | **78.7** | 0.811 |
+| best_k2 | dev200 | 92.5 | 90.7 | 1.000 | 1.000 | 1.000 | 0.955 | 0.894 | 3661 | 0.909 | 73.4 | 74.8 | 0.757 |
+| best_k8 | dev | 93.5 | 92.7 | 1.000 | 1.000 | 1.000 | 0.984 | 0.958 | 3376 | 0.911 | 79.9 | 81.9 | 0.838 |
+| best_k8 | dev200 | 92.6 | 91.2 | 1.000 | 1.000 | 1.000 | 0.955 | 0.909 | 3541 | 0.909 | 75.1 | 76.7 | 0.784 |
 
-Dev and dev200 are close to the ceiling. With PA=1 and CF1=1 at about 3k chars, S is about 94. The remaining gap is one wrong top-1 cite per split. AUC on dev200 rests on a single unanswerable question, so it carries little information.
+Routed AUC for best: 0.838 on dev and 0.847 on dev200, against 0.837 and 0.838 for A. Rows without a figure for the second split are in the run directories and in `runs/leaderboard.csv`.
+
+## Brief items
+1. **Decoys out of passages.** Decoy-only sessions are dropped and named in the hint, using A's note format. Clean dev questions get 1 passage. On test, packs average 2.13 sessions (best) against 5.92 in round 1.
+2. **b_merge beats A on the routed ssu route** on both S and Sall, on both splits. Gold ssu S ties. Sall is −1.1 on dev and −0.5 on dev200, within the 2-point limit.
+3. **"Last mentioned" cites.** The grill question now cites the newest session, "returned the Weber kettle grill and bought a Big Green Egg". The recency pick compares sessions by user statements (`rec_user`). Without it, 3 R-77 "end up" questions cited a session where the ASSISTANT suggested a screen-grid resistor.
 
 ## Top failure patterns
-1. **Plan beats past (tense).** dev200 "How long was I in Japan for?": the top session is "I'm planning a trip to Japan … booked with Sakura Travel" (logit 6.8). The gold "when I was in Japan a few months ago … spent two weeks" scores 2.1. It is in the pack (PA=1), but the cite is wrong. The draft tagger catches "planning to" but not "planning a trip to".
-2. **Wrong service, same slot.** dev "music streaming service I've been using lately": Netflix sessions ("I've been using Netflix … lately", −0.7) outrank the Spotify mention (−3.4). Media type is a semantic slot the cross-encoder ignores.
-3. **Entity swap with the entity present.** dev "collecting vintage films": "film" appears in the vintage-camera session, so the coverage check passes and the logit is 3.4, giving abstain_p 0.15. dev/dev200 "Korea": Korea is mentioned but the user never says they were there, giving 0.6 to 0.9. Answerable questions with low logits get a high abstain_p, e.g. "painting of a sunset worth" (−5.8) and "What breed is my dog?" (−4.0, the answer is "a Golden Retriever like Max").
-4. **Test (audit, qualitative).** Packs carry all the drifting values: cat Sombra, Fig, Bica; starter Bubbles (thinking), Bubbles, Herman (saw), Masa (renamed, latest). They also carry possessor decoys ("My sister Amina's favorite color is teal", "My brother Brian's favorite color is blue"). The hint plus "most recent wins" covers the update questions. Possessor and slot decoys rely on Reactor reading the hint. Lens A's owner classifier is the right tool for those.
+1. **Plan beats past (dev200).** Example: "How long was I in Japan for?" The top session is "I'm planning a trip to Japan … booked with Sakura Travel last month" (logit 6.8). The gold "when I was in Japan a few months ago … spent two weeks" sits at 3.2. It is in the pack, so PA is 1, but the cite is wrong. A's tense rule gives the plan sentence +0.5 because "last month" counts as a past marker. Sentence-level CE makes this worse (k11s, k11s5).
+2. **Assistant echo of a decoy (test).** Before the user-backed rule, B cited assistant-driven sessions:
+   - "Rice and beans is a great base…" instead of "My favorite meal is pilau".
+   - "That's high praise, coming from a son" instead of "My younger son Daniel is moving to Brisbane".
+
+   One case remains. For "physiotherapist after the Toronto Marathon", the only head match is a decoy ("My sister Nadia saw a physiotherapist after the Ottawa Marathon"). It is probably unanswerable, with abstain_p 0.40.
+3. **Same-object drift (test).** Many sessions describe the same object with different slots: R-77 AM IF, screen-grid resistor, AGC resistor, cathode resistor, dial lamp. Unit logits are compressed (all 1–5), so the recency rule can pick a sibling slot. Example: "AM IF … end up using" can still cite the July 14 screen-grid session. The 465 kHz session is in the pack.
+4. **Misrouted multi questions** (dev 10, dev200 3). These need every gold session, but the pack takes 2–3 sessions within a logit window. They score S 37 against 43 for A, which packs ±1 neighbours of each unit.
+5. **Abstention flags on answerable recency questions (test).** Examples: last beer kegged, last book, grill, last restaurant. The CE logits are low (−2 to −5) for "what was the last X I mentioned", so abstain_p is 0.78 to 0.92. Nothing goes to Reactor, but the abstain_p values are miscalibrated for any policy built on them.
 
 ## CORE REQUESTs
-1. **Answer-anchored citation** (pipeline): after Reactor answers, keep the cited passages whose text contains the answer, falling back to cite_plan. ssu gold is always one session and the pack holds decoys on purpose.
-2. **Default pool = all-role hybrid top-100 for every lens.** It is fully cached on dev, dev200 and test. Lenses that add user-only pools or new rerank queries pay about 40 s per question while the server is contended. A shared, precomputed "rerank every user unit of the top-3 sessions" cache would make the session sweep free.
-3. **`build_pack(before_if_reply=True)`**: render the previous assistant chunk only when a unit is a short reply to a question. The lens does this by hand now. It saved about 1.7k chars per question with no PA loss.
-4. **Model-server contention**: `/rerank` waits behind long `/embed` batches under one LOCK. A separate lock per model, or a priority for small rerank batches, would speed every agent's sweeps.
+1. **Router: role detector for cue-less ssa (still the biggest routed loss).** With b_merge, ssa misroutes still reach only PA 0.82. The gold assistant chunk is often missing from the all-role pool. Re-ranking the top session's assistant units (k11pa) crowds the budget. An evidence-based `role_guess` from ssa-B would serve these questions with the ssa lens instead.
+2. **Answer-anchored citation** (repeat from round 1, still declined). For ssu the cite plan is one session. Keeping the passages Reactor cites that contain its answer would make Sall equal S on every ssu question.
+3. **A cached sentence-level CE over the top units** (`hx.rerank_texts` is cold on test). k11s was slow on its first run (450 ms/q on dev200). A precompute for the top-12 user units of the ssu route would make sentence-level experiments cheap.
 
 ## Ideas for the next round
-- Merge with lens A: B's retrieval and pack (all-role max-pool, user sweep, cu5r pack, top-1 cite) plus A's owner/polarity classifier on the user units as the tagger. A's classifier is more complete than the b_mentions tags. Tags are neutral on dev/dev200, so they must be judged on the test audit.
-- Tense feature: the question is past ("was I / did I") and the unit is a plan ("planning a trip", "going to", "next month"), so apply a soft penalty. This fixes the Japan cite.
-- Abstention: when the question's key noun appears in the top units only in a different slot ("vintage film cameras" vs "vintage films"), compare noun phrases, not prefixes. Calibrate on dev + dev200 together, since there are only 7 positives.
-- Recency on test: when the cue is present, also force the latest head-term session into the pack (`n_sess` +2) so the newest value can never be cut by the budget.
-- Chars: drop `other_units` from sessions more than 8 logits below the top (about −0.3k chars). This is only worth doing if test audits show those sessions never matter.
+- **KU pair cite gated by evidence, not by the question cue.** Cite the second session only when its best user unit restates the same slot with a different value. This needs a value extractor beyond names, such as numbers with units or quoted titles. On dev it is worth about +1.3 S on the routed route (k11p), and it must not fire on R-77-style sibling slots.
+- **Tense fix for "planning a trip … booked … last month".** A plan clause should outrank a past marker in the same sentence when the question asks "was I / did I". This fixes the one wrong dev200 cite.
+- **Slot-specific lexical check for drift questions.** Before the recency pick, require the near session's user unit to contain the question's rarest slot term or its abbreviation (intermediate frequency → IF).
+- **Calibrate abstain_p for recency phrasing.** Under a recency cue, use the best user-unit logit relative to the question's own pool (a z-score) instead of the absolute logit.
+- **Multi misroutes.** When the question carries count or comparison words, fall back to ±1 neighbours and the depth sweep (multi-B).

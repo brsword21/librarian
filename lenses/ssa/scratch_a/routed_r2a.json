@@ -1,0 +1,11 @@
+{
+  "round": "r2-ssa-a proposal",
+  "routes": {
+    "ssu": {"lens": "lenses/ssa/a_handoff.py", "variant": "nf50a"},
+    "ssa": {"lens": "lenses/ssa/a_recsent.py", "variant": "r2_conf2"},
+    "multi": {"lens": "lenses/multi/b_sweep.py", "variant": "deep8_10k"},
+    "ku": {"lens": "lenses/ku/b_semantic.py", "variant": "pair_r1b"},
+    "temporal": {"lens": "lenses/temporal/merged_r1.py", "variant": "gapA_semB"}
+  },
+  "fallback": {"lens": "lenses/generic.py", "variant": "hybrid_rr"}
+}

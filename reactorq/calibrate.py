@@ -19,7 +19,7 @@ from pathlib import Path
 import core.paths  # noqa: F401  (puts the upstream kit on sys.path)
 from score import score_question, summarize  # upstream kit
 
-from core.data import gold, questions, read_jsonl
+from core.data import gold, questions, read_jsonl, session_ids_file
 from core.paths import KIT, SPLIT_DIRS
 from core.types import SHORT
 
@@ -48,7 +48,7 @@ def score(split: str, packs: Path, results: Path) -> None:
         res.write_text("".join(json.dumps(r) + "\n" for r in best.values()))
         pred = Path(tmp) / "p.jsonl"
         subprocess.run([sys.executable, str(KIT / "reactor" / "predictions.py"), str(res), "--histories",
-                        str(SPLIT_DIRS[split] / "histories.jsonl"), "--out", str(pred), "--abstain-on",
+                        str(session_ids_file(split)), "--out", str(pred), "--abstain-on",
                         "agent,no-answer"], capture_output=True)
         preds = {p["question_id"]: p for p in read_jsonl(pred)}
     pk = {p["question_id"]: p for p in read_jsonl(packs)}

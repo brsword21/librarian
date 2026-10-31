@@ -1,0 +1,5 @@
+78 questions x 1 variants on dev in 11s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+pair_r1b                   93.2 1.000 0.965 1.000 1.000 1.000     - 0.979   3669  191.4 0.887 0
+   if Reactor cites every passage: CF1all=0.667 Sall=83.9
+   -> runs/r2-ku-b/ku/b_semantic/pair_r1b/dev

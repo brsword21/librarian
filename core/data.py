@@ -125,3 +125,16 @@ if __name__ == "__main__":
     elif cmd == "dev200":
         build_dev200()
         print("dev200", shard("dev200"), "histories sharded")
+
+
+def session_ids_file(split: str) -> Path:
+    """A histories stand-in for the kit's predictions.py --histories: one {"session_id": ...} per line. (The kit reads
+    histories.jsonl with str.splitlines(), which also splits on U+2028/U+2029 inside the dialogue text and breaks.)"""
+    out = CACHE / f"session_ids_{split}.jsonl"
+    if not out.exists():
+        out.parent.mkdir(parents=True, exist_ok=True)
+        with open(out, "w", encoding="utf-8") as f:
+            for h in read_jsonl(SPLIT_DIRS[split] / "histories.jsonl"):
+                for s in h["sessions"]:
+                    f.write(json.dumps({"session_id": s["session_id"]}) + "\n")
+    return out

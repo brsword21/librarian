@@ -1,0 +1,11 @@
+{
+  "round": "r1",
+  "routes": {
+    "ssu": {"lens": "lenses/ssu/a_struct.py", "variant": "nb3t0"},
+    "ssa": {"lens": "lenses/ssa/a_recsent.py", "variant": "recqs_cf7"},
+    "multi": {"lens": "lenses/multi/b_sweep.py", "variant": "deep8_10k"},
+    "ku": {"lens": "lenses/ku/b_semantic.py", "variant": "pair_r1b"},
+    "temporal": {"lens": "lenses/temporal/merged_r1.py", "variant": "gapA_semB"}
+  },
+  "fallback": {"lens": "lenses/generic.py", "variant": "hybrid_rr"}
+}

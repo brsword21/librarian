@@ -1,76 +1,110 @@
-# KU lens B ("Semantyka"): round 1 report
+# KU lens B ("Semantyka"): round 2 report
 
-Lens: `lenses/ku/b_semantic.py`. Runs: `runs/r1-ku-b/ku/{generic,b_semantic}/<variant>/{dev,dev200}`. Logs and audits are in `lenses/ku/scratch_b/` (`r1_*.log`, `r1_audit_pair_r1*.log`). The new CF1 miss reader is `scratch_b/cf1_miss.py`; `harness.failures` lists only PA<1, and every KU loss here is a CF1 loss.
+Lens: `lenses/ku/b_r2.py`. It reuses the pair_r1b retrieval and pair logic from `lenses/ku/b_semantic.py` unchanged and replaces the packing. Round-1 report: `lenses/ku/b_report_r1.md`. Runs: `runs/r2-ku-b/ku/{generic,b_semantic,b_r2}/<variant>/{dev,dev200}`. Test audits: `runs/audit/ku/b_r2/{r2b,r2c}/test_packs.jsonl` and `lenses/ku/scratch_b/r2_audit_r2b.log`. Detector runs: `runs/r2-ku-b-det/{multi,ssu}/b_r2/r2b/dev`.
 
-**Best variant: `pair_r1b`.** Dev S 93.2 / dev200 S 93.1. The generic hybrid_rr baseline gets 83.8 / 83.5, and round-0 `pair_prf` gets 93.2 / 91.8.
+**Best variant: `b_r2.py` / `r2b`.**
+- Dev: S 93.4, Sall 93.6.
+- dev200: S 93.3, Sall 92.7.
+- Round-1 winner `pair_r1b` (re-run): S 93.2 / 93.1, Sall 83.9 / 83.8.
 
-Dev is saturated. The highest S possible at 3.7k chars is about 93.85 (PA 1, CF1 1). So the "+2 S on dev" acceptance rule cannot be met by any variant. `pair_r1b` ties on dev and gains +1.3 on dev200, which is test scale. It also adds the test-motivated assistant-recap path with no measured cost.
+So r2b gains about +0.2 S and **+9.7 Sall on dev, +8.9 Sall on dev200**, with about 600 fewer chars and a higher abstention AUC (dev 0.887 → 0.926, dev200 0.886 → 0.898).
+
+The "+2 S on dev" rule cannot be met. Dev KU is saturated: the S ceiling at about 3k chars is about 93.9. r2b wins on Sall, which is what round-2 brief item 1 targets, and it loses nothing on S on either split.
 
 ## Variants tried (one line each)
-- `pair` (R0): hybrid user pool → unit and sentence cross-encoder → ownership, value and coverage features → session pair. Cites the pair plus 2 extra sessions, budget 6000, with a timeline hint.
-- `pair_prf` (R0): `pair` plus a value-anchored second hop and a forward value link (`link_w=5`).
-- `pair_decay` (R0): `pair_prf` plus a linear recency prior (`decay=1.5`). No change.
-- `tight` (R0): `pair_prf` with only the pair in the pack (`extra=0`, budget 4000). Loses PA.
-- `wide` (control): unit rerank top-2, ±1 window, 12k budget.
-- `pair_asst` (R1): `pair_prf` plus assistant recap sentences rewritten to first person, scored like user sentences, `asst_pen=1`. The idea that test updates live in assistant turns comes from lens A's design.
-  - v1 let assistant units take the user unit slots and lost one PA on dev200 (S 88.8).
-  - v2 gives them their own slot. Now neutral.
-- `pair_stem` (R1): `pair_prf` with the Snowball stemmer for coverage and candidate sentences, so "waking" matches "wake". +0.7 on dev200.
-- `pair_before` (R1): `pair_prf` plus "before X" chronology. In old-mode questions, the session that best covers the before-clause terms must be the newer pair member (`before_pen=5`). +0.7 on dev200.
-- `pair_r1` (R1): `pair_prf` + snowball + asst + before_chrono. Dev 93.2 / dev200 93.1.
-- **`pair_r1b`** (R1): `pair_r1` plus two changes. Fewer chars, same pairs.
-  - A reverse value link (`rev_link=3`): an earlier own sentence that shares a name with an update naming both the old and the new value.
-  - Timeline hygiene (`tl_min_cov=0.2`): the hint no longer quotes off-attribute sentences or bare questions.
-- `pair_r1c` (R1, rejected): `pair_r1b` plus a sentence window of −1 when the attribute sentence has no value. It loses one dev200 pair (Lake Michigan bass), −0.7.
+- `r1b`: control. pair_r1b re-run through b_r2: the pair plus 2 context sessions, budget 6000.
+- `only`: the cited pair only (extra=0, 3 units per pair session, budget 4500). It loses 2 PA on dev and 1 on dev200.
+  - The context sessions were rescuing the gym-frequency, kitchen-gadget and one dev200 pair.
+- `gate`: pair only if the pair is confident, otherwise pair + 1. The gate needs own ≥ 0, cov_min ≥ 0.5, no newer "threat" session, and distinct values or margin ≥ 2.
+  - cov ≥ 0.5 was far too strict: 25 of 72 questions were judged not confident, and it still missed the gym question. Dev S 92.5, Sall 90.9.
+- **`m35`**: margin-only gate. The pair goes alone when its weaker member's score is ≥ 3.5 above the best non-pair session; otherwise pair + 1 context session.
+  - On dev, all 5 pair misses or PA risks have margin < 3.5: camera lens 0.43, Saturday wake-up 0.58, gym 1.8, United status 2.7, kitchen gadget 3.1. The next correct pair is at 4.95.
+  - The hint still quotes dated statements from 2 more sessions (`tl_extra=2`). Reactor can read them but cannot cite them.
+- `m35x2`: as m35 with pair + 2 when not confident. Same S, Sall −0.8 on dev200.
+- `m5`: gate margin 5.0. Same S, Sall −0.6 on dev200.
+- `m35_bg`, `m35_bg1`, `m35_bg15`: m35 plus phrase-level (bigram) abstention, with logit +w per missing question bigram, capped at 2. The `missing_phrases` helper is copied from lens A (`a_timeline.py`, pkl_b1); credit to A.
+  - w=1.0 is best: AUC 0.926 dev, 0.898 dev200. Only abstain_p changes.
+- **`r2b`**: m35_bg1 without the INSUFFICIENT_EVIDENCE note in the hint, per the round-2 rule of no abstention hints. Metrics are identical.
+- `r2c`: r2b plus an ownership rule for quantity questions. A bare-name subject with no I/my counts as someone else's value ("Carlos drinks three cups of coffee every morning.").
+  - Neutral on dev and dev200, and no pack changed on test: Carlos drops to own=−1 but still ranks 2nd. Not adopted (simpler wins).
+  - The flag `OWN_NAME` in b_semantic.py defaults to off, so pair_r1b is unchanged (selftest passes).
 
 ## Results (KU only; dev 78 q / 72 answerable, dev200 26 q / 22 answerable)
-| variant | dev S | PA | ATR | SR | CF1 | chars | AUC | dev200 S | PA | ATR | SR | CF1 | chars | AUC |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| generic/hybrid_rr (bar) | 83.8 | 0.972 | 0.979 | 0.986 | 0.812 | 11936 | 0.806 | 83.5 | 1.000 | 1.000 | 1.000 | 0.740 | 11923 | 0.852 |
-| pair | 93.0 | 1.000 | 0.961 | 1.000 | 0.972 | 3662 | 0.875 | - | | | | | | |
-| pair_prf (R0 best) | 93.2 | 1.000 | 0.961 | 1.000 | 0.979 | 3678 | 0.875 | 91.8 | 1.000 | 0.977 | 1.000 | 0.932 | 3752 | 0.864 |
-| pair_decay | 93.2 | 1.000 | 0.961 | 1.000 | 0.979 | 3678 | 0.875 | - | | | | | | |
-| tight | 91.8 | 0.972 | 0.940 | 0.979 | 0.979 | 2524 | 0.875 | - | | | | | | |
-| wide | 90.5 | 1.000 | 0.982 | 1.000 | 0.972 | 11792 | 0.873 | 91.3 | 1.000 | 1.000 | 1.000 | 1.000 | 11700 | 0.886 |
-| pair_asst (v2) | 93.2 | 1.000 | 0.961 | 1.000 | 0.979 | 3696 | 0.875 | 91.8 | 1.000 | 0.977 | 1.000 | 0.932 | 3782 | 0.864 |
-| pair_stem | 93.2 | 1.000 | 0.965 | 1.000 | 0.979 | 3665 | 0.887 | 92.5 | 1.000 | 0.977 | 1.000 | 0.955 | 3742 | 0.886 |
-| pair_before | 93.2 | 1.000 | 0.961 | 1.000 | 0.979 | 3678 | 0.875 | 92.5 | 1.000 | 0.977 | 1.000 | 0.955 | 3747 | 0.864 |
-| pair_r1 | 93.2 | 1.000 | 0.965 | 1.000 | 0.979 | 3684 | 0.887 | 93.1 | 1.000 | 0.977 | 1.000 | 0.977 | 3767 | 0.886 |
-| **pair_r1b** | **93.2** | 1.000 | 0.965 | 1.000 | 0.979 | 3669 | 0.887 | **93.1** | 1.000 | 0.977 | 1.000 | 0.977 | 3729 | 0.886 |
-| pair_r1c (rejected) | 93.2 | 1.000 | 0.965 | 1.000 | 0.979 | 3677 | 0.887 | 92.4 | 1.000 | 0.977 | 1.000 | 0.955 | 3759 | 0.886 |
+| variant | dev S | Sall | PA | ATR | SR | CF1 | CF1all | chars | AUC | dev200 S | Sall | PA | ATR | SR | CF1 | CF1all | chars | AUC |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| generic/hybrid_rr (bar) | 83.8 | 83.8 | 0.972 | 0.979 | 0.986 | 0.812 | 0.812 | 11936 | 0.806 | 83.5 | 83.5 | 1.000 | 1.000 | 1.000 | 0.740 | 0.740 | 11923 | 0.852 |
+| r1b (= pair_r1b, R1 winner) | 93.2 | 83.9 | 1.000 | 0.965 | 1.000 | 0.979 | 0.667 | 3669 | 0.887 | 93.1 | 83.8 | 1.000 | 0.977 | 1.000 | 0.977 | 0.667 | 3729 | 0.886 |
+| only | 91.6 | 91.6 | 0.972 | 0.972 | 0.979 | 0.979 | 0.979 | 2994 | 0.887 | 90.4 | 90.4 | 0.955 | 0.977 | 0.977 | 0.977 | 0.977 | 2876 | 0.886 |
+| gate (cov gate) | 92.5 | 90.9 | 0.986 | 0.986 | 0.993 | 0.979 | 0.926 | 3187 | 0.887 | - | | | | | | | | |
+| m35 | 93.4 | 93.6 | 1.000 | 0.993 | 1.000 | 0.979 | 0.986 | 3048 | 0.887 | 93.3 | 92.7 | 1.000 | 1.000 | 1.000 | 0.977 | 0.955 | 3077 | 0.886 |
+| m35x2 | 93.4 | 93.4 | 1.000 | 0.993 | 1.000 | 0.979 | 0.979 | 3080 | 0.887 | 93.3 | 91.9 | 1.000 | 1.000 | 1.000 | 0.977 | 0.930 | 3255 | 0.886 |
+| m5 | 93.4 | 93.5 | 1.000 | 0.993 | 1.000 | 0.979 | 0.981 | 3063 | 0.887 | 93.3 | 92.1 | 1.000 | 1.000 | 1.000 | 0.977 | 0.936 | 3125 | 0.886 |
+| m35_bg (w .6) | 93.4 | 93.6 | 1.000 | 0.993 | 1.000 | 0.979 | 0.986 | 3048 | 0.917 | 93.3 | 92.7 | 1.000 | 1.000 | 1.000 | 0.977 | 0.955 | 3077 | 0.898 |
+| m35_bg1 (w 1.0) | 93.4 | 93.6 | 1.000 | 0.993 | 1.000 | 0.979 | 0.986 | 3048 | 0.926 | 93.3 | 92.7 | 1.000 | 1.000 | 1.000 | 0.977 | 0.955 | 3077 | 0.898 |
+| m35_bg15 (w 1.5) | 93.4 | 93.6 | 1.000 | 0.993 | 1.000 | 0.979 | 0.986 | 3048 | 0.924 | 93.3 | 92.7 | 1.000 | 1.000 | 1.000 | 0.977 | 0.955 | 3077 | 0.898 |
+| **r2b** | **93.4** | **93.6** | 1.000 | 0.993 | 1.000 | 0.979 | 0.986 | 3043 | 0.926 | **93.3** | **92.7** | 1.000 | 1.000 | 1.000 | 0.977 | 0.955 | 3072 | 0.898 |
+| r2c | 93.4 | 93.6 | 1.000 | 0.993 | 1.000 | 0.979 | 0.986 | 3043 | 0.926 | 93.3 | 92.7 | 1.000 | 1.000 | 1.000 | 0.977 | 0.955 | 3072 | 0.898 |
 
-Against the baseline: +9.4 S on dev and +9.6 on dev200. CF1 goes from 0.81 to 0.98 and from 0.74 to 0.98, at about a third of the chars. Abstention AUC goes from 0.81 to 0.89 and from 0.85 to 0.89.
+On dev, CF1all (0.986) is higher than CF1 on cite_plan (0.979). On two low-margin questions (camera lens, kitchen gadget) the context session is the gold session the pair missed, so citing everything there is correct.
 
-Lens A's best dev200 run at the time of writing (`pkv3w0_bm25`, BM25 only) was S 89.7.
+## Test audit (`harness.audit`, 20 KU-routed questions, qualitative)
+- **The gate is stricter on test.** 8 of 20 packs are pair-only. 12 of 20 get pair + 1 because test margins are low (planted near-misses). If those pairs are right, the expected test KU CF1all is about 0.88, against 0.667 for pair_r1b.
+- **Brief item 2: the newly routed questions.**
+  - Correct old → new pairs:
+    - km each evening: 3 km → 5 km, confident;
+    - GB data plan: 15 → 25 GB, confident;
+    - UX team: 6 → 8, confident;
+    - apple trees: 4, then +3, confident;
+    - chapters: 8 → 12;
+    - beehives: 3 → 4;
+    - tractors: 1 → 2;
+    - rent: 18,000 → 22,000;
+    - watercolour: Margaret → Priya Nair;
+    - accountant: Marta → Bruno;
+    - ceramics: Miguel → Ana Ferreira.
+  - Still wrong:
+    - **laps**: only "40 laps" restatements and the neighbour's 20 laps are found. The update is not retrieved.
+    - **cups of coffee**: the pair holds "Carlos drinks three cups" (another person) next to the correct new "switched to just one cup". The user's own old statement is not retrieved.
+    - **rooms renovated so far**: no count statement is retrieved.
+    - **job title**: the promotion to Director of Clinical Services is not retrieved. The hint now quotes nothing misleading.
+    - **long run**: the recap "shifted to Sundays at 6:30 a.m." is not retrieved; we get "playgroup moved to 9:00".
+    - **skateboard**: the old name 'Decaf' is only quoted inside the update sentence.
+    - **cats on my farm**: probably unanswerable. The pack shows horses and beehives with abstain_p 0.18.
 
-`wide` has CF1 1.000 on dev200, so plain unit-rerank top-2 got every dev200 pair. That shows the pair features cost dev200 pairs before the R1 fixes. At 11.7k chars, though, it scores less.
+## Top failure patterns (r2b)
+1. **Paraphrased updates without the attribute noun are not retrieved (test).** Examples: job title → "another promotion, so now I am Director of Clinical Services"; long run → assistant recap "Sundays at 6:30 a.m."; laps.
+   - On test these are the low-margin packs, and the third session rarely holds the update.
+   - Dev cannot measure this. Every dev KU gold turn is a user turn with the attribute noun.
+2. **Another person's value fills the old slot when the user's own old statement is not in the pool** (test). Example: coffee, "Carlos drinks three cups". The own penalty (−6) is not enough when every other candidate is weak too.
+   - r2c labels the sentence correctly but does not change the pack.
+3. **Low-margin dev pairs (CF1 only, PA kept by the gate):**
+   - camera lens: two 70-200mm mentions compete;
+   - kitchen gadget before the Air Fryer: "my new Instant Pot" has no lexical overlap;
+   - gym frequency: the new value "four times a week" sits in a smoothie sentence, and the cross-encoder prefers "Do you think I should do them more frequently?"
+4. **The bigram abstention signal also fires on answerable test questions.** Examples: 'job title', 'monthly rent', 'freelance taxes', "skateboard's name", 'completely renovated'.
+   - It is fine as a ranking score (AUC up) but must not drive a hint. Keep the no-abstention-hint policy.
 
-## Top failure patterns (pair_r1b)
-1. **Old-value questions with several earlier candidates.** The "previous" value is ambiguous.
-   - "What was my previous personal best time for the charity 5K run?" (dev200). The gold old value is 27:45 (session 22). We cite session 77, "finished with a time of 27 minutes and 12 seconds", which is a charity 5K time but not a PB.
-     The hint still lists all three statements in date order, so Reactor can answer. Only CF1 is lost.
-   - "What new kitchen gadget did I invest in before getting the Air Fryer?" (dev). The Instant Pot session ("my new Instant Pot") has almost no lexical overlap with "kitchen gadget / invest".
-     The before-clause rule fixed the dev200 copy, where the wrong partner was later than the anchor. On dev the wrong partner is earlier.
-2. **Comparison questions.** "Do I go to the gym more frequently than I did previously?" The new value ("four times a week") sits in a sentence about a smoothie. The cross-encoder prefers an assistant-style question that contains "more frequently".
-3. **Two mentions of the same item.** "What type of camera lens did I purchase most recently?" Two 70-200mm sentences compete, and we cite the more explicit one, which is the wrong session.
-4. **Test (audit, qualitative).**
-   - Retrieval misses paraphrased updates without the attribute noun. For "current job title", "promotion … Director of Clinical Services" is not in the top 40. The hint now quotes nothing misleading there (hygiene fix), but the pair is wrong.
-   - Skateboard: the old name 'Decaf' sits one sentence before the "skateboard" sentence. The −1 window would fix it, but it cost a dev200 pair, so it is rejected.
-   - Fixed on test by R1:
-     - watercolour: the assistant recap "Margaret has retired, so your … class is now taught by Priya Nair" is now the top session;
-     - rent: the pair is 18,000 → 22,000, with the brother decoy only as extra context;
-     - ceramics, accountant, UX team (all decoys out of the pair), beehives and chapters all hold old + new.
-5. **Abstention.** "Italian restaurants" (Korean in the history) and "Software Engineer Manager" (Senior Software Engineer) score 0.13 and 0.09. Every question word exists in the history, and the swap is only visible at the phrase level.
+## Brief item 4: evidence-based KU detector `ku_pair_p(q, hx)` (in `b_r2.py`)
+The rule: the pair's best sentences carry two **different** values, the weaker pair member's score is ≥ 6, and min coverage is ≥ 0.5. It is measured from r2b gate features on dev, with 40-question samples for multi and ssu:
+
+| threshold (min score, min cov) | ku hit | multi FP | ssu FP |
+|---|---|---|---|
+| 0, 0.3 | 55/78 | 10/40 | 0/40 |
+| 4, 0.5 | 42/78 | 3/40 | 0/40 |
+| **6, 0.5** | 40/78 | 2/40 | 0/40 |
+
+A multi → ku misroute costs about 70 S, while ku → multi only costs about 2 S (S 91 there). So the detector should **only re-route questions the text router sends to ssu**: ku → ssu costs 23 S on dev and 45 S on dev200, and the ssu false-positive count was 0/40. It needs one `analyze` call (BM25 + dense + rerank, about 60-250 ms warm). The measurement is small (40 q per type). Re-check on full dev and dev200 ssu before wiring it in.
 
 ## CORE REQUESTs
-1. **Sentence-level cross-encoder through `HistoryIndex`.** Add `hx.rerank_texts(query, texts)`. The lens calls `core.models.rerank` directly today, and that path is unstable under load: the sentence rerank was most of the 17-minute dev200 run while the server was shared by 16 sweeps.
-2. **Honour `cite_plan` in submission for KU.** Gold KU is always exactly 2 sessions, and the pack shows 2 extra sessions for robustness. Citing them would cost about 0.33 F1 per question.
-3. **Expose `analyze()` to the generic path.** The router finds about 19% of dev KU. When the best two sessions hold different own values with coverage ≥ 0.6, the generic path should add the timeline hint and cite the pair. Lens A asks for the same.
-4. **`build_pack(pinned_uids=...)`.** The pair's units should always enter first; today this depends on ranking order.
-5. **Server queueing or priority.** Sweeps from 16 agents at once made a 26-question run take 17 minutes. Cached reruns take 5 seconds.
+1. **Route ku to `lenses/ku/b_r2.py` variant `r2b`** in `configs/best.json`. Gains are S +0.2 / +0.2, Sall +9.7 / +8.9, chars −600, and AUC up.
+   - b_r2 imports `lenses/ku/b_semantic.py`, and both files must ship. The b_semantic change is a flag that defaults to off.
+2. **Router:** wire `lenses/ku/b_r2.ku_pair_p` into the ssu route only, after re-measuring on the full dev and dev200 ssu sets (see above).
+3. **Submission (unchanged ask):** if post-filtering by `cite_plan` is ever confirmed, KU loses nothing either way now. Otherwise, low-confidence packs could cite all 3 sessions: on dev that gives CF1all 0.986 > CF1 0.979.
 
 ## Ideas for the next round
-- **Phrase-level abstention:** check bigrams like "Italian restaurant(s)" and "Engineer Manager" against the history, not single terms. That targets the entity swaps the current signal misses.
-- **Old mode:** pick the old member as the value immediately preceding the newest one among own same-attribute statements, not the strongest.
-- **Attribute paraphrase expansion** for the PRF hop (title → promoted / role / position; instructor → teach), probably borrowing lens A's 19 synonym groups. Gate the −1 sentence window on a quoted or capitalised name only, so it fixes the skateboard case without the bass regression.
-- **`computed`** for numeric "new"-mode questions (the newest pair value). This only pays off if Reactor sample runs show the hint is followed.
+- **Attribute-paraphrase second hop for the test misses.** Run sentence-level CE (`hx.rerank_texts`) over value-bearing own sentences of the top 60 user units, plus assistant recaps, with the declarative attribute ("my job title", "my long run start time").
+  - Admit a session to the pair only if it states a value of the same type (time / count / title / name) as the old member.
+  - This targets job title, long run and laps.
+- **Own-value constraint in the pair.** When one pair member has own < 0 (Carlos), replace it with the best own same-type-value session even if its score is lower, or drop to a single-session pack plus the hint.
+- **Per-owner totals** ("Bjørn and I in total"): one timeline per owner and a summed `computed`.
+- **Calibrate abstain_p on dev + dev200 pooled**, using the bigram signal only together with low coverage, so answerable phrase variants ("monthly rent") are not pushed up.
