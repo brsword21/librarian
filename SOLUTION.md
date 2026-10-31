@@ -187,6 +187,19 @@ Final result:
 
 `finalize` rebuilds `submission/predictions.jsonl` byte for byte from the recorded replies.
 
+**Out of distribution: LoCoMo** (`runs/ood/LOCOMO.md`). We never looked at this dataset while building: 10 conversations
+between two people and 1,535 answerable questions. Measured offline with the same harness and no tuning:
+
+| System | S | CF1 | Session recall | Gold-turn recall |
+|---|---|---|---|---|
+| naive keyword baseline | 31.3 | 0.32 | 0.60 | 0.37 |
+| generic hybrid, same pack size | 56.8 | 0.38 | 0.87 | 0.78 |
+| **routed v3** | **66.4** | **0.69** | 0.83 | 0.78 |
+
+On both datasets the routed system scores about 2x the baseline (dev: 87.1 vs 42.9). On LoCoMo the gain comes from
+the shared core and the citation planning; the type lenses add no recall there. S is not comparable 1:1 across the
+two datasets, because LoCoMo needs its own stand-in for PA.
+
 ## 5. Decisions worth knowing
 
 - **Compute, then let Reactor read.** Date arithmetic, latest-value logic and instance lists are done in code and given
@@ -214,6 +227,13 @@ Final result:
   test-pack defects, not on test answers.
 - The Reactor server rejected continuing an older history ("history_changed") for re-asks. Those few questions were
   therefore answered in a fresh Reactor history with the same self-contained pack.
+
+- Out of distribution (LoCoMo), multi-hop scores 26 S: questions with no counting cue go to the single-fact route,
+  and no lens filters sessions by a calendar window named in the question ("the first weekend of October 2023").
+  Our unanswerable-question signal does not transfer either (AUC 0.56, vs 0.81 on dev), so abstaining stays
+  Reactor's call.
+- Everything is English: BM25 stemmer, embedder, reranker and the notes to Reactor. Archives in other languages are
+  untested.
 
 ## 7. Application
 

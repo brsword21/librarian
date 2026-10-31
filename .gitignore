@@ -17,6 +17,9 @@ runs/final/*_candidate.jsonl
 runs/final/r1*_test_packs.jsonl
 runs/final/v1_rebuild_test_packs.jsonl
 !runs/proxy/
+!runs/ood/
+runs/ood/*.jsonl
+runs/ood/*.log
 runs/proxy/packs/v3_*.jsonl
 runs/proxy/packs/multideep8_*.jsonl
 runs/proxy/packs/ssabsem_*.jsonl

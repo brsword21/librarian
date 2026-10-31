@@ -3,7 +3,8 @@
 Accepted inputs:
 - the challenge format: one history as JSON, or a histories.jsonl (its first history);
 - a ChatGPT export (conversations.json), a list of sessions, or one list of {role, content} messages;
-- a WhatsApp-style chat export ("12/05/2023, 14:03 - Anna: ..."): one session per day;
+- a WhatsApp-style chat export ("12/05/2023, 14:03 - Anna: ..."): one session per day, every turn a "user" turn
+  prefixed with the speaker's name;
 - plain text or Markdown: a heading that is a date ("## 3 May 2024") starts a new session; without dates, paragraphs
   are grouped into ~3,000-character sessions dated at upload time.
 """
@@ -129,16 +130,16 @@ def _chat_export(lines: list[str], now: datetime) -> list:
         elif cur is not None and line.strip():
             cur[6] += "\n" + line.strip()
     dayfirst = not any(int(r[1]) > 12 for r in rows)   # "05/13/2023" means month first; otherwise assume day first
-    speakers: dict[str, str] = {}
     by_day: dict[str, list] = {}
     for d1, d2, d3, hm, ampm, name, msg in rows:
         name = name.strip()
-        speakers.setdefault(name, "user" if not speakers else "assistant")
         try:
             d = _naive(dparser.parse(f"{d1}/{d2}/{d3} {hm} {ampm or ''}".strip(), dayfirst=dayfirst and len(d1) <= 2))
         except (ValueError, OverflowError):
             d = now
-        by_day.setdefault(d.strftime("%Y-%m-%d"), []).append((d, speakers[name], f"{name}: {msg.strip()}"))
+        # every human turn is "user" with the speaker's name: on LoCoMo, labelling the second person "assistant" cost
+        # 6.6 S (runs/ood/LOCOMO.md)
+        by_day.setdefault(d.strftime("%Y-%m-%d"), []).append((d, "user", f"{name}: {msg.strip()}"))
     return [(rows_[0][0], "", [(r, t) for _, r, t in rows_]) for rows_ in by_day.values()]
 
 
