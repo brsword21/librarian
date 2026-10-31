@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Librarian Inbox</title>
+<style>
+:root {
+  --bg: #f4ecdc; --panel: #fbf6ec; --ink: #2b2117; --muted: #6f5f4b; --rule: #d9c9ad; --accent: #8a5a1c;
+  --accent-ink: #fffaf0; --pick: #efe0bd; --cite: #e2c27f; --bad: #9b2c2c; --ok: #3f6b2a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1d1712; --panel: #2a2119; --ink: #f1e6d2; --muted: #b9a68a; --rule: #4a3b2c; --accent: #d8a55a;
+    --accent-ink: #1d1712; --pick: #3a2d1d; --cite: #6b4e22; --bad: #f08a8a; --ok: #9fcf7f;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 Georgia, "Iowan Old Style", serif; }
+header { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--rule); }
+h1 { font-size: 22px; margin: 0; }
+.ui { font-family: system-ui, sans-serif; }
+select, input[type=search], textarea { font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 7px 10px; }
+select { max-width: 340px; }
+button, .btn { font: 600 14px system-ui, sans-serif; border-radius: 6px; padding: 8px 14px; cursor: pointer; border: 1px solid var(--accent); background: transparent; color: var(--accent); }
+button.primary { background: var(--accent); color: var(--accent-ink); }
+button:disabled { opacity: .45; cursor: not-allowed; }
+.pill { font: 12px system-ui, sans-serif; padding: 3px 9px; border-radius: 99px; border: 1px solid var(--rule); color: var(--muted); white-space: nowrap; }
+main { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 16px; padding: 16px; max-width: 1400px; margin: 0 auto; }
+@media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+section { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 14px; min-width: 0; }
+h2 { font: 600 12px system-ui, sans-serif; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin: 0 0 10px; }
+.meta { font: 13px/1.45 system-ui, sans-serif; color: var(--muted); }
+#inbox { max-height: calc(100vh - 210px); overflow: auto; margin-top: 10px; border-top: 1px solid var(--rule); }
+@media (max-width: 900px) { #inbox { max-height: 60vh; } }
+.row { border-bottom: 1px solid var(--rule); padding: 9px 6px; cursor: pointer; }
+.row:hover { background: color-mix(in srgb, var(--pick) 50%, transparent); }
+.row.picked { background: var(--pick); }
+.row.cited { background: var(--cite); }
+.row .top { display: flex; gap: 8px; align-items: baseline; font: 12px system-ui, sans-serif; color: var(--muted); }
+.row .prev { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row .badge { font: 600 11px system-ui, sans-serif; padding: 1px 7px; border-radius: 99px; background: var(--accent); color: var(--accent-ink); }
+.row .full { margin-top: 8px; font-size: 15px; white-space: pre-wrap; cursor: text; }
+.row .full .turn { margin: 6px 0; }
+.row .full .who { font: 600 12px system-ui, sans-serif; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+textarea { width: 100%; min-height: 58px; resize: vertical; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
+ol.flow { list-style: none; padding: 0; margin: 14px 0 0; }
+ol.flow li { display: grid; grid-template-columns: 26px 1fr; gap: 8px; padding: 8px 0; border-top: 1px solid var(--rule); }
+ol.flow .dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--rule); margin-top: 2px; display: grid; place-items: center; font: 700 11px system-ui, sans-serif; color: var(--muted); }
+ol.flow li.run .dot { border-color: var(--accent); border-top-color: transparent; animation: spin 1s linear infinite; }
+ol.flow li.done .dot { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+ol.flow li.err .dot { border-color: var(--bad); color: var(--bad); }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { ol.flow li.run .dot { animation: none; } }
+ol.flow .t { font: 600 14px system-ui, sans-serif; }
+ol.flow .d { font: 13px/1.45 system-ui, sans-serif; color: var(--muted); white-space: pre-wrap; }
+.answer { font-size: 26px; margin: 6px 0; }
+.err { color: var(--bad); font: 13px system-ui, sans-serif; white-space: pre-wrap; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0; }
+.chip { font: 12px system-ui, sans-serif; border: 1px solid var(--accent); color: var(--accent); border-radius: 99px; padding: 2px 9px; cursor: pointer; background: transparent; }
+.out { border-top: 1px solid var(--rule); padding: 8px 0; font: 14px/1.4 system-ui, sans-serif; }
+.out b { font-weight: 600; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Librarian · memory inbox</h1>
+  <select id="archive" class="ui" aria-label="Archive"></select>
+  <label class="btn">Upload archive<input type="file" id="file" hidden accept=".json,.jsonl,.txt,.md,.markdown,text/*,application/json"></label>
+  <span class="pill" id="status">Reactor: checking…</span>
+  <span class="meta" id="archInfo"></span>
+</header>
+<main>
+  <section aria-label="Inbox">
+    <h2>Inbox <span id="count"></span></h2>
+    <input type="search" id="filter" class="ui" placeholder="Filter messages" style="width:100%">
+    <div id="inbox"></div>
+  </section>
+
+  <div style="display:grid; gap:16px; align-content:start; min-width:0">
+    <section aria-label="Ask">
+      <h2>Ask the memory</h2>
+      <textarea id="q" placeholder="e.g. How many days passed between the demo day and our first paying customer?"></textarea>
+      <div class="actions">
+        <button id="run" class="primary">Run workflow + Reactor</button>
+        <button id="dry">Retrieval only</button>
+        <span class="meta" id="timer"></span>
+      </div>
+      <div class="err" id="err"></div>
+      <ol class="flow" id="flow">
+        <li data-k="route"><span class="dot">1</span><div><div class="t">Read the question</div><div class="d">Which kind of question is it?</div></div></li>
+        <li data-k="search"><span class="dot">2</span><div><div class="t">Search the archive</div><div class="d">Hybrid search + rerank picks the few sessions that matter.</div></div></li>
+        <li data-k="notes"><span class="dot">3</span><div><div class="t">Code notes</div><div class="d">Dates, counts and latest values are computed by code, not guessed.</div></div></li>
+        <li data-k="reactor"><span class="dot">4</span><div><div class="t">Reactor reads the pages</div><div class="d">Only the picked pages go to Reactor.</div></div></li>
+        <li data-k="output"><span class="dot">5</span><div><div class="t">Output</div><div class="d">Answer with its sources.</div></div></li>
+      </ol>
+    </section>
+
+    <section aria-label="Output" id="outCard" hidden>
+      <h2>Output</h2>
+      <div class="answer" id="answer"></div>
+      <div class="meta" id="outMeta"></div>
+      <div class="chips" id="cites"></div>
+      <div class="actions">
+        <button id="copy">Copy JSON</button>
+        <button id="dl">Download JSON</button>
+      </div>
+    </section>
+
+    <section aria-label="Outbox">
+      <h2>Outbox · every Reactor answer on this archive</h2>
+      <div class="actions" style="margin:0 0 6px"><button id="dlAll">Download all (JSONL)</button></div>
+      <div id="outbox" class="meta">No answers yet.</div>
+    </section>
+  </div>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const API = new URLSearchParams(location.search).get("api") || "";
+const ROUTES = { ssu: "a fact you stated", ssa: "something the assistant said", multi: "facts spread over sessions",
+  ku: "a value that changed over time", temporal: "dates and time gaps" };
+const S = { archives: [], cur: null, arch: null, picked: new Set(), cited: new Set(), last: null, outputs: [], open: new Set() };
+
+async function call(path, opts) {
+  const r = await fetch(API + path, opts);
+  const j = await r.json().catch(() => ({ error: `HTTP ${r.status}` }));
+  if (!r.ok || j.error) throw new Error(j.error || `HTTP ${r.status}`);
+  return j;
+}
+const post = (path, body) => call(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+async function loadArchives(select) {
+  S.archives = (await call("/api/uploads")).uploads;
+  const sel = $("#archive");
+  sel.replaceChildren(...S.archives.map(u => { const o = el("option", null, `${u.name} · ${u.sessions || "?"} sessions`); o.value = u.history_id; return o; }));
+  if (!S.archives.length) sel.append(el("option", null, "Upload an archive to start"));
+  const want = select || S.cur || (S.archives[0] && S.archives[0].history_id);
+  if (want) { sel.value = want; await openArchive(want); }
+  const indexing = S.archives.some(u => u.state === "indexing");
+  if (indexing) setTimeout(() => loadArchives(S.cur), 1500);
+}
+
+async function openArchive(hid) {
+  if (S.cur !== hid) { S.picked.clear(); S.cited.clear(); S.open.clear(); $("#outCard").hidden = true; resetFlow(); }
+  S.cur = hid;
+  const u = S.archives.find(a => a.history_id === hid) || {};
+  try { S.arch = await call(`/api/archive?split=upload&history_id=${encodeURIComponent(hid)}`); }
+  catch (e) { $("#err").textContent = e.message; return; }
+  $("#archInfo").textContent = [u.format, `${S.arch.sessions.length} sessions`, `${Math.round(S.arch.chars / 1000).toLocaleString()}k characters`,
+    u.state === "indexing" ? `indexing ${Math.round((u.progress || 0) * 100)}%` : u.state === "error" ? "indexing failed" : "ready"].filter(Boolean).join(" · ");
+  renderInbox(); loadOutputs();
+}
+
+function renderInbox() {
+  const box = $("#inbox"), f = $("#filter").value.trim().toLowerCase();
+  if (!S.arch) return box.replaceChildren();
+  let rows = S.arch.sessions.filter(r => !f || r.preview.toLowerCase().includes(f) || r.date.includes(f));
+  rows = [...rows.filter(r => S.picked.has(r.session_id)), ...rows.filter(r => !S.picked.has(r.session_id))];
+  $("#count").textContent = `(${rows.length})`;
+  box.replaceChildren(...rows.map(r => {
+    const row = el("div", "row" + (S.cited.has(r.session_id) ? " cited" : S.picked.has(r.session_id) ? " picked" : ""));
+    row.id = "row-" + r.session_id;
+    const top = el("div", "top");
+    top.append(el("span", null, r.date.slice(0, 16)), el("span", null, `${r.turns} msg`));
+    if (S.cited.has(r.session_id)) top.append(el("span", "badge", "cited by Reactor"));
+    else if (S.picked.has(r.session_id)) top.append(el("span", "badge", "picked"));
+    row.append(top, el("div", "prev", r.preview));
+    if (S.open.has(r.session_id)) row.append(fullView(r.session_id));
+    row.onclick = e => { if (e.target.closest(".full")) return; S.open.has(r.session_id) ? S.open.delete(r.session_id) : S.open.add(r.session_id); renderInbox(); };
+    return row;
+  }));
+}
+
+const sessionCache = {};
+function fullView(sid) {
+  const box = el("div", "full", "Loading…");
+  const fill = s => box.replaceChildren(...s.turns.map(t => { const d = el("div", "turn"); d.append(el("div", "who", t.role), el("div", null, t.content)); return d; }));
+  if (sessionCache[S.cur + sid]) fill(sessionCache[S.cur + sid]);
+  else call(`/api/session?split=upload&history_id=${encodeURIComponent(S.cur)}&session_id=${encodeURIComponent(sid)}`)
+    .then(s => { sessionCache[S.cur + sid] = s; fill(s); }).catch(e => box.textContent = e.message);
+  return box;
+}
+
+function resetFlow() {
+  document.querySelectorAll("#flow li").forEach((li, i) => { li.className = ""; li.querySelector(".dot").textContent = i + 1; });
+  const d = { route: "Which kind of question is it?", search: "Hybrid search + rerank picks the few sessions that matter.",
+    notes: "Dates, counts and latest values are computed by code, not guessed.", reactor: "Only the picked pages go to Reactor.", output: "Answer with its sources." };
+  Object.entries(d).forEach(([k, v]) => step(k, null, v));
+}
+function step(k, state, detail) {
+  const li = document.querySelector(`#flow li[data-k="${k}"]`);
+  if (state) { li.className = state; li.querySelector(".dot").textContent = state === "done" ? "✓" : state === "err" ? "!" : ""; }
+  if (detail != null) li.querySelector(".d").textContent = detail;
+}
+
+function showPack(p) {
+  step("route", "done", `Route: ${ROUTES[p.route] || p.route} (${p.route})`);
+  const ids = p.passages.filter(x => x.id).map(x => x.id);
+  S.picked = new Set(ids); S.cited.clear();
+  const chars = p.passages.reduce((n, x) => n + x.text.length, 0);
+  const pct = S.arch && S.arch.chars ? (100 * chars / S.arch.chars) : 0;
+  step("search", "done", `Picked ${new Set(ids).size} of ${S.arch ? S.arch.sessions.length : "?"} sessions · ${chars.toLocaleString()} characters (${pct < 1 ? pct.toFixed(2) : pct.toFixed(1)}% of the archive) · ${p.build_ms} ms`);
+  step("notes", "done", p.computed ? `Computed by code: ${p.computed}` + (p.notes ? `\n${p.notes.split("\n")[0]}` : "") : p.notes ? p.notes.split("\n").slice(0, 3).join("\n") : "No notes needed for this question.");
+  renderInbox();
+}
+
+async function run(live) {
+  $("#err").textContent = "";
+  const question = $("#q").value.trim();
+  if (!S.cur) return $("#err").textContent = "Upload or pick an archive first.";
+  if (!question) return $("#err").textContent = "Type a question.";
+  $("#run").disabled = $("#dry").disabled = true; $("#outCard").hidden = true; resetFlow();
+  step("route", "run"); step("search", "run");
+  const body = { split: "upload", history_id: S.cur, question };
+  let t0 = Date.now(), tick;
+  try {
+    const p = await post("/api/pack", body);
+    showPack(p);
+    if (!live) { step("reactor", null, "Skipped (retrieval only)."); step("output", null, "Run with Reactor to get the answer."); return; }
+    step("reactor", "run", "Reactor is reading the pages…");
+    t0 = Date.now();
+    tick = setInterval(() => { $("#timer").textContent = `Reactor: ${Math.round((Date.now() - t0) / 1000)} s`; }, 500);
+    const a = await post("/api/ask", body);
+    S.last = a;
+    S.cited = new Set(a.cited || []);
+    step("reactor", "done", `Answered in ${Math.round(a.latency_s || (Date.now() - t0) / 1000)} s · status ${a.status}`);
+    step("output", "done", a.abstained ? "Not in the archive: Reactor says it does not know." : `${a.answer}`);
+    renderOutput(a); renderInbox(); loadOutputs();
+  } catch (e) {
+    $("#err").textContent = e.message;
+    document.querySelectorAll("#flow li.run").forEach(li => { li.className = "err"; li.querySelector(".dot").textContent = "!"; });
+  } finally {
+    clearInterval(tick); $("#timer").textContent = ""; $("#run").disabled = $("#dry").disabled = false; status();
+  }
+}
+
+function renderOutput(a) {
+  $("#outCard").hidden = false;
+  $("#answer").textContent = a.abstained ? "I don't know: the archive does not say." : a.answer || "(no answer)";
+  $("#outMeta").textContent = `Question: ${a.question} · route ${a.route} · ${a.passages.length} passages read · Reactor ${Math.round(a.latency_s || 0)} s`;
+  const chips = $("#cites"); chips.replaceChildren();
+  (a.cited || []).forEach(id => {
+    const s = S.arch && S.arch.sessions.find(r => r.session_id === id);
+    const c = el("button", "chip", `source: ${s ? s.date.slice(0, 10) : id}`);
+    c.onclick = () => { S.open.add(id); renderInbox(); const r = document.getElementById("row-" + id); r && r.scrollIntoView({ behavior: "smooth", block: "center" }); };
+    chips.append(c);
+  });
+}
+
+function outputJson(a) {
+  return { question: a.question, question_date: a.question_date, answer: a.abstained ? null : a.answer, abstained: a.abstained,
+    cited_sessions: a.cited, route: a.route, computed: a.computed, latency_s: a.latency_s,
+    passages: a.passages.map(x => ({ id: x.id, date: x.date, text: x.text })) };
+}
+function download(name, text, type) {
+  const url = URL.createObjectURL(new Blob([text], { type })); const l = el("a"); l.href = url; l.download = name; l.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+async function loadOutputs() {
+  try { S.outputs = (await call(`/api/outputs?history_id=${encodeURIComponent(S.cur || "")}`)).outputs; } catch { S.outputs = []; }
+  const box = $("#outbox");
+  if (!S.outputs.length) return box.replaceChildren(el("div", null, "No answers yet."));
+  box.replaceChildren(...S.outputs.map(o => {
+    const d = el("div", "out");
+    const q = el("div"); q.append(el("b", null, "Q: "), document.createTextNode(o.question));
+    const a = el("div"); a.append(el("b", null, "A: "), document.createTextNode(o.abstained ? "I don't know" : o.answer));
+    d.append(q, a, el("div", "meta", `${o.time} · ${o.route} · ${(o.cited || []).length} source(s) · ${Math.round(o.latency_s || 0)} s`));
+    return d;
+  }));
+}
+
+async function status() {
+  try { const s = await call("/api/status"); $("#status").textContent = s.reactor_busy ? "Reactor: busy" : "Reactor: available"; }
+  catch { $("#status").textContent = "Server offline"; }
+}
+
+$("#archive").onchange = e => openArchive(e.target.value);
+$("#filter").oninput = renderInbox;
+$("#run").onclick = () => run(true);
+$("#dry").onclick = () => run(false);
+$("#q").addEventListener("keydown", e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) run(true); });
+$("#copy").onclick = () => S.last && navigator.clipboard.writeText(JSON.stringify(outputJson(S.last), null, 2));
+$("#dl").onclick = () => S.last && download("librarian-output.json", JSON.stringify(outputJson(S.last), null, 2), "application/json");
+$("#dlAll").onclick = () => download("librarian-outbox.jsonl", S.outputs.map(o => JSON.stringify(o)).join("\n") + "\n", "application/x-ndjson");
+$("#file").onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  $("#err").textContent = ""; $("#archInfo").textContent = `Reading ${f.name}…`;
+  try { const u = await post("/api/upload", { name: f.name, content: await f.text() }); await loadArchives(u.history_id); }
+  catch (err) { $("#err").textContent = err.message; }
+  e.target.value = "";
+};
+loadArchives().catch(e => $("#err").textContent = e.message); status(); setInterval(status, 20000);
+</script>
+</body>
+</html>

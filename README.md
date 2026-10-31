@@ -53,6 +53,11 @@ WhatsApp `.txt` export, or Markdown notes with date headings; try `demo/samples/
 `core.model_server` running; "Ask Reactor" also needs Reactor access (see Reproduce). API: `POST /api/upload`, then
 `POST /api/pack` or `/api/ask` with `{"split": "upload", "history_id", "question"}` (see `demo/server.py`).
 
+**Memory inbox:** http://127.0.0.1:8800/inbox shows the archive as an inbox and runs the whole workflow step by step:
+route, search (sessions picked, share of the archive read), code notes, Reactor, output. The sessions Librarian picked
+and those Reactor cited are highlighted. Every live answer is logged to `cache/live_outputs.jsonl` and downloadable as
+JSON or JSONL.
+
 ## Reproduce
 Requirements: macOS or Linux, [uv](https://docs.astral.sh/uv/), git, curl.
 

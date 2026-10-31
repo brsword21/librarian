@@ -10,6 +10,11 @@ Endpoints:
                                          any archive (see demo/ingest.py); indexing continues in the background
   GET  /api/uploads                      uploaded archives with their indexing state ("indexing" / "ready" / "error")
   GET  /live                             minimal page: upload an archive, ask it, see the pages and Reactor's answer
+  GET  /inbox                            the archive as an inbox + the whole workflow (route, search, notes, Reactor,
+                                         output); every live answer is logged and exported
+  GET  /api/archive?split=&history_id=   the archive's sessions, newest first: id, date, turns, chars, preview
+  GET  /api/session?split=&history_id=&session_id=   one session's turns
+  GET  /api/outputs[?history_id=]        live answers logged by /api/ask (newest first; cache/live_outputs.jsonl)
 Ask an uploaded archive with {"split": "upload", "history_id": ..., "question": ...}. One Reactor call at a time across
 all demo servers on this machine (file lock); a second caller gets 409. API responses allow any origin (CORS).
 Needs core.model_server running (for packs) and, for /api/ask, ../reactor.env + the keychain key.
@@ -24,6 +29,7 @@ import subprocess
 import tempfile
 import threading
 from datetime import datetime
+from urllib.parse import parse_qs, urlparse
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -38,6 +44,7 @@ PIPE = None
 UPLOAD_DIR = shard_dir("upload")
 UPLOADS: dict[str, dict] = {}          # history_id -> summary + indexing state
 REACTOR_LOCK = CACHE / "reactor_demo.lock"
+OUTPUTS = CACHE / "live_outputs.jsonl"
 MAX_BODY = 40_000_000
 
 
@@ -120,7 +127,52 @@ def ask_locked(body: dict) -> dict:
             fcntl.flock(lf, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
             raise Busy("Reactor is answering another live question; try again in a minute")
-        return ask(pack_for(body))
+        out = ask(pack_for(body))
+    log_output(body, out)
+    return out
+
+
+def log_output(body: dict, out: dict) -> None:
+    rec = {"time": datetime.now().strftime(DATE_FMT), "split": body.get("split", "test"),
+           "history_id": out["history_id"], "question": out["question"], "question_date": out["question_date"],
+           "route": out["route"], "answer": out["answer"], "abstained": out["abstained"], "cited": out["cited"],
+           "status": out["status"], "latency_s": out["latency_s"], "computed": out["computed"],
+           "passages": [{"id": x["id"], "date": x["date"]} for x in out["passages"]],
+           "pack_chars": sum(len(x["text"]) for x in out["passages"])}
+    with open(OUTPUTS, "a", encoding="utf-8") as f:
+        f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+
+def outputs(history_id: str | None) -> list[dict]:
+    if not OUTPUTS.exists():
+        return []
+    rows = [json.loads(x) for x in OUTPUTS.read_text(encoding="utf-8").splitlines() if x.strip()]
+    return [r for r in rows if not history_id or r["history_id"] == history_id][::-1][:200]
+
+
+def _hist(split: str, hid: str) -> dict:
+    from core.data import history
+    if split == "upload" and not (UPLOAD_DIR / f"{hid}.json").exists():
+        raise KeyError(f"no uploaded archive {hid}")
+    return history(split, hid)
+
+
+def archive(split: str, hid: str) -> dict:
+    h = _hist(split, hid)
+    rows = []
+    for s in h["sessions"]:
+        first = next((t["content"] for t in s["turns"] if t["role"] == "user"), s["turns"][0]["content"] if s["turns"] else "")
+        rows.append({"session_id": s["session_id"], "date": s["date"], "turns": len(s["turns"]),
+                     "chars": sum(len(t["content"]) for t in s["turns"]), "preview": " ".join(first.split())[:160]})
+    rows.sort(key=lambda r: datetime.strptime(r["date"], DATE_FMT), reverse=True)
+    return {"split": split, "history_id": hid, "sessions": rows, "chars": sum(r["chars"] for r in rows)}
+
+
+def session(split: str, hid: str, sid: str) -> dict:
+    s = next((s for s in _hist(split, hid)["sessions"] if s["session_id"] == sid), None)
+    if s is None:
+        raise KeyError(f"no session {sid}")
+    return {"session_id": sid, "date": s["date"], "turns": [{"role": t["role"], "content": t["content"]} for t in s["turns"]]}
 
 
 def _index_upload(hid: str) -> None:
@@ -203,6 +255,19 @@ class Handler(SimpleHTTPRequestHandler):
             self._json({"uploads": sorted(UPLOADS.values(), key=lambda u: u["uploaded"], reverse=True)})
         elif self.path.rstrip("/") == "/live" or self.path.startswith("/live?"):
             self._file(ROOT / "demo" / "live.html", "text/html; charset=utf-8")
+        elif self.path.rstrip("/") == "/inbox" or self.path.startswith("/inbox?"):
+            self._file(ROOT / "demo" / "inbox.html", "text/html; charset=utf-8")
+        elif self.path.startswith(("/api/archive", "/api/session", "/api/outputs")):
+            q = {k: v[0] for k, v in parse_qs(urlparse(self.path).query).items()}
+            try:
+                if self.path.startswith("/api/archive"):
+                    self._json(archive(q.get("split", "upload"), q["history_id"]))
+                elif self.path.startswith("/api/session"):
+                    self._json(session(q.get("split", "upload"), q["history_id"], q["session_id"]))
+                else:
+                    self._json({"outputs": outputs(q.get("history_id"))})
+            except (KeyError, FileNotFoundError) as exc:
+                self._json({"error": f"not found: {exc}"}, 404)
         else:
             super().do_GET()
 
