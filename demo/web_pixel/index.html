@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Librarian</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Caveat:wght@500;600;700&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1793414850">
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div id="app">
+  <header id="top">
+    <div class="brand">
+      <img id="logo" alt="">
+      <div>
+        <h1>THE LIBRARIAN</h1>
+        <p class="tag">memory for AI assistants that knows what it doesn't know</p>
+      </div>
+    </div>
+    <div id="tourbar" aria-label="Demo tour"></div>
+    <div class="hdr-right">
+      <span id="status" class="badge">REPLAY</span>
+      <div class="ctrls">
+        <button id="bPrev" class="pbtn" title="Previous (←)">◀</button>
+        <button id="bPlay" class="pbtn wide" title="Play / pause tour (Space)">▶ TOUR</button>
+        <button id="bNext" class="pbtn" title="Next / skip (→)">▶</button>
+        <button id="bHow" class="pbtn" title="How it works (H)">?</button>
+        <button id="bFull" class="pbtn" title="Fullscreen (F)">⛶</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <aside id="chooser" class="panel">
+      <button id="bCollapse" class="collapse" title="Hide / show questions (Q)">◀</button>
+      <div class="ch-inner">
+        <div class="ch-title">QUESTIONS</div>
+        <div id="splitTabs" class="tabs"></div>
+        <div id="tomes" class="tomes"></div>
+        <div id="qlist" class="qlist"></div>
+        <form id="askForm" class="askbox" autocomplete="off">
+          <label for="askInput">ASK ABOUT <span id="askWho">THIS PERSON</span></label>
+          <textarea id="askInput" rows="2" placeholder="e.g. What is my cat's name?"></textarea>
+          <div class="askbtns">
+            <button type="button" id="bPack" class="pbtn">FIND PAGES</button>
+            <button type="submit" id="bAsk" class="pbtn gold">ASK THE ORACLE</button>
+          </div>
+          <div id="askMsg" class="askmsg"></div>
+        </form>
+      </div>
+      <div class="ch-rail" id="rail"></div>
+    </aside>
+
+    <section id="center">
+      <div id="qbanner">
+        <div class="qb-left"><img id="qSigil" alt=""><div><div id="qKind" class="qkind"></div><div id="qDate" class="qdate"></div></div></div>
+        <div id="qText" class="qtext">Choose a question, or press <b>Space</b> for the tour.</div>
+        <div id="tourCap" class="tourcap"></div>
+      </div>
+
+      <div id="library" class="panel">
+        <div class="lib-head">
+          <span class="lh-title">THE ARCHIVE</span>
+          <span id="libCount" class="lh-count"></span>
+          <span id="libRange" class="lh-range"></span>
+        </div>
+        <div id="shelves">
+          <div id="wizard"><img id="wizImg" alt=""><div id="bubble" class="bubble"></div></div>
+        </div>
+      </div>
+
+      <div id="desk">
+        <div class="candle c1"><i class="flame"></i></div>
+        <div class="candle c2"><i class="flame"></i></div>
+        <div id="margin" class="margin"></div>
+        <div id="pagesWrap">
+          <div class="desk-head"><span class="dh-title">THE READING DESK</span><span id="tabs" class="tabs-pages"></span></div>
+          <div id="pages"></div>
+        </div>
+      </div>
+    </section>
+
+    <aside id="right" class="panel">
+      <div id="oracleBox">
+        <div class="ob-title">THE ORACLE <small>Reactor</small></div>
+        <canvas id="oracle" width="64" height="68"></canvas>
+        <div id="oracleMsg" class="oracle-msg"></div>
+      </div>
+      <div id="answer" class="answer"></div>
+      <div id="ribbon" class="ribbon"></div>
+    </aside>
+  </main>
+</div>
+
+<div id="how" class="overlay" hidden>
+  <div class="how-card">
+    <div class="how-title">THE LIBRARIAN</div>
+    <div class="how-sub">memory for AI assistants that knows what it doesn't know</div>
+    <div class="how-steps">
+      <div class="step"><img data-icon="book" alt=""><b>1 · THE ARCHIVE</b><span>Months of chats with an assistant: ~200 conversations, ~1.6M characters. Far too much for any model to read per question.</span></div>
+      <div class="arrow">▶</div>
+      <div class="step"><img data-icon="wizard" alt=""><b>2 · THE LIBRARIAN</b><span>Our local code searches the shelves: hybrid search, reranking, timelines, date arithmetic, decoy detection. It picks a few pages.</span></div>
+      <div class="arrow">▶</div>
+      <div class="step"><img data-icon="quill" alt=""><b>3 · MARGIN NOTES</b><span>Code writes the hard parts: dates, day gaps, "the most recent value wins", "this is the friend's cat, not yours".</span></div>
+      <div class="arrow">▶</div>
+      <div class="step"><img data-icon="eye" alt=""><b>4 · THE ORACLE</b><span>Reactor reads only that small dossier, answers and cites the pages, or says "not written in the archive".</span></div>
+    </div>
+    <div class="how-keys"><b>SPACE</b> start / pause tour &nbsp;·&nbsp; <b>← →</b> step &nbsp;·&nbsp; <b>F</b> fullscreen &nbsp;·&nbsp; <b>Q</b> questions &nbsp;·&nbsp; <b>H</b> this panel</div>
+    <button id="howGo" class="pbtn gold big">▶ BEGIN THE TOUR</button>
+  </div>
+</div>
+
+<script src="pixel.js?v=1793414850"></script>
+<script src="app.js?v=1793414850"></script>
+</body>
+</html>

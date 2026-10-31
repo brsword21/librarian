@@ -1,0 +1,10 @@
+526 questions x 1 variants on dev in 33s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+routed_v2                  86.8 0.942 0.971 0.985 0.964 0.983 1.000 0.914   5949  160.3 0.812 0
+   if Reactor cites every passage: CF1all=0.859 Sall=85.1
+   -> runs/merge3/all/pipeline/routed_v2/dev
+     ssu       n= 70 S= 88.4 Sall= 86.7 PA=0.969 CF1=0.892 routes={'ssu': 49, 'multi': 14, 'ku': 2, 'temporal': 5}
+     ssa       n=112 S= 93.0 Sall= 92.8 PA=0.991 CF1=1.000 routes={'ssa': 104, 'ssu': 7, 'temporal': 1}
+     multi     n=133 S= 84.9 Sall= 82.6 PA=0.926 CF1=0.900 routes={'multi': 114, 'ssu': 9, 'temporal': 10}
+     ku        n= 78 S= 91.3 Sall= 90.6 PA=0.986 CF1=0.957 routes={'ku': 21, 'multi': 32, 'ssu': 21, 'temporal': 4}
+     temporal  n=133 S= 79.7 Sall= 76.9 PA=0.874 CF1=0.840 routes={'temporal': 124, 'ssu': 5, 'multi': 4}

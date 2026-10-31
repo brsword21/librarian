@@ -1,0 +1,424 @@
+{
+ "C": 0.1,
+ "policy": {
+  "threshold": 0.3,
+  "max_add": 3,
+  "fill_threshold": 0.4,
+  "fill_max": 5
+ },
+ "features": [
+  "bias",
+  "contains",
+  "num_match",
+  "tok_overlap",
+  "in_plan",
+  "plan_comp",
+  "plan_first",
+  "ce_q",
+  "ce_qa",
+  "ce_q_rel",
+  "ce_qa_rel",
+  "spec",
+  "n_pass_inv",
+  "r_ssu",
+  "r_ssa",
+  "r_multi",
+  "r_ku",
+  "r_temporal",
+  "contains_x_multi",
+  "contains_x_temporal",
+  "in_plan_x_multi",
+  "in_plan_x_temporal",
+  "in_plan_x_ku",
+  "bare_num",
+  "contains_x_bare"
+ ],
+ "coef": {
+  "bias": 0.6984,
+  "contains": 0.3181,
+  "num_match": -0.2034,
+  "tok_overlap": 0.7774,
+  "in_plan": 1.1739,
+  "plan_comp": 0.4908,
+  "plan_first": 0.6534,
+  "ce_q": 0.9288,
+  "ce_qa": 1.4078,
+  "ce_q_rel": 0.304,
+  "ce_qa_rel": 0.9403,
+  "spec": 0.0631,
+  "n_pass_inv": 0.7699,
+  "r_ssu": 0.3087,
+  "r_ssa": 0.063,
+  "r_multi": 0.4351,
+  "r_ku": 0.0509,
+  "r_temporal": -0.1592,
+  "contains_x_multi": -0.1108,
+  "contains_x_temporal": 0.4036,
+  "in_plan_x_multi": 0.4684,
+  "in_plan_x_temporal": 0.3542,
+  "in_plan_x_ku": 0.1587,
+  "bare_num": 0.2604,
+  "contains_x_bare": -0.1293
+ },
+ "table": {
+  "dev_cv/none": {
+   "reactor": 0.0,
+   "finalize": 0.5375,
+   "plan": 0.9154,
+   "model": 0.6187,
+   "model_noku": 0.6073,
+   "n": 496,
+   "by_type_model": {
+    "knowledge-update": [
+     72,
+     0.71
+    ],
+    "multi-session": [
+     121,
+     0.099
+    ],
+    "single-session-assistant": [
+     112,
+     0.929
+    ],
+    "single-session-user": [
+     64,
+     0.901
+    ],
+    "temporal-reasoning": [
+     127,
+     0.646
+    ]
+   },
+   "by_type_finalize": {
+    "knowledge-update": [
+     72,
+     0.527
+    ],
+    "multi-session": [
+     121,
+     0.04
+    ],
+    "single-session-assistant": [
+     112,
+     0.83
+    ],
+    "single-session-user": [
+     64,
+     0.87
+    ],
+    "temporal-reasoning": [
+     127,
+     0.592
+    ]
+   }
+  },
+  "dev_cv/contains": {
+   "reactor": 0.454,
+   "finalize": 0.5375,
+   "plan": 0.9154,
+   "model": 0.618,
+   "model_noku": 0.6066,
+   "n": 496,
+   "by_type_model": {
+    "knowledge-update": [
+     72,
+     0.708
+    ],
+    "multi-session": [
+     121,
+     0.098
+    ],
+    "single-session-assistant": [
+     112,
+     0.929
+    ],
+    "single-session-user": [
+     64,
+     0.901
+    ],
+    "temporal-reasoning": [
+     127,
+     0.646
+    ]
+   },
+   "by_type_finalize": {
+    "knowledge-update": [
+     72,
+     0.527
+    ],
+    "multi-session": [
+     121,
+     0.04
+    ],
+    "single-session-assistant": [
+     112,
+     0.83
+    ],
+    "single-session-user": [
+     64,
+     0.87
+    ],
+    "temporal-reasoning": [
+     127,
+     0.592
+    ]
+   }
+  },
+  "dev_cv/top1": {
+   "reactor": 0.4414,
+   "finalize": 0.525,
+   "plan": 0.9154,
+   "model": 0.6181,
+   "model_noku": 0.6067,
+   "n": 496,
+   "by_type_model": {
+    "knowledge-update": [
+     72,
+     0.71
+    ],
+    "multi-session": [
+     121,
+     0.098
+    ],
+    "single-session-assistant": [
+     112,
+     0.929
+    ],
+    "single-session-user": [
+     64,
+     0.901
+    ],
+    "temporal-reasoning": [
+     127,
+     0.645
+    ]
+   },
+   "by_type_finalize": {
+    "knowledge-update": [
+     72,
+     0.505
+    ],
+    "multi-session": [
+     121,
+     0.035
+    ],
+    "single-session-assistant": [
+     112,
+     0.83
+    ],
+    "single-session-user": [
+     64,
+     0.87
+    ],
+    "temporal-reasoning": [
+     127,
+     0.56
+    ]
+   }
+  },
+  "dev200/none": {
+   "reactor": 0.0,
+   "finalize": 0.5897,
+   "plan": 0.9049,
+   "model": 0.6821,
+   "model_noku": 0.67,
+   "n": 110,
+   "by_type_model": {
+    "knowledge-update": [
+     22,
+     0.644
+    ],
+    "multi-session": [
+     22,
+     0.106
+    ],
+    "single-session-assistant": [
+     22,
+     1.0
+    ],
+    "single-session-user": [
+     22,
+     0.955
+    ],
+    "temporal-reasoning": [
+     22,
+     0.706
+    ]
+   },
+   "by_type_finalize": {
+    "knowledge-update": [
+     22,
+     0.409
+    ],
+    "multi-session": [
+     22,
+     0.061
+    ],
+    "single-session-assistant": [
+     22,
+     0.864
+    ],
+    "single-session-user": [
+     22,
+     0.955
+    ],
+    "temporal-reasoning": [
+     22,
+     0.661
+    ]
+   }
+  },
+  "dev200/contains": {
+   "reactor": 0.4958,
+   "finalize": 0.5897,
+   "plan": 0.9049,
+   "model": 0.6821,
+   "model_noku": 0.67,
+   "n": 110,
+   "by_type_model": {
+    "knowledge-update": [
+     22,
+     0.644
+    ],
+    "multi-session": [
+     22,
+     0.106
+    ],
+    "single-session-assistant": [
+     22,
+     1.0
+    ],
+    "single-session-user": [
+     22,
+     0.955
+    ],
+    "temporal-reasoning": [
+     22,
+     0.706
+    ]
+   },
+   "by_type_finalize": {
+    "knowledge-update": [
+     22,
+     0.409
+    ],
+    "multi-session": [
+     22,
+     0.061
+    ],
+    "single-session-assistant": [
+     22,
+     0.864
+    ],
+    "single-session-user": [
+     22,
+     0.955
+    ],
+    "temporal-reasoning": [
+     22,
+     0.661
+    ]
+   }
+  },
+  "dev200/top1": {
+   "reactor": 0.4815,
+   "finalize": 0.5755,
+   "plan": 0.9049,
+   "model": 0.6821,
+   "model_noku": 0.67,
+   "n": 110,
+   "by_type_model": {
+    "knowledge-update": [
+     22,
+     0.644
+    ],
+    "multi-session": [
+     22,
+     0.106
+    ],
+    "single-session-assistant": [
+     22,
+     1.0
+    ],
+    "single-session-user": [
+     22,
+     0.955
+    ],
+    "temporal-reasoning": [
+     22,
+     0.706
+    ]
+   },
+   "by_type_finalize": {
+    "knowledge-update": [
+     22,
+     0.409
+    ],
+    "multi-session": [
+     22,
+     0.048
+    ],
+    "single-session-assistant": [
+     22,
+     0.864
+    ],
+    "single-session-user": [
+     22,
+     0.939
+    ],
+    "temporal-reasoning": [
+     22,
+     0.617
+    ]
+   }
+  },
+  "e1b_real/real": {
+   "reactor": 0.6927,
+   "finalize": 0.6927,
+   "plan": 0.6656,
+   "model": 0.7135,
+   "model_noku": 0.7135,
+   "n": 16,
+   "by_type_model": {
+    "knowledge-update": [
+     4,
+     0.5
+    ],
+    "multi-session": [
+     4,
+     0.688
+    ],
+    "single-session-assistant": [
+     4,
+     0.75
+    ],
+    "temporal-reasoning": [
+     4,
+     0.917
+    ]
+  
+e1b changes: [
+ {
+  "qid": "q_7e25312cf880",
+  "type": "temporal-reasoning",
+  "route": "temporal",
+  "answer": "The Nightingale by Kristin Hannah",
+  "before": [
+   "s_15be09232254"
+  ],
+  "after": [
+   "s_15be09232254",
+   "s_a590a69a7ab3"
+  ],
+  "gold": [
+   "s_a590a69a7ab3",
+   "s_15be09232254"
+  ],
+  "f1": [
+   0.667,
+   1.0
+  ]
+ }
+]
+wrote coefficients into reactorq/attribution.py

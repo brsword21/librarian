@@ -1,0 +1,14 @@
+7 questions in 6 histories to ask (0 already answered)
+   retry q_607d3cf5b4f1 after closed 
+[1/7] q_607d3cf5b4f1 answered 423.9s 'Graça [E3]'
+[2/7] q_b3e5afe916c8 answered 49.5s 'Director of Clinical Services [E2]'
+[3/7] q_eefdc20af97b answered 123.0s '6 [E1][E2][E4][E7][E8]'
+[4/7] q_e165458f4cff answered 47.1s '22,000 shillings [E1][E2]'
+[5/7] q_bcd6d210710b answered 71.4s '23,200 pesos [E1][E3][E6]'
+[6/7] q_33b11e8a4d44 answered 40.4s '250k ohms [E1, E2]'
+[7/7] q_47e3f2749c07 answered 67.5s '3 [E1][E4]'
+146 prediction(s) (15 abstained) written to submission/predictions.jsonl; 0 result(s) skipped
+attribution q_b3e5afe916c8: ku-chain (superseded statement): +1
+statuses: {'answered': 143, 'error': 3}; predictions: 146/146; missing questions: 0; abstained: 15; no citations: 0; format errors: 0
+143 test + 28 dev records, 43 timelines -> demo/replay.json
+AFTER_V3_DONE

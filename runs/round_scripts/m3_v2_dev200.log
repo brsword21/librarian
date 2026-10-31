@@ -1,0 +1,10 @@
+125 questions x 1 variants on dev200 in 32s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+routed_v2                  86.8 0.946 0.970 0.984 0.955 0.983 1.000 0.905   5898  602.0 0.853 0
+   if Reactor cites every passage: CF1all=0.847 Sall=85.1
+   -> runs/merge3/all/pipeline/routed_v2/dev200
+     ssu       n= 23 S= 87.1 Sall= 84.0 PA=0.955 CF1=0.879 routes={'ssu': 18, 'multi': 4, 'ku': 1}
+     ssa       n= 22 S= 93.7 Sall= 93.7 PA=1.000 CF1=1.000 routes={'ssa': 22}
+     multi     n= 28 S= 82.7 Sall= 82.1 PA=0.909 CF1=0.862 routes={'ssu': 4, 'multi': 24}
+     ku        n= 26 S= 86.7 Sall= 86.9 PA=0.955 CF1=0.874 routes={'ku': 5, 'multi': 12, 'ssu': 7, 'temporal': 2}
+     temporal  n= 26 S= 84.1 Sall= 78.9 PA=0.909 CF1=0.909 routes={'temporal': 23, 'multi': 3}

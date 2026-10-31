@@ -1,0 +1,15 @@
+{
+  "result": "pass",
+  "checks": [
+    "replay, progressive disclosure, cited sources, nested full-passage dialog, return",
+    "recorded abstention",
+    "cancelled replay does not publish a late answer",
+    "custom question uses retrieval; busy Reactor cannot be invoked",
+    "aborted retrieval and server errors leave a usable form",
+    "five comic chapters, dev-only metrics, ambient-light pause",
+    "live conflict handled without a real Reactor request",
+    "1920\u00d71080, mobile fallback, empty question search",
+    "reduced motion, load failure, no JS errors or missing assets"
+  ],
+  "real_reactor_calls": 0
+}

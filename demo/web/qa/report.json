@@ -1,0 +1,14 @@
+{
+  "result": "pass",
+  "checks": [
+    "full 200-session archive uses local illustrated book spines",
+    "five question types, abstention and rejected code candidate preserve recorded answers",
+    "larger transcript type, full evidence view and keyboard focus return",
+    "existing question chooser and guided-tour controls preserved",
+    "scroll explanation, five illustrated steps, tab keyboard, return to demo; no tour-key conflicts",
+    "1920\u00d71080 projector view with 22px evidence text",
+    "mobile fallback has no horizontal page overflow",
+    "reduced-motion disables ambient light and shortens replay"
+  ],
+  "real_reactor_calls": 0
+}

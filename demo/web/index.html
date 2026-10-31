@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Librarian</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="library.css">
+<link rel="icon" type="image/webp" href="assets/logo_emblem.webp">
+</head>
+<body class="library-ui">
+<a class="skip-link" href="#method">Skip to how it works</a>
+<canvas id="motes" aria-hidden="true"></canvas>
+<div id="runesBg" aria-hidden="true"></div>
+
+<div id="app">
+  <!-- ============ HEADER ============ -->
+  <header id="top">
+    <div class="brand">
+      <img class="brand-emblem" src="assets/logo_emblem.webp" alt="" width="45" height="49">
+      <div>
+        <h1>The Librarian</h1>
+        <p class="tagline">Find the right memory. Show the evidence.</p>
+      </div>
+    </div>
+    <div class="top-controls">
+      <span id="statusPill" class="pill" title="Is Reactor (Reactor) free for live questions?"><i></i><span>Replay mode</span></span>
+      <button id="btnQuestions" class="btn" title="Choose a question (Q)"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Questions</button>
+      <button id="btnHow" class="btn" title="How it works (H)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.6 2.6 0 1 1 3.6 2.4c-.8.4-1.1.9-1.1 1.8M12 17h.01"/></svg>How it works</button>
+      <button id="btnTour" class="btn btn-gold" title="Demo tour (Space)"><svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></svg><span>Begin the tour</span></button>
+      <button id="btnFull" class="btn btn-icon" title="Fullscreen (F)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    </div>
+  </header>
+
+  <!-- ============ QUESTION BANNER ============ -->
+  <section id="banner">
+    <div class="banner-sigil" id="bannerSigil"></div>
+    <div class="banner-main">
+      <div class="banner-kind"><span id="bannerKind">The archive awaits a question</span><span id="bannerDate"></span></div>
+      <div id="question" class="question">Ask what the person once told their assistant. The Librarian finds the pages; Reactor answers.</div>
+      <div id="caption" class="caption"></div>
+    </div>
+    <ol id="steps" class="steps" aria-label="Pipeline">
+      <li data-step="0"><b>01</b><span>Question</span></li>
+      <li data-step="1"><b>02</b><span>Find evidence</span></li>
+      <li data-step="2"><b>03</b><span>Check context</span></li>
+      <li data-step="3"><b>04</b><span>Reactor answers</span></li>
+    </ol>
+  </section>
+
+  <!-- ============ ARCHIVE ============ -->
+  <section id="archive">
+    <div class="beam">
+      <div class="candle left"><i class="flame"></i></div>
+      <div class="beam-title">
+        <span id="archiveOwner">The Archive</span>
+        <span class="beam-sep">✦</span>
+        <span id="archiveCount">— conversations</span>
+      </div>
+      <div class="beam-runes" id="beamRunes"></div>
+      <div class="candle right"><i class="flame"></i></div>
+    </div>
+    <svg class="ivy" viewBox="0 0 220 90" aria-hidden="true" preserveAspectRatio="xMinYMin meet"><path class="vine" d="M0 6 C40 10 60 2 90 12 S150 6 220 10 M38 9 C40 30 30 44 36 70 M120 9 C126 26 118 36 122 52 M170 8 C168 20 176 28 172 40"/><g class="leaves"></g></svg>
+    <div id="shelves" class="shelves"></div>
+    <div id="librarian" class="librarian" aria-hidden="true">
+      <img src="assets/char_librarian_search.webp" alt="">
+    </div>
+  </section>
+
+  <!-- ============ STAGE: desk + marginalia + oracle ============ -->
+  <section id="stage">
+    <div id="desk" class="desk">
+      <div class="desk-label"><span>The selected pages</span><small id="deskSub">pages the Librarian brings</small></div>
+      <div class="desk-body">
+        <div id="pile" class="pile"></div>
+        <div id="pages" class="pages">
+          <div class="desk-empty" id="deskEmpty">
+            <svg viewBox="0 0 120 80" aria-hidden="true"><path d="M60 18 C46 8 22 8 8 14 V70 C22 64 46 64 60 74 C74 64 98 64 112 70 V14 C98 8 74 8 60 18Z M60 18 V74"/></svg>
+            <p>No pages on the desk yet.</p>
+          </div>
+        </div>
+      </div>
+      <div class="desk-candle"><i class="flame"></i></div>
+    </div>
+
+    <aside id="margin" class="margin">
+      <div class="margin-head"><span>Context &amp; checks</span><small>the Librarian’s notes</small></div>
+      <div id="computed" class="computed" hidden></div>
+      <div id="notes" class="notes"><p class="note-empty">The Librarian writes notes in the margin: dates, day gaps, which value is newest, which mention is a decoy.</p></div>
+    </aside>
+
+    <aside id="oracle" class="oracle" data-state="idle">
+      <div class="oracle-head"><span>Reactor</span><small>answer model</small></div>
+      <div class="orb-wrap">
+        <img class="reactor-art" src="assets/reactor_tower.webp" alt="The brass vacuum-tube Reactor">
+        <img class="reactor-diode" src="assets/fx_lamp_green.webp" alt="">
+        <svg class="orb-ring" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="94" /><g id="ringRunes"></g></svg>
+        <div class="orb">
+          <div class="mist m1"></div><div class="mist m2"></div><div class="mist m3"></div>
+          <div class="orb-text" id="orbText"></div>
+          <div class="glint"></div>
+        </div>
+        <svg class="stand" viewBox="0 0 160 46" aria-hidden="true">
+          <defs><linearGradient id="brass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e0b866"/><stop offset=".5" stop-color="#9c7432"/><stop offset="1" stop-color="#5c3f17"/></linearGradient></defs>
+          <path d="M30 2 Q40 16 52 14 L108 14 Q120 16 130 2 Q128 20 116 24 L44 24 Q32 20 30 2Z" fill="url(#brass)"/>
+          <path d="M40 24 L120 24 L132 38 Q80 46 28 38Z" fill="url(#brass)"/>
+          <path d="M28 38 Q80 46 132 38 L134 42 Q80 50 26 42Z" fill="#3a2610"/>
+        </svg>
+      </div>
+      <div class="verdict" id="verdict">
+        <div class="verdict-label" id="verdictLabel">waiting for a question</div>
+        <div class="answer" id="answer"></div>
+        <div class="cites" id="cites"></div>
+        <div class="gold" id="gold" hidden></div>
+        <div class="oracle-actions" id="oracleActions"></div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ============ RIBBON ============ -->
+  <footer id="ribbon">
+    <div class="read">
+      <span class="read-big" id="readBig">Reactor may read only a few pages</span>
+      <span class="read-bar"><i id="readFill"></i></span>
+      <span class="read-small" id="readSmall"></span>
+    </div>
+    <div class="tourdots" id="tourDots"></div>
+    <div class="keys" title="← → step through the tour · Space play/pause · F fullscreen · Q questions · H how it works · S skip animation"><kbd>←</kbd><kbd>→</kbd><kbd>Space</kbd><kbd>F</kbd><kbd>Q</kbd><kbd>H</kbd></div>
+  </footer>
+</div>
+
+<div class="below-demo"><span>THE DEMO ABOVE USES REAL RECORDED REACTOR ANSWERS.</span><a href="#method">Explore how it works ↓</a></div>
+
+<!-- flying books layer -->
+<div id="fx" aria-hidden="true"></div>
+
+<!-- ============ QUESTION DRAWER ============ -->
+<div id="drawer" class="drawer" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Choose a question">
+  <div class="drawer-inner">
+    <div class="drawer-head">
+      <h2>Choose a question</h2>
+      <button class="btn btn-icon" id="drawerClose" title="Close (Esc)"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <label class="field-label" for="personSel">Whose archive</label>
+    <select id="personSel"></select>
+    <p class="person-desc" id="personDesc"></p>
+    <div id="qGroups" class="qgroups"></div>
+    <div class="live">
+      <div class="live-head">
+        <svg viewBox="0 0 32 32"><path d="M6 26 L22 10 M20 6 l6 6 M22 10 l4-4"/><circle cx="8" cy="8" r="1.4"/><circle cx="26" cy="22" r="1.2"/><circle cx="14" cy="4" r="1"/></svg>
+        <span>Ask anything about <b id="liveWho">this person</b></span>
+      </div>
+      <textarea id="liveQ" rows="2" placeholder="e.g. What did I name my cat?"></textarea>
+      <div class="live-btns">
+        <button class="btn" id="btnPack" title="The Librarian builds the dossier (about 1 s)">Find the pages</button>
+        <button class="btn btn-gold" id="btnAsk" title="Pages + Reactor's answer (1-2 min, only when Reactor is free)">Consult Reactor</button>
+      </div>
+      <p class="live-note" id="liveNote">Live: the Librarian searches now. Reactor answers live only when it is not busy with the benchmark run; it never fakes an answer.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HOW IT WORKS ============ -->
+<div id="how" class="overlay" aria-hidden="true">
+  <div class="how-card">
+    <button class="btn btn-icon how-close" id="howClose" title="Close (Esc)"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <h2>How the Librarian works</h2>
+    <p class="how-lede">An assistant that remembers months of conversations, and says so when it doesn't.</p>
+    <div class="how-steps">
+      <div class="how-step"><b>I</b><h3>The Archive</h3><p>~200 conversations, ~1.6M characters per person. Far too much for Reactor, which may read only a few pages per question.</p></div>
+      <div class="how-arrow">➳</div>
+      <div class="how-step"><b>II</b><h3>The Search</h3><p>Local code: hybrid search + reranking picks the few pages that matter, and spots decoys about other people.</p></div>
+      <div class="how-arrow">➳</div>
+      <div class="how-step"><b>III</b><h3>Margin notes</h3><p>Code lines up timelines, computes day gaps, marks the newest value and flags "this is your friend's cat, not yours".</p></div>
+      <div class="how-arrow">➳</div>
+      <div class="how-step"><b>IV</b><h3>Reactor</h3><p>Reactor reads the small dossier, answers and cites its pages, or says "not written in the archive".</p></div>
+    </div>
+    <p class="how-use"><span>Use case</span> Find the right memory. Show the evidence.</p>
+  </div>
+</div>
+
+<!-- ============ READING GLASS (full passage) ============ -->
+<div id="glass" class="overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="glassHead">
+  <div class="glass-card">
+    <button class="btn btn-icon how-close" id="glassClose" title="Close (Esc)"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="glass-head" id="glassHead"></div>
+    <div class="glass-body" id="glassBody"></div>
+  </div>
+</div>
+
+<div id="loading" class="loading"><img class="loading-hourglass" src="assets/prop_hourglass.webp" alt=""><p>The Librarian lights the candles…</p></div>
+
+
+<section class="method" id="method" aria-labelledby="methodTitle">
+ <header class="method-heading"><div><p class="eyebrow">INSIDE THE LIBRARY</p><h2 id="methodTitle">A good answer has a history.</h2></div><a class="back-link" href="#app">Back to the demo ↑</a></header>
+ <div class="problem-story"><div class="problem-copy"><p class="eyebrow">01 / THE PROBLEM</p><h3>A whole archive.<br>A handful of useful pages.</h3><p>Months of conversation hide the small details that matter. Some facts change. Some mentions belong to someone else. Some answers were never there.</p><p>The Librarian finds the relevant evidence, checks its context, and gives Reactor just the pages it needs.</p><div class="problem-facts"><span><strong>200</strong>conversations per test archive</span><span><strong>1.65M</strong>characters, approximately</span><span><strong>A few</strong>pages selected per question</span></div></div><figure><img src="assets/illo_haystack.webp" alt="The tiny Librarian searches an enormous heap of books for one glowing page." loading="lazy"><figcaption>A library of near misses. One detail that answers your question.</figcaption></figure></div>
+ <div class="walkthrough" id="walkthrough"><div class="walkthrough-top"><div><p class="eyebrow">02 / FROM QUESTION TO ANSWER</p><h3>The journey of a memory.</h3></div><div class="chapter-controls"><button id="chapterPrev" aria-label="Previous explanation step">←</button><span id="chapterCount">01 / 05</span><button id="chapterNext" aria-label="Next explanation step">→</button></div></div><div class="chapter-tabs" role="tablist" aria-label="How the Librarian works"><button role="tab" data-chapter="0" aria-selected="true" aria-controls="chapterPanel" id="chapterTab0">01 Question</button><button role="tab" data-chapter="1" aria-selected="false" aria-controls="chapterPanel" id="chapterTab1" tabindex="-1">02 Choose a lens</button><button role="tab" data-chapter="2" aria-selected="false" aria-controls="chapterPanel" id="chapterTab2" tabindex="-1">03 Find the pages</button><button role="tab" data-chapter="3" aria-selected="false" aria-controls="chapterPanel" id="chapterTab3" tabindex="-1">04 Prepare evidence</button><button role="tab" data-chapter="4" aria-selected="false" aria-controls="chapterPanel" id="chapterTab4" tabindex="-1">05 Reactor answers</button></div><div class="chapter-panel" id="chapterPanel" role="tabpanel" aria-labelledby="chapterTab0"><img id="chapterImage" src="assets/comic_1.webp" alt="The Librarian receives a question through a pneumatic tube." loading="lazy"><div><p class="eyebrow" id="chapterLabel">THE QUESTION</p><h4 id="chapterTitle">First, a question.</h4><p id="chapterDescription">A single fact may be buried in months of conversation. Start with what you want to remember.</p><p class="chapter-detail" id="chapterDetail">Every replay above starts with a real question from the benchmark.</p></div></div></div>
+ <section class="lens-section" aria-labelledby="lensTitle"><p class="eyebrow">03 / FIVE SPECIALISED LENSES</p><h3 id="lensTitle">Different questions need different reading.</h3><div class="lens-grid"><article><img src="assets/icon_lens_ssu.webp" alt="" loading="lazy"><h4>Personal facts</h4><p>What the user said about themselves, rather than someone else.</p></article><article><img src="assets/icon_lens_ssa.webp" alt="" loading="lazy"><h4>Advice &amp; recommendations</h4><p>What the assistant actually recommended in an earlier conversation.</p></article><article><img src="assets/icon_lens_multi.webp" alt="" loading="lazy"><h4>Across conversations</h4><p>Bring scattered facts together, then count or compare.</p></article><article><img src="assets/icon_lens_ku.webp" alt="" loading="lazy"><h4>Things that changed</h4><p>Read the timeline carefully. The latest relevant value wins.</p></article><article><img src="assets/icon_lens_temporal.webp" alt="" loading="lazy"><h4>Dates &amp; durations</h4><p>Find the right events. Let code do the date arithmetic.</p></article></div></section>
+ <div class="closing-story"><img src="assets/char_librarian_shrug.webp" alt="The Librarian shrugs with a blank book." loading="lazy"><div><p class="eyebrow">AND WHEN THE ANSWER ISN’T THERE?</p><h3>A good memory knows its limits.</h3><p>Reactor can abstain instead of inventing an answer. The selected pages and citations stay open to inspection.</p><a class="btn btn-gold" href="#app">Try the demo ↑</a></div></div>
+ <footer class="method-footer"><span>The Librarian · START Warsaw 2026</span><span>Local retrieval. Reactor answers. Evidence included.</span></footer>
+</section>
+
+<script src="app.js"></script>
+<script src="presentation.js"></script>
+</body>
+</html>

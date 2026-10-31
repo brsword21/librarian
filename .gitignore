@@ -1,7 +1,23 @@
 .venv/
 cache/
-runs/*
-!runs/leaderboard.csv
 __pycache__/
 *.pyc
 .DS_Store
+# runs/: only small, durable results are tracked (Reactor answers, reports, round scripts), not the sweep dumps
+runs/*
+!runs/leaderboard.csv
+!runs/SYNTHESIS_*.md
+!runs/round_scripts/
+!runs/reactor/
+!runs/citations/
+runs/citations/*_packs.jsonl
+runs/citations/feats_*.jsonl
+!runs/final/
+runs/final/*_candidate.jsonl
+runs/final/r1*_test_packs.jsonl
+runs/final/v1_rebuild_test_packs.jsonl
+!runs/proxy/
+runs/proxy/packs/v3_*.jsonl
+runs/proxy/packs/multideep8_*.jsonl
+runs/proxy/packs/ssabsem_*.jsonl
+demo/web_before_library_style/

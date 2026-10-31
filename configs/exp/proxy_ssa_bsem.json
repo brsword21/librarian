@@ -1,0 +1,39 @@
+{
+ "round": "r4",
+ "routes": {
+  "ssu": {
+   "lens": "lenses/ssu/merged_r4.py",
+   "variant": "r4"
+  },
+  "ssa": {
+   "lens": "lenses/ssa/b_semantic.py",
+   "variant": "session10k1_rr"
+  },
+  "multi": {
+   "lens": "lenses/multi/merged_r4.py",
+   "variant": "r4"
+  },
+  "ku": {
+   "lens": "lenses/ku/merged_r4.py",
+   "variant": "r4"
+  },
+  "temporal": {
+   "lens": "lenses/temporal/a_r3_gap.py",
+   "variant": "span_own"
+  }
+ },
+ "fallback": {
+  "lens": "lenses/generic.py",
+  "variant": "hybrid_rr"
+ },
+ "notes": {
+  "ssu": "lenses/ssu/merged_r4.py r4: frozen v2 ssu route + first-changed-wins over [ssu/a_r4_route hpd (hint head noun, residence hop, before/after delta), temporal/b_r4_last last (recency guard), ssu/b_r4_sent g_res_lv_d (gated sentence hop)]. v2 notes: lenses/ssu/a_r3_route.py kg3crga (SSU-A: role hand-off, typed own value-disagreement ku gate, comp/runner cite) with inner lens lenses/ssu/merged_r3.py ku11fn4s_p5 (SSU-B ku-cue recall backstop + pass-through of ru_cite), role detector lenses/ssa/a_r3_role.py (SSA-A refit), ku hand-off lens ku a_r3 r3w. Routed ssu route: dev 86.1 -> 88.8, dev200 82.3 -> 88.8 (A alone 87.7/85.0, B alone 87.6/88.1). Test: move date ssu -> ku (visible), cafe cite_plan only.",
+  "ssa": "unchanged a_recsent r2_conf2 (saturated: 93.6 / 93.7, PA = CF1 = 1).",
+  "multi": "lenses/multi/merged_r4.py r4: frozen v2 multi route + first-changed-wins over [multi/a_r4_route vlbhc6 (verb-class instance rescue), multi/b_r4_inst vc2 (quantity-bearing own instance rescue)]. v2 notes: unchanged b_tight p08c35_aor via merged_r2 tight_role9, role detector -> lenses/ssa/a_r3_role.py (0 test change). b_r3_full ufull_h (untrimmed user units) NOT taken: -0.3/-0.4 S, 15 of 20 test packs change, and on test the added text is chatter or planted decoys (PhD 'five journal articles' for a books count, orchid repotting in the grandchildren pack); revisit after a Reactor check.",
+  "ku": "lenses/ku/merged_r4.py r4: frozen v2 ku route (a_r3 r3w) + first-changed-wins over [ku/a_r4 r4 (attr, decoy-session extras, head absence), ku/b_r4_ku nolate_c (drop uncited later sessions)].",
+  "temporal": "lenses/temporal/a_r3_gap.py span_own (= v1 merged_r2 evA_mixB + span computation for 'how many years did I serve' + own-cut for gap questions with no own statement). 4 test packs change, 0 dev answerable questions affected.",
+  "routed": "routed v2: dev 86.9 (Sall 85.3), dev200 87.0 (Sall 85.2); v1 same run 86.0 (84.9) / 84.9 (83.2).",
+  "test_diff": "v3 vs v2: runs/final/v3_changed.tsv"
+ },
+ "note": "proxy experiment: ssa tie"
+}

@@ -64,7 +64,17 @@ def main(argv=None) -> int:
     ap.add_argument("--limit", type=int)
     ap.add_argument("--no-cache", action="store_true")
     ap.add_argument("--max-chars", default="32000")
+    ap.add_argument("--reuse-history", nargs="*", default=[], metavar="RESULTS",
+                    help="earlier results files: continue each dataset history in the Reactor history it already used "
+                         "(retries stay in the same history instead of opening a new one)")
     a = ap.parse_args(argv)
+    known: dict[str, str] = {}
+    for f in a.reuse_history:
+        for l in open(f, encoding="utf-8"):
+            if l.strip():
+                r = json.loads(l)
+                if r.get("dataset_history") and r.get("history_id"):
+                    known[r["dataset_history"]] = r["history_id"]
     packs = [json.loads(l) for l in open(a.packs, encoding="utf-8") if l.strip()]
     out = Path(a.out)
     done = set()
@@ -87,7 +97,7 @@ def main(argv=None) -> int:
     with open(out, "a", encoding="utf-8") as fo, open(CACHE_FILE, "a", encoding="utf-8") as fc, \
             tempfile.TemporaryDirectory() as tmp:
         for hid, ps in groups.items():
-            rh = None
+            rh = known.get(hid)
             for p in ps:
                 if a.limit and asked >= a.limit:
                     return 0

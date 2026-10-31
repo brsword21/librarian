@@ -1,0 +1,13 @@
+# librarian/.venv (Python 3.14 via uv; 3.12 works too). The Reactor client itself runs in a separate venv with
+# websockets (see ONBOARDING.md, level 2).
+torch==2.15.0
+sentence-transformers==6.2.0
+transformers==5.22.1
+bm25s==0.3.16
+PyStemmer==3.1.0
+numpy==2.5.4
+scipy==1.18.1
+# optional: simulator experiments (PROXY.md), attribution research (runs/citations), demo QA
+# mlx-lm==0.32.2
+# scikit-learn==1.9.1
+# playwright
