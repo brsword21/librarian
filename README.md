@@ -38,6 +38,7 @@ Test submission (`submission/predictions.jsonl`):
 - every answer has at least one citation;
 - 0 format errors (`score.validate`).
 
+**Standalone filter, open source (MIT): [brsword21/librarian-recall](https://github.com/brsword21/librarian-recall).**
 **How it works and how we got here: [SOLUTION.md](SOLUTION.md).** Team onboarding: [ONBOARDING.md](ONBOARDING.md) (Polish). Lens contract: [CONTRACT.md](CONTRACT.md). Research notes:
 [RESEARCH.md](RESEARCH.md). Reports from the agent rounds: `runs/SYNTHESIS_r*.md`.
 

@@ -256,6 +256,9 @@ months of history:
 - verifiably: every answer carries its source sessions;
 - safely: when the fact is not there, it says so instead of guessing.
 
+We have that business use case, but we prefer to share the code with the community. The filter on its own (Python
+and HTTP API, no Reactor, no benchmark tooling) is open source under MIT: https://github.com/brsword21/librarian-recall.
+
 ## Reproduce
 
 See [README.md](README.md) for setup (`tools/setup.sh`), offline evaluation, pack building, the Reactor queue and
