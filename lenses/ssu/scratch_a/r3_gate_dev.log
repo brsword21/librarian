@@ -1,0 +1,27 @@
+dev ku q_6863ec3c6b22 [] no_typed_disagreement [] [12.54, 6.09] 0.4 | What was my personal best time in the charity 5K run?
+dev ku q_c06f4e77bd64 [] weak None [4.22, 2.62] 0.419 | Where did Rachel move to after her recent relocation?
+dev ku q_cf2d53dca29a ['kg6', 'kg4', 'kg3'] fire ['money'] [9.28, 7.4] 0.702 | What was the amount I was pre-approved for when I got my mortgage from Wells Far
+dev ku q_6e90516748d9 [] weak None [3.14, 4.61] 0.287 | How often do I attend yoga classes to help with my anxiety?
+dev ku q_61a19ce280f4 [] weak None [-3.14, 10.53] 0.373 | Is my mom using the same grocery list method as me?
+dev ku q_e8cab0936ae8 ['kg3'] fire ['weekday'] [3.26, 7.95] 0.731 | What day of the week do I take a cocktail-making class?
+dev ku q_abd7c68760fd [] no_typed_disagreement [] [5.2, 3.04] 0.474 | Where do I initially keep my old sneakers?
+dev ku q_0c5ba501d58c [] weak None [3.02, 3.52] 0.325 | What type of camera lens did I purchase most recently?
+dev ku q_e76a5dd1c2b4 [] weak None [4.71, 6.29] 0.301 | How often do I see my therapist, Dr. Smith?
+dev ku q_77782f8fdbd7 ['kg4', 'kg3'] fire ['n:ounce'] [5.99, 4.36] 0.535 | For the coffee-to-water ratio in my French press, did I switch to more water per
+dev ku q_34921e543106 [] weak None [1.86, 0.69] 0.5 | Do I go to the gym more frequently than I did previously?
+dev ku q_5555bfad40d4 [] no_typed_disagreement [] [6.66, 9.03] 0.527 | How long have my parents been staying with me in the US?
+dev ku q_e88175bc40ba ['kg4', 'kg3'] fire ['n:month'] [7.09, 12.63] 0.435 | How long have I had my cat, Luna?
+dev ku q_12c38e74c86f [] no_typed_disagreement [] [9.74, 11.57] 0.837 | Did I finish reading 'The Nightingale' by Kristin Hannah?
+dev ku q_91de552bb7a8 [] no_typed_disagreement [] [8.78, 10.34] 1.0 | Where did I get my guitar serviced?
+dev ku q_d2682d21e022 [] no_typed_disagreement [] [12.18, 12.48] 1.0 | What time do I usually go to the gym?
+dev ku q_e4996966e337 [] no_typed_disagreement [] [9.51, 8.6] 0.843 | Where am I planning to stay for my birthday trip to Hawaii?
+dev ku q_06b3cfdaf136 [] no_typed_disagreement [] [9.0, 13.74] 1.0 | What was my previous personal best time for the charity 5K run?
+dev ku q_d6ef8ceece42 [] weak None [7.32, 2.14] 0.592 | What day of the week did I meet with my previous language exchange tutor Juan?
+dev ku q_be00952fefe3 [] weak None [1.28, -0.36] 0.507 | What was my previous goal for my Apex Legends level before I updated my goal?
+dev ku q_0fc530dd5882 [] not_own:unknown/plan None [14.99, 10.95] 0.682 | What time do I wake up on Saturday mornings?
+dev ku q_466e22735f43 [] no_typed_disagreement [] [7.02, 9.66] 0.729 | Do I have a spare screwdriver for opening up my laptop?
+dev ku q_ea85a3ebbe49 [] weak None [-0.06, 6.91] 0.361 | Did I mostly recently increase or decrease the limit on the number of cups of co
+dev ku q_3dc608395f82 [] weak None [-7.08, -2.41] 0.318 | What new kitchen gadget did I invest in before getting the Air Fryer?
+dev ku q_c5a575d6c33e [] weak None [-7.61, -0.72] 0.0 | How often do I see Dr. Johnson?
+dev ku q_360ea746c776 [] not_own:match/plan None [5.39, 7.98] 0.788 | How often do I play table tennis with my friends at the local park?
+dev ku q_69ca54c1a3f1 [] no_typed_disagreement [] [3.29, 5.48] 0.443 | Before I purchased the gravel bike, do I have other bikes in addition to my moun

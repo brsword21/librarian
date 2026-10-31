@@ -1,0 +1,3 @@
+lenses/ssu/merged_r2.py role8_r3rn dev: n=64 PA=1.000 PA_strict=1.000 PA_fact=1.000 lost_fact_sents=0 lost_sents=0 in 0 q  passage_chars=2580
+lenses/ku/b_r2.py r2b dev: n=72 PA=0.986 PA_strict=0.986 PA_fact=0.986 lost_fact_sents=0 lost_sents=0 in 0 q  passage_chars=1632
+lenses/temporal/merged_r2.py evA_mixB dev: n=127 PA=0.890 PA_strict=0.890 PA_fact=0.890 lost_fact_sents=0 lost_sents=0 in 0 q  passage_chars=6036

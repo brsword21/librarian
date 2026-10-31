@@ -1,0 +1,32 @@
+{
+ "round": "r3-ku-b-exp",
+ "routes": {
+  "ssu": {
+   "lens": "lenses/ku/b_r3_gate.py",
+   "variant": "qt3c_ap"
+  },
+  "ssa": {
+   "lens": "lenses/ssa/a_recsent.py",
+   "variant": "r2_conf2"
+  },
+  "multi": {
+   "lens": "lenses/multi/merged_r2.py",
+   "variant": "tight_role9"
+  },
+  "ku": {
+   "lens": "lenses/ku/b_r2.py",
+   "variant": "r2b"
+  },
+  "temporal": {
+   "lens": "lenses/temporal/merged_r2.py",
+   "variant": "evA_mixB"
+  }
+ },
+ "fallback": {
+  "lens": "lenses/generic.py",
+  "variant": "hybrid_rr"
+ },
+ "notes": {
+  "ssu": "KU-B r3 experiment: v1 ssu route (merged_r2 role8_r3rn) + value-type/question-cue ku hand-off (qt3c)"
+ }
+}

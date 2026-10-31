@@ -1,0 +1,5 @@
+dev ku q_6863ec3c6b22 ['kg4', 'kg3'] fire ['hms'] [12.54, 6.09] 0.4 | What was my personal best time in the charity 5K run?
+dev ku q_cf2d53dca29a ['kg6', 'kg4', 'kg3'] fire ['money'] [9.28, 7.4] 0.702 | What was the amount I was pre-approved for when I got my mortgage from Wells Far
+dev ku q_e8cab0936ae8 ['kg3'] fire ['weekday'] [3.26, 7.95] 0.731 | What day of the week do I take a cocktail-making class?
+dev ku q_77782f8fdbd7 ['kg4', 'kg3'] fire ['n:ounce'] [5.99, 4.36] 0.535 | For the coffee-to-water ratio in my French press, did I switch to more water per
+dev ku q_e88175bc40ba ['kg4', 'kg3'] fire ['n:month'] [7.09, 12.63] 0.435 | How long have I had my cat, Luna?

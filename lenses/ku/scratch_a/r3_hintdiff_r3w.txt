@@ -1,0 +1,22 @@
+== q_b3e5afe916c8 What is my current job title? | computed None -> None
+    +- 2023/08/24: "I got another promotion, so now I am Director of Clinical Services."
+== q_074ae81650db How many laps do I swim each morning these days? | computed None -> None
+    -- 2023/04/12: "Good morning! I swam my usual 40 laps, but my blood pressure was 138/86 before breakfast."
+    +- 2023/08/21: "After my check-up I increased my morning swim to 30 laps."
+== q_eb3a2b633378 What time does my long run start these days? | computed None -> None
+    +- 2023/06/24: "My long run has shifted to Sundays at 6:30 a.m. because my Saturday shifts changed."
+== q_a90a3ef2db02 How many Icelandic horses do my neighbor Bjørn and I have in total right now? | computed None -> 16
+    -Statements about this in the history, oldest first:
+    -- 2023/01/20: "Even though I currently have 9 Icelandic horses on my farm., I try to keep Sundays a bit slower, so a stew that simmers by itself is ideal."
+    -- 2023/06/20: "Bjørn's daughter has 2 Icelandic horses."
+    -If the value changed over time, answer with the MOST RECENT value the user states about their own situation; ignore values about other people, other places or past/hypothetical ones.
+    -Cite both the session with the earlier value and the session with the latest value.
+    +Counts per owner in the history, oldest first:
+    +- 2023/01/20 (me): "Even though I currently have 9 Icelandic horses on my farm., I try to keep Sundays a bit slower, so a stew that simmers by itself is ideal."
+    +- 2023/05/02 (me): "By the way, I bought 2 more Icelandic horses at the spring auction. so the barn is feeling a bit fuller this week."
+    +- 2023/03/14 (Bjørn): "By the way, Your neighbor Bjørn has 5 Icelandic horses."
+    +Latest counts: me 9 + 2 = 11; Bjørn 5; total 11 + 5 = 16.
+    +On the final answer line, give the total, then [E1][E2][E3].
+== q_be4ffb1f8c06 How many apple trees do I have in my orchard right now? | computed None -> 7
+    +The later statement adds 3 to the earlier 4: 4 + 3 = 7.
+5 of 20 hints/computed changed

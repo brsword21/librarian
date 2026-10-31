@@ -1,0 +1,18 @@
+526 questions x 2 variants on dev in 192s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+v1                         86.0 0.935 0.967 0.985 0.964 0.974 1.000 0.899   5583  434.7 0.812 0
+   if Reactor cites every passage: CF1all=0.858 Sall=84.8
+   -> runs/r3-ku-b/all/b_r3_routed/v1/dev
+     ssu       n= 70 S= 87.4 Sall= 85.8 PA=0.953 CF1=0.892 routes={'ssu': 49, 'temporal': 5, 'multi': 14, 'ku': 2}
+     ssa       n=112 S= 91.8 Sall= 91.4 PA=0.973 CF1=0.997 routes={'ssa': 97, 'ssu': 13, 'multi': 1, 'temporal': 1}
+     multi     n=133 S= 84.9 Sall= 82.9 PA=0.926 CF1=0.889 routes={'multi': 114, 'ssu': 9, 'temporal': 10}
+     ku        n= 78 S= 87.9 Sall= 89.8 PA=0.972 CF1=0.869 routes={'ssu': 27, 'temporal': 4, 'ku': 15, 'multi': 32}
+     temporal  n=133 S= 80.3 Sall= 77.5 PA=0.882 CF1=0.843 routes={'temporal': 124, 'multi': 4, 'ssu': 5}
+qt3c                       86.5 0.938 0.968 0.986 0.966 0.974 1.000 0.908   5535  217.1 0.810 0
+   if Reactor cites every passage: CF1all=0.859 Sall=85.0
+   -> runs/r3-ku-b/all/b_r3_routed/qt3c/dev
+     ssu       n= 70 S= 87.4 Sall= 85.8 PA=0.953 CF1=0.892 routes={'ssu': 49, 'temporal': 5, 'multi': 14, 'ku': 2}
+     ssa       n=112 S= 91.8 Sall= 91.4 PA=0.973 CF1=0.997 routes={'ssa': 97, 'ssu': 13, 'multi': 1, 'temporal': 1}
+     multi     n=133 S= 84.9 Sall= 82.9 PA=0.926 CF1=0.889 routes={'multi': 114, 'ssu': 9, 'temporal': 10}
+     ku        n= 78 S= 90.7 Sall= 90.9 PA=0.986 CF1=0.930 routes={'ku': 27, 'temporal': 4, 'ssu': 15, 'multi': 32}
+     temporal  n=133 S= 80.3 Sall= 77.5 PA=0.882 CF1=0.843 routes={'temporal': 124, 'multi': 4, 'ssu': 5}

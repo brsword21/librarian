@@ -1,0 +1,10 @@
+140 questions x 1 variants on dev in 27s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+qt3c                       87.6 0.939 0.963 0.984 0.962 0.967 1.000 0.927   3980  331.8 0.911 0
+   if Reactor cites every passage: CF1all=0.969 Sall=88.9
+   -> runs/r3-ku-b/ssu-routed/b_r3_gate/qt3c/dev
+     ssu       n= 49 S= 93.3 Sall= 93.3 PA=1.000 CF1=0.978 routes={'ssu': 49}
+     ssa       n= 50 S= 91.1 Sall= 90.9 PA=0.960 CF1=1.000 routes={'ssa': 37, 'ssu': 13}
+     multi     n=  9 S= 55.7 Sall= 62.8 PA=0.571 CF1=0.667 routes={'ssu': 9}
+     ku        n= 27 S= 85.5 Sall= 90.0 PA=0.960 CF1=0.813 routes={'ssu': 15, 'ku': 12}
+     temporal  n=  5 S= 57.3 Sall= 59.9 PA=0.600 CF1=0.667 routes={'ssu': 5}

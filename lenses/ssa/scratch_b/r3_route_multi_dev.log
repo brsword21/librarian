@@ -1,0 +1,34 @@
+170 questions x 4 variants on dev in 29s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+v1                         86.3 0.936 0.972 0.984 0.962 0.962     - 0.903   5467  129.7 0.795 0
+   if Reactor cites every passage: CF1all=0.860 Sall=85.0
+   -> runs/r3-ssa-b/multi-routed/b_r3_role/v1/dev
+     ssu       n= 14 S= 73.0 Sall= 72.0 PA=0.846 CF1=0.646 routes={'multi': 14}
+     ssa       n=  6 S= 81.0 Sall= 80.2 PA=0.833 CF1=0.944 routes={'multi': 1, 'ssa': 5}
+     multi     n=114 S= 86.8 Sall= 85.2 PA=0.943 CF1=0.911 routes={'multi': 114}
+     ku        n= 32 S= 93.3 Sall= 92.5 PA=1.000 CF1=0.986 routes={'multi': 32}
+     temporal  n=  4 S= 72.7 Sall= 73.1 PA=0.750 CF1=0.867 routes={'multi': 4}
+comb                       86.7 0.943 0.978 0.984 0.962 0.981     - 0.905   5481   55.5 0.800 0
+   if Reactor cites every passage: CF1all=0.863 Sall=85.5
+   -> runs/r3-ssa-b/multi-routed/b_r3_role/comb/dev
+     ssu       n= 14 S= 73.0 Sall= 72.0 PA=0.846 CF1=0.646 routes={'multi': 14}
+     ssa       n=  6 S= 93.4 Sall= 93.4 PA=1.000 CF1=1.000 routes={'ssa': 6}
+     multi     n=114 S= 86.8 Sall= 85.2 PA=0.943 CF1=0.911 routes={'multi': 114}
+     ku        n= 32 S= 93.3 Sall= 92.5 PA=1.000 CF1=0.986 routes={'multi': 32}
+     temporal  n=  4 S= 72.7 Sall= 73.1 PA=0.750 CF1=0.867 routes={'multi': 4}
+comb_guard                 86.7 0.943 0.978 0.984 0.962 0.981     - 0.905   5481   54.6 0.800 0
+   if Reactor cites every passage: CF1all=0.863 Sall=85.5
+   -> runs/r3-ssa-b/multi-routed/b_r3_role/comb_guard/dev
+     ssu       n= 14 S= 73.0 Sall= 72.0 PA=0.846 CF1=0.646 routes={'multi': 14}
+     ssa       n=  6 S= 93.4 Sall= 93.4 PA=1.000 CF1=1.000 routes={'ssa': 6}
+     multi     n=114 S= 86.8 Sall= 85.2 PA=0.943 CF1=0.911 routes={'multi': 114}
+     ku        n= 32 S= 93.3 Sall= 92.5 PA=1.000 CF1=0.986 routes={'multi': 32}
+     temporal  n=  4 S= 72.7 Sall= 73.1 PA=0.750 CF1=0.867 routes={'multi': 4}
+v1_guard                   86.3 0.936 0.972 0.984 0.962 0.962     - 0.903   5467   48.4 0.795 0
+   if Reactor cites every passage: CF1all=0.860 Sall=85.0
+   -> runs/r3-ssa-b/multi-routed/b_r3_role/v1_guard/dev
+     ssu       n= 14 S= 73.0 Sall= 72.0 PA=0.846 CF1=0.646 routes={'multi': 14}
+     ssa       n=  6 S= 81.0 Sall= 80.2 PA=0.833 CF1=0.944 routes={'multi': 1, 'ssa': 5}
+     multi     n=114 S= 86.8 Sall= 85.2 PA=0.943 CF1=0.911 routes={'multi': 114}
+     ku        n= 32 S= 93.3 Sall= 92.5 PA=1.000 CF1=0.986 routes={'multi': 32}
+     temporal  n=  4 S= 72.7 Sall= 73.1 PA=0.750 CF1=0.867 routes={'multi': 4}

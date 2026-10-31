@@ -76,6 +76,15 @@ is in multi (0.87 -> 0.44), temporal (0.83 -> 0.65) and ku (0.96 -> 0.64).
 - Router r2: "how many days did I spend ... (in total / and / trips)" and "the most / the least / compared to" go to
   multi when the base rules say ssu or temporal (0 test questions affected).
 
+### Harness additions after round 3
+- `harness.audit --compare OLD.jsonl` / `--diff OLD NEW` now also report passage-text changes, hint changes (works on
+  audit rows and on reactor packs, the constant answer-format suffix is stripped), old -> new cite ids, and computed /
+  abstain_p changes as info; it warns when the diff is partial (use `--n 999`) and counts the Reactor-visible changes.
+- `configs/best_v1.json` = the v1 system (git tag v1), `configs/best_v2.json` = v2 (= `configs/best.json`, tag v2);
+  `lenses/pipeline.py` variants `routed_v1` / `routed_v2`.
+- `lenses/ssu/merged_r3.py`: SSU-B's b_r3_ssu with SSU-A's `ru_cite` passed through, used as the inner lens of
+  `lenses/ssu/a_r3_route.py` (see configs/best_v2.json).
+
 ## Lens file contract
 ```python
 # lenses/<type>/<a|b>_<name>.py

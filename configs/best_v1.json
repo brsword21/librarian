@@ -1,0 +1,36 @@
+{
+ "round": "r2",
+ "routes": {
+  "ssu": {
+   "lens": "lenses/ssu/merged_r2.py",
+   "variant": "role8_r3rn"
+  },
+  "ssa": {
+   "lens": "lenses/ssa/a_recsent.py",
+   "variant": "r2_conf2"
+  },
+  "multi": {
+   "lens": "lenses/multi/merged_r2.py",
+   "variant": "tight_role9"
+  },
+  "ku": {
+   "lens": "lenses/ku/b_r2.py",
+   "variant": "r2b"
+  },
+  "temporal": {
+   "lens": "lenses/temporal/merged_r2.py",
+   "variant": "evA_mixB"
+  }
+ },
+ "fallback": {
+  "lens": "lenses/generic.py",
+  "variant": "hybrid_rr"
+ },
+ "notes": {
+  "ssu": "wrapper: SSA-B role_guess >= 0.8 -> ssa lens (a_recsent r2_conf2), else a_struct2 r3rn. ku_pair hand-off measured (+0.3 dev / +1.3 dev200 routed) but NOT enabled: it moves 6 of 45 test ssu questions (sourdough name, R-77 sibling slots) into 2-session KU pairs on planted drift/decoys.",
+  "multi": "wrapper: role_guess >= 0.9 -> ssa lens, else b_tight p08c35_aor (ties b_sweep deep8_10k on routed S, +3.5 Sall dev / +3.2 dev200, -1.3k chars). Fallback alternative: lenses/multi/merged_r2.py deep8_role9.",
+  "ku": "b_r2 r2b: ties pair_r1b on S (+0.2 / +0.2), -600 chars, Sall +9.7 / +8.9.",
+  "temporal": "merged_r2 evA_mixB: a_gap ct_evgba on gap / named-event questions + b_merge ev1_mix_g elsewhere.",
+  "handoff_in_pipeline": "lenses/pipeline.py also supports an optional 'handoff' block for experiments (configs/exp/); best.json does the hand-offs inside the route lenses so reactorq.build_packs (text router + routes) gets them too."
+ }
+}

@@ -1,0 +1,30 @@
+38 questions x 4 variants on dev200 in 70s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+kg3c                       82.9 0.886 0.929 0.943 0.886 0.885 1.000 0.886   4177 1234.0 0.886 0
+   if Reactor cites every passage: CF1all=0.876 Sall=82.6
+   -> runs/r3-ssu-a/ssu-routed/a_r3_route/kg3c/dev200
+     ssu       n= 18 S= 92.0 Sall= 89.1 PA=1.000 CF1=0.941 routes={'ssu': 18}
+     ssa       n=  7 S= 93.8 Sall= 93.8 PA=1.000 CF1=1.000 routes={'ssa': 6, 'ssu': 1}
+     multi     n=  4 S= 88.3 Sall= 93.3 PA=1.000 CF1=0.833 routes={'ssu': 4}
+     ku        n=  9 S= 55.9 Sall= 59.2 PA=0.556 CF1=0.704 routes={'ssu': 8, 'ku': 1}
+kg3r                       82.6 0.886 0.929 0.943 0.886 0.885 1.000 0.876   4177  656.1 0.886 0
+   if Reactor cites every passage: CF1all=0.876 Sall=82.6
+   -> runs/r3-ssu-a/ssu-routed/a_r3_route/kg3r/dev200
+     ssu       n= 18 S= 92.0 Sall= 89.1 PA=1.000 CF1=0.941 routes={'ssu': 18}
+     ssa       n=  7 S= 93.8 Sall= 93.8 PA=1.000 CF1=1.000 routes={'ssa': 6, 'ssu': 1}
+     multi     n=  4 S= 83.3 Sall= 93.3 PA=1.000 CF1=0.667 routes={'ssu': 4}
+     ku        n=  9 S= 55.9 Sall= 59.2 PA=0.556 CF1=0.704 routes={'ssu': 8, 'ku': 1}
+kg4r                       82.6 0.886 0.929 0.943 0.886 0.885 1.000 0.876   4177  669.8 0.886 0
+   if Reactor cites every passage: CF1all=0.876 Sall=82.6
+   -> runs/r3-ssu-a/ssu-routed/a_r3_route/kg4r/dev200
+     ssu       n= 18 S= 92.0 Sall= 89.1 PA=1.000 CF1=0.941 routes={'ssu': 18}
+     ssa       n=  7 S= 93.8 Sall= 93.8 PA=1.000 CF1=1.000 routes={'ssa': 6, 'ssu': 1}
+     multi     n=  4 S= 83.3 Sall= 93.3 PA=1.000 CF1=0.667 routes={'ssu': 4}
+     ku        n=  9 S= 55.9 Sall= 59.2 PA=0.556 CF1=0.704 routes={'ssu': 8, 'ku': 1}
+kg3cr                      82.9 0.886 0.929 0.943 0.886 0.885 1.000 0.886   4177  661.2 0.886 0
+   if Reactor cites every passage: CF1all=0.876 Sall=82.6
+   -> runs/r3-ssu-a/ssu-routed/a_r3_route/kg3cr/dev200
+     ssu       n= 18 S= 92.0 Sall= 89.1 PA=1.000 CF1=0.941 routes={'ssu': 18}
+     ssa       n=  7 S= 93.8 Sall= 93.8 PA=1.000 CF1=1.000 routes={'ssa': 6, 'ssu': 1}
+     multi     n=  4 S= 88.3 Sall= 93.3 PA=1.000 CF1=0.833 routes={'ssu': 4}
+     ku        n=  9 S= 55.9 Sall= 59.2 PA=0.556 CF1=0.704 routes={'ssu': 8, 'ku': 1}

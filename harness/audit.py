@@ -2,7 +2,7 @@
 
     python -m harness.audit --lens lenses/temporal/a_calendar.py --variant base --type temporal [--n 10] [--full]
 Writes runs/audit/<type>/<lens>/<variant>/test_packs.jsonl.
-    --compare OLD.jsonl  after the audit, list the test packs whose route, cite_plan or passage set changed against an
+    --compare OLD.jsonl  after the audit, list the test packs whose route, cite_plan, passages or hint changed against an
                          older test_packs.jsonl (or compare two files without building: python -m harness.audit
                          --diff OLD.jsonl NEW.jsonl).
 """
@@ -87,12 +87,33 @@ def main(argv=None) -> None:
         compare(a.compare, out / "test_packs.jsonl")
 
 
+_SUFFIX_RX = None
+
+
+def _hint_of(r: dict) -> str:
+    """Hint text in either format: audit rows carry `hint`; reactor packs (reactorq.build_packs) carry question_text =
+    question + hint + constant answer-format suffix."""
+    global _SUFFIX_RX
+    if "hint" in r:
+        return (r.get("hint") or "").strip()
+    if _SUFFIX_RX is None:
+        import re
+        _SUFFIX_RX = re.compile(r"\n?Write the final answer line as:.*$", re.S)
+    qt = r.get("question_text") or ""
+    q = r.get("question") or ""
+    if qt.startswith(q):
+        qt = qt[len(q):]
+    return _SUFFIX_RX.sub("", qt).strip()
+
+
 def compare(old_path, new_path) -> int:
-    """Print every question whose route, cite_plan or passage set differs between two test_packs.jsonl files."""
+    """Print every question whose route, cite_plan, passage set, passage text or hint differs between two
+    test_packs.jsonl files (audit rows or reactor packs, any mix). computed / abstain_p changes are printed as info
+    (they do not change what Reactor sees). Returns the number of changed packs (route, cite, passages or hint)."""
     def load(p):
         return {r["question_id"]: r for r in map(json.loads, open(p, encoding="utf-8"))}
     old, new = load(old_path), load(new_path)
-    n = 0
+    n = n_visible = 0
     for qid, b in new.items():
         o = old.get(qid)
         if o is None:
@@ -100,18 +121,40 @@ def compare(old_path, new_path) -> int:
             n += 1
             continue
         ps_o, ps_b = [p["id"] for p in o["passages"]], [p["id"] for p in b["passages"]]
-        ch = []
+        ch, info = [], []
         if o.get("route") != b.get("route"):
             ch.append(f"route {o.get('route')} -> {b.get('route')}")
-        if sorted(o.get("cite_plan") or []) != sorted(b.get("cite_plan") or []):
-            ch.append(f"cite {len(o.get('cite_plan') or [])}->{len(b.get('cite_plan') or [])} "
-                      f"(kept {len(set(o.get('cite_plan') or []) & set(b.get('cite_plan') or []))})")
+        co, cb = sorted(o.get("cite_plan") or []), sorted(b.get("cite_plan") or [])
+        if co != cb:
+            ch.append(f"cite {co} -> {cb}")
+        visible = False
         if sorted(ps_o) != sorted(ps_b):
             ch.append(f"passages {len(ps_o)}->{len(ps_b)} (kept {len(set(ps_o) & set(ps_b))})")
+            visible = True
+        elif [p["text"] for p in o["passages"]] != [p["text"] for p in b["passages"]] or ps_o != ps_b:
+            ch.append(f"passage text/order ({sum(len(p['text']) for p in o['passages'])}->"
+                      f"{sum(len(p['text']) for p in b['passages'])} chars)")
+            visible = True
+        if _hint_of(o) != _hint_of(b):
+            ch.append("hint")
+            visible = True
+        if o.get("computed") != b.get("computed"):
+            info.append(f"computed {o.get('computed')} -> {b.get('computed')}")
+        ao, ab = o.get("abstain_p"), b.get("abstain_p")
+        if ao is not None and ab is not None and abs(ao - ab) >= 0.05:
+            info.append(f"abstain_p {ao:.2f} -> {ab:.2f}")
         if ch:
             n += 1
-            print(f"{b.get('route') or '?':8s} {qid} {'; '.join(ch)} | {b['question'][:90]}")
-    print(f"{n} of {len(new)} packs changed against {old_path}")
+            n_visible += visible
+            print(f"{b.get('route') or '?':8s} {qid} {'; '.join(ch)}{' | ' + '; '.join(info) if info else ''} "
+                  f"| {b['question'][:90]}")
+        elif info:
+            print(f"(info)   {qid} {'; '.join(info)} | {b['question'][:90]}")
+    missing = [q for q in old if q not in new]
+    if missing:
+        print(f"PARTIAL DIFF: {len(missing)} questions of {old_path} are not in the new file (use --n 999)")
+    print(f"{n} of {len(new)} packs changed against {old_path} ({n_visible} change what Reactor sees: "
+          f"passages, passage text or hint)")
     return n
 
 

@@ -1,0 +1,26 @@
+526 questions x 3 variants on dev in 194s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+v1                         86.0 0.935 0.967 0.985 0.964 0.974 1.000 0.899   5582  340.8 0.813 0
+   if Reactor cites every passage: CF1all=0.859 Sall=84.9
+   -> runs/r3-ssa-a-routed/all/a_r3_routed/v1/dev
+     ssu       n= 70 S= 87.4 Sall= 85.8 PA=0.953 CF1=0.892 routes={'ssu': 49, 'temporal': 5, 'multi': 14, 'ku': 2}
+     ssa       n=112 S= 91.8 Sall= 91.4 PA=0.973 CF1=0.997 routes={'ssa': 97, 'ssu': 13, 'multi': 1, 'temporal': 1}
+     multi     n=133 S= 84.9 Sall= 82.9 PA=0.926 CF1=0.889 routes={'multi': 114, 'ssu': 9, 'temporal': 10}
+     ku        n= 78 S= 87.9 Sall= 89.8 PA=0.972 CF1=0.869 routes={'ssu': 27, 'temporal': 4, 'ku': 15, 'multi': 32}
+     temporal  n=133 S= 80.3 Sall= 77.6 PA=0.882 CF1=0.843 routes={'temporal': 124, 'multi': 4, 'ssu': 5}
+r3fit                      86.3 0.940 0.971 0.985 0.964 0.978 1.000 0.900   5607  161.6 0.814 0
+   if Reactor cites every passage: CF1all=0.861 Sall=85.2
+   -> runs/r3-ssa-a-routed/all/a_r3_routed/r3fit/dev
+     ssu       n= 70 S= 87.4 Sall= 85.8 PA=0.953 CF1=0.892 routes={'ssu': 49, 'temporal': 5, 'multi': 14, 'ku': 2}
+     ssa       n=112 S= 93.0 Sall= 92.8 PA=0.991 CF1=1.000 routes={'ssa': 104, 'ssu': 7, 'temporal': 1}
+     multi     n=133 S= 84.9 Sall= 82.9 PA=0.926 CF1=0.889 routes={'multi': 114, 'ssu': 9, 'temporal': 10}
+     ku        n= 78 S= 87.9 Sall= 89.8 PA=0.972 CF1=0.869 routes={'ssu': 27, 'temporal': 4, 'ku': 15, 'multi': 32}
+     temporal  n=133 S= 80.3 Sall= 77.6 PA=0.882 CF1=0.843 routes={'temporal': 124, 'multi': 4, 'ssu': 5}
+r3nh                       86.3 0.940 0.971 0.985 0.964 0.978 1.000 0.900   5605  170.4 0.814 0
+   if Reactor cites every passage: CF1all=0.861 Sall=85.2
+   -> runs/r3-ssa-a-routed/all/a_r3_routed/r3nh/dev
+     ssu       n= 70 S= 87.4 Sall= 85.8 PA=0.953 CF1=0.892 routes={'ssu': 49, 'temporal': 5, 'multi': 14, 'ku': 2}
+     ssa       n=112 S= 93.0 Sall= 92.8 PA=0.991 CF1=1.000 routes={'ssa': 104, 'ssu': 7, 'temporal': 1}
+     multi     n=133 S= 84.9 Sall= 82.9 PA=0.926 CF1=0.889 routes={'multi': 114, 'ssu': 9, 'temporal': 10}
+     ku        n= 78 S= 87.9 Sall= 89.8 PA=0.972 CF1=0.869 routes={'ssu': 27, 'temporal': 4, 'ku': 15, 'multi': 32}
+     temporal  n=133 S= 80.3 Sall= 77.6 PA=0.882 CF1=0.843 routes={'temporal': 124, 'multi': 4, 'ssu': 5}

@@ -1,130 +1,127 @@
-# SSA lens A ("Struktura"), round 2 report
+# SSA lens A ("Struktura"), round 3 report
 
-Files:
-- `lenses/ssa/a_recsent.py`. **Best variant: `r2_conf2`.** New functions: `role_features` / `role_guess`.
-- `lenses/ssa/a_handoff.py`. New: an evidence-based hand-off for the **ssu route**, variant `nf50a`.
-- `lenses/ssa/a_routed.py` is a measurement wrapper around `lenses/pipeline.py` with a proposal config at `lenses/ssa/scratch_a/routed_r2a.json`.
-- Scratch: `scratch_a/turn_rank.py` (budget vs gold-turn coverage per within-session ordering), `margin_eval.py`, `agree_eval.py`, `role_eval.py` and `route_sim.py`.
-- Runs: tags `r2-ssa-a`, `r2-ssa-a-route` and `r2-ssa-a-routed`.
+The round-2 report has moved to `lenses/ssa/a_report_r2.md` and is summarised in `runs/SYNTHESIS_r2.md`.
+
+Files (all new; no frozen v1 file was edited):
+- `lenses/ssa/a_r3_role.py`
+  - `role_guess(q, hx)`: a refit role detector. It is a drop-in `role_module` for `lenses/ssu/merged_r2.py` and `lenses/multi/merged_r2.py`.
+  - Route-slice variants: `ssu_v1`, `ssu_fit`, `ssu_fit_s55`, `ssu_fit_nh55`, `multi_v1`, `multi_fit`.
+- `lenses/ssa/a_r3_routed.py`: a measurement wrapper around `lenses/pipeline.py`.
+  - `v1` = configs/best.json.
+  - `r3fit` = v1 + the role module on both wrappers.
+  - `r3nh` = r3fit + no-hint band.
+  - Configs are in `lenses/ssa/scratch_a/r3/routed_r3fit.json` and `routed_r3nh.json`.
+- `lenses/ssa/scratch_a/r3/`: role features per split (`role_feats.py`, `role_feats_{dev,dev200,test}.jsonl`), the logistic fits (`fit_role.py`), the test candidate audit (`test_cands.py`) and the sweep logs.
+- Runs: tags `r3-ssa-a` (gold type and route slices) and `r3-ssa-a-routed` (full routed system). Audit output is in `runs/audit/all/a_r3_routed/r3fit`.
 
 ## TL;DR
-1. **The ssa route is saturated.** PA = CF1 = 1.0 on both splits. The only levers left are chars and Sall. `r2_conf2` keeps PA 1.0 and moves dev from 93.3 to 93.6 (Sall 92.6 → 93.6) and dev200 from 93.3 to 93.7 (Sall 92.9 → 93.7), with chars at 5.6k → 4.5k and 5.4k → 4.2k. That is below the 2-point bar, but it wins the tie rule (fewer chars), and it gains about +1 on Sall because the pack is now exactly the cite set.
-2. **The bigger win is on the ssu route (brief item 3).** On dev, 50 gold-ssa questions without a cue are routed to ssu, where they score S 70. `a_handoff.py nf50a` sends a question to the ssa lens when `role_guess >= 0.5` and the question has no first-person word ("should I …" advice questions are exempt). Over all ssu-routed questions this gives:
-   - dev: 74.4 → **82.4** (Sall 75.8 → 84.2, AUC 0.837 → 0.931);
-   - dev200: 72.6 → **75.9** (Sall 73.8 → 77.3, AUC 0.838 → 0.892);
-   - **test: 0 of 45 ssu-routed questions change** (all say I/my/our), so the change is test-neutral by construction.
-3. **Routed system** (both changes on configs/best.json):
-   - dev: 80.4 → **82.6** (Sall 74.9 → 77.3, AUC 0.719 → 0.749);
-   - dev200: 79.8 → **81.0** (Sall 74.2 → 75.5, AUC 0.810 → 0.820).
-
-(The round-1 report that was in this file is summarised in runs/SYNTHESIS_r1.md, and its runs are under tag `r1-ssa-a`.)
+1. **The ssa route is saturated and stays as it is** (`a_recsent r2_conf2`: PA = CF1 = 1.0, Sall = S on both splits).
+   - Test audit of all 25 ssa-routed packs: every pack holds the right recommendation, and the planted decoys are rejected (details under failure patterns).
+   - I changed nothing on this route.
+2. **The remaining ssa loss is in the hand-off, and real Reactor confirms it.**
+   - In the E1b calibration, Reactor answered INSUFFICIENT_EVIDENCE on q_73a1f68b2421 ("Which company does a great job with environmentally responsible supply chains?", gold Patagonia).
+   - The pack contained the answer. The ssu hint "Answer from what the user said about their own supply chains …" sent Reactor to the wrong role.
+   - That one abstention is the whole of the ssa citation loss in the calibration: ssa evidence F1 was 0.75 = 3 of 4.
+   - v1 still routes that question to ssu (p_b 0.73 < 0.8). Thirteen dev gold-ssa questions get the user-only hint. Proxy PA is 1.0 for 11 of them, so the proxy does not see the problem.
+3. **`a_r3_role.role_guess` = max(p_b, p_fit, advice rule).**
+   - Routed dev: **86.0 → 86.3** (Sall 84.9 → 85.2). On gold ssa: **91.8 → 93.0**, PA 0.973 → 0.991, and the number of gold-ssa questions on the ssa route goes from 97 to 104.
+   - dev200: tie (84.9 / 84.9; ssa 21 → 22 on the ssa route).
+   - **FP 0** on dev and dev200: no non-ssa question changes route.
+   - **0 of 146 test packs change** (`harness.audit --compare runs/final/v1_test_packs.jsonl`). Route, cite_plan, passages and hint text are all identical; the only character difference is the constant 191-character answer-format suffix in the reactor packs.
+   - This is below the +2 bar on S. It is offered as an insurance or Reactor-correctness change with zero test diff.
 
 ## Variants tried (one line each)
-| variant | idea and params |
-|---|---|
-| `recqs_cf7` | Round-1 winner, re-run for Sall: BM25 + role-BM25 + structural scan, best turn whole + rest of the session, budget 7000, runner-up session when the score is within 0.85x. |
-| `r2_solo` | `tie=1.01`: no runner-up session, so the pack equals the cite set (CF1all = 1). PA is unchanged on both splits. On test only the Lisbon pack changes: the decoy runner-up session is dropped. |
-| `r2_b6` | Budget 6000. `turn_rank.py` shows the lens order still covers 100% of gold turns at 6k. Runner-up kept. |
-| `r2_solo_b6` | solo + 6000. |
-| `r2_conf` | solo + 6000, and budget 3500 when the best turn is clearly ahead inside its session (turn_margin ≥ 1.3). turn_margin = fused score of the best unit / best unit of any other turn of that session. At 1.3 the best turn is the gold turn 16/16 on dev and 4/4 on dev200. |
-| **`r2_conf2`** | Tiers: margin ≥ 1.3 → 3000, ≥ 1.2 → 4500, else 6000 (+ solo, + kind gate). **Best.** |
-| `r2_conf3` | Tiers: ≥ 1.3 → 2500, ≥ 1.2 → 4000, ≥ 1.1 → 5000. Too tight: long gold turns get cut (AC 0.96), and PA drops to 0.964 / 0.909. Rejected. |
-| `r2_s55` | solo + flat 5500. Loses 2 dev questions (PA 0.982). Rejected. A flat cut is worse than a confidence-gated one. |
-| `kind_gate` (in all r2_*) | abstain_p on rec-style questions is capped at 0.35 when the asked category (head noun or a synonym) appears in the top session's assistant text (brief item 2). Changes abstain_p only. |
-| `a_handoff nf50` | ssu route: hand off to `a_recsent recqs_cf7` when p_assistant ≥ 0.5 and the question has no I/my/me/our. |
-| **`a_handoff nf50a`** | nf50, and "should I / do I need to" questions count as advice requests (first person allowed). **Recommended for the ssu route.** |
-| `a_handoff nf50a_c2` | nf50a handing off to `r2_conf2` instead. Fewer chars, but less robust when the hand-off is wrong. On dev200 the ssu question "How long did it take to move to the new apartment?" loses its user turn to the tighter budget (PA 1 → 0). Use `recqs_cf7` (or `r2_solo`) as the hand-off target. |
+| variant | idea and params | verdict |
+|---|---|---|
+| logistic fits (offline, `fit_role.py`) | Fit on dev ssu+multi-routed questions, hold out dev200. Feature sets: [d, nf0], + bm_diff/sess_cov/top5_a, + ours/advice, + route. d = CE(best assistant unit) − CE(best user unit); nf0 = no first-person word. | AUC 0.99 dev / 1.00 dev200 for every set. The extra features do not raise the zero-FP TP count. nf0 carries the model (w 5.7 vs 0.47 per d unit). |
+| `ssu_fit` / `multi_fit` (= `r3fit`) | role_guess = max(p_b, p_fit). p_fit = sigmoid(0.469·d + 5.666·nf0 + b), with b set so that p = 0.8 at d = −0.73. That is the midpoint between the nearest dev negative ("…move to the new apartment?", d −1.04) and the lowest positive above it (−0.42). Thresholds stay 0.8 (ssu) and 0.9 (multi). | ssu slice: tie. multi slice: +0.4 dev, tie dev200. **Recommended.** |
+| advice rule (inside r3fit) | "should I/my/we" and d ≥ 2 → p ≥ 0.85, which passes ssu (0.8) but not multi (0.9). dev: 3 of 3 such ssu-routed questions are ssa; the multi-route "do I need to" questions are not ssa and are not matched. | Fixes "Which back-end languages should I learn …" (PA 0 → 1). 0 test questions match. |
+| `ssu_fit_s55` | Soft band: nf0 and −5.5 ≤ d < −0.73 → ssa lens `recqs_cf7` (session fill). | dev slice +0.4 (President's advisor PA 0 → 1); **dev200 −0.9**: the "new apartment" ssu question cites the wrong session. **Rejected.** |
+| `ssu_fit_nh55` (= `r3nh`) | Same band, but keep the ssu pack and drop only the user-only hint. | Tie on both splits, 0 test change. Optional; the motivation is Reactor behaviour only. |
+| soft quote (offline) | Quote the best line on rec-style questions when shape ≥ 0.5 but the pick is not confident. | dev: 1 of 1 soft quote wrong; dev200: 1 of 1 right. Not enough evidence, so not built. |
+| list position (brief item 2) | Pack the list chunk plus the next chunk. | Not built. The computed n-th item is already right on 6 of 6 dev and 3 of 3 dev200 ordinal questions (PA 1). There are no test ordinal ssa questions, and the chars-only gain is about 0.04 S. |
 
-Dropped without a sweep:
-- **Cross-encoder turn ordering** (`turn_rank.py`). turn@1 is better (0.75 vs 0.66 on dev), but coverage at a given budget is worse than the lens order: at 6k, 0.95 vs 1.00.
-- **CE-agreement as a confidence signal** (`agree_eval.py`). When the CE top turn equals the lens best turn, the best turn is the gold turn only 84% of the time on dev (69/82), against 16/16 for margin ≥ 1.3.
+## Results
+Gold-type ssa (gold routing; dev 112 q, dev200 22 q; no unanswerable ssa questions, so AUC is "-"):
 
-## Results: ssa gold type (harness.sweep, tag `r2-ssa-a`; dev and dev200 contain no unanswerable ssa questions, so AUC is "-")
-| split | variant | S | Sall | PA | ATR | SR | CF1 | CF1all | chars | AUC |
-|---|---|---|---|---|---|---|---|---|---|---|
-| dev (112) | generic `hybrid_rr` (baseline) | 72.3 | 72.3 | 1.000 | 1.000 | 1.000 | 0.368 | 0.368 | 11932 | - |
-| dev | `recqs_cf7` (r1 best) | 93.3 | 92.6 | 1.000 | 1.000 | 1.000 | 1.000 | 0.979 | 5587 | - |
-| dev | `r2_solo` | 93.3 | 93.3 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 5382 | - |
-| dev | `r2_b6` | 93.4 | 92.8 | 1.000 | 1.000 | 1.000 | 1.000 | 0.979 | 5131 | - |
-| dev | `r2_solo_b6` | 93.4 | 93.4 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 4979 | - |
-| dev | `r2_conf` | 93.5 | 93.5 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 4755 | - |
-| dev | **`r2_conf2`** | **93.6** | **93.6** | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | **4542** | - |
-| dev | `r2_conf3` | 91.3 | 91.3 | 0.964 | 0.991 | 1.000 | 1.000 | 1.000 | 4275 | - |
-| dev | `r2_s55` | 92.4 | 92.4 | 0.982 | 0.982 | 1.000 | 1.000 | 1.000 | 4711 | - |
-| dev200 (22) | generic `hybrid_rr` (baseline) | 71.2 | 71.2 | 1.000 | 1.000 | 1.000 | 0.331 | 0.331 | 11938 | - |
-| dev200 | `recqs_cf7` (r1 best) | 93.3 | 92.9 | 1.000 | 1.000 | 1.000 | 1.000 | 0.985 | 5376 | - |
-| dev200 | `r2_solo` | 93.4 | 93.4 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 5248 | - |
-| dev200 | `r2_b6` | 93.5 | 93.0 | 1.000 | 1.000 | 1.000 | 1.000 | 0.985 | 4867 | - |
-| dev200 | `r2_solo_b6` | 93.5 | 93.5 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 4786 | - |
-| dev200 | `r2_conf` | 93.6 | 93.6 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 4493 | - |
-| dev200 | **`r2_conf2`** | **93.7** | **93.7** | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | **4186** | - |
-| dev200 | `r2_conf3` | 87.9 | 87.9 | 0.909 | 0.955 | 1.000 | 1.000 | 1.000 | 3836 | - |
-| dev200 | `r2_s55` | 93.6 | 93.6 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 4556 | - |
+| split | lens / variant | S | PA | ATR | SR | CF1 | chars | AUC |
+|---|---|---|---|---|---|---|---|---|
+| dev | generic `hybrid_rr` (baseline) | 72.3 | 1.000 | 1.000 | 1.000 | 0.368 | 11932 | - |
+| dev | `a_recsent r2_conf2` (v1, frozen) | 93.6 | 1.000 | 1.000 | 1.000 | 1.000 | 4542 | - |
+| dev200 | generic `hybrid_rr` (baseline) | 71.2 | 1.000 | 1.000 | 1.000 | 0.331 | 11938 | - |
+| dev200 | `a_recsent r2_conf2` (v1, frozen) | 93.7 | 1.000 | 1.000 | 1.000 | 1.000 | 4186 | - |
 
-S ceiling at PA = CF1 = 1 is 95 − chars/3200. Going from 5.6k to 4.5k chars is worth +0.35, and dropping the runner-up is worth about +0.7 on Sall. A +2 S gain is impossible on this type.
-`r2_conf2` vs `recqs_cf7`: S +0.3 dev / +0.4 dev200, Sall +1.0 / +0.8, chars −19% / −22%, no PA loss.
+Gold ssa questions through the routed system (`a_r3_routed.py`):
 
-Test audit (`harness.audit --variant r2_conf2 --n 25`): **0 flags out of 25**. Every pack is a single session of 2.2 to 3.4k chars. Against `r2_solo`, only 5 packs change, each losing 300–400 chars of trailing chit-chat. The recommendation sentence stays in every pack. Against `recqs_cf7`, the only session-level change is Lisbon/Heden, where the runner-up (decoy) session is gone. abstain_p on test: 22 × 0.05 and 3 × 0.35.
+| split | variant | S | Sall | PA | ATR | SR | CF1 | chars |
+|---|---|---|---|---|---|---|---|---|
+| dev | v1 | 91.8 | 91.4 | 0.973 | 0.973 | 1.000 | 0.997 | 4387 |
+| dev | **r3fit** | **93.0** | 92.8 | 0.991 | 0.991 | 1.000 | 1.000 | 4504 |
+| dev | r3nh | 93.0 | 92.8 | 0.991 | 0.991 | 1.000 | 1.000 | 4497 |
+| dev200 | v1 | 93.7 | 93.7 | 1.000 | 1.000 | 1.000 | 1.000 | 4162 |
+| dev200 | r3fit / r3nh | 93.7 | 93.7 | 1.000 | 1.000 | 1.000 | 1.000 | 4186 |
 
-## Results: the ssu route (`--route --type ssu`, tag `r2-ssa-a-route`; questions the text router sends to ssu, all gold types)
+Full routed system (all types; dev 526 q, dev200 125 q):
+
 | split | variant | S | Sall | PA | ATR | SR | CF1 | chars | AUC |
 |---|---|---|---|---|---|---|---|---|---|
-| dev (144 q, 136 answerable) | ssu winner `a_struct nb3t0` (= `a_handoff ssu_only`) | 74.4 | 75.8 | 0.757 | 0.866 | 0.952 | 0.875 | 3701 | 0.837 |
-| dev | `a_recsent recqs_cf7` on everything | 77.9 | 79.2 | 0.831 | 0.892 | 0.918 | 0.863 | 6395 | 0.562 |
-| dev | `a_handoff nf50` | 81.3 | 83.2 | 0.868 | 0.932 | 0.952 | 0.875 | 4454 | 0.921 |
-| dev | **`a_handoff nf50a`** | **82.4** | **84.2** | 0.882 | 0.947 | 0.952 | 0.883 | 4502 | **0.931** |
-| dev | `a_handoff nf50a_c2` | 82.5 | 84.5 | 0.882 | 0.947 | 0.952 | 0.883 | 4195 | 0.931 |
-| dev200 (40 q, 37 answerable) | ssu winner `nb3t0` | 72.6 | 73.8 | 0.757 | 0.851 | 0.905 | 0.817 | 3799 | 0.838 |
-| dev200 | `a_recsent recqs_cf7` on everything | 74.3 | 76.6 | 0.811 | 0.833 | 0.901 | 0.788 | 6489 | 0.500 |
-| dev200 | `a_handoff nf50` | 75.9 | 77.3 | 0.811 | 0.905 | 0.905 | 0.817 | 4221 | 0.892 |
-| dev200 | **`a_handoff nf50a`** | **75.9** | **77.3** | 0.811 | 0.905 | 0.905 | 0.817 | 4221 | **0.892** |
-| dev200 | `a_handoff nf50a_c2` | 74.2 | 75.0 | 0.784 | 0.878 | 0.878 | 0.817 | 4016 | 0.892 |
+| dev | v1 | 86.0 | 84.9 | 0.935 | 0.967 | 0.985 | 0.899 | 5582 | 0.813 |
+| dev | **r3fit** | **86.3** | 85.2 | 0.940 | 0.971 | 0.985 | 0.900 | 5607 | 0.814 |
+| dev | r3nh | 86.3 | 85.2 | 0.940 | 0.971 | 0.985 | 0.900 | 5605 | 0.814 |
+| dev200 | v1 | 84.9 | 83.2 | 0.918 | 0.956 | 0.970 | 0.894 | 5478 | 0.855 |
+| dev200 | r3fit | 84.9 | 83.2 | 0.918 | 0.956 | 0.970 | 0.894 | 5482 | 0.853 |
+| dev200 | r3nh | 84.9 | 83.2 | 0.918 | 0.956 | 0.970 | 0.894 | 5481 | 0.853 |
 
-Per gold type, dev (ssu lens → nf50a): ssa 70.1 → 88.9 (50 q); ssu 93.3 → 93.3; ku, multi and temporal unchanged. **No loss on any non-ssa question on dev.** On dev200 there is one loss: an ssu question, "How long did it take to move to the new apartment?", which has no first-person word. AUC rises because the ssu lens gave high abstain_p to answerable ssa questions, and those now go to the ssa lens. No unanswerable question is handed off (dev 0/8, dev200 0/3).
+Route slices (`--route`). ssu_fit was measured before the advice rule was added; the routed rows above include it.
 
-`role_guess` quality: AUC for gold ssa vs every other type, over ssu-routed questions:
+| slice | variant | S | PA | ATR | SR | CF1 | chars | AUC |
+|---|---|---|---|---|---|---|---|---|
+| ssu-routed dev (140) | ssu_v1 | 86.1 | 0.932 | 0.960 | 0.980 | 0.894 | 4159 | 0.931 |
+| | ssu_fit | 86.1 | 0.932 | 0.960 | 0.980 | 0.894 | 4217 | 0.933 |
+| | ssu_fit_s55 | 86.5 | 0.939 | 0.967 | 0.980 | 0.894 | 4315 | 0.936 |
+| | ssu_fit_nh55 | 86.1 | 0.932 | 0.960 | 0.980 | 0.894 | 4208 | 0.933 |
+| ssu-routed dev200 (38) | ssu_v1 | 82.3 | 0.886 | 0.929 | 0.943 | 0.867 | 4234 | 0.905 |
+| | ssu_fit | 82.3 | 0.886 | 0.929 | 0.943 | 0.867 | 4248 | 0.905 |
+| | ssu_fit_s55 | **81.4** | 0.886 | 0.929 | 0.943 | 0.838 | 4291 | 0.905 |
+| | ssu_fit_nh55 | 82.3 | 0.886 | 0.929 | 0.943 | 0.867 | 4243 | 0.905 |
+| multi-routed dev (170) | multi_v1 | 86.3 | 0.936 | 0.972 | 0.984 | 0.903 | 5467 | 0.795 |
+| | multi_fit | 86.7 | 0.943 | 0.978 | 0.984 | 0.905 | 5481 | 0.800 |
+| multi-routed dev200 (45) | multi_v1 / multi_fit | 84.2 | 0.921 | 0.965 | 0.984 | 0.872 | 6061 | 0.789 |
 
-| feature | dev | dev200 |
-|---|---|---|
-| `p_assistant` (combined) | 0.925 | 0.909 |
-| `q_nofirst` (no I/my/me in the question) | 0.916 | 0.985 |
-| BM25 assistant-vs-user top score | 0.826 | 0.779 |
-| CE assistant-vs-user (`use_ce=True`) | 0.867 | - |
-
-The CE does not improve the combination (0.922), so the default is lexical only. The no-first-person gate turns the probability into a test-safe rule.
-
-### Routed system, all types (`lenses/ssa/a_routed.py`, tag `r2-ssa-a-routed`)
-`best` = configs/best.json. `r2a` = the same config with two changes: ssu route → `a_handoff nf50a`, ssa route → `a_recsent r2_conf2`.
-
-| split | config | S | Sall | PA | ATR | CF1 | CF1all | chars | AUC |
-|---|---|---|---|---|---|---|---|---|---|
-| dev (526) | best | 80.4 | 74.9 | 0.867 | 0.930 | 0.877 | 0.694 | 7375 | 0.719 |
-| dev | **r2a** | **82.6** | **77.3** | 0.901 | 0.952 | 0.879 | 0.702 | 7476 | 0.749 |
-| dev200 (125) | best | 79.8 | 74.2 | 0.864 | 0.915 | 0.862 | 0.674 | 7206 | 0.810 |
-| dev200 | **r2a** | **81.0** | **75.5** | 0.882 | 0.933 | 0.862 | 0.679 | 7166 | 0.820 |
-
-The change is +2.2 S on dev and +1.2 on dev200, with Sall up 2.4 and 1.3 and AUC up as well. It passes the ≥ 2 dev / no dev200 loss rule. On test, `r2a` changes 0 ssu packs; on the ssa route, 5 packs lose 300–400 chars of chit-chat and Lisbon drops its decoy runner-up session.
+**Best:** `r3fit`. In configs/best.json set `routes.ssu.params` and `routes.multi.params` to `{"role_module": "lenses/ssa/a_r3_role.py"}`. The ssa route stays on `a_recsent r2_conf2`. reactorq/build_packs.py already merges `params`.
 
 ## Top failure patterns
-1. **The best turn is not the gold turn (about 1/3 of dev).** This is still the limit on chars. With a flat budget, any cut below 6k loses gold turns:
-   - `r2_s55` loses 2 dev questions;
-   - `r2_conf3` cuts long gold turns mid-way (AC 0.957), as in "What was the 27th of the 100 prompt parameters?", where the list item sits deep in a 5k turn.
+1. **The user-only ssu hint on misrouted ssa questions.** Real Reactor abstained on one of them. After r3fit, 7 dev gold-ssa questions still get the hint:
+   - "Which romantic Italian restaurant in Rome was it for dinner?"
+   - "In Bajimaya v Reward Homes Pty Ltd, what year …"
+   - "Which traditional game is often performed by skilled dancers at powwows?"
+   - "What is Andy wearing in the comedy movie scene script?"
+   - the two "designation on my jumpsuit" questions
+   - the President's advisor question
 
-   Only the margin-gated tiers are safe. Examples where the best turn is not the gold turn: Bandung Nasi Goreng (gold 4 turns before the best), tea tree oil ratio (+8), Radiation Amplified zombie (+5).
-2. **Wrong hand-offs are user facts phrased impersonally.** "How long did it take to move to the new apartment?" (ssu, p_assistant 0.67, no I/my) is the one loss on dev200. With the tighter `r2_conf2` budget the user turn falls out of the pack, which is why the hand-off target should be the session-filling `recqs_cf7`.
-3. **ssa questions that keep a first-person word stay with the ssu lens.** "Which show was my example of Netflix …" is a user-role ssa question routed to temporal. "Who was the President's Chief Advisor … fusion breakthrough?" scores p_assistant 0.49, just under the threshold. The ssu lens finds the session but not the turn (PA 0, the only remaining ssa PA miss on the ssu route).
-
-## abstain_p
-dev and dev200 have no unanswerable question on the ssa route, so calibration on this route is not measurable. The routed-to-ssa set is 100% answerable on both splits. The kind gate moves 6 answerable dev questions from 0.6–0.7 down to 0.35 (dev distribution: 99 × 0.05, 1 × 0.3, 7 × 0.35, 1 × 0.6, 4 × 0.7). Nothing above 0.7 remains on dev, dev200 or test. Recommended reading for the integrator: on the ssa route, abstain_p ≥ 0.7 means "the recommendation shape and the category are both missing". It has never fired on an unanswerable question, because there are none. Keep the no-hint policy.
+   The hint template also produces broken text: "their own jumpsuit led me. Mentions of other people's me", "their own house begin", "their own cordero ancash". `r3nh` removes the hint on the no-first-person ones (0 test change).
+2. **A negative CE margin on true ssa questions (the user turn matches better).**
+   - President's Chief Advisor (d −4.99) is the only remaining ssa PA miss on dev (ssu lens, PA 0). Rome (d −3.08) and Andy (d −8.18) also have negative margins.
+   - They cannot be separated from "How long did it take to move to the new apartment?" (ssu, d −1.04) and "Where did Rachel move to …" (ku, d −6.19) with d and nf0 alone.
+   - Handing that band to the ssa lens (s55) fixes the President question but breaks the apartment question's citation on dev200 (CF1 1 → 0). The ssa lens then ranks a runner-up session first.
+3. **Role-play ssa questions with a first-person word.** "What designation on my jumpsuit …" and "Which show was my example of Netflix …" (the latter routed to temporal) are unreachable with role features: nf0 = 0. Proxy PA is already 1 for them.
+4. **Test ssa route (audit, no gold): all 25 packs pick the right recommendation.**
+   - Rejected decoys: the sister's farrier Magnus Vik (we pick Ola Hansen), the sister's illustrator Maja Lie (Silje Dahl), the Supernormal birthday dinner (Matilda 159 Domain for the sons), Coach Elena for strength work (Coach Miriam for speedwork), the AGC 33k-ohm resistor (0.022 µF coupling capacitor), and the user's own Avila Spaces day pass (Heden in Baixa).
+   - 22 of 25 packs quote the line. Three have no quote because the pick is not confident (correct by reading, but low-margin):
+     - Lisbon/Heden: structural tie at 1.01 across 3 sessions;
+     - RouteXL: shape 0.5;
+     - Octane Coffee: shape 0.5.
 
 ## CORE REQUESTs
-1. **Put `lenses/ssa/a_handoff.py nf50a` on the ssu route** (configs/best.json, integrator-owned). Its `ssu_lens` / `ssu_variant` parameters default to the current ssu winner, so whatever wins ssu-A/B this round can be plugged in. Test-neutral: 0 of 45 test ssu-routed questions are handed off. A cleaner alternative is a `role_guess` hook in `lenses/pipeline.py`: `if route == "ssu" and handoff(q, hx): route = "ssa"`.
-2. **ssa route → `a_recsent r2_conf2`.**
-3. `harness.sweep`: print `chars` in summary.json under the same key as the leaderboard (`chars_mean`). summary.json has no `chars` key today.
-4. The round-1 request for `core.units` sentence splitting at "Dr." / "St." was declined. Still fine: the lens re-joins sentences itself.
+1. **configs/best.json:** `routes.ssu.params = routes.multi.params = {"role_module": "lenses/ssa/a_r3_role.py"}`. It is in `lenses/ssa/scratch_a/r3/routed_r3fit.json`. Effect: dev +0.3 routed (+1.2 on gold ssa), tie on dev200, **0 test packs changed**.
+2. **ssu lens owners (ssu-A/B), optional:**
+   - Do not emit "Answer from what the user said about their own X" when the question has no first-person word. `lenses/ssa/a_r3_role.py ssu_fit_nh55` does this as a wrapper: tie on proxy, 0 test change.
+   - Fix the head-noun templating ("their own jumpsuit led me … other people's me").
+3. **harness.audit --compare:** also diff the `hint` text, and normalise the 191-character answer-format suffix that reactor packs add to `chars`. I checked both by hand this time.
+4. **Reactor check:** test the quoted-line hint on 3–5 ssa test-style packs, and one no-quote pack (Lisbon).
 
 ## Ideas for the next round
-- Calibrate role_guess with a logistic fit on dev and validate on dev200. It is hand-weighted now. Add an "impersonal user fact" feature (definite article plus a personal-life noun: "the new apartment", "the move") to stop the one wrong hand-off.
-- Hand off from temporal and multi too: "Which show was my example …" (ssa → temporal) and "How many mummies …" (ssa → multi). It needs a per-route rule; the cost of a wrong move is high on multi.
-- Turn ranking: a round score (user question + assistant answer as one unit) for the margin signal, so more questions qualify for the 3000 tier.
-- A Reactor check (integrator) of the quoted-line hint on about 10 test-style questions. It fires on 23 of 25 test ssa questions and has never been checked against Reactor.
+- An impersonal-user-fact feature ("the new apartment", "Rachel moved") together with a sentence-level CE (assistant sentences vs user sentences instead of units). This would make the −5..−1 band separable and let the s55-style hand-off fix the President question without the apartment regression.
+- When the ssa lens takes a hand-off with no rec cue, cite by the turn's own session rather than the fused top, to avoid the dev200 CF1 miss.
+- A soft quote line for shape-0.5 picks ("possibly relevant line …"), only after a Reactor check: the dev evidence is 1 wrong and 1 right.
+- A role-play detector ("my jumpsuit", "my character", "in the story") for the remaining first-person ssa questions.

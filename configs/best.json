@@ -1,9 +1,16 @@
 {
- "round": "r2",
+ "round": "r3",
  "routes": {
   "ssu": {
-   "lens": "lenses/ssu/merged_r2.py",
-   "variant": "role8_r3rn"
+   "lens": "lenses/ssu/a_r3_route.py",
+   "variant": "kg3crga",
+   "params": {
+    "ssu_lens": "lenses/ssu/merged_r3.py",
+    "ssu_variant": "ku11fn4s_p5",
+    "role_module": "lenses/ssa/a_r3_role.py",
+    "ku_lens": "lenses/ku/a_r3.py",
+    "ku_variant": "r3w"
+   }
   },
   "ssa": {
    "lens": "lenses/ssa/a_recsent.py",
@@ -11,15 +18,18 @@
   },
   "multi": {
    "lens": "lenses/multi/merged_r2.py",
-   "variant": "tight_role9"
+   "variant": "tight_role9",
+   "params": {
+    "role_module": "lenses/ssa/a_r3_role.py"
+   }
   },
   "ku": {
-   "lens": "lenses/ku/b_r2.py",
-   "variant": "r2b"
+   "lens": "lenses/ku/a_r3.py",
+   "variant": "r3w"
   },
   "temporal": {
-   "lens": "lenses/temporal/merged_r2.py",
-   "variant": "evA_mixB"
+   "lens": "lenses/temporal/a_r3_gap.py",
+   "variant": "span_own"
   }
  },
  "fallback": {
@@ -27,10 +37,12 @@
   "variant": "hybrid_rr"
  },
  "notes": {
-  "ssu": "wrapper: SSA-B role_guess >= 0.8 -> ssa lens (a_recsent r2_conf2), else a_struct2 r3rn. ku_pair hand-off measured (+0.3 dev / +1.3 dev200 routed) but NOT enabled: it moves 6 of 45 test ssu questions (sourdough name, R-77 sibling slots) into 2-session KU pairs on planted drift/decoys.",
-  "multi": "wrapper: role_guess >= 0.9 -> ssa lens, else b_tight p08c35_aor (ties b_sweep deep8_10k on routed S, +3.5 Sall dev / +3.2 dev200, -1.3k chars). Fallback alternative: lenses/multi/merged_r2.py deep8_role9.",
-  "ku": "b_r2 r2b: ties pair_r1b on S (+0.2 / +0.2), -600 chars, Sall +9.7 / +8.9.",
-  "temporal": "merged_r2 evA_mixB: a_gap ct_evgba on gap / named-event questions + b_merge ev1_mix_g elsewhere.",
-  "handoff_in_pipeline": "lenses/pipeline.py also supports an optional 'handoff' block for experiments (configs/exp/); best.json does the hand-offs inside the route lenses so reactorq.build_packs (text router + routes) gets them too."
+  "ssu": "lenses/ssu/a_r3_route.py kg3crga (SSU-A: role hand-off, typed own value-disagreement ku gate, comp/runner cite) with inner lens lenses/ssu/merged_r3.py ku11fn4s_p5 (SSU-B ku-cue recall backstop + pass-through of ru_cite), role detector lenses/ssa/a_r3_role.py (SSA-A refit), ku hand-off lens ku a_r3 r3w. Routed ssu route: dev 86.1 -> 88.8, dev200 82.3 -> 88.8 (A alone 87.7/85.0, B alone 87.6/88.1). Test: move date ssu -> ku (visible), cafe cite_plan only.",
+  "ssa": "unchanged a_recsent r2_conf2 (saturated: 93.6 / 93.7, PA = CF1 = 1).",
+  "multi": "unchanged b_tight p08c35_aor via merged_r2 tight_role9, role detector -> lenses/ssa/a_r3_role.py (0 test change). b_r3_full ufull_h (untrimmed user units) NOT taken: -0.3/-0.4 S, 15 of 20 test packs change, and on test the added text is chatter or planted decoys (PhD 'five journal articles' for a books count, orchid repotting in the grandchildren pack); revisit after a Reactor check.",
+  "ku": "lenses/ku/a_r3.py r3w (ties b_r2 r2b on dev/dev200; 5 test ku packs fixed: job title, laps, long run, horses 16, apple trees 7).",
+  "temporal": "lenses/temporal/a_r3_gap.py span_own (= v1 merged_r2 evA_mixB + span computation for 'how many years did I serve' + own-cut for gap questions with no own statement). 4 test packs change, 0 dev answerable questions affected.",
+  "routed": "routed v2: dev 86.9 (Sall 85.3), dev200 87.0 (Sall 85.2); v1 same run 86.0 (84.9) / 84.9 (83.2).",
+  "test_diff": "10 Reactor-visible test pack changes vs runs/final/v1_test_packs.jsonl: runs/final/v2_changed_qids.txt, reasons in runs/final/v2_changed.tsv"
  }
 }

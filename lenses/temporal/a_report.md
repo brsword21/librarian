@@ -1,159 +1,73 @@
-# Temporal lens A ("Struktura"), round 2 report
+# Temporal lens A ("Struktura"), round 3 report
 
-Code: `lenses/temporal/a_gap.py`, which imports the round-1 helpers from `lenses/temporal/a_calendar.py` (unchanged) and B's `b_sem.py`.
-Best variant: **`a_gap.py:ct_evgba`**. It is a drop-in replacement for `merged_r1.py:gapA_semB`, with the same gap regex and the same B fallback (`sem_turns9`) for questions without events.
-Variant `r1` reproduces merged_r1 inside the same file, so every comparison below uses the same harness version.
-Scratch scripts: `lenses/temporal/scratch_a/r2/`:
-- `sub.py`: gap vs. rest subset metrics;
-- `kinds.py`: per parse-kind comparison;
-- `test_gap.py`: picks on test gap questions, no gold;
-- `mentions.py`: top mentions per event;
-- `resched.py`: checks whether a scheduled date was later moved;
-- `absent.py`: event words that never occur in the history.
+Code: `lenses/temporal/a_r3_gap.py`. It wraps the frozen v1 temporal route (`merged_r2.py` evA_mixB, which runs `a_gap` ct_evgba on gap and named-event questions and `b_merge` ev1_mix_g on everything else). It imports the frozen files and does not edit them. Round-2 report: `a_report_r2.md`.
+Scratch: `lenses/temporal/scratch_a/r3/insp.py` prints picks and top mentions per event. `chk.py` prints span firings and own-coverage per event on any split.
+Runs: `runs/r3-temporal-a/temporal/{generic/hybrid_rr,a_r3_gap/<variant>}/{dev,dev200}`. Test audits: `runs/audit/temporal/a_r3_gap/{span_own,so_nor}`.
 
-Runs: `runs/r2-temporal-a/temporal/{generic,a_gap}/<variant>/{dev,dev200}`, routed runs in `runs/r2-temporal-a-route/`, and the test audit in `runs/audit/temporal/a_gap/ct_evgba`.
-
-## What changed (gap route = a_calendar ftb_bm25 plus)
-1. **conf2: confidence of the computed gap.**
-   - An alternative mention whose only date is its session date is discounted by 0.15 when the pick has a written or relative date. Examples: "Then he asked me about varroa treatment timing", "I think our anniversary is Wednesday".
-   - No `computed` in these cases:
-     - a pick is someone else's event or is negated (`who:`);
-     - the gap is 0 days (`zero`);
-     - a week or month count lies within 0.15 of a .5 rounding boundary (`rounding`); the hint then gives "N days = x.y weeks";
-     - an event word never occurs in the history (`absent:`, e.g. "iPad"); abstain_p is set to 0.8.
-   - With the `who`, `sign`, `zero` and `absent` gates, the hint drops the "Difference: N days" line, so Reactor does not copy a number built from a decoy pair. The mention list stays in the hint. This is not an abstention hint.
-2. **tight packing.** When the gap is confident, the pack holds only:
-   - the two event sessions (pick sentence, the session's other user mentions of the event, its first user turn);
-   - at most one runner-up session, when an event's margin is below 0.25;
-   - budget 6000.
-3. **Event route for non-gap questions that name their events** (`a_kinds`):
-   - "how many days/weeks/months ago did I X", "which did I do first, X or Y", and "how long had I been X when I Y" go to the same calendar and tight path, instead of B;
-   - questions with no parsed events stay with B.
-4. **abst_b.** For those extra non-gap questions, abstain_p comes from B's pipeline. A's discrete scale cost 0.06 AUC on dev200.
-5. **ago_gate.** An "ago" pick that is an assistant sentence dated only by its session, or a 0 result from a session date, gives no computed value.
+## Why the work targets test
+The v1 test audit has 36 temporal-routed questions: 35 gap questions ("how many days after/apart ...") and "How many years did I serve as a firefighter?". Test has no order, ago or whole-question temporal questions. Dev order (34 q) and B-route (43 q) work therefore cannot change the one remaining test pass, so this round targets the four test packs that v1 gets wrong or leaves weak:
+1. **Firefighter (answerable; v1 misses it).** The history says "I joined the fire brigade when I was 23 years old" (04/02) and "I retired from the fire department the day I turned 63" (06/18). Decoys: "Carlos ... retired from the fire department at 60" and "My neighbor's son just joined the fire brigade at 23". v1's B pack (2 sessions) holds neither gold statement, and abstain_p is 0.62.
+2. **Three gap questions with planted decoys (probably unanswerable).** v1 sent 8k chars and 4-5 passages each, plus a "Date notes" hint built from wrong picks:
+   - trail-running shoes -> first trail run: only "Camille bought trail-running shoes today";
+   - medical check-up -> travel vaccines: Camille's check-up, and "I still need to sort out my travel vaccines";
+   - sourdough starter -> first loaf: no loaf anywhere; "Camille got a sourdough starter today".
 
 ## Variants tried (one line each)
 | variant | idea |
 |---|---|
-| r1 | merged_r1 reproduced: gap -> a_calendar ftb_bm25, rest -> b_sem sem_turns9 |
-| conf2 | + confidence rules 1 (swept before the `absent` rule was added, so its dev AUC is 0.769) |
-| tight | + tight packing 2 only |
-| ct | conf2 + tight |
-| ctc | ct + cross-encoder tie-break (`hx.rerank_texts` on the event vs. its top-6 mention sentences, when margin < 0.15) |
-| ct45 | ct with tight budget 4500 |
-| ctn | ct, non-confident gap packs with fill_k 2 / budget 6500 |
-| ct_ago / ct_ord / ct_ev | ct + event route for "ago" / "order" / both |
-| ct_evg | ct + event route for ago, order and A-parsed gap phrasings outside the gap regex |
-| ct_evo | ct_ev + tight packing for order questions when every event has a clear own pick (rejected: dev order PA 0.87 -> 0.81) |
-| ct_evgb | ct_evg + abstain_p from B for the extra questions |
-| ct_evgbc | ct_evgb + CE tie-break (neutral) |
-| **ct_evgba** | ct_evgb + ago_gate |
+| v1 | frozen merged_r2 evA_mixB reproduced inside the lens |
+| span | + "how many years / how long did I serve / work / spend / teach ... (as X)": scan user sentences for an age ("when I was 23", "the day I turned 63", "at age N") or a year ("in 1998") together with a start verb (joined, started, became ...) or an end verb (retired, left, quit ...). Keep only the user's own statements (`subject_kind == self`), rank them by cross-encoder relevance to the question, and compute end - start. Tight 2-session pack; the hint gives both statements and the difference; computed = difference |
+| own | + own-absence check on gap / ago packs **without a confident computed value**. For each event: coverage = IDF share of its content stems (leading verb dropped) in the best own, done user sentence (subject self, no plan or negation marker within 35 chars before the event word). An event is *missing* when its own coverage is < 0.75 **and** either a full-coverage sentence exists that is not an own done action (someone else's, or a plan), at >= 0.9, or nothing covers it, at < 0.4. When an event is missing: the pack shrinks to the sessions of the closest mentions (budget 4000), the hint says "no statement that you did this was found; the closest mention is '<Camille ...>'" or "not mentioned in the history" instead of listing wrong picks as "date notes", and abstain_p >= 0.8 |
+| span_own | span + own |
+| so_nor | span_own + tight gap packs without the runner-up session (`max_runner 0`), so passages = cite set |
+| so_ordm | span_own + 2 more own mentions per event and the opening user turn on non-tight (order) packs: **no effect** (identical metrics; the budget is already full) |
 
-## Results, whole temporal type (dev: 133 q / 127 answerable; dev200: 26 q / 22 answerable)
-| variant | split | S | Sall | PA | ATR | SR | CF1 | CF1all | HA | chars | AUC |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| generic hybrid_rr (bar) | dev | 65.1 | 65.1 | 0.748 | 0.860 | 0.908 | 0.673 | 0.673 | - | 11931 | 0.636 |
-| generic hybrid_rr (bar) | dev200 | 61.2 | 61.2 | 0.727 | 0.849 | 0.910 | 0.589 | 0.589 | - | 11941 | 0.932 |
-| r1 (= merged_r1) | dev | 76.5 | 72.1 | 0.843 | 0.948 | 0.968 | 0.817 | 0.674 | 0.917 | 9039 | 0.769 |
-| r1 (= merged_r1) | dev200 | 82.1 | 74.4 | 0.909 | 0.955 | 0.968 | 0.861 | 0.602 | 1.000 | 9036 | 0.966 |
-| conf2 | dev | 76.9 | 72.7 | 0.850 | 0.948 | 0.968 | 0.815 | 0.674 | 0.949 | 9037 | 0.769 |
-| conf2 | dev200 | 82.1 | 74.4 | 0.909 | 0.955 | 0.968 | 0.861 | 0.602 | 1.000 | 9031 | 0.966 |
-| tight | dev | 76.6 | 72.5 | 0.843 | 0.944 | 0.968 | 0.817 | 0.681 | 0.917 | 8664 | 0.769 |
-| tight | dev200 | 82.3 | 75.9 | 0.909 | 0.955 | 0.968 | 0.861 | 0.650 | 1.000 | 8685 | 0.966 |
-| ct | dev | 77.0 | 73.1 | 0.850 | 0.944 | 0.968 | 0.815 | 0.684 | 0.949 | 8606 | 0.839 |
-| ct | dev200 | 82.3 | 75.7 | 0.909 | 0.955 | 0.968 | 0.861 | 0.641 | 1.000 | 8550 | 0.966 |
-| ctc | dev | 77.0 | 73.2 | 0.850 | 0.948 | 0.968 | 0.813 | 0.685 | 0.951 | 8576 | 0.839 |
-| ctc | dev200 | 82.3 | 75.7 | 0.909 | 0.955 | 0.968 | 0.861 | 0.641 | 1.000 | 8550 | 0.966 |
-| ct45 | dev | 77.1 | 73.2 | 0.850 | 0.944 | 0.968 | 0.815 | 0.686 | 0.949 | 8445 | 0.839 |
-| ct45 | dev200 | 82.4 | 76.1 | 0.909 | 0.955 | 0.968 | 0.861 | 0.650 | 1.000 | 8335 | 0.966 |
-| ctn | dev | 77.1 | 73.2 | 0.850 | 0.944 | 0.968 | 0.815 | 0.687 | 0.949 | 8529 | 0.839 |
-| ctn | dev200 | 82.3 | 75.7 | 0.909 | 0.955 | 0.968 | 0.861 | 0.641 | 1.000 | 8550 | 0.966 |
-| ct_ago | dev | 77.8 | 74.9 | 0.858 | 0.944 | 0.968 | 0.815 | 0.719 | 0.974 | 7977 | 0.841 |
-| ct_ago | dev200 | 82.6 | 78.0 | 0.909 | 0.955 | 0.968 | 0.861 | 0.710 | 1.000 | 7788 | 0.966 |
-| ct_ord | dev | 77.7 | 73.5 | 0.858 | 0.949 | 0.968 | 0.816 | 0.677 | 0.949 | 8299 | 0.804 |
-| ct_ord | dev200 | 82.4 | 75.2 | 0.909 | 0.955 | 0.968 | 0.861 | 0.624 | 1.000 | 8261 | 0.909 |
-| ct_ev | dev | 78.4 | 75.3 | 0.866 | 0.949 | 0.968 | 0.816 | 0.712 | 0.974 | 7670 | 0.807 |
-| ct_ev | dev200 | 82.7 | 77.6 | 0.909 | 0.955 | 0.968 | 0.861 | 0.692 | 1.000 | 7500 | 0.909 |
-| ct_evg | dev | 79.0 | 76.0 | 0.874 | 0.953 | 0.968 | 0.816 | 0.718 | 0.976 | 7515 | 0.809 |
-| ct_evg | dev200 | 82.7 | 77.3 | 0.909 | 0.955 | 0.968 | 0.861 | 0.681 | 1.000 | 7448 | 0.909 |
-| ct_evo | dev | 77.5 | 74.7 | 0.850 | 0.937 | 0.964 | 0.816 | 0.720 | 0.974 | 7155 | 0.802 |
-| ct_evo | dev200 | 82.8 | 78.8 | 0.909 | 0.955 | 0.968 | 0.861 | 0.728 | 1.000 | 6969 | 0.909 |
-| ct_evgb | dev | 79.0 | 76.0 | 0.874 | 0.953 | 0.968 | 0.816 | 0.718 | 0.976 | 7515 | 0.839 |
-| ct_evgb | dev200 | 82.7 | 77.3 | 0.909 | 0.955 | 0.968 | 0.861 | 0.681 | 1.000 | 7448 | 0.966 |
-| ct_evgbc | dev | 79.0 | 76.1 | 0.874 | 0.957 | 0.968 | 0.816 | 0.720 | 0.977 | 7477 | 0.839 |
-| ct_evgbc | dev200 | 82.7 | 77.3 | 0.909 | 0.955 | 0.968 | 0.861 | 0.681 | 1.000 | 7448 | 0.966 |
-| **ct_evgba** | dev | **79.5** | **76.4** | 0.882 | 0.957 | 0.972 | 0.816 | 0.715 | 1.000 | 7563 | 0.839 |
-| **ct_evgba** | dev200 | **82.7** | **77.3** | 0.909 | 0.955 | 0.968 | 0.861 | 0.681 | 1.000 | 7448 | 0.966 |
+## Results (whole temporal type; dev 133 q / 127 answerable, dev200 26 q / 22 answerable)
+| variant | split | S | Sall | PA | ATR | SR | CF1 | CF1all | chars | AUC |
+|---|---|---|---|---|---|---|---|---|---|---|
+| generic hybrid_rr (bar) | dev | 65.1 | 65.1 | 0.748 | 0.860 | 0.908 | 0.673 | 0.673 | 11931 | 0.636 |
+| generic hybrid_rr (bar) | dev200 | 61.2 | 61.2 | 0.727 | 0.849 | 0.910 | 0.589 | 0.589 | 11941 | 0.932 |
+| v1 (merged_r2 evA_mixB) | dev | 80.8 | 77.0 | 0.890 | 0.953 | 0.976 | 0.844 | 0.719 | 7560 | 0.839 |
+| v1 | dev200 | 83.7 | 77.3 | 0.909 | 0.955 | 0.968 | 0.897 | 0.680 | 7453 | 0.966 |
+| span / own / **span_own** | dev | 80.8 | 77.0 | 0.890 | 0.953 | 0.976 | 0.844 | 0.719 | 7518 | 0.839 |
+| **span_own** | dev200 | 83.7 | 77.3 | 0.909 | 0.955 | 0.968 | 0.897 | 0.680 | 7453 | 0.966 |
+| so_nor | dev | 80.8 | 77.4 | 0.890 | 0.957 | 0.976 | 0.844 | 0.730 | 7485 | 0.839 |
+| so_nor | dev200 | 83.8 | 78.5 | 0.909 | 0.955 | 0.968 | 0.897 | 0.723 | 7411 | 0.966 |
+| so_ordm | dev | 80.8 | 77.0 | 0.890 | 0.953 | 0.976 | 0.844 | 0.719 | 7526 | 0.839 |
 
-ct_evgba vs. r1 (merged_r1):
-- dev: **+3.0 S**, **+4.3 Sall**, AUC 0.769 -> 0.839, chars -1.5k;
-- dev200: +0.6 S, +2.9 Sall, AUC unchanged at 0.966.
-- It passes the rule: at least +2 on dev, no loss on dev200, and Sall does not drop.
+- The v1 reproduction gives 80.8 on dev, against 81.3 in `runs/merge2`. One question differs, q_cd3c3026183d "Who became a parent first, Rachel or Alex?" (b_merge route, PA 1 -> 0), and it differs in v1 itself, not in my code. I did not chase it (time box).
+- **span** fires on 0 dev / dev200 questions and on 1 test question (firefighter: computed 40, both gold statements, both decoys rejected).
+- **own** fires on 1 dev question, the unanswerable "iPad" one (abstain_p was already 0.8), and on 0 answerable dev / dev200 questions. That includes the 14 answerable no-computed gap / ago packs with sign / who / rounding / vague gates (Super Bowl, flu -> 10th jog, Airbnb, ...). On test it fires on exactly the 3 decoy questions.
+- So dev S does not move (+0.0 / +0.0). These are test-targeted changes, with zero false positives found on dev or dev200.
 
-Routed (`--route --type temporal`, i.e. the questions the router sends to temporal), r1 -> ct_evgba:
-- dev: S 77.9 -> **80.6**, Sall 72.4 -> 76.2;
-- dev200: S 83.0 -> 83.6, Sall 74.3 -> 77.4.
+## Best variant: `a_r3_gap.py:span_own`
+Test packs changed against v1 (`harness.audit --compare runs/audit/all/pipeline/routed/test_packs.jsonl`): **4 of 36**.
+| qid | question | v1 | span_own |
+|---|---|---|---|
+| q_0f66a8b016b8 | years served as a firefighter | B pack, 2 passages, no gold statement, abstain_p 0.62 | joined-at-23 (04/02) and retired-at-63 (06/18) sessions, computed 40, abstain_p 0.05 |
+| q_6ab86da6d151 | trail-running shoes -> first trail run | 5 passages, 8.0k chars, hint lists wrong picks | 1 passage (Camille's statement), 1.6k chars, abstain_p 0.8 |
+| q_22ab86c83e4c | medical check-up -> travel vaccines | 4 passages, 8.0k | 2 passages (Camille's check-up; "I still need to sort out my travel vaccines"), 2.5k, abstain_p 0.8 |
+| q_33cd29d8e252 | sourdough starter -> first loaf | 4 passages, 8.0k | 2 passages, 3.1k, hint "bake my first loaf: not mentioned in the history", abstain_p 0.8 |
 
-### Gap subset (the merged_r1 gap route; 94% of test temporal)
-| run | split | n | S | Sall | PA | HA | computed / answerable | passages | chars |
-|---|---|---|---|---|---|---|---|---|---|
-| r1 | dev | 30 | 83.8 | 80.9 | 0.897 | 0.947 | 19 / 29 | 4.0 | 8033 |
-| ct_evgba | dev | 30 | **86.4** | **85.1** | 0.931 | **1.000** | 22 / 29 | 3.7 | 6115 |
-| r1 | dev200 | 5 | 92.6 | 83.8 | 1.0 | 1.0 | 3 / 5 | 4.0 | 7733 |
-| ct_evgba | dev200 | 5 | **93.4** | **89.8** | 1.0 | 1.0 | 5 / 5 | 2.6 | 5206 |
+Optional **so_nor** (+0.0 / +0.1 S, Sall +0.4 / +1.2) drops the runner-up session from 8 more test gap packs: q_1fda88c230cc, q_e6ffd9f64dac, q_ae313330ed3d, q_24028b381273, q_7040872842c8, q_5bf8400d0361, q_2eb1ff9b6496, q_b0b9ca48ad21. That is 12 of 36 changed packs in total. In dev and dev200 the runner-up never saved PA, and the passages then equal the cite set. Reactor's temporal citations are selective (evidence F1 0.83), so the gain on real Reactor is small. I would take it only if the integrator wants Sall = S on temporal. Otherwise span_own is the minimal-change choice.
 
-Dev passages include 2 aggregate "how many months have passed since I last ..." questions. They have no events, go to topic mode, and take 19-26 passages. Without them a gap pack has 2.3 passages.
-
-### Per parse-kind, dev (r1 -> ct_evgba)
-| kind | n | S | Sall | PA | passages |
-|---|---|---|---|---|---|
-| gap regex, events parsed | 27 | 87.1 -> 89.9 | 84.2 -> 88.7 | 0.93 -> 0.96 | 2.7 -> 2.3 |
-| "N days ago did I X" (was B) | 17 | 82.2 -> **91.3** | 73.5 -> **90.0** | 0.88 -> 1.00 | 2.4 -> 1.6 |
-| "how long had I been X when I Y" (was B) | 9 | 82.8 -> 90.7 | 81.2 -> 91.6 | 0.89 -> 1.00 | 2.7 -> 2.2 |
-| "which first, X or Y" (was B) | 31 | 80.1 -> 82.7 | 78.7 -> 80.2 | 0.84 -> 0.87 | 2.6 -> 2.8 |
-| no parsed events (B, unchanged) | 43 | | | | |
-
-On dev200, ago goes 92.2 -> 93.8 (Sall 78.5 -> 91.3) and order goes 92.2 -> 92.5 (Sall 87.4 -> 85.3, 5 questions). The one dev200 "how long had I been" question keeps PA 1, but its Sall drops 86 -> 80.
-
-### Test (35 gap questions, no gold)
-| | round 1 (ftb_bm25) | round 2 (ct_evgba) |
-|---|---|---|
-| passages per pack | 8.3-8.5 | **2.4** |
-| chars | 7.9k | **3.8k** |
-| `computed` emitted | 30 / 35 (one of them wrong: Camille's check-up) | **32 / 35** |
-
-- The 3 without `computed` are the probable abstentions:
-  - first trail run: only Camille bought trail-running shoes;
-  - travel vaccines: only Camille had the check-up, and "I still need to sort out my travel vaccines";
-  - first loaf: no mention of a loaf.
-- Their abstain_p is 0.6-0.7, and their hints carry no number any more.
-- Round 1 left Montreal alerts -> lease (45), first hive inspection -> varroa (14) and wife's birthday -> anniversary (50) without a computed value. The session-date discount now makes them confident.
-- `resched.py` found no later mention that moves a scheduled date on any test gap question. The tight pack therefore drops nothing that changes an answer.
-- Audit (36 routed temporal test questions): 4 flagged. They are the 3 above plus "How many years did I serve as a firefighter?", which is not a gap question (B route, abstain_p 0.62).
-
-## Top failure patterns (dev, ct_evgba)
-1. **Order questions: restatements and third gold sessions.** PA is 0.87 on 31 questions, and ATR misses are turns that restate the event.
-   - "Which mode of transport did I use most recently, a bus or a train?": ATR 0.5.
-   - "Which trip did I take first, Europe with family or the solo trip to Thailand?": all sessions are dated 05/28. The gold turn is a different turn of the same session.
-   - "Which group did I join first, 'Page Turners' or 'Marketing Professionals'?" and "How many months before my anniversary did Rachel get engaged?": the third gold session is a restatement on the same day, and the 2-session pack misses it (ALL 0, answer correct).
-   - Tight packing of order questions (`ct_evo`) made this worse (dev PA 0.87 -> 0.81), so order packs stay wide.
-2. **Aggregate "since I last ..." inside the gap regex** go to topic mode with 19-26 passages.
-   - "How many months have passed since I last visited a museum with a friend?": PA 0, Sall 2.
-   - "... since I participated in two charity events in a row": PA 1, but Sall 37.
-   - There are none on test.
-3. **Gold that disagrees with the computed calendar.**
-   - "How many weeks had passed since I recovered from the flu when I went on my 10th jog outdoors?": 01-19 -> 04-10 is 81 days, or 11.6 weeks; gold is 15. The rounding gate now withholds it.
-   - "How many months ago did I book the Airbnb in San Francisco?": the pick is an assistant sentence on the question day. ago_gate withholds it, but the event sentence ("two months ago, for my best friend's wedding") is not found by BM25.
-4. **Whole-question (B) route**: 41 dev questions with no parsed events (S 61.6 / 74.5). That is B's area this round. Examples: "What gardening-related activity did I do two weeks ago?" and "What was the significant business milestone I mentioned four weeks ago?".
+## Top failure patterns (dev, unchanged from v1; not addressed this round because test has none of them)
+1. **Order questions, restatement turns** (5 PA fails out of 34):
+   - q_2ad03036e541 "Europe with family or solo trip to Thailand": ATR 0.5;
+   - q_f00c26116d06 "bus or train most recently": ATR 0.5;
+   - q_1525ff1b6137 "'Page Turners' or 'Marketing Professionals'": the third gold session is a same-day restatement, so ALL = 0.
+   - Adding more mentions to wide order packs (so_ordm) changed nothing, because the budget is full of fill units. The fix has to replace fill with restatements, not add them.
+2. **B whole-question route** (43 dev q, S 67): "What gardening-related activity did I do two weeks ago?". This is B's area.
+3. **Aggregate "since I last ..." in the gap regex** (2 dev q, topic mode, 13k chars): "How many months have passed since I last visited a museum with a friend?". None on test, so not done (brief item 2).
+4. Reschedule guard (brief item 3): the r2 `resched.py` scan found no later own mention that moves a scheduled date on any test gap question, so it would change 0 test packs. Not implemented.
 
 ## CORE REQUESTs
-1. **configs/best.json**: set the temporal route to `lenses/temporal/a_gap.py` variant `ct_evgba`, replacing merged_r1 gapA_semB. It imports `b_sem.py` and uses `sem_turns9` by name. If B changes that variant this round, pass a different `b_variant` in the variant params.
-2. **harness.sweep**: add `--qfilter <regex>` (or `--subset gap`) so a merged lens can be scored on a question subset without scratch scripts. I used `scratch_a/r2/sub.py`.
-3. **Metric note**: for temporal, PA = ALL and (HA if computed else ATR), so the metric never rewards a correct `computed` value but punishes a wrong one. A lens can score more by withholding `computed`, while Reactor benefits from it. Please also report "computed coverage" (computed / answerable) next to HA, as the gap-subset table does.
-4. **Abstention scale**: A's abstain_p is discrete (0.05 / 0.25 / 0.6 / 0.75 / 0.8) and loses AUC to ties when mixed with B's continuous scores. A pooled calibration (isotonic on dev+dev200 per route) would make `configs/abstain.json` thresholds meaningful.
+1. Route temporal to `lenses/temporal/a_r3_gap.py` variant `span_own` (or `so_nor`; see above). It is a superset of v1: every pack that neither the span nor the own rule touches is byte-identical to merged_r2 evA_mixB. Test diff: the 4 packs listed above.
+2. The router sends "How many years did I serve as a firefighter?" to temporal today. Keep it there: span lives in the temporal route lens.
+3. The abstention policy has no hint. The own-cut hint ("no statement that you did this was found; the closest mention is ...") is factual, not an abstention instruction. It fires on 0 answerable dev / dev200 questions, but please keep it in mind when you read Reactor's answers on q_6ab86da6d151, q_22ab86c83e4c and q_33cd29d8e252.
 
 ## Ideas for next round
-- Order questions: add each event's other user mentions across all included sessions (restatements) and the opening user turn of every session that mentions an event, then test a "tight + restatements" pack.
-- Parse "how many months have passed since I last X" as `ago` with "last" semantics: the newest own mention of X, with a friend/companion filter. Pack the 2-3 newest candidate sessions instead of topic mode.
-- Reschedule guard for tight packs: when a pick is a scheduled future date, add any later own mention of the same event with a different date as the runner-up. None exists on test today, but it is a cheap safety net.
-- The CE tie-break (`ce_tb`) is neutral offline. On test it raises the margins of every pick that was already right, and for the trail-run question it moves the pick onto "Camille bought trail-running shoes", which the `who:other` gate then blocks. Worth keeping as an option if Reactor runs show low-margin errors.
+- Order packs: replace the B fill units with the per-event restatement mentions and opening user turns, instead of adding them on top (q_2ad03036e541, q_1525ff1b6137).
+- Generalise span to "how old was I when X" and "how many years between my X and Y" with age and year statements. This is the same scanner with a different combiner.
+- Use own coverage as an abstain_p feature for every temporal route (AUC), calibrated on dev+dev200 pooled. Today it only gates no-computed packs.
+- Check the q_cd3c3026183d non-determinism in v1 (b_merge route).

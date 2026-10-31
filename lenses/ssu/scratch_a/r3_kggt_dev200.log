@@ -1,0 +1,9 @@
+38 questions x 1 variants on dev200 in 32s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+kg3crgt                    85.0 0.914 0.943 0.957 0.914 0.923 1.000 0.895   4115 1367.7 0.886 0
+   if Reactor cites every passage: CF1all=0.894 Sall=85.0
+   -> runs/r3-ssu-a/ssu-routed/a_r3_route/kg3crgt/dev200
+     ssu       n= 18 S= 92.0 Sall= 89.7 PA=1.000 CF1=0.941 routes={'ssu': 18}
+     ssa       n=  7 S= 93.8 Sall= 93.8 PA=1.000 CF1=1.000 routes={'ssa': 6, 'ssu': 1}
+     multi     n=  4 S= 88.3 Sall= 93.3 PA=1.000 CF1=0.833 routes={'ssu': 4}
+     ku        n=  9 S= 64.3 Sall= 67.5 PA=0.667 CF1=0.741 routes={'ssu': 7, 'ku': 2}

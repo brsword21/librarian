@@ -1,0 +1,9 @@
+dev200 ku q_12c38e74c86f [] no_typed_disagreement [] [9.77, 11.57] 0.847 | Did I finish reading 'The Nightingale' by Kristin Hannah?
+dev200 ku q_06b3cfdaf136 [] no_typed_disagreement [] [10.95, 13.74] 0.548 | What was my previous personal best time for the charity 5K run?
+dev200 ku q_0fc530dd5882 [] not_own:unknown/plan None [10.08, 11.04] 0.714 | What time do I wake up on Saturday mornings?
+dev200 ku q_3dc608395f82 [] weak None [-10.22, -2.46] 0.054 | What new kitchen gadget did I invest in before getting the Air Fryer?
+dev200 ku q_e88175bc40ba ['kg4', 'kg3'] fire ['n:month'] [7.16, 12.63] 0.458 | How long have I had my cat, Luna?
+dev200 ku q_d6ef8ceece42 [] weak None [7.33, 2.13] 0.594 | What day of the week did I meet with my previous language exchange tutor Juan?
+dev200 ku q_be00952fefe3 [] weak None [1.34, -0.28] 0.535 | What was my previous goal for my Apex Legends level before I updated my goal?
+dev200 ku q_61a19ce280f4 [] weak None [-3.03, 10.76] 0.408 | Is my mom using the same grocery list method as me?
+dev200 ku q_466e22735f43 [] no_typed_disagreement [] [6.94, 9.66] 0.699 | Do I have a spare screwdriver for opening up my laptop?

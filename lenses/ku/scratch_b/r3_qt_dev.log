@@ -1,0 +1,42 @@
+140 questions x 5 variants on dev in 119s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+v1                         86.1 0.932 0.960 0.980 0.955 0.967 1.000 0.894   4159  475.4 0.931 0
+   if Reactor cites every passage: CF1all=0.966 Sall=88.3
+   -> runs/r3-ku-b/ssu-routed/b_r3_gate/v1/dev
+     ssu       n= 49 S= 93.3 Sall= 93.3 PA=1.000 CF1=0.978 routes={'ssu': 49}
+     ssa       n= 50 S= 91.1 Sall= 90.9 PA=0.960 CF1=1.000 routes={'ssa': 37, 'ssu': 13}
+     multi     n=  9 S= 55.7 Sall= 62.8 PA=0.571 CF1=0.667 routes={'ssu': 9}
+     ku        n= 27 S= 77.4 Sall= 86.8 PA=0.920 CF1=0.640 routes={'ssu': 27}
+     temporal  n=  5 S= 57.3 Sall= 59.9 PA=0.600 CF1=0.667 routes={'ssu': 5}
+r2ku                       87.3 0.939 0.963 0.984 0.962 0.967 1.000 0.917   4068  277.7 0.924 0
+   if Reactor cites every passage: CF1all=0.969 Sall=88.9
+   -> runs/r3-ku-b/ssu-routed/b_r3_gate/r2ku/dev
+     ssu       n= 49 S= 93.3 Sall= 93.3 PA=1.000 CF1=0.978 routes={'ssu': 49}
+     ssa       n= 50 S= 91.1 Sall= 90.9 PA=0.960 CF1=1.000 routes={'ssa': 37, 'ssu': 13}
+     multi     n=  9 S= 55.7 Sall= 62.8 PA=0.571 CF1=0.667 routes={'ssu': 9}
+     ku        n= 27 S= 83.8 Sall= 89.9 PA=0.960 CF1=0.760 routes={'ssu': 20, 'ku': 7}
+     temporal  n=  5 S= 57.3 Sall= 59.9 PA=0.600 CF1=0.667 routes={'ssu': 5}
+qt2                        87.2 0.939 0.963 0.984 0.962 0.967 1.000 0.914   4056  285.0 0.933 0
+   if Reactor cites every passage: CF1all=0.969 Sall=88.9
+   -> runs/r3-ku-b/ssu-routed/b_r3_gate/qt2/dev
+     ssu       n= 49 S= 93.3 Sall= 93.3 PA=1.000 CF1=0.978 routes={'ssu': 49}
+     ssa       n= 50 S= 91.1 Sall= 90.9 PA=0.960 CF1=1.000 routes={'ssa': 37, 'ssu': 13}
+     multi     n=  9 S= 55.7 Sall= 62.8 PA=0.571 CF1=0.667 routes={'ssu': 9}
+     ku        n= 27 S= 83.4 Sall= 89.9 PA=0.960 CF1=0.747 routes={'ssu': 20, 'ku': 7}
+     temporal  n=  5 S= 57.3 Sall= 59.9 PA=0.600 CF1=0.667 routes={'ssu': 5}
+qt3                        87.2 0.939 0.963 0.984 0.962 0.967 1.000 0.914   4056  278.7 0.933 0
+   if Reactor cites every passage: CF1all=0.969 Sall=88.9
+   -> runs/r3-ku-b/ssu-routed/b_r3_gate/qt3/dev
+     ssu       n= 49 S= 93.3 Sall= 93.3 PA=1.000 CF1=0.978 routes={'ssu': 49}
+     ssa       n= 50 S= 91.1 Sall= 90.9 PA=0.960 CF1=1.000 routes={'ssa': 37, 'ssu': 13}
+     multi     n=  9 S= 55.7 Sall= 62.8 PA=0.571 CF1=0.667 routes={'ssu': 9}
+     ku        n= 27 S= 83.4 Sall= 89.9 PA=0.960 CF1=0.747 routes={'ssu': 20, 'ku': 7}
+     temporal  n=  5 S= 57.3 Sall= 59.9 PA=0.600 CF1=0.667 routes={'ssu': 5}
+qt4                        87.1 0.939 0.963 0.984 0.962 0.967 1.000 0.909   4085  279.8 0.936 0
+   if Reactor cites every passage: CF1all=0.969 Sall=88.9
+   -> runs/r3-ku-b/ssu-routed/b_r3_gate/qt4/dev
+     ssu       n= 49 S= 93.3 Sall= 93.3 PA=1.000 CF1=0.978 routes={'ssu': 49}
+     ssa       n= 50 S= 91.1 Sall= 90.9 PA=0.960 CF1=1.000 routes={'ssa': 37, 'ssu': 13}
+     multi     n=  9 S= 55.7 Sall= 62.8 PA=0.571 CF1=0.667 routes={'ssu': 9}
+     ku        n= 27 S= 82.5 Sall= 89.9 PA=0.960 CF1=0.720 routes={'ssu': 22, 'ku': 5}
+     temporal  n=  5 S= 57.3 Sall= 59.9 PA=0.600 CF1=0.667 routes={'ssu': 5}

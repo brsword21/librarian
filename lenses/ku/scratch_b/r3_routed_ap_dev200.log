@@ -1,0 +1,10 @@
+125 questions x 1 variants on dev200 in 150s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+qt3c_ap                    86.3 0.936 0.965 0.979 0.946 0.983 1.000 0.902   5426 1987.4 0.855 0
+   if Reactor cites every passage: CF1all=0.844 Sall=84.6
+   -> runs/r3-ku-b/all/b_r3_routed/qt3c_ap/dev200
+     ssu       n= 23 S= 87.1 Sall= 84.0 PA=0.955 CF1=0.879 routes={'ssu': 18, 'multi': 4, 'ku': 1}
+     ssa       n= 22 S= 93.7 Sall= 93.7 PA=1.000 CF1=1.000 routes={'ssa': 21, 'ssu': 1}
+     multi     n= 28 S= 82.6 Sall= 82.5 PA=0.909 CF1=0.847 routes={'ssu': 4, 'multi': 24}
+     ku        n= 26 S= 84.0 Sall= 83.7 PA=0.909 CF1=0.874 routes={'multi': 12, 'ku': 7, 'ssu': 5, 'temporal': 2}
+     temporal  n= 26 S= 84.2 Sall= 78.9 PA=0.909 CF1=0.909 routes={'temporal': 23, 'multi': 3}

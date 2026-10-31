@@ -1,4 +1,180 @@
-# Lens A "Struktura" for multi-session: Round 2 report
+# Lens A "Struktura" for multi-session: Round 3 report
+
+Lens: `lenses/multi/a_r3_pin.py`. It copies the frozen `b_tight.build` (`p08c35_aor`, the v1 multi lens behind
+`merged_r2.py tight_role9`) and adds three optional layers on top. Variant `ref` reproduces v1 exactly
+(dev 87.25 / dev200 83.3).
+1. **Sentence-level rescue** (brief item 1): sessions that b_tight did not keep, but whose best own declarative
+   sentence ranks near the top by bge cosine.
+2. **Pinned trimming**: a unit keeps its best sentence when it is trimmed.
+3. **A sentence-evidence abstention term** (brief item 3).
+
+Runs: `runs/r3-multi-a/multi/{generic,a_r3_pin}/<variant>/{dev,dev200}` and `runs/r3-multi-a/multi-routed/...`.
+Test audits: `runs/audit/multi/a_r3_pin/{r2m,lf,ab}`.
+Scratch files are in `lenses/multi/scratch_a/`:
+- `r3_sentrank.py`: where gold instance sentences rank under sentence CE and dense scoring.
+- `r3_resc_an.py` / `r3_resc_ce.py`: precision of the rescue.
+- `r3_like.py`: the multi_like detector check.
+- `r3_audit_*.txt`: the test audits.
+
+The round-2 report is archived below and in `scratch_a/a_report_r2.md`.
+
+## Headline
+
+- **Recommendation for the single remaining test pass: no pack change for multi from lens A.** v1 (`b_tight
+  p08c35_aor`) stays.
+- **Rescue** (`r2m` / `g2m`): +1.0 S on dev (2 PA questions: furniture, years of formal education) and ±0 on dev200.
+  Sall is −0.3 to −1.5 on dev200, and the test audit shows it mostly injects decoys and junk.
+  - `r2m` changes 16 of 20 test multi packs.
+  - Even the strict lexical + fact gate (`lf`) changes 5, and on inspection 4 of those 5 rescues are planted decoys
+    or noise (details in Failure patterns).
+  - It fails the +2 S acceptance rule and would cost citation precision on test.
+- **Abstention** (`ab`): leaves 0 of 20 test packs changed, so passages, cite_plan and hints are identical to v1.
+  - Gold-type AUC: dev 0.731 → **0.787**, dev200 0.795 → **0.955**.
+  - Routed multi AUC: dev 0.774 → 0.754, dev200 0.763 → 0.850, pooled 0.769 → 0.778.
+  - Precision is still below the policy bar: pooled routed, threshold 0.6 gives 10/23 at recall 0.50.
+  - It is safe to log, but it is not good enough to drive an abstention hint.
+- **multi_like hand-off** (brief item 2): no usable evidence signal. Sentence-level features do not separate the 9 dev
+  multi→ssu questions from the 49 gold-ssu ones (table below), so I built no hand-off and there are no test firings.
+- **Hint wording**: the e1 Reactor false abstention (road-trip hours, q_2605c5385371) looked like the "ignore things I
+  only planned" clause, but B found the real cause: trimming had cut the "it only took me four hours" sentence
+  (`b_r3_full.py`).
+  - My `hint_pass` flag (variant `g2mb_h`) adds "(a past event I mention in passing while planning something new still
+    counts)".
+  - It is unmeasurable offline and would change 17 of 20 test multi packs.
+  - Not recommended unless a Reactor check is run.
+
+## Results (gold type multi; dev 133 q / 121 answerable, dev200 28 q / 22 answerable)
+
+| variant | dev S | Sall | PA | ATR | SR | CF1 | chars | AUC | dev200 S | Sall | PA | ATR | SR | CF1 | chars | AUC |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| generic/hybrid_rr (bar) | 69.1 | 69.1 | 0.744 | 0.873 | 0.961 | 0.817 | 11931 | 0.598 | 63.7 | 63.7 | 0.682 | 0.844 | 0.950 | 0.770 | 11947 | 0.689 |
+| **ref = v1 b_tight p08c35_aor** | **87.2** | 85.7 | 0.950 | 0.980 | 0.984 | 0.910 | 5841 | 0.731 | **83.3** | 82.3 | 0.909 | 0.962 | 0.973 | 0.868 | 6279 | 0.795 |
+| pin | 87.2 | 85.7 | 0.950 | 0.980 | 0.984 | 0.910 | 5874 | 0.731 | - | - | - | - | - | - | - | - |
+| r1 | 87.8 | 85.2 | 0.959 | 0.985 | 0.988 | 0.910 | 5918 | 0.731 | 83.2 | 81.0 | 0.909 | 0.970 | 0.982 | 0.868 | 6392 | 0.795 |
+| r2 | 88.3 | 85.0 | 0.967 | 0.986 | 0.991 | 0.910 | 5992 | 0.731 | 83.2 | 79.9 | 0.909 | 0.970 | 0.982 | 0.868 | 6501 | 0.795 |
+| r2c (rescued cited) | 86.1 | 85.0 | 0.967 | 0.986 | 0.991 | 0.839 | 5992 | 0.731 | 80.4 | 79.9 | 0.909 | 0.970 | 0.982 | 0.777 | 6501 | 0.795 |
+| r2p | 88.3 | 84.9 | 0.967 | 0.986 | 0.991 | 0.910 | 6029 | 0.731 | 83.2 | 79.9 | 0.909 | 0.970 | 0.982 | 0.868 | 6530 | 0.795 |
+| **r2m** (best on S) | **88.3** | 86.0 | 0.967 | 0.986 | 0.991 | 0.910 | 5912 | 0.731 | 83.2 | 81.3 | 0.909 | 0.970 | 0.982 | 0.868 | 6391 | 0.795 |
+| r2f | 87.8 | 85.7 | 0.959 | 0.981 | 0.986 | 0.910 | 5888 | 0.731 | 83.2 | 81.2 | 0.909 | 0.970 | 0.982 | 0.868 | 6371 | 0.795 |
+| r2mf | 87.8 | 86.0 | 0.959 | 0.981 | 0.986 | 0.910 | 5863 | 0.731 | 83.2 | 81.9 | 0.909 | 0.970 | 0.982 | 0.868 | 6330 | 0.795 |
+| g2 | 88.2 | 84.2 | 0.967 | 0.988 | 0.992 | 0.910 | 6237 | 0.731 | 83.1 | 79.1 | 0.909 | 0.977 | 0.991 | 0.868 | 6875 | 0.795 |
+| g2m | 88.3 | 85.4 | 0.967 | 0.988 | 0.992 | 0.910 | 6057 | 0.731 | 83.2 | 80.9 | 0.909 | 0.977 | 0.991 | 0.868 | 6637 | 0.795 |
+| g2mf | 87.8 | 85.6 | 0.959 | 0.981 | 0.986 | 0.910 | 5920 | 0.731 | 83.2 | 81.5 | 0.909 | 0.970 | 0.982 | 0.868 | 6425 | 0.795 |
+| g2mb | 88.3 | 85.2 | 0.967 | 0.984 | 0.988 | 0.910 | 6074 | 0.731 | 83.2 | 80.9 | 0.909 | 0.970 | 0.982 | 0.868 | 6635 | 0.795 |
+| lf (strict) | 87.2 | 85.6 | 0.950 | 0.980 | 0.984 | 0.910 | 5855 | 0.731 | 83.2 | 81.6 | 0.909 | 0.962 | 0.973 | 0.868 | 6336 | 0.795 |
+| lfm | 87.2 | 85.7 | 0.950 | 0.980 | 0.984 | 0.910 | 5841 | 0.731 | 83.2 | 82.1 | 0.909 | 0.962 | 0.973 | 0.868 | 6297 | 0.795 |
+| lf1 | 87.2 | 85.6 | 0.950 | 0.980 | 0.984 | 0.910 | 5849 | 0.731 | 83.2 | 81.7 | 0.909 | 0.962 | 0.973 | 0.868 | 6303 | 0.795 |
+| **ab** (abstain only) | 87.2 | 85.7 | 0.950 | 0.980 | 0.984 | 0.910 | 5841 | **0.787** | 83.3 | 82.3 | 0.909 | 0.962 | 0.973 | 0.868 | 6279 | **0.955** |
+| g2m_ab | 88.3 | 85.4 | 0.967 | 0.988 | 0.992 | 0.910 | 6057 | 0.787 | 83.2 | 80.9 | 0.909 | 0.977 | 0.991 | 0.868 | 6637 | 0.955 |
+
+Routed (`--route --type multi`; dev 170 q, dev200 45 q; no ssa role hand-off inside this lens, so the ssa misroutes
+stay):
+
+| variant | dev S | Sall | PA | CF1 | chars | AUC | dev200 S | Sall | PA | CF1 | chars | AUC |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| ref | 83.8 | 82.4 | 0.904 | 0.889 | 5493 | 0.774 | 79.9 | 78.2 | 0.868 | 0.844 | 6137 | 0.763 |
+| ab | 83.8 | 82.4 | 0.904 | 0.889 | 5493 | 0.754 | 79.9 | 78.2 | 0.868 | 0.844 | 6137 | 0.850 |
+| g2m_ab | 84.5 | 82.0 | 0.917 | 0.889 | 5678 | 0.754 | 79.8 | 76.9 | 0.868 | 0.844 | 6447 | 0.850 |
+
+Abstention, pooled routed dev+dev200 (20 unanswerable questions), TP/flagged at each threshold:
+
+| variant | thr 0.4 | thr 0.5 | thr 0.6 | thr 0.7 |
+|---|---|---|---|---|
+| ref | 9/15 (rec 0.45) | 5/11 | 2/8 | 1/7 |
+| ab | 15/63 (rec 0.75) | 14/41 (0.70) | 10/23 (0.50) | 7/17 |
+
+## Variants tried (one line each)
+
+- `ref`: b_tight p08c35_aor copied into this file (sanity check). Reproduces v1.
+- `pin`: every packed unit keeps its best own sentence (bge) through the 240-char trim. Dev-neutral; B's
+  `b_r3_full` fact trimming covers the same failure more directly.
+- `r2` / `r1`: rescue up to 2 / 1 sessions. A session qualifies when its best own declarative sentence ranks in the top
+  len(keep)+2 sessions by bge cosine and lies within 0.15 of the top, and the sentence is not declined or someone
+  else's fact. The pinned unit enters right after the first pass; the session is not cited.
+  - r2: +1.0 dev, −0.1 dev200; Sall −0.7 / −2.4.
+  - Rescue precision: 3 of 94 rescued sessions on dev and 1 of 30 on dev200 are gold.
+- `r2c`: as r2, but the rescued sessions are cited. CF1 drops to 0.839 / 0.777, which confirms the low precision.
+- `r2m` / `r2mf` / `r2f`: precision gates: the sentence must beat the weakest kept session's best sentence (m) and/or
+  carry a fact cue (f). r2m: +1.0 dev, Sall +0.3 dev, −1.0 dev200.
+- `g2` / `g2m` / `g2mf` / `g2mb`: the session strength comes from good sentences only (a "considering condos" opener no
+  longer vetoes "I viewed a 1-bedroom condo"), plus the best 2 units of each rescued session.
+  - The dev200 health-devices question gets its hearing-aid session (SR 1.0, ATR 0.83). PA stays 0 because the
+    first gold turn is still missing.
+  - The properties question gets the condo session, but the wrong unit (the dense model prefers "I'm looking at
+    options for condo" over "I viewed a 1-bedroom condo on February 10th").
+  - A +0.05 fact bonus (`g2mb`) did not change this.
+- `lf` / `lfm` / `lf1`: strict rescue. The sentence must name a question term AND state an event or quantity. Neutral
+  on dev and dev200 S (fires rarely). On test it changes 5 packs, mostly with decoys.
+- `ab` / `g2m_ab`: abstain_p = noisy-OR(b_tight abstain_p, sigmoid(20·(0.63 − s_top))).
+  - s_top is the best good own sentence's cosine to the question.
+  - The parameters were fit on dev, where unanswerable questions have a median of 0.635 against 0.708 for answerable
+    ones. dev200 is the holdout.
+- `g2mb_h`: g2mb plus the `hint_pass` wording (not measurable offline).
+- Not built: the multi_like hand-off. `r3_like.py` on the 98 dev ssu-routed questions gives the gap between the top-1
+  and top-3 sessions by best own sentence (min / median / max):
+  - gold ssu 0.007 / 0.164 / 0.366
+  - gold multi 0.019 / 0.126 / 0.237
+  - gold ku 0.001 / 0.179 / 0.330
+
+  The top cosine overlaps just as much (median 0.725 vs 0.695). There is no threshold with 0 FP on gold ssu that
+  catches any of the 3 failing multi→ssu questions (poster university, two hobbies, Alex's birth age).
+
+## Top failure patterns
+
+1. **bge-small sentence similarity is topical, not instance-aware.** On dev, the rescued sentences are mostly generic
+   first-person chatter that scores as high as gold instance sentences:
+   - "I'm looking for some advice on how to organize my closet" (kitchen items)
+   - "I've been reading a lot lately" (weddings)
+
+   A sentence-level CE gate does not help either. Gold rescues score CE −8.8 to −10.7, inside the junk range (−6 to
+   −11.3; `r3_resc_ce.py`).
+2. **Test histories plant decoys right where a rescue looks.** Even the strict `lf` rescue adds:
+   - "I attended a one-off watercolour workshop" and the exhibition opening (q_6dd9e5e4fb97, weekly classes)
+   - "I bought a 12-volt dial lamp for the National R-77" (q_6834eb0349a2, tubes replaced)
+   - "I repotted two orchids last week" (q_47e3f2749c07, orchids added)
+   - the watercolour class and a hike, as noise for vegetable varieties (q_eefdc20af97b)
+
+   Only the bakery deposit "opened a separate savings account for the bakery and deposited 25,000 pesos"
+   (q_bcd6d210710b) looks like a real missed instance. The round-2 target "I just finished reading a book about the
+   history of São Paulo" (q_8b4f1ff8ce11) is rescued by `r2m`, but `lf` misses it, because the prefix-5 stems do not
+   match ("books" vs "book").
+3. **The remaining dev/dev200 PA losses are within-session unit choice, not session recall.** Once the session is in
+   (g2m), the missing piece is a second gold turn of the same session:
+   - the first "replacement batteries for my hearing aids" turn
+   - the "I viewed a 1-bedroom condo on February 10th" turn
+
+   For Reactor these packs are probably answerable already; PA (ATR == 1) is stricter than the answer needs.
+4. **The abstention signal shifts on test.** Test histories have shorter, chattier user sentences, so s_top_good is
+   lower. `ab` lifts 5 of 20 test packs to abstain_p ≥ 0.5:
+   - feijoada 0.87 (likely truly unanswerable)
+   - systolic 0.67, books since March 0.66, field trips 0.59, book club 0.52 (likely answerable)
+
+   Do not use it as an abstention trigger.
+
+## CORE REQUESTs
+
+1. **Sentence-keyed instance index** (`hx.sentences` with own / declarative / negation / reported-speech flags and
+   cached CE): every round-3 idea here recomputes this per question. More importantly, a better sentence scorer than
+   bge-small (for example CE on question vs statement pairs, batched) is the only way the rescue gets precise.
+2. **`harness.failures`: print the rank of each missing gold turn inside its own session**, not only the session. The
+   remaining multi losses are now within-session (pattern 3).
+3. **An `ATR_any` / "one gold turn per gold session" metric** next to PA for multi. PA requires every gold turn, which
+   undercounts packs that Reactor can answer: health devices, properties with g2m.
+
+## Ideas for next round
+
+- Rescue only with an instance-aware scorer: CE on (question rewritten as a statement, sentence) pairs, or a learned
+  p(gold) refit with the sentence features B logs (`ufull_fs`). Validate on dev200 and audit for decoys before any
+  test change.
+- The within-session second unit for kept sessions: take the session's best good sentence unit in addition to the CE
+  depth units (targets pattern 3, no new sessions, so Sall-neutral).
+- Calibrate `ab` per route on test-like style (dev200 only) before using abstain_p for anything. Keep the term logged.
+- Hint: test `hint_pass` in the next Reactor calibration batch, together with B's fact trimming, on the e1 road-trip
+  question and on 3 decoy-heavy test-style questions.
+
+---
+
+# (archived) Round 2 report
 
 Lens: `lenses/multi/a_prune.py`. **Best variant: `r2best`**, which is `p8x1_ddl1` plus a calibrated abstain_p (the metrics are identical).
 Exported helper: `lenses/multi/a_abstain.py`, with `facet_absence(question, qdate, hx)` and `combine(p, pf)` (brief item 2).

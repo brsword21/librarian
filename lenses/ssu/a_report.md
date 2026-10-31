@@ -1,125 +1,126 @@
-# SSU lens A "Struktura": round 2 report
+# SSU lens A "Struktura": round 3 report
 
-Code: `lenses/ssu/a_struct2.py`. It imports the round-1 pool, scoring and classifier from `a_struct.py` and `a_owner.py`, which are unchanged.
-The round-1 report is now in `lenses/ssu/a_report_r1.md`.
-Scratch scripts: `lenses/ssu/scratch_a/r2_*.py`. Test audits: `scratch_a/r2_audit_r3rn.txt` (45 packs), plus the 12-pack audits for `r3` and `r2best_a4x2`.
-Runs: gold-type runs are in `runs/r2-ssu-a/ssu/...`. Routed runs (`--route --type ssu`) are in `runs/r2-ssu-a-route/ssu/...`; they need a separate tag because `--route` writes to the same path.
+Code: `lenses/ssu/a_r3_route.py`. It is a new ssu route wrapper. It imports the frozen `a_struct2.py` (r3rn), `ssa/a_recsent.py`, `ssa/b_role.py` and `ku/b_r2.py`, and it edits none of them.
+Earlier reports: `a_report_r1.md` and `a_report_r2.md`.
+Scratch scripts are in `lenses/ssu/scratch_a/`:
+- `r3_kufeat.py`: KU-B pair features per routed question.
+- `r3_gate.py`: typed-gate firings on dev, dev200 and test.
+- `r3_rugate.py`: runner-up gate analysis.
+- `r3_audit_*.txt`: test audits.
 
-**Best variant: `a_struct2.py` / `r3rn`.**
-- On gold-type ssu it ties the round-1 winner `nb3t0`:
-  - dev: S 93.4 vs 93.5.
-  - dev200: S 92.5 vs 92.5.
-  - Sall: -0.5 on dev and -1.0 on dev200, within the 2-point limit.
-  - AUC: 0.919 vs 0.911 on dev, 0.955 vs 0.909 on dev200.
-- On the routed ssu route, which is what the system actually serves, it wins clearly:
-  - dev: S 82.6 vs 74.4, Sall 84.2 vs 75.8.
-  - dev200: S 78.5 vs 72.6, Sall 79.1 vs 73.8.
-- Gold-type ssu is saturated. PA is 1.000, and 63 of 64 dev cites are already correct, so the ceiling at about 3.6k chars is S ≈ 93.9. A +2 win on gold-type dev is not possible; the gains have to come from the routed questions and from test behaviour.
-- On the 45 test ssu-route packs, `r3rn` changes the cite on 2 questions, both recency fixes (pattern 4 below). Mean passages per pack go from 2.71 to 2.80. No pack has abstain_p ≥ 0.5 any more; before, 8 did.
+Runs:
+- Routed runs are in `runs/r3-ssu-a/ssu-routed/{merged_r2,a_r3_route}/...`.
+- Gold-type runs are in `runs/r3-ssu-a/ssu/...`.
+- Test packs are in `runs/audit/ssu/a_r3_route/<variant>/test_packs.jsonl`.
+
+**Best variant: `a_r3_route.py` / `kg3crga`.** It is a drop-in replacement for the ssu route (`merged_r2.py` role8_r3rn).
+
+Results on the routed ssu slice:
+
+| split | v1 S | kg3crga S | Sall | AUC |
+|---|---|---|---|---|
+| dev | 86.1 | **87.7** (+1.6) | 88.3 → 88.9 | 0.931 → 0.932 |
+| dev200 | 82.3 | **85.0** (+2.7) | 82.6 → 84.7 | 0.905 → 0.914 |
+
+- Gold-type ssu is unchanged: 93.4 on dev and 92.5 on dev200. The gate has 0 false positives on gold ssu.
+- **Test: 1 of 45 ssu-route packs changes** (`harness.audit --diff` against `runs/audit/all/pipeline/routed/test_packs.jsonl`):
+  - Pack: `q_f14893711b1a` "What is my move date?". Its route changes from ssu to ku, and its cite goes from 1 session to 2.
+  - Old pack (v1): it cited the 03/12 session, where the user says the move date is "April 30".
+  - New pack: a ku pair. 03/15: "my move date is September 2". 07/10: "Since your move date is now September 16", which the user confirms: "I keep forgetting the date shifted".
+  - The new pack also carries a dated timeline hint: "most recent value wins".
+  - I believe this is a fix. The old cite was the oldest of three own values.
+- Compared with the deferred KU-B hand-off (`merged_r2` role8_r3rn_ku: dev 87.3, dev200 86.5, **6 test changes**):
+  - On dev, kg3crga is +0.4.
+  - On dev200, it is −1.5.
+  - It changes 1 test pack instead of 6. Five of KU-B's six test firings are planted decoys (see pattern 1).
+- Against the acceptance rule (+2 dev and no loss on dev200), kg3crga gets +1.6 on dev and +2.7 on dev200. It is the brief's requested gate, and it changes one test pack.
 
 ## Variants tried (one line each)
+All variants run on the routed ssu slice: 144 dev and 40 dev200 questions. Each one adds a single change to the row above it.
+
 | variant | idea and params |
 |---|---|
-| r2 | `nb3t0`, but the hint no longer carries the "answer INSUFFICIENT_EVIDENCE" line. This follows the integrator's no-abstention-hint policy. |
-| pair2 / pair3 | Also cite the runner-up session when it scores within 2 / 3 logits of the best one (KU update pair). |
-| pair3t | pair3 with a tight pack: only cited sessions are packed. |
-| pair3h | pair3 plus a dated hint: "the user mentioned this on d1 and d2; if they differ, the later one is current". It uses the earlier date for "previous" questions. |
-| ru | pair3 plus an **outlier runner-up** rule. When s2 > −6 and s2 − s3 > 3, the runner-up session's best 3 units are packed but not cited. |
-| ruc / ruch | ru, and the runner-up is also cited: always (ruc), or only when its best unit is an affirmed own unit with a head hit (ruch). |
-| ruct / rucht | ruc / ruch with a tight pack. |
-| ru_ab0/1/2 | ru, with the abstention prior using max(best user logit, best ALL-roles logit − 0/1/2). The ALL-roles logit comes from the generic hybrid_rr pool, which is already cached. |
-| r2best | ru_ab1 plus Platt calibration of abstain_p (a=0.5, c=−2), fitted on pooled dev+dev200 routed-ssu rows. |
-| r2best_a2 / _a4 | r2best, plus: when the best ALL-roles unit is an assistant unit in another session and beats the best user logit by 2 / 4, cite that session (ssa misroute). |
-| r2best_a4x4 / _a4x2 | _a4, plus the best assistant unit (±1) of a kept session is packed when it beats the best user logit by 4 / 2. |
-| r3 | r2best_a4x2 **without** the pair cite (pair_gap off). |
-| r3new / r3new2 | r3 with the pair (gap 3 / 2) packed, citing only the newest session (or the oldest for "previous"). |
-| r3g4 / r3g3 | r3 with sess_gap 4 / 3 instead of 6 (fewer context sessions). |
-| **r3rn** | **r3 plus a check on the recency jump: a later near-top session is picked only if it states the attribute itself (an affirmed own unit with a head or modifier hit).** |
-| r3rn_x1 / _x0 | r3rn, adding the assistant unit at a +1 / 0 logit margin. |
-| r2best_h | r2best plus the pair hint. It has no offline effect, so it is not adopted. |
+| v1 | Reproduces `merged_r2` role8_r3rn (frozen): role_guess ≥ 0.8 → ssa lens; otherwise a_struct2 r3rn. |
+| kg6 | **Typed value-disagreement gate → ku lens (b_r2 r2b)**. It keeps KU-B's pair at min_score 6 and cov 0.5. Both pair sentences must pass SSU-A's own/affirmed check (`a_owner.classify`: owner ≠ mismatch, polarity ≠ neg/plan; REJECT_RX makes "briefly tried … removed it" a plan). Both must carry a value of the same type: clock time, h:mm, date, weekday, money, or number+unit. The two value sets of that type must be disjoint. Names never count as a type. |
+| kg4 / kg3 | The same gate with relaxed KU-B scores: min_score 4 / 3, cov 0.4. The typed check carries the precision. |
+| kg6_any | Ablation without the own check. Not swept; offline it re-admits the test decoys. |
+| kg3c | kg3, plus **compositional misroutes** (COMP_RX: "how old was I when", "the two", "X and the Y", "increase"): cite a_struct2's outlier runner-up (ru_cite all). On test, 0 of 45 ssu-route questions match. |
+| kg3r / kg4r | kg3 / kg4, plus a **runner gate**: cite a_struct2's runner-up when both its best unit and the primary's are own, affirmed, head-hit statements with a typed disagreement. On test it fires on 0 of 45. |
+| kg3cr | kg3c plus the runner gate. |
+| kg3crg | kg3cr, plus "considering I like to wake up at 7:30 am" is read as "given that". PLAN_RX in a_owner treats every "considering" as a plan, which blocked a real KU pair. |
+| **kg3crga** | kg3crg, plus **abstain_p capped at 0.05 when the gate fires**: two affirmed own typed statements are evidence that the question is answerable. It only fixes the ku lens's abstain_p on handed-off questions, which had dropped AUC from 0.931 to 0.914. |
+| kg3crgt | kg3crg, plus the **tense fix** (brief item 3): in "did I / was I" questions, a unit with a plan marker gets the future penalty even when it also has a past marker. **Rejected**: S and PA are unchanged, but it moves 3 test R-77 cites to wrong sessions (see pattern 3). |
 
 ## Results
-"gold" means questions of gold type ssu: dev has 70 (64 answerable), dev200 has 23 (22 answerable). "routed" means the questions the router sends to ssu: 144 on dev and 40 on dev200. The routed sets include the dev-only cue-less ssa misroutes (50 + 7) and the ku, multi and temporal misroutes.
+"gold" means questions of gold type ssu: dev has 70 (64 answerable), dev200 has 23 (22 answerable). "routed" means the questions the text router sends to ssu: 144 on dev and 40 on dev200.
 
-| lens/variant | set | dev S | dev Sall | PA | ATR | SR | CF1 | chars | AUC | dev200 S | dev200 Sall | PA | ATR | SR | CF1 | chars | AUC |
+| set | lens/variant | dev S | Sall | PA | ATR | SR | CF1 | chars | AUC | dev200 S | Sall | PA | ATR | SR | CF1 | chars | AUC |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| generic/hybrid_rr (baseline) | gold | 76.6 | 76.6 | 1.000 | 1.000 | 1.000 | 0.512 | 11934 | 0.924 | 73.5 | 73.5 | 1.000 | 1.000 | 1.000 | 0.407 | 11933 | 0.955 |
-| generic/hybrid_rr (baseline) | routed | 75.7 | 75.7 | 0.971 | 0.983 | 0.993 | 0.545 | 11932 | 0.847 | 76.6 | 76.6 | 1.000 | 1.000 | 1.000 | 0.510 | 11939 | 0.946 |
-| a_struct/nb3t0 (r1 winner) | gold | 93.5 | 93.2 | 1.000 | 1.000 | 1.000 | 0.984 | 3489 | 0.911 | 92.5 | 90.7 | 1.000 | 1.000 | 1.000 | 0.955 | 3589 | 0.909 |
-| a_struct/nb3t0 (r1 winner) | routed | 74.4 | 75.8 | 0.757 | 0.866 | 0.952 | 0.875 | 3701 | 0.837 | 72.6 | 73.8 | 0.757 | 0.851 | 0.905 | 0.817 | 3799 | 0.838 |
-| r2 | gold | 93.5 | 93.2 | 1.000 | 1.000 | 1.000 | 0.984 | 3483 | 0.911 | 92.5 | 90.7 | 1.000 | 1.000 | 1.000 | 0.955 | 3583 | 0.909 |
-| r2 | routed | 74.4 | 75.8 | 0.757 | 0.866 | 0.952 | 0.875 | 3689 | 0.837 | 72.5 | 73.8 | 0.757 | 0.851 | 0.905 | 0.817 | 3802 | 0.838 |
-| pair3 | gold | 93.5 | 93.2 | 1.000 | 1.000 | 1.000 | 0.984 | 3486 | 0.911 | 92.1 | 90.7 | 1.000 | 1.000 | 1.000 | 0.939 | 3629 | 0.909 |
-| pair3 | routed | 75.9 | 75.8 | 0.757 | 0.866 | 0.952 | 0.926 | 3746 | 0.837 | 73.8 | 73.7 | 0.757 | 0.851 | 0.905 | 0.860 | 3874 | 0.838 |
-| pair3t | gold | 93.5 | 93.5 | 1.000 | 1.000 | 1.000 | 0.984 | 3390 | 0.911 | 92.2 | 92.2 | 1.000 | 1.000 | 1.000 | 0.939 | 3291 | 0.909 |
-| pair3t | routed | 73.1 | 73.1 | 0.713 | 0.830 | 0.915 | 0.926 | 3434 | 0.837 | 70.5 | 70.5 | 0.703 | 0.806 | 0.860 | 0.860 | 3356 | 0.838 |
-| ru | gold | 93.5 | 92.7 | 1.000 | 1.000 | 1.000 | 0.984 | 3558 | 0.911 | 92.0 | 89.3 | 1.000 | 1.000 | 1.000 | 0.939 | 3851 | 0.909 |
-| ru | routed | 78.7 | 78.9 | 0.801 | 0.888 | 0.974 | 0.926 | 3866 | 0.837 | 77.3 | 76.9 | 0.811 | 0.878 | 0.932 | 0.860 | 4081 | 0.838 |
-| ruc | gold | 93.0 | 92.7 | 1.000 | 1.000 | 1.000 | 0.969 | 3558 | 0.911 | 89.7 | 89.3 | 1.000 | 1.000 | 1.000 | 0.864 | 3851 | 0.909 |
-| ruc | routed | 79.3 | 78.9 | 0.801 | 0.888 | 0.974 | 0.946 | 3866 | 0.837 | 77.1 | 76.9 | 0.811 | 0.878 | 0.932 | 0.856 | 4081 | 0.838 |
-| ruch | gold | 93.0 | 92.7 | 1.000 | 1.000 | 1.000 | 0.969 | 3558 | 0.911 | 91.5 | 89.3 | 1.000 | 1.000 | 1.000 | 0.924 | 3851 | 0.909 |
-| ruch | routed | 78.9 | 78.9 | 0.801 | 0.888 | 0.974 | 0.933 | 3866 | 0.837 | 77.5 | 76.9 | 0.811 | 0.878 | 0.932 | 0.869 | 4081 | 0.838 |
-| r2best | gold | 93.5 | 92.7 | 1.000 | 1.000 | 1.000 | 0.984 | 3558 | 0.919 | 92.0 | 89.3 | 1.000 | 1.000 | 1.000 | 0.939 | 3851 | 0.955 |
-| r2best | routed | 78.7 | 78.9 | 0.801 | 0.888 | 0.974 | 0.926 | 3866 | 0.895 | 77.3 | 76.9 | 0.811 | 0.878 | 0.932 | 0.860 | 4081 | 0.874 |
-| r2best_a4 | routed | 78.8 | 78.9 | 0.801 | 0.888 | 0.974 | 0.928 | 3870 | 0.895 | 79.3 | 78.8 | 0.838 | 0.905 | 0.932 | 0.869 | 4072 | 0.874 |
-| r2best_a4x2 | gold | 93.4 | 92.7 | 1.000 | 1.000 | 1.000 | 0.984 | 3613 | 0.919 | 92.0 | 89.5 | 1.000 | 1.000 | 1.000 | 0.939 | 3890 | 0.955 |
-| r2best_a4x2 | routed | 84.0 | 84.2 | 0.882 | 0.932 | 0.974 | 0.928 | 4067 | 0.895 | 79.3 | 78.9 | 0.838 | 0.892 | 0.932 | 0.869 | 4170 | 0.874 |
-| r3 | gold | 93.4 | 92.7 | 1.000 | 1.000 | 1.000 | 0.984 | 3609 | 0.919 | 92.5 | 89.7 | 1.000 | 1.000 | 1.000 | 0.955 | 3859 | 0.955 |
-| r3 | routed | 82.6 | 84.2 | 0.882 | 0.932 | 0.974 | 0.883 | 4012 | 0.895 | 78.5 | 79.1 | 0.838 | 0.892 | 0.932 | 0.844 | 4131 | 0.874 |
-| r3g3 | routed | 81.7 | 83.5 | 0.868 | 0.918 | 0.960 | 0.883 | 3846 | 0.895 | 76.8 | 77.2 | 0.811 | 0.874 | 0.914 | 0.844 | 3922 | 0.874 |
-| r3new | gold | 93.0 | 92.7 | 1.000 | 1.000 | 1.000 | 0.969 | 3614 | 0.919 | 92.4 | 89.7 | 1.000 | 1.000 | 1.000 | 0.955 | 3890 | 0.955 |
-| **r3rn** | gold | **93.4** | **92.7** | 1.000 | 1.000 | 1.000 | 0.984 | 3609 | **0.919** | **92.5** | **89.7** | 1.000 | 1.000 | 1.000 | 0.955 | 3859 | **0.955** |
-| **r3rn** | routed | **82.6** | **84.2** | 0.882 | 0.932 | 0.974 | 0.883 | 4012 | 0.895 | **78.5** | **79.1** | 0.838 | 0.892 | 0.932 | 0.844 | 4131 | 0.874 |
+| gold | generic/hybrid_rr (baseline) | 76.6 | 76.6 | 1.000 | 1.000 | 1.000 | 0.512 | 11934 | 0.924 | 73.5 | 73.5 | 1.000 | 1.000 | 1.000 | 0.407 | 11933 | 0.955 |
+| gold | a_r3_route/v1 (= frozen ssu) | 93.4 | 92.7 | 1.000 | 1.000 | 1.000 | 0.984 | 3619 | 0.906 | 92.5 | 89.7 | 1.000 | 1.000 | 1.000 | 0.955 | 3859 | 0.955 |
+| gold | a_r3_route/kg3crg(a) | 93.4 | 92.7 | 1.000 | 1.000 | 1.000 | 0.984 | 3619 | 0.906 | 92.5 | 89.7 | 1.000 | 1.000 | 1.000 | 0.955 | 3859 | 0.955 |
+| routed | merged_r2/role8_r3rn_ku (KU-B hand-off, deferred) | 87.3 | 88.9 | 0.939 | 0.963 | 0.984 | 0.917 | 4068 | 0.924 | 86.5 | 86.8 | 0.943 | 0.957 | 0.971 | 0.881 | 4117 | 0.905 |
+| routed | a_r3_route/v1 (= v1 frozen) | 86.1 | 88.3 | 0.932 | 0.960 | 0.980 | 0.894 | 4159 | 0.931 | 82.3 | 82.6 | 0.886 | 0.929 | 0.943 | 0.867 | 4234 | 0.905 |
+| routed | kg6 | 86.2 | 88.3 | 0.932 | 0.960 | 0.980 | 0.896 | 4147 | 0.928 | 82.3 | 82.6 | 0.886 | 0.929 | 0.943 | 0.867 | 4234 | 0.905 |
+| routed | kg4 | 86.4 | 88.3 | 0.932 | 0.960 | 0.980 | 0.904 | 4106 | 0.919 | 82.6 | 82.6 | 0.886 | 0.929 | 0.943 | 0.876 | 4177 | 0.886 |
+| routed | kg3 | 86.5 | 88.3 | 0.932 | 0.960 | 0.980 | 0.907 | 4095 | 0.916 | 82.6 | 82.6 | 0.886 | 0.929 | 0.943 | 0.876 | 4177 | 0.886 |
+| routed | kg3c | 86.9 | 88.3 | 0.932 | 0.960 | 0.980 | 0.919 | 4095 | 0.916 | 82.9 | 82.6 | 0.886 | 0.929 | 0.943 | 0.886 | 4177 | 0.886 |
+| routed | kg3r | 86.6 | 88.3 | 0.932 | 0.960 | 0.980 | 0.909 | 4095 | 0.916 | 82.6 | 82.6 | 0.886 | 0.929 | 0.943 | 0.876 | 4177 | 0.886 |
+| routed | kg4r | 86.5 | 88.3 | 0.932 | 0.960 | 0.980 | 0.907 | 4106 | 0.919 | 82.6 | 82.6 | 0.886 | 0.929 | 0.943 | 0.876 | 4177 | 0.886 |
+| routed | kg3cr | 87.0 | 88.3 | 0.932 | 0.960 | 0.980 | 0.922 | 4095 | 0.916 | 82.9 | 82.6 | 0.886 | 0.929 | 0.943 | 0.886 | 4177 | 0.886 |
+| routed | kg3crg | 87.7 | 88.9 | 0.939 | 0.963 | 0.984 | 0.929 | 4082 | 0.914 | 85.0 | 84.7 | 0.914 | 0.943 | 0.957 | 0.895 | 4148 | 0.886 |
+| routed | **kg3crga** | **87.7** | **88.9** | 0.939 | 0.963 | 0.984 | 0.929 | 4082 | **0.932** | **85.0** | **84.7** | 0.914 | 0.943 | 0.957 | 0.895 | 4148 | **0.914** |
+| routed | kg3crgt (rejected on test) | 87.7 | 88.8 | 0.939 | 0.963 | 0.984 | 0.929 | 4095 | 0.914 | 85.0 | 85.0 | 0.914 | 0.943 | 0.957 | 0.895 | 4115 | 0.886 |
 
-The full table, including pair2, pair3h, ruct, rucht, ru_ab*, r2best_a2/_a4x4, r3g4, r3new2, r3rn_x0 and r3rn_x1, can be rebuilt from `runs/r2-ssu-a*/ssu/a_struct2/*/summary.json`. None of the omitted rows beats the rows shown.
-
-Routed ssu by gold type, `nb3t0` → `r3rn` (S):
+Routed S by gold type, v1 → kg3crga:
 
 | gold type | dev | dev200 |
 |---|---|---|
-| ssu | 93.3 → 93.3 | 92.1 → 92.0 |
-| ssa | 70.1 → 86.1 (PA 0.64 → 0.88) | 71.3 → 84.8 |
-| ku | 69.7 → 77.4 (PA 0.80 → 0.92) | 47.6 → 54.7 |
-| multi | 43.3 → 49.7 | 37.6 → 59.0 |
-| temporal | 39.2 → 49.9 | 78.2 → 78.2 |
+| ssu | 93.3 → 93.3 | 92.0 → 92.0 |
+| ssa | 91.1 → 91.1 | 93.8 → 93.8 |
+| multi | 55.7 → 61.4 | 83.3 → 88.3 |
+| ku | 77.4 → 84.2 (6 hand-offs) | 54.7 → 64.3 (2 hand-offs) |
+| temporal | 57.3 → 57.3 | n/a |
 
-Every test ssa question says "you recommended" and routes correctly, so the ssa part of the routed gain is mostly a dev artefact. On test, the gain that counts is the ku and multi part, plus the recency fix.
+Gate firings, the same for kg3crg and kg3crga:
 
-Why `r3rn` and not the higher routed S of `r2best_a4x2` (84.0 on dev, +1.4)? The difference is the pair cite. On test it fires on **10 of 12** audited ssu packs, because test histories plant value drift and decoys: the cat is Fig, Bica and Sombra across sessions, and the sourdough starter is Bubbles, Herman and Masa. Citing two sessions there would cost about 0.33 CF1 on most test ssu questions. On dev and dev200 it fires on only 5 of the 62 routed gold-ssu questions (`scratch_a/r2_gap.py`).
+| split | firings | details |
+|---|---|---|
+| dev | 6 | All gold ku. Mortgage pre-approval ($ money), charity 5K PB (27:12 vs 25:50, h:mm), cocktail class (Thursday vs Fridays), French-press ratio (6 vs 5 oz), cat Luna (6 vs 9 months), Saturday wake-up (8:30 vs 7:30 am). |
+| dev200 | 2 | Luna, Saturday wake-up. Both gold ku. |
+| test | 1 of 45 | Move date. |
+
+Without the own and typed checks, KU-B's ku_pair_p fires on 6 test questions; five of them are decoys.
 
 ## Top failure patterns (with examples)
-1. **The KU update session was dropped from the pack (fixed by `ru`).** The update session scores 6–10 logits below the top session, so `sess_gap=6` dropped it, but it sits far above the noise floor of about −8 to −11. Session scores (G = gold):
-   - "What day of the week do I take a cocktail-making class?" [3.6 G, −2.9 G, −8.3].
-   - "What day of the week did I meet with my previous language exchange tutor Juan?" [6.5 G, −0.3 G, −10.1].
-   - "Is my mom using the same grocery list method as me?" [6.9 G, −3.3 G, −9.9].
+1. **KU-B pairs on test are mostly planted decoys, and the typed own gate removes them (fixed).** Pair sentences from `scratch_a/r3_kufeat_test.jsonl`:
+   - Sourdough starter: "I'm thinking of naming my sourdough starter Bubbles" (plan) and "My friend Valentina named her sourdough starter Bubbles too" (other owner, name only).
+   - Café: "I usually stop at Caffè Gilli …" and "Francesca usually stops at Caffè Rivoire …" (other owner, name only).
+   - R-77 filter capacitor: "swapped … from 33 µF to 47 µF" and "I briefly tried a 68 µF filter capacitor … removed it" (REJECT, so plan).
+   - R-77 dial lamp: "ended up fitting a 6.3-volt dial lamp" and "bought a 12-volt dial lamp … but it was too dim" (REJECT).
+   - Birthday restaurant: "My friend Ines booked her birthday dinner at Trattoria Otto" (other owner) and "I booked a table at Osteria Numero".
 
-   The outlier rule (s2 > −6 and s2 − s3 > 3) fires on 28 of 34 routed ku questions, and the runner-up is gold in 27 of them. On ssu it fires on 8 of 62. ku PA on dev goes from 0.80 to 0.92.
-2. **Right session, wrong turn on ssa misroutes (fixed by `asst_add`).** The cited session is right (CF1 1.0), but the answer is in an assistant turn that the user-only pool never packed. Examples:
-   - "Which fashion brand uses wild rubber from the Amazon rainforest?": best user logit −7.5, best ALL-roles logit +7.3.
-   - "What's that hostel near the Red Light District in Amsterdam called?"
+   The one firing the gate keeps is the move date: September 2, then "now September 16". That is a real update.
+2. **ku misroutes still miss the second gold session (open). PA on dev200 ku is 0.667.** These are the remaining PA failures on dev200 (`harness.failures … kg3crga/dev200`):
+   - "What was my previous personal best time for the charity 5K run?": the 27:45 session (04/11) sits inside a long training-plan turn and is never retrieved. The pack has 27:12 and 26:30.
+   - "What new kitchen gadget did I invest in before getting the Air Fryer?": the Instant Pot session ("thinking of using my new Instant Pot") is phrased as a plan, so the plan penalty and the low score drop it.
+   - "Is my mom using the same grocery list method as me?": the old state ("she's still stuck on her old paper list") is not a typed value, so no gate can see it. This is a status update, not a value update.
+3. **The tense fix as specified is wrong at unit level (rejected, kg3crgt).** In "did I end up using" questions, a unit-level FUT_RX also hits the correct units, because the same turn holds "I need to / I want to". The test cites moved like this:
+   - AM IF: from 07/09 "realigned the AM IF … to 465 kHz" to the dial-lamp session.
+   - Speaker impedance: from 05/19 "swapped the speaker … to an 8-ohm unit" to 03/11, the old 4-ohm unit.
+   - AGC: from 03/04 "18k-ohm" to the dial-lamp session.
 
-   Still failing are list-position questions, where the item sits in a chunk more than one unit from the best match: "Of the five bottles for a gin cocktail bar, what was the fifth?" and "In the chess game, what move came after 27. Kg2 Bd5+?".
-3. **One cite for a two-gold KU pair (open).** CF1 is about 0.64 on ku misroutes. The pair cite fixes this on dev (+1.5 routed S), but on test it fires on drift and decoys (see above). A value-disagreement test is needed; see the ideas below.
-4. **The recency jump picked a session that only shares the topic (test; fixed by `rec_need`).**
-   - "What speaker impedance did I end up using in my National R-77?" and "What AM intermediate frequency did I end up using …": `nb3t0` cited 2023/07/14, "I briefly tried a 22k-ohm screen grid resistor in my National R-77 … removed it". That was the latest session within 2.5 logits.
-   - Now AM IF cites 07/09, "realigned the AM IF of my National R-77 to 465 kHz".
-   - The speaker question now cites 05/19 ("the new old-stock speaker is a Pioneer…", with the assistant's 8-ohm discussion), the latest own speaker statement after the 03/11 "4-ohm unit".
-5. **An unflagged "perceive" decoy (open).** "I saw a sourdough starter named Herman in a French baking forum" is the top unit (+3.98) for "What did I end up naming my sourdough starter?". The recency rule still picks 09/02, "I've renamed my sourdough starter Masa".
-6. **Abstention (improved).** Pooled routed AUC goes from 0.827 to 0.882. Most of the high-abstain_p negatives were ssa misroutes, whose evidence sits in assistant turns; the ALL-roles prior handles them.
-   - After calibration, 3 of 8 packs with p ≥ 0.3 are truly unanswerable.
-   - On test, 0 packs reach ≥ 0.5. Before, 8 of 45 did, including dog name, partner and favourite colour.
-   - This is still far from the integrator's re-enable rule (precision ≥ 0.7 at recall ≥ 0.4), and there is no abstention hint.
+   Dev S does not change, so the regression shows up only in the test audit. A clause-level version would need the plan and the past marker to sit in the same clause as the head hit.
+4. **A difference question whose head is a unit (open, test only).** "By how many ohms did I reduce the volume control resistance in my National R-77?" parses with head "ohms", so the pack holds three resistor sessions and no volume statement. The evidence is 03/05 "replaced the scratchy volume pot with a 500k-ohm log taper unit" and 05/19 "installed a 250k-ohm log taper volume pot"; the answer is 250k. It also has decoys: a Panasonic RF-2200 with 500k and a Hallicrafters with 1M. Of the other route lenses, multi tight and ku r2b miss both volume statements; only generic hybrid_rr (12k chars) packs them. No dev or dev200 question starts with "by how many", so nothing could be validated and nothing was shipped.
+5. **Compositional multi misroutes (partly fixed, dev only).** "How old was I when Alex was born?" and "At which university did I present a poster on my thesis research?" lose the second session, which never becomes an outlier runner-up (SR 0.5). kg3c cites the runner-up when one exists, which raises CF1 on "the two novels", "the two hobbies" and "Instagram increase" (multi CF1 0.667 → 0.857). On test, 0 questions match COMP_RX.
 
 ## CORE REQUESTs
-1. **`harness.sweep --route` should write to its own path**, for example `runs/<tag>/<type>-routed/...`. Today a routed run silently overwrites the gold-type run that has the same tag.
-2. **Per-gold-type breakdown in routed sweep output.** This is `scratch_a/r2_bytype.py`, which takes S, Sall, PA and CF1 per gold type from per_question.jsonl. Without it, misroute effects stay hidden in the route mean.
-3. **`harness.audit --compare <old run>`**: list the test packs whose cite_plan or passage count changed. This is `scratch_a/r2_cmp_test.py`. It is how the pair-cite problem and the recency fix were found.
-4. Carried over: **answer-anchored citation** on the submission side.
-5. Wiring: set `configs/best.json` ssu → `lenses/ssu/a_struct2.py` / `r3rn`. It reuses the cached generic hybrid_rr all-roles pool. Build time is about 110 ms on dev and 370 ms on dev200, cached.
+1. **Wire kg3crga as the ssu route**: `configs/best.json` ssu → `lenses/ssu/a_r3_route.py` / `kg3crga`. It changes 1 test pack, `q_f14893711b1a`. Build time: about 0.4 s per question on dev and 1.6 s on dev200, cold cache included.
+2. **Router or parse: "by how many/much <unit> did I <change-verb> <object>"** is a difference question. Its anchor is the object, not the unit. Route it to a lens that packs the before and after statements of the object and computes the difference. It is one test question with no dev counterpart, so the integrator has to decide whether to wire it untested.
+3. Optional: **`harness.audit --diff` should also print hint changes** (route-preserving hint edits are invisible today) and an abstain_p delta column.
 
 ## Ideas for the next round
-- **Gate the pair cite on value disagreement.** Cite both sessions only when both best units are affirmed own statements of the same attribute with *different* extracted values (number, day, time, duration), the KU signature. Do not cite both on name drift. Measure it on routed dev and on the test audit together.
-- **Name drift voting** (cat Fig, Bica, Sombra) was not done this round. Count affirmed own mentions per value, prefer replies to "What's her name?", and break ties by recency. Name the leading value in the hint only when it clearly leads.
-- **Perceive decoys.** Extend PERCEIVE_RX in `a_owner.py` to "I saw/read about a X named Y" with owner = other.
-- **ssa list-position questions:** for ordinal cues ("fifth", "number 7", "last on the list"), pack the assistant chunk that holds the list, plus the next chunk.
-- **Merge with B:** B's all-roles session sweep, combined with A's structure, recency check and outlier runner-up.
+- A clause-level tense check: penalise a plan only when the plan marker and the head hit are in the same clause (CLAUSE_RX split). Validate it on the test audit before trusting dev.
+- A status-update gate for KU: still stuck on X, now using Y. Use the same own/affirmed check with a typed contrast "still / old → now / switched" instead of a value type. This covers the grocery-list and "finished the Nightingale" questions.
+- Relative updates: "increased the AGC resistor by 15k ohms" after "put in an 18k-ohm resistor". Compute base ± delta when both statements are own and share the head. This is the ku-A brief item; on test it is one question, the AGC resistor.
+- Recall for KU old values buried in long turns, such as the 27:45 5K PB inside a training-plan turn. Use a sentence-level CE over all user turns that mention the head.

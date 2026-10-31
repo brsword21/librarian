@@ -1,0 +1,10 @@
+140 questions x 1 variants on dev in 58s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+kg3crga                    87.7 0.939 0.963 0.984 0.962 0.967 1.000 0.929   4082  717.8 0.932 0
+   if Reactor cites every passage: CF1all=0.969 Sall=88.9
+   -> runs/r3-ssu-a/ssu-routed/a_r3_route/kg3crga/dev
+     ssu       n= 49 S= 93.3 Sall= 93.3 PA=1.000 CF1=0.978 routes={'ssu': 49}
+     ssa       n= 50 S= 91.1 Sall= 90.9 PA=0.960 CF1=1.000 routes={'ssa': 37, 'ssu': 13}
+     multi     n=  9 S= 61.4 Sall= 62.8 PA=0.571 CF1=0.857 routes={'ssu': 9}
+     ku        n= 27 S= 84.2 Sall= 89.9 PA=0.960 CF1=0.773 routes={'ssu': 21, 'ku': 6}
+     temporal  n=  5 S= 57.3 Sall= 59.9 PA=0.600 CF1=0.667 routes={'ssu': 5}

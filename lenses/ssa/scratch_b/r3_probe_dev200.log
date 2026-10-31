@@ -1,0 +1,112 @@
+ssu multi-session pB=0.53 pA=0.73 d=+3.8 What time did I reach the clinic on Monday?
+ssu single-session pB=0.24 pA=0.42 d=+0.1 What did I buy for my sister's birthday gift?
+temporal temporal-reaso pB=0.63 pA=0.49 d=+5.0 How many weeks ago did I attend the 'Summer Nights' festival at Univer
+ssu knowledge-upda pB=0.21 pA=0.36 d=-0.3 Did I finish reading 'The Nightingale' by Kristin Hannah?
+ssu knowledge-upda pB=0.17 pA=0.34 d=-1.1 What was my previous personal best time for the charity 5K run?
+temporal temporal-reaso pB=0.34 pA=0.48 d=+1.5 What charity event did I participate in a month ago?
+multi multi-session pB=0.44 pA=0.38 d=+2.8 How much more did I have to pay for the trip after the initial quote?
+multi knowledge-upda pB=0.28 pA=0.50 d=+0.7 How many issues of National Geographic have I finished reading?
+ssu single-session pB=0.95 pA=0.72 d=+5.8 In the dinosaur children's book, what colour is the Plesiosaur's scaly
+ssu single-session pB=0.13 pA=0.27 d=-2.0 What type of bulb did I replace in my bedside lamp?
+ssu single-session pB=0.04 pA=0.29 d=-5.7 Where did I attend for my study abroad program?
+temporal temporal-reaso pB=0.31 pA=0.40 d=+1.1 How many weeks have I been accepted into the exchange program when I s
+multi multi-session pB=0.20 pA=0.31 d=-0.5 How many minutes did I exceed my target time by in the marathon?
+multi multi-session pB=0.08 pA=0.61 d=-3.4 How many years in total did I spend in formal education from high scho
+ssu single-session pB=0.18 pA=0.51 d=-1.0 What is the name of the playlist I created on Spotify?
+ssu single-session pB=0.85 pA=0.69 d=+2.1 Back in Bandung soon. Which restaurant in Cihampelas Walk does the gre
+multi single-session pB=0.12 pA=0.38 d=-2.2 How much screen time have I been averaging on Instagram per day?
+multi temporal-reaso pB=0.21 pA=0.47 d=-0.4 Which airline did I fly with the most in March and April?
+multi multi-session pB=0.17 pA=0.35 d=-1.1 How many antique items did I inherit or acquire from my family members
+temporal temporal-reaso pB=0.24 pA=0.66 d=+0.1 How many days ago did I buy a smoker?
+multi temporal-reaso pB=0.21 pA=0.37 d=-0.3 How many weeks in total do I spent on reading 'The Nightingale' and li
+ssu single-session pB=0.49 pA=0.32 d=+3.3 How long was I in Korea for?
+ssu single-session pB=0.65 pA=0.63 d=-1.0 How long did it take to move to the new apartment?
+temporal temporal-reaso pB=0.89 pA=0.55 d=+3.1 Which trip did the narrator take first, the solo trip to Europe or the
+ssu single-session pB=0.02 pA=0.24 d=-15.0 What health issue did I initially think was just a cold?
+temporal temporal-reaso pB=0.05 pA=0.49 d=-5.3 Which event did I attend first, the 'Effective Time Management' worksh
+multi multi-session pB=0.17 pA=0.53 d=-1.2 What is the total number of days I spent in Japan and Chicago?
+multi multi-session pB=0.44 pA=0.66 d=+2.7 How many hours do I work in a typical week during peak campaign season
+multi multi-session pB=0.52 pA=0.58 d=+3.7 What is the total cost of the car cover and detailing spray I purchase
+multi knowledge-upda pB=0.18 pA=0.28 d=-0.9 How many times have I worn my new black Converse Chuck Taylor All Star
+temporal temporal-reaso pB=0.28 pA=0.28 d=+0.8 How many months passed between the completion of my undergraduate degr
+ssu knowledge-upda pB=0.24 pA=0.67 d=+0.1 What time do I wake up on Saturday mornings?
+multi multi-session pB=0.17 pA=0.64 d=-1.1 How many health-related devices do I use in a day?
+multi single-session pB=0.22 pA=0.58 d=-0.2 How much time do I dedicate to practicing guitar every day?
+temporal temporal-reaso pB=0.19 pA=0.46 d=-0.7 Who did I go with to the music event last Saturday?
+temporal temporal-reaso pB=0.40 pA=0.03 d=+2.2 Which three events happened in the order from first to last: the day I
+ssu multi-session pB=0.33 pA=0.50 d=+1.4 What was the approximate increase in Instagram followers I experienced
+ssu knowledge-upda pB=0.16 pA=0.48 d=-1.3 What new kitchen gadget did I invest in before getting the Air Fryer?
+ssu single-session pB=0.84 pA=0.80 d=+1.9 Which atmospheric correction algorithm does the SIAC_GEE tool implemen
+temporal temporal-reaso pB=0.14 pA=0.62 d=-1.7 What was the social media activity I participated 5 days ago?
+multi multi-session pB=0.05 pA=0.28 d=-4.9 How much total money have I spent on bike-related expenses since the s
+multi knowledge-upda pB=0.27 pA=0.32 d=+0.6 How many free night's stays can I redeem at any Hilton property with m
+ssu single-session pB=0.76 pA=0.65 d=+0.4 What's the phone number of the Speyer tourism board?
+temporal temporal-reaso pB=0.02 pA=0.36 d=-10.3 How many months ago did I attend the Seattle International Film Festiv
+temporal temporal-reaso pB=0.87 pA=0.50 d=+2.6 Who graduated first, second and third among Emma, Rachel and Alex?
+multi knowledge-upda pB=0.19 pA=0.27 d=-0.7 How many of Emma's recipes have I tried out?
+multi multi-session pB=0.17 pA=0.45 d=-1.1 How many kitchen items did I replace or fix?
+multi multi-session pB=0.02 pA=0.22 d=-7.6 What is the total number of goals and assists I have in the recreation
+temporal temporal-reaso pB=0.18 pA=0.11 d=-0.9 How many days passed between the day I received feedback about my car'
+multi temporal-reaso pB=0.26 pA=0.46 d=+0.5 How long did I take to finish 'The Seven Husbands of Evelyn Hugo' and 
+temporal temporal-reaso pB=0.09 pA=0.12 d=-3.0 How many days passed between the day I replaced my spark plugs and the
+ssu single-session pB=0.98 pA=0.90 d=+14.6 Which fashion brand uses wild rubber from the Amazon rainforest?
+ssu single-session pB=0.22 pA=0.40 d=-0.2 What play did I attend at the local community theater?
+ssu single-session pB=0.61 pA=0.60 d=+4.7 Where do I take yoga classes?
+ssu knowledge-upda pB=0.02 pA=0.30 d=-9.0 How long have I had my cat, Luna?
+temporal temporal-reaso pB=0.47 pA=0.49 d=+3.1 Which event did I participate in first, the volleyball league or the c
+temporal temporal-reaso pB=0.02 pA=0.22 d=-13.5 How many weeks ago did I attend the friends and family sale at Nordstr
+multi multi-session pB=0.04 pA=0.33 d=-5.9 How many days a week do I attend fitness classes?
+multi multi-session pB=0.07 pA=0.31 d=-4.1 Which grocery store did I spend the most money at in the past month?
+temporal temporal-reaso pB=0.07 pA=0.35 d=-4.0 Which show did I start watching first, 'The Crown' or 'Game of Thrones
+temporal temporal-reaso pB=0.11 pA=0.10 d=-2.6 How many days passed between the day I cancelled my FarmFresh subscrip
+temporal knowledge-upda pB=0.28 pA=0.37 d=+0.8 How long have I been sticking to my daily tidying routine?
+temporal temporal-reaso pB=0.18 pA=0.60 d=-1.0 How many days passed between my visit to the Museum of Modern Art (MoM
+multi knowledge-upda pB=0.27 pA=0.27 d=+0.6 How many autographed football have I added to my collection in the fir
+multi knowledge-upda pB=0.12 pA=0.23 d=-2.3 How many Italian restaurants have I tried in my city?
+multi knowledge-upda pB=0.08 pA=0.30 d=-3.5 How many sessions of the bereavement support group did I attend?
+temporal temporal-reaso pB=0.41 pA=0.47 d=+2.3 When did I book the Airbnb in Sacramento?
+multi multi-session pB=0.14 pA=0.49 d=-1.7 How many fish are there in my 30-gallon tank?
+ssu single-session pB=0.05 pA=0.28 d=-5.0 Where did I buy my new tennis racket from?
+ssu single-session pB=0.38 pA=0.44 d=+2.0 What breed is my dog?
+multi multi-session pB=0.43 pA=0.63 d=+2.7 What is the total amount I spent on luxury items in the past few month
+ssu single-session pB=0.24 pA=0.33 d=+0.2 How long is my daily commute to work?
+multi multi-session pB=0.03 pA=0.36 d=-6.9 How many properties did I view before making an offer on the townhouse
+multi multi-session pB=0.09 pA=0.35 d=-3.3 How much money did I raise in total through all the charity events I p
+multi multi-session pB=0.35 pA=0.50 d=+1.6 How much did I save on the Jimmy Choo heels?
+multi knowledge-upda pB=0.29 pA=0.28 d=+0.9 How many stars do I need to reach the gold level on my Starbucks Rewar
+ssu single-session pB=0.92 pA=0.63 d=+4.3 What was the last venue on the list of Portland indie music venues?
+ssu single-session pB=0.94 pA=0.41 d=+4.8 What was number 7 on the list of work-from-home jobs for seniors?
+ku knowledge-upda pB=0.31 pA=0.40 d=+1.1 How many videos of Corey Schafer's Python programming series have I co
+multi multi-session pB=0.02 pA=0.32 d=-7.6 How many days did I spend attending workshops, lectures, and conferenc
+multi single-session pB=0.98 pA=0.91 d=+12.6 How many mummies does the party face in the Lost Temple of the Djinn o
+multi single-session pB=0.22 pA=0.56 d=-0.2 How much did I spend on a designer handbag?
+multi multi-session pB=0.22 pA=0.38 d=-0.1 What is the total number of views on my most popular videos on YouTube
+ssu single-session pB=0.03 pA=0.38 d=-6.4 What type of rice is my favorite?
+multi multi-session pB=0.25 pA=0.33 d=+0.4 How much did I spend on gifts for my sister?
+multi multi-session pB=0.25 pA=0.53 d=+0.3 How much total money did I spend on attending workshops in the last fo
+multi single-session pB=0.96 pA=0.69 d=+6.6 How many eggs go into a classic French omelette again?
+multi single-session pB=0.29 pA=0.39 d=+0.9 How many skeins of worsted weight yarn did I find in my stash?
+multi knowledge-upda pB=0.16 pA=0.34 d=-1.3 How many women are on the team led by my former manager Rachel?
+ssu knowledge-upda pB=0.15 pA=0.15 d=-1.5 What day of the week did I meet with my previous language exchange tut
+multi knowledge-upda pB=0.27 pA=0.51 d=+0.6 How many largemouth bass did I catch with Alex on the earlier fishing 
+temporal temporal-reaso pB=0.18 pA=0.64 d=-1.0 Which task did I complete first, fixing the fence or purchasing three 
+multi knowledge-upda pB=0.21 pA=0.32 d=-0.3 How many trips have I taken my Canon EOS 80D camera on?
+ssu knowledge-upda pB=0.62 pA=0.14 d=+4.8 What was my previous goal for my Apex Legends level before I updated m
+ku knowledge-upda pB=0.37 pA=0.47 d=+1.9 How many followers do I have on Instagram now?
+ssu single-session pB=0.07 pA=0.40 d=-4.0 Who gave me a new stand mixer as a birthday gift?
+multi knowledge-upda pB=0.14 pA=0.23 d=-1.7 How many engineers do I lead when I just started my new role as Softwa
+ku knowledge-upda pB=0.26 pA=0.61 d=+0.4 What is my current highest score in Ticket to Ride?
+ssu knowledge-upda pB=0.03 pA=0.19 d=-6.9 Is my mom using the same grocery list method as me?
+ssu knowledge-upda pB=0.49 pA=0.31 d=+3.3 Do I have a spare screwdriver for opening up my laptop?
+ssu single-session pB=0.41 pA=0.21 d=+2.4 What was the discount I got on my first purchase from the new clothing
+ssu single-session pB=0.33 pA=0.51 d=+1.4 Where did I redeem a $5 coupon on coffee creamer?
+ssu single-session pB=0.40 pA=0.41 d=+2.2 How long was I in Japan for?
+ssu single-session pB=0.29 pA=0.63 d=+0.9 Where did I attend the Imagine Dragons concert?
+ku single-session pB=0.17 pA=0.57 d=-1.1 What brand of shampoo do I currently use?
+multi multi-session pB=0.51 pA=0.60 d=+3.5 How many pages do I have left to read in 'Sapiens'?
+temporal knowledge-upda pB=0.20 pA=0.33 d=-0.6 How long have I been living in my current apartment in Shinjuku?
+temporal temporal-reaso pB=0.04 pA=0.25 d=-5.5 How long have I been working before I started my current job at Google
+multi multi-session pB=0.82 pA=0.57 d=+7.7 How much will I save by taking the bus from the airport to my hotel in
+ssu multi-session pB=0.11 pA=0.22 d=-2.6 At which university did I present a poster for my undergrad course res
+temporal temporal-reaso pB=0.17 pA=0.60 d=-1.2 Which project did I start first, the Ferrari model or the Porsche 991 
+ssu multi-session pB=0.26 pA=0.41 d=+0.5 How old will Rachel be when I get married?

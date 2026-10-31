@@ -1,0 +1,74 @@
+== q_62e927862f62 What is the name of my ceramics class instructor now? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +When you answer, cite two passages on the final answer line: the one with the earlier value and the one with the latest value, not only the latest.
+== q_cd41ef1d48d1 What is the name of the accountant I'm using for my freelance taxes now? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +If you answer, cite both [E1] (the earlier value) and [E2] (the latest value) on the final answer line: the answer, then [E1][E2].
+== q_b3e5afe916c8 What is my current job title? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +When you answer, cite two passages on the final answer line: the one with the earlier value and the one with the latest value, not only the latest.
+== q_1a6b4fa2ede3 Who teaches my Saturday morning watercolour class now? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +If you answer, cite both [E1] (the earlier value) and [E2] (the latest value) on the final answer line: the answer, then [E1][E2].
+== q_fc41aad935fc How many gigabytes is my current mobile data plan? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +If you answer, cite both [E1] (the earlier value) and [E2] (the latest value) on the final answer line: the answer, then [E1][E2].
+== q_e165458f4cff What is my current monthly rent? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +When you answer, cite two passages on the final answer line: the one with the earlier value and the one with the latest value, not only the latest.
+== q_074ae81650db How many laps do I swim each morning these days? | computed None -> None
+    -- 2023/04/12: "Good morning! I swam my usual 40 laps, but my blood pressure was 138/86 before breakfast."
+    +- 2023/08/21: "After my check-up I increased my morning swim to 30 laps."
+    -Cite both the session with the earlier value and the session with the latest value.
+    +When you answer, cite two passages on the final answer line: the one with the earlier value and the one with the latest value, not only the latest.
+== q_355094c7f34a How many cups of coffee do I drink each morning these days? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +When you answer, cite two passages on the final answer line: the one with the earlier value and the one with the latest value, not only the latest.
+== q_e509e8e931c1 How many kilometers do I walk each evening these days? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +If you answer, cite both [E1] (the earlier value) and [E2] (the latest value) on the final answer line: the answer, then [E1][E2].
+== q_8e9be6f580d2 What is the name of the store where I currently buy Moroccan spices? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +When you answer, cite two passages on the final answer line: the one with the earlier value and the one with the latest value, not only the latest.
+== q_25e9a4b961d7 How many people are on my UX team now? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +If you answer, cite both [E1] (the earlier value) and [E2] (the latest value) on the final answer line: the answer, then [E1][E2].
+== q_8933b400c72a What is my skateboard's name now? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +When you answer, cite two passages on the final answer line: the one with the earlier value and the one with the latest value, not only the latest.
+== q_eb3a2b633378 What time does my long run start these days? | computed None -> None
+    +- 2023/06/24: "My long run has shifted to Sundays at 6:30 a.m. because my Saturday shifts changed."
+    -Cite both the session with the earlier value and the session with the latest value.
+    +When you answer, cite two passages on the final answer line: the one with the earlier value and the one with the latest value, not only the latest.
+== q_982391af62c7 How many rooms have we completely renovated in the bungalow so far? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +When you answer, cite two passages on the final answer line: the one with the earlier value and the one with the latest value, not only the latest.
+== q_a90a3ef2db02 How many Icelandic horses do my neighbor Bjørn and I have in total right now? | computed None -> 16
+    -Statements about this in the history, oldest first:
+    -- 2023/01/20: "Even though I currently have 9 Icelandic horses on my farm., I try to keep Sundays a bit slower, so a stew that simmers by itself is ideal."
+    -- 2023/06/20: "Bjørn's daughter has 2 Icelandic horses."
+    -If the value changed over time, answer with the MOST RECENT value the user states about their own situation; ignore values about other people, other places or past/hypothetical ones.
+    -Cite both the session with the earlier value and the session with the latest value.
+    +Counts per owner in the history, oldest first:
+    +- 2023/01/20 (me): "Even though I currently have 9 Icelandic horses on my farm., I try to keep Sundays a bit slower, so a stew that simmers by itself is ideal."
+    +- 2023/05/02 (me): "By the way, I bought 2 more Icelandic horses at the spring auction. so the barn is feeling a bit fuller this week."
+    +- 2023/03/14 (Bjørn): "By the way, Your neighbor Bjørn has 5 Icelandic horses."
+    +Latest counts: me 9 + 2 = 11; Bjørn 5; total 11 + 5 = 16.
+    +On the final answer line, give the total, then [E1][E2][E3].
+== q_e0e8cc3f07b6 How many chapters does my children's book have now? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +If you answer, cite both [E1] (the earlier value) and [E2] (the latest value) on the final answer line: the answer, then [E1][E2].
+== q_fd2d7909a58a How many beehives do I have on my farm right now? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +When you answer, cite two passages on the final answer line: the one with the earlier value and the one with the latest value, not only the latest.
+== q_be4ffb1f8c06 How many apple trees do I have in my orchard right now? | computed None -> 7
+    -Cite both the session with the earlier value and the session with the latest value.
+    +The later statement adds 3 to the earlier 4: 4 + 3 = 7.
+    +If you answer, cite both [E1] (the earlier value) and [E2] (the latest value) on the final answer line: the answer, then [E1][E2].
+== q_07a3d3d857f4 How many tractors do I have on my farm right now? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +When you answer, cite two passages on the final answer line: the one with the earlier value and the one with the latest value, not only the latest.
+== q_1a034c66813d How many cats do I have on my farm right now? | computed None -> None
+    -Cite both the session with the earlier value and the session with the latest value.
+    +When you answer, cite two passages on the final answer line: the one with the earlier value and the one with the latest value, not only the latest.
+20 of 20 hints/computed changed

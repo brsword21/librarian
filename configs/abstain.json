@@ -1,10 +1,58 @@
 {
- "policy": "no_abstain_hint",
- "signal": "pack.abstain_p of the routed lens (each lens's own evidence-coverage signal); logged per pack, never sent to Reactor",
+ "policy": "no_generic_abstain_hint",
  "threshold": null,
+ "signal": "pack.abstain_p of the final route lens (logged per pack, never sent to Reactor as a number)",
  "hint_to_reactor": false,
- "hint_text_if_enabled": "If none of the passages states this about me, say that our conversations do not contain it.",
+ "factual_hints_kept": [
+  "temporal a_r3_gap own-cut: '<event>: no statement that you did this was found; the closest mention is ...' / 'not mentioned in the history' (3 test packs, abstain_p 0.8)",
+  "ku / ssu lens notes that quote another person's value as someone else's"
+ ],
+ "notes": "Routed v2 abstain_p AUC: dev 0.813, dev200 0.853, pooled 0.821 (45 unanswerable / 606 answerable). No single threshold reaches the enable bar (precision >= 0.7 at recall >= 0.4): pooled >= 0.8 flags 9 TP / 22 FP. Per route: ssu AUC 0.884 but only 1 TP at >= 0.6; multi 0.795 (2 TP / 0 FP at >= 0.6, recall 0.10); temporal 0.825 with 21 answerable packs at >= 0.8. Real Reactor (first 23 v1 test answers): 3 INSUFFICIENT_EVIDENCE: 'my dog's name' (no own dog in the history: likely correct), 'current job title' (answerable, pack lacked the promotion sentence: fixed in v2 by ku a_r3 r3w), 'my neighborhood in Lisbon' (answerable: 'I live in Graça' was never retrieved; the ownership hint is not the cause, the pack had no neighbourhood statement). Reactor already abstains on its own when the pack lacks the fact, so a generic abstention hint would mostly add false abstentions. Keep: factual 'not found' notes from lenses only. Re-enable rule unchanged: a soft hint per route only at precision >= 0.7, recall >= 0.4 pooled; never temporal.",
  "enable_rule": "Re-enable a soft hint (hint_text_if_enabled, never a forced abstention) for a route only when its abstain_p reaches precision >= 0.7 at recall >= 0.4 on dev+dev200 pooled. Never on the temporal route (21 answerable packs at abstain_p >= 0.8).",
+ "hint_text_if_enabled": "If none of the passages states this about me, say that our conversations do not contain it.",
+ "measured_r3": {
+  "routed_v2_dev_auc": 0.813,
+  "routed_v2_dev200_auc": 0.853,
+  "pooled_auc": 0.821,
+  "per_route_pooled": {
+   "ssu": {
+    "n": 120,
+    "pos": 11,
+    "auc": 0.884,
+    "tp_fp_at_0.8": [
+     1,
+     0
+    ]
+   },
+   "multi": {
+    "n": 207,
+    "pos": 20,
+    "auc": 0.795,
+    "tp_fp_at_0.6": [
+     2,
+     0
+    ]
+   },
+   "ku": {
+    "n": 29,
+    "pos": 0
+   },
+   "ssa": {
+    "n": 126,
+    "pos": 0,
+    "fp_at_0.6": 7
+   },
+   "temporal": {
+    "n": 169,
+    "pos": 14,
+    "auc": 0.825,
+    "tp_fp_at_0.8": [
+     8,
+     21
+    ]
+   }
+  }
+ },
  "measured_r2": {
   "routed_dev_auc": 0.814,
   "routed_dev200_auc": 0.855,
@@ -99,58 +147,5 @@
    ]
   },
   "run": "runs/merge2/all/pipeline/routed/{dev,dev200} (final v1 config, router r2)"
- },
- "reactor_evidence": "Calibration E1 (12 dev questions): Reactor abstained correctly on 3/3 unanswerable questions without any hint, and wrongly abstained (INSUFFICIENT_EVIDENCE) on 1 multi-session question. The current failure mode is over-abstention on multi, not under-abstention, so an abstain hint would push the wrong way.",
- "notes": "Policy for v1: send passages only, no abstention hint; Reactor decides. AUC rose from 0.72 / 0.81 to 0.81 / 0.86 on dev / dev200 (role hand-off + ku b_r2 + temporal merged_r2), but no global threshold gets above about 0.3 precision (0.29 at 0.5 and at 0.8), so any hint would cost more false abstentions (each = wrong answer + CF1 0) than it saves. abstain_p is used only inside lenses (packing choices). Candidate for later: a counter-hint on the multi route when the pack holds >= 2 instance sentences ('the passages list items; count what they show'), only after a Reactor spot check, since one real multi question was over-abstained. Lens scales differ (temporal-A is discrete 0.05/0.25/0.6/0.75/0.8), so a per-route isotonic calibration on dev+dev200 pooled is the next step before any threshold.",
- "previous_r1": {
-  "policy": "no_abstain_hint_yet",
-  "signal": "pack.abstain_p of the routed lens (each lens's own evidence-coverage signal)",
-  "threshold": 0.9,
-  "hint_to_reactor": false,
-  "hint_text_if_enabled": "If none of the passages states this about me, say that our conversations do not contain it.",
-  "measured": {
-   "routed_dev_auc": 0.719,
-   "routed_dev200_auc": 0.808,
-   "dev_plus_dev200_precision_at": {
-    "0.5": 0.18,
-    "0.7": 0.18,
-    "0.8": 0.23,
-    "0.9": 0.18
-   },
-   "dev_plus_dev200_recall_at": {
-    "0.5": 0.38,
-    "0.7": 0.31,
-    "0.8": 0.29,
-    "0.9": 0.16
-   },
-   "per_lens_auc_dev_dev200": {
-    "ssu b_sem best_rec": [
-     0.9,
-     0.95
-    ],
-    "ku b_semantic pair_r1b": [
-     0.89,
-     0.89
-    ],
-    "ku a_timeline pkd_b2": [
-     0.9,
-     0.94
-    ],
-    "temporal merged_r1": [
-     0.77,
-     0.97
-    ],
-    "multi b_sweep deep8_10k": [
-     0.64,
-     0.83
-    ],
-    "ssa": "no unanswerable questions in dev",
-    "ssu a_struct nb3t0 (routed)": [
-     0.91,
-     0.91
-    ]
-   }
-  },
-  "notes": "Do not tell Reactor to abstain from abstain_p yet. Over dev+dev200 (45 unanswerable vs 606 answerable) no threshold gets above about 0.25 precision: at 0.8 the final routed system has 13 true abstentions against 43 false ones. Lens scales also differ, so on test 6 of 45 ssu packs score 0.8 or more on questions that are probably answerable. One example is 'brand of the grill I last mentioned buying', where Big Green Egg is in the pack. Policy for now: send passages only and let Reactor decide from what they contain. abstain_p is used only for packing choices inside lenses. Re-enable a soft hint (hint_text_if_enabled, never a forced abstention) for a route once its own abstain_p reaches precision >= 0.7 at recall >= 0.4 on dev+dev200 together. The candidates are evidence-based signals: missing event or phrase-bigram coverage for ku and temporal, and the missing-facet check for multi. Lens agents should calibrate abstain_p as a probability on dev+dev200 pooled, since each split alone has too few positives."
  }
 }

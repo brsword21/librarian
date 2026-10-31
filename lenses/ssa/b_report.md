@@ -1,160 +1,133 @@
-# SSA lens B ("Semantyka"): round 2 report
+# SSA lens B ("Semantyka"): round 3 report
+
+Round-2 report: `lenses/ssa/b_report_r2.md`.
 
 Files:
-- `lenses/ssa/b_role.py`: new this round. It holds the evidence-based role detector `role_guess(q, hx)` and a routed wrapper lens that measures it end to end.
-- `lenses/ssa/b_semantic.py`: the ssa lens, extended this round.
-- Scratch: `lenses/ssa/scratch_b/role_probe.py`, `role_eval.py`, `role_test.py`, `role_test_multi.py`, `role_other_routes.py`.
-- Runs: `runs/r2-ssa-b/` (ssa type) and `runs/r2-ssa-b-role/` (routed ssu, multi and all).
+- `lenses/ssa/b_r3_role.py` (new). It holds the combined role detector `role_guess(q, hx)`, the ssu-route hint guard, the "should I" advice hand-off, and a routed wrapper lens that measures all three.
+- Scratch: `lenses/ssa/scratch_b/r3_probe.py` (role features for every router-placed question; outputs in `r3_probe_{dev,dev200,test}.jsonl`) and `r3_compare.py` (per-question differences against v1).
+- Runs: `runs/r3-ssa-b/` (`ssa/`, `ssu-routed/`, `multi-routed/` and `all/`).
+- Test audits: `runs/audit/{ssu,multi,ssa}/b_r3_role/{comb_guard,comb_guard_adv}/`.
 
-**Headline: the role detector is the round-2 deliverable.** With it, cue-less dev ssa questions routed to ssu or multi are switched to the ssa lens.
-- Routed system: dev S goes from 80.4 to **83.3** (+2.9) and Sall from 74.9 to **78.0**. dev200 S goes from 79.9 to **82.8** (+2.9) and Sall from 74.2 to **77.2**.
-- Abstain AUC goes from 0.719 to 0.750 on dev and from 0.808 to 0.825 on dev200.
-- No ssu, ku, multi or temporal question is switched by mistake on dev or dev200 (FP 0).
-- On test it switches nothing (0 of 45 ssu-routed, 0 of 20 multi-routed questions). Every test ssa question carries the "you recommended" cue.
+No frozen file was edited.
 
-The ssa type itself is still saturated. My lens ties lens A there (92.5 / 93.1 against A's 93.3 / 93.3), and sentence-level trimming to about 4k chars cannot be done without losing PA on dev.
+## TL;DR
+1. **The ssa type stays saturated.** v1 (`a_recsent r2_conf2`) scores PA = CF1 = 1.0 at 4.5k / 4.2k chars. The test ssa packs are healthy: 25 single sessions of 2.4 to 3.2k chars, and 23 of 25 quote the recommendation line. Following brief item 3, I did not trim them.
+2. **The real-Reactor failure on ssa is a hint conflict, not retrieval.** In the calibration run, the one ssa miss was q_73a1f68b2421 ("Which company does a great job with environmentally responsible supply chains?"). The question was routed to ssu, and the pack contained the answer, Patagonia. The ssu lens adds "Answer from what the user said about their own supply chains. Mentions of other people's … are not the answer." Reactor obeyed that hint and answered INSUFFICIENT_EVIDENCE.
+   - On dev, every one of the 13 gold-ssa questions left on the ssu route carries this hint (dev200: 1). The proxy PA scores them as fine (S ≈ 94).
+   - v1 still routes q_73a1f68b2421 to ssu (p = 0.73).
+   - Lens A found the same problem independently this round (`a_r3_role.py`, variant nh55).
+3. **Deliverable: `b_r3_role.py comb_guard_adv`.** It adds three things to v1, and no test pack changes (audit --compare: 0 of 90 ssu / multi / ssa packs change route, cite, passages or hint; ku and temporal are untouched by construction):
+   - **(a) Combined detector.** B's cross-encoder margin plus A's lexical role scan. TP at FP 0 goes from 37 to 39 of 50 on the dev ssu route and from 5 to 6 of 6 on the dev multi route; dev200 is unchanged at 6 of 7 and 2 of 2. Both thresholds are unchanged.
+   - **(b) Hint guard.** On a ssu-routed question with no first-person word and p ≥ 0.6, the ownership / decoy / "user never mentions" sentences are replaced by a role-neutral line. It fires on 6 ssa + 1 ssu question on dev, 1 + 1 on dev200, and 0 on test.
+   - **(c) Advice hand-off.** "should I …" on the ssu route goes to the ssa lens at p ≥ 0.5. One dev question moves: S 29 → 93.
+4. **Routed S** (all 526 / 125 questions): dev 85.9 → **86.2** (Sall 84.7 → 85.0, AUC 0.810 → 0.811), gold-ssa rows 91.8 → 93.0 (PA 0.973 → 0.991; ssa route 97 → 101 of 112), dev200 tie at 84.9 / Sall 83.2. That is below the +2 acceptance bar. It is a robustness and Reactor-motivated change with **zero test diff**.
 
 ## Variants tried (one line each)
-ssa lens (`b_semantic.py`, gold ssa questions):
-- `session10k1_rr` (round-1 best, default): the whole top session in cross-encoder priority order, cut at 10k chars.
-- `session10k1_rrp`: as `session10k1_rr`, plus a recommendation-sentence pool. Every assistant unit whose first-person recommendation shares a category or purpose token with the question joins the cross-encoder pool. The idea follows lens A's sentence scan. It is neutral on dev and dev200. On test it adds a hint line and drops abstain_p from 0.73 to 0.06 for the illustrator question, whose recommendation unit sat at hybrid rank 50.
-- `trim4k`, `trim5k`, `trim6k`: brief item (2). The best turn and its user request are kept whole; the rest of the top session follows in unit cross-encoder order (raw question). The cut is at 4k, 5k or 6k.
-- `trim4k_nohead`: as `trim4k`, without the turn-head unit before each chunk.
-- `trim5k_cq`, `trim6k_cq`: as `trim5k` / `trim6k`, but the cross-encoder query is the cleaned question, with meta-cues ("our previous chat about") removed.
-- `trim5k_s`, `trim6k_s`: as the `_cq` variants, but a unit's score is the maximum sentence-level cross-encoder logit (`hx.rerank_texts`).
-- `trim5k_sb`: as `trim5k_s`; the best turn is also chosen by sentence score.
-- `_SELF_REC` now also matches "you might like / you'd love / you'll enjoy". This is general recommendation phrasing; it affects the hint and abstain_p only.
-- The INSUFFICIENT_EVIDENCE note in the hint is switched off by default (`abstain_hint` = 9), following the brief's "no abstention hints".
-
-Role detector (`b_role.py`, router plus switch, ssa target = A `recqs_cf7` unless noted):
-- `noswitch`: the routed system as in `configs/best.json` (control).
-- `switch_a`: ssu route switched at p ≥ 0.7, c = −1.0.
-- `switch_b`: as `switch_a`, but the target is my `session10k1_rr` instead of A's lens.
-- `switch_a5`: as `switch_a`, threshold 0.5.
-- `switch_a_m`: c = −1.2 (margin version), threshold 0.7.
-- `switch_m6`, `switch_m8`: margin version at thresholds 0.6 and 0.8 (sensitivity check).
-- `switch_nf0`: text feature only, with no cross-encoder margin (ablation).
-- `switch_am9`, `switch_am95`: the ssu route at 0.7, plus the multi route at 0.9 or 0.95.
-- **`switch_m8m9` (recommended):** the ssu route at 0.8 and the multi route at 0.9.
-
-## role_guess(q, hx) -> p_assistant
-Signals:
-- `d`: the best cross-encoder logit over assistant units minus the best over user units. It is computed on the cross-encoder-reranked top 40 of `hx.hybrid(question, k=100, pool=300)`, the same query and pool as generic `hybrid_rr`, so the rerank pairs are cached.
-- `nf0`: the question has no first-person word (I, my, me, mine, our, us …).
-
-The probability is `p = sigmoid(0.35·clip(d, ±8) + 2.2·nf0 − 1.2)`.
-
-The idea: cue-less ssa questions ask about content the assistant produced ("Which dessert shop in Orlando had the giant milkshakes?"). They match an assistant unit much better than any user unit (d about +2 to +16) and rarely mention the user. ssu questions match the user's own statement.
-
-Results on questions routed to ssu (offline `role_eval.py`; dev has 144 such questions, 50 of them gold ssa):
-
-| | dev | dev200 |
-|---|---|---|
-| AUC, p_assistant (ssa vs everything routed to ssu) | 0.974 | 1.000 |
-| AUC, ssa vs ssu only | 0.978 | 1.000 |
-| accuracy at 0.7, ssa vs ssu only | 0.919 | 1.000 |
-| TP / FP at 0.7 | 42 / 0 | 7 / 0 |
-| TP / FP at 0.8 | 37 / 0 | 6 / 0 |
-| highest p of a non-ssa question | 0.654 | 0.654 |
-
-Gain captured: on dev, +1.97 of the +2.25 a perfect oracle switch would give; on dev200, +1.25 of +1.27.
-
-Where the gain comes from: the switch gains about 64 S on each ssa question that the ssu lens gets wrong, and costs about 1 S (chars) on each one it gets right. The cost side is steep. A false switch of an ssu, multi or ku question costs 31 to 86 S, for example "What breed is my dog?" (−65), "What time did I reach the clinic" (−65) and "Where did Rachel move to" (−86). That is why the thresholds are strict.
-
-Wiring (CORE REQUEST 1): after `route(q.question)`:
-- if the route is ssu and `role_guess(q, hx) ≥ 0.8`, use ssa;
-- if the route is multi and `role_guess(q, hx) ≥ 0.9`, use ssa;
-- never apply it to the ku or temporal routes. On temporal-routed dev questions p ≥ 0.7 gives 12 false switches ("Which event happened first, …" has no first-person word).
+`lenses/ssa/b_r3_role.py`. Each variant is the whole routed system: text router, then configs/best.json, with the overrides below.
+- `v1`: control. Reproduces v1 exactly (dev200 84.9 / Sall 83.2 / AUC 0.855).
+- `comb`: the ssu and multi wrappers (`merged_r2`, through their `role_module` parameter) use the combined `role_guess`: `z = 0.35·clip(d,±8) + 2.2·nf0 − 1.2 + logit(pA) − 0.5`, `p = sigmoid(z)`. Thresholds stay 0.8 (ssu) and 0.9 (multi). `pA` is A's r2 lexical `role_features` (BM25 role diff, top-5 role mix, per-role term coverage, first-person count, advice cue).
+- `v1_guard`: v1 plus the hint guard (soft = 0.6, ssu route, no first-person word). Isolates the guard.
+- `comb_guard`: `comb` plus the guard.
+- **`comb_guard_adv` (recommended)**: `comb_guard`, plus "should I" questions on the ssu route go to `a_recsent recqs_cf7` when p ≥ 0.5 (A's r2 nf50a idea).
+- Offline only (`r3_probe` rows), not swept:
+  - A 9-feature standardised logistic fit: ssu TP 38 at FP 0, but the multi margin shrinks to 0.17 logit. Rejected as overfit.
+  - `B + 0.5·logit(pA)`: 40 / 50 on ssu, but the ssu margin is 0.40 and it gives 1 FP on ku and on temporal.
+  - `B + top1_a`, `B + top5_a`, `B + advice` alone: no gain.
+- Temporal-route hand-off (brief item 2): **not built.** dev has exactly one gold-ssa question on the temporal route ("Which show was my example of Netflix only having the last season available?"), and dev200 has none. That question is user-role: its answer is the user's own line, so d = −8.9 and no assistant-margin feature can see it. v1's temporal lens already answers it (S 91.9). Meanwhile 7 dev / 2 dev200 temporal questions sit at p ≥ 0.8 under either score ("Which trip did the narrator take first …"). Nothing can be learned from one positive.
 
 ## Results
-### ssa type (gold ssa; dev n = 112, dev200 n = 22; AUC undefined, 0 unanswerable ssa)
-| split | variant | S | Sall | PA | ATR | SR | CF1 | chars |
+Columns: S / PA / ATR / SR / CF1 / chars / AUC. dev and dev200 have no unanswerable ssa question, so AUC is "-" on ssa rows.
+
+**Gold ssa questions, ssa lens on gold type** (the ssa route itself)
+
+| split | lens / variant | S | PA | ATR | SR | CF1 | chars | AUC |
 |---|---|---|---|---|---|---|---|---|
-| dev | generic `hybrid_rr` (bar) | 72.3 | 72.3 | 1.000 | 1.000 | 1.000 | 0.368 | 11932 |
-| dev | A `recqs_cf7` (routed winner, r1) | 93.3 | 92.6 | 1.000 | | | 1.000 | 5587 |
-| dev | **session10k1_rr** | **92.5** | **92.5** | 0.991 | 1.000 | 1.000 | 1.000 | 6085 |
-| dev | session10k1_rrp | 92.5 | 92.5 | 0.991 | 1.000 | 1.000 | 1.000 | 6085 |
-| dev | session8k1 | 92.4 | 92.4 | 0.991 | 0.991 | 0.991 | 0.991 | 5692 |
-| dev | trim4k | 88.0 | 88.0 | 0.911 | 0.920 | 1.000 | 1.000 | 3702 |
-| dev | trim4k_nohead | 88.0 | 88.0 | 0.911 | 0.920 | 1.000 | 1.000 | 3696 |
-| dev | trim5k | 88.4 | 88.4 | 0.920 | 0.920 | 1.000 | 1.000 | 4407 |
-| dev | trim6k | 90.5 | 90.5 | 0.955 | 0.964 | 1.000 | 1.000 | 4963 |
-| dev | trim5k_cq | 89.6 | 89.6 | 0.938 | 0.938 | 1.000 | 1.000 | 4403 |
-| dev | trim6k_cq | 91.1 | 91.1 | 0.964 | 0.973 | 1.000 | 1.000 | 4960 |
-| dev | trim5k_s | 90.1 | 90.1 | 0.946 | 0.946 | 1.000 | 1.000 | 4406 |
-| dev | trim6k_s | 91.1 | 91.1 | 0.964 | 0.973 | 1.000 | 1.000 | 4967 |
-| dev | trim5k_sb | 90.1 | 90.1 | 0.946 | 0.955 | 1.000 | 1.000 | 4401 |
-| dev200 | generic `hybrid_rr` (bar) | 71.2 | 71.2 | 1.000 | 1.000 | 1.000 | 0.331 | 11938 |
-| dev200 | A `recqs_cf7` (r1) | 93.3 | 92.9 | 1.000 | | | 1.000 | 5376 |
-| dev200 | **session10k1_rr** | **93.1** | **93.1** | 1.000 | 1.000 | 1.000 | 1.000 | 5929 |
-| dev200 | session10k1_rrp | 93.1 | 93.1 | 1.000 | 1.000 | 1.000 | 1.000 | 5929 |
-| dev200 | trim5k_cq | 87.8 | 87.8 | 0.909 | 0.909 | 1.000 | 1.000 | 4279 |
-| dev200 | trim6k_cq | 90.6 | 90.6 | 0.955 | 0.955 | 1.000 | 1.000 | 4756 |
+| dev (112) | generic `hybrid_rr` (baseline) | 72.3 | 1.000 | 1.000 | 1.000 | 0.368 | 11932 | - |
+| dev | v1 `a_recsent r2_conf2` | 93.6 | 1.000 | 1.000 | 1.000 | 1.000 | 4542 | - |
+| dev200 (22) | generic `hybrid_rr` | 71.2 | 1.000 | 1.000 | 1.000 | 0.331 | 11938 | - |
+| dev200 | v1 `a_recsent r2_conf2` | 93.7 | 1.000 | 1.000 | 1.000 | 1.000 | 4186 | - |
 
-### Role switch, questions routed to ssu (dev n = 144, dev200 n = 40)
-| variant | dev S / Sall | dev PA / ATR / SR / CF1 / chars / AUC | dev200 S / Sall | dev200 PA / ATR / SR / CF1 / chars / AUC |
-|---|---|---|---|---|
-| noswitch (= best.json, a_struct nb3t0) | 74.4 / 75.8 | .757 / .866 / .952 / .875 / 3701 / .837 | 72.6 / 73.8 | .757 / .851 / .905 / .817 / 3799 / .838 |
-| switch_a (0.7, c −1.0) | 82.0 / 83.8 | .875 / .939 / .952 / .883 / 4431 / .936 | 76.8 / 77.6 | .811 / .905 / .905 / .844 / 4130 / .892 |
-| switch_b (target: B lens) | 81.9 / 84.0 | .875 / .939 / .952 / .883 / 4566 / .923 | 76.7 / 77.5 | .811 / .905 / .905 / .844 / 4232 / .883 |
-| switch_a5 (0.5) | 81.5 / 83.3 | .868 / .936 / .948 / .883 / 4614 / .912 | 72.4 / 73.6 | .757 / .865 / .892 / .817 / 4427 / .856 |
-| switch_a_m (0.7, c −1.2) | 82.0 / 83.8 | .875 / .939 / .952 / .883 / 4409 / .936 | 76.8 / 77.6 | .811 / .905 / .905 / .844 / 4130 / .892 |
-| switch_m6 (0.6) | 81.5 / 83.4 | .868 / .932 / .952 / .883 / 4509 / .909 | 74.1 / 75.6 | .784 / .878 / .905 / .817 / 4289 / .928 |
-| **switch_m8 (0.8)** | **82.0 / 83.8** | .875 / .939 / .952 / .883 / 4329 / .934 | **76.8 / 77.6** | .811 / .905 / .905 / .844 / 4117 / .892 |
-| switch_nf0 (text only) | 81.1 / 83.0 | .868 / .937 / .948 / .871 / 4511 / .922 | 75.9 / 77.3 | .811 / .905 / .905 / .817 / 4218 / .892 |
+**Gold ssa questions through the router** (what gets submitted)
 
-The plateau runs from 0.7 to 0.8, and 0.6 already lets in "move to the new apartment" (an ssu question; −31 S on dev200). The cross-encoder margin adds about +0.9 S on this route over the text-only rule, on both splits.
+| split | variant | S | PA | ATR | SR | CF1 | chars |
+|---|---|---|---|---|---|---|---|
+| dev (112) | v1 | 91.8 | 0.973 | 0.973 | 1.000 | 0.997 | 4387 |
+| dev | comb / comb_guard | 92.5 | 0.982 | 0.982 | 1.000 | 1.000 | 4415 |
+| dev | **comb_guard_adv** | **93.0** | 0.991 | - | - | 1.000 | - |
+| dev200 (22) | v1 = all variants | 93.7 | 1.000 | 1.000 | 1.000 | 1.000 | 4162 |
 
-### Role switch, questions routed to multi (dev n = 158, dev200 n = 42)
-| variant | dev S / Sall | dev200 S / Sall |
-|---|---|---|
-| no multi switch | 82.6 / 69.7 | 79.5 / 67.2 |
-| **multi at 0.9** | **85.3 / 72.8** | **84.2 / 72.5** |
-| multi at 0.95 | 84.8 / 72.2 | 84.2 / 72.5 |
+**Router-selected slices** (`--route`; all question types on the route)
 
-At 0.9 the switch catches 5 of the 6 dev ssa questions routed to multi, and 2 of 2 on dev200, with 0 false switches. Examples are "How many eggs go into a classic French omelette again?" and "How many mummies … Lost Temple of the Djinn". On these the multi lens scores S 5 to 17; the ssa lens scores 93.
+| slice | variant | S | PA | ATR | SR | CF1 | chars | AUC |
+|---|---|---|---|---|---|---|---|---|
+| ssu-routed dev (140) | v1 | 86.1 | 0.932 | 0.960 | 0.980 | 0.894 | 4159 | 0.931 |
+| | comb / comb_guard / v1_guard | 86.1 | 0.932 | 0.960 | 0.980 | 0.894 | 4161 | 0.932 |
+| | **comb_guard_adv** | **86.6** | 0.939 | 0.967 | 0.980 | 0.894 | 4184 | 0.932 |
+| ssu-routed dev200 (38) | all variants | 82.3 | 0.886 | 0.929 | 0.943 | 0.867 | 4234 | 0.905 |
+| multi-routed dev (170) | v1 / v1_guard | 86.3 | 0.936 | 0.972 | 0.984 | 0.903 | 5467 | 0.795 |
+| | **comb / comb_guard** | **86.7** | 0.943 | 0.978 | 0.984 | 0.905 | 5481 | 0.800 |
+| multi-routed dev200 (45) | all variants | 84.2 | 0.921 | 0.965 | 0.984 | 0.872 | 6061 | 0.789 |
 
-### Routed system (all questions; dev n = 526, dev200 n = 125)
-| variant | dev S / Sall / PA / CF1 / chars / AUC | dev200 S / Sall / PA / CF1 / chars / AUC |
-|---|---|---|
-| noswitch (current best.json) | 80.4 / 74.9 / .867 / .877 / 7375 / .719 | 79.9 / 74.2 / .864 / .864 / 7173 / .808 |
-| switch_a (ssu 0.7) | 82.5 / 77.1 / .899 / .879 / 7575 / .750 | 81.3 / 75.5 / .882 / .873 / 7279 / .820 |
-| switch_am9 (ssu 0.7 + multi 0.9) | 83.3 / 78.0 / .909 / .884 / 7525 / .751 | 82.8 / 77.2 / .900 / .882 / 7192 / .823 |
-| **switch_m8m9 (ssu 0.8 + multi 0.9)** | **83.3 / 78.0 / .909 / .884 / 7504 / .750** | **82.8 / 77.2 / .900 / .882 / 7188 / .825** |
+**Routed system, all types** (`runs/r3-ssa-b/all/b_r3_role/`)
 
-## Best variants
-- **For the router: `lenses/ssa/b_role.py` `switch_m8m9`.** It gains +2.9 S on both dev and dev200 and +3.1 / +3.0 Sall, and passes the acceptance rule. The integrator wires `role_guess` into `pipeline.py`.
-- **ssa type:** `b_semantic.py` `session10k1_rr` (equivalently `session10k1_rrp`, which gives better test hints). It ties A within 0.8 on dev and 0.2 on dev200. Keep **A `recqs_cf7`** on the ssa route: it has fewer chars and gets the one test question where we disagree right (see failure pattern 3).
+| split | variant | S | Sall | PA | CF1 | chars | AUC |
+|---|---|---|---|---|---|---|---|
+| dev200 (125) | v1 | 84.9 | 83.2 | 0.918 | 0.894 | 5478 | 0.855 |
+| dev200 | comb_guard_adv | 84.9 | 83.2 | 0.918 | 0.894 | 5477 | 0.855 |
+| dev (526) | v1 | 85.9 | 84.7 | 0.933 | 0.899 | 5587 | 0.810 |
+| dev | **comb_guard_adv** | **86.2** | **85.0** | 0.938 | 0.899 | 5599 | 0.811 |
 
-Test audit (`harness.audit`, all 25 test ssa questions, `session10k1_rrp`):
-- Every pack is a single session of 2.0 to 3.4k chars (mean 2.66k), so brief item (2)'s target of about 4k is already met on test. Trimming only matters for the long LongMemEval sessions on dev.
-- 23 of 25 hints quote exactly one first-person recommendation sentence that matches the purpose (Toggl Track, pandas, VS Code, Riverdale Park East, Silje Dahl, Octane Coffee …).
-- The cited session matches A's `r2_solo` on 23 of 25 questions. The two that differ are Lisbon coworking (probably unanswerable: abstain_p 0.70, both lenses cite a session with no recommendation) and homebrew (failure pattern 3).
+(v1 re-measured at 85.9 here vs 86.0 in SYNTHESIS_r2; the 0.1 drift is in temporal rows, identical in both variants of this run.)
+
+Per-question changes against v1 (`r3_compare.py`). No question loses S.
+- dev ssu route:
+  - switched to ssa: "Besides 'sexual compulsions' …" and "phone number of the Speyer tourism board" (S 94.3 → 94.2), plus "Which back-end languages should I learn …" (S 29 → 93).
+  - guard only: "27th of the 100 prompt parameters", "Seco de Cordero beer", "powwows traditional game", "environmentally responsible supply chains" (the Reactor failure), and the ssu question "How long did it take to move to the new apartment?". That last one keeps its pack and recency line and only loses the ownership sentence.
+- dev multi route: "DHL Wellness Retreats … influencer marketing", S 19 → 93.2.
+- dev200: guard only, on "Speyer" and "new apartment".
+
+### Test audit (no gold)
+`harness.audit --compare runs/final/v1_test_packs.jsonl`:
+- ssu: **0 of 45** packs change for both `comb_guard` and `comb_guard_adv`.
+- multi: **0 of 20** change.
+- ssa: **0 of 25** change.
+- ku and temporal are not touched by construction.
+
+Why nothing moves: the highest `p_assistant` on test is 0.33 on the ssu route and 0.28 on the multi route. Every ssu- and multi-routed test question contains I / my / our, so the guard is gated off, and none says "should I". The one flag is the pre-existing v1 multi flag (feijoada, abstain_p 0.54).
+
+Test packs this change modifies: **none**. I checked the ssa packs qualitatively:
+- Lisbon coworking (q_a13386c9d560): the pack holds "Heden in Baixa has a good day pass" without the word coworking, and there is no quote line. It is a plausible answer, and I made no per-question fix.
+- Speedwork coach (q_bad53f86da03): no quote line, but the pack holds "I recommend Coach Miriam at the Toronto Lakeshore Running Club".
 
 ## Top failure patterns
-1. **Trimming the top session loses the gold turn, whatever the trimming signal.** Unit cross-encoder, cleaned-query cross-encoder and sentence-level cross-encoder all fail. At 5k, PA falls from 0.991 to between 0.92 and 0.95; each miss costs 0.58 S and 1k chars saves only 0.31 S. Examples:
-   - "Bandung … Nasi Goreng": the gold is assistant turn t7 ("Miss Bee Providore offers …"), at gold_rank 21. Sibling turns name the restaurant too.
-   - "Radiation Amplified zombie": the gold is the user turn "Fissionator is a REALLY cool one", at gold_rank 30.
-   - "powwows … Hoop Dance": the gold-turn label points to a user turn ("I'll definitely look into those powwows …") that does not contain "Hoop" (q_6fabbe9a09a6, q_4d6447a7f593). This looks like label noise in `core.gold_turns`. A whole-session pack satisfies it; any trimmed pack loses it.
-2. **Role-detector misses and near-misses.**
-   - Missed: "Who was the President's Chief Advisor … in the article on the Lawrence Livermore fusion breakthrough?" (d = −5.0). The user pasted the article, so the best cross-encoder match is a user unit; the miss costs 64.7 S. "Which back-end languages should I learn …" (nf = 1, d = +4.1, p = 0.56).
-   - Near false positives: "What breed is my dog?" (d = +4.65), "Where do I take yoga classes?" (d = +4.68) and "How long did it take to move to the new apartment?" (nf0, d = −1.04). Each would cost 31 to 65 S if switched, hence thresholds of 0.8 and 0.9 rather than 0.5.
-3. **A recommendation whose name only partly matches the category (test, qualitative).** "What was the name of the homebrew supply shop you recommended?"
-   - B cites the session where the user mentions "the homebrew supply place".
-   - A cites the right session, with "You should check out Peachtree Brew Supply in Decatur".
-   - The cross-encoder logit of that sentence is −8.4, and it sits at hybrid rank 99. The `rrp` pool brings it into the pool, but the additive speech-act bonus (+0.8) cannot beat the cross-encoder z-score.
-   - I did not tune a weight on this single test question. A's structural scan handles it, which is one more reason to keep A on the ssa route.
+1. **Role hint contradicts the evidence (Reactor-visible, proxy-invisible).** A ssa question on the ssu route keeps PA = 1, but it gets "answer from what the user said about their own X". Examples:
+   - q_73a1f68b2421 supply chains: real Reactor abstained.
+   - "Which beer goes in the Seco de Cordero from Ancash?" (p 0.70).
+   - "Which traditional game is often performed by skilled dancers at powwows?" (p 0.77).
+
+   The guard fixes all three on dev. It cannot reach ssa questions phrased with "my" ("What designation on my jumpsuit led me to the file number …", p 0.41).
+2. **The cross-encoder margin is blind when the answer echoes the user's words, or when the answer is user-role.**
+   - "Besides 'sexual compulsions', what were the other four alternative terms?": the user quotes the term, so d = −0.3. A's lexical scan sees the terms in assistant turns (pA 0.87), and the combined score catches it.
+   - "Who was the President's Chief Advisor … in the article on the Lawrence Livermore fusion breakthrough?": the user pasted the article, so d = −5.0. No role feature can catch this, and the ssu lens misses the turn (S 28.7).
+   - "Which show was my example of Netflix …": user-role, on the temporal route.
+3. **Thin margin at the nearest ssu question.** "How long did it take to move to the new apartment?" has no first-person word. It is the closest negative for every detector: combined z 0.85 on dev and 0.65 on dev200, against the switch threshold of 1.39. That is why it gets the guard rather than a switch. A's `a_r3_role` places its nf0 switch at d ≥ −0.73 against this question's d = −1.04, and A's s55 variant, which switched it, lost on dev200.
+
+## Overlap with lens A (round 3)
+A's `a_r3_role.py` reaches the same diagnosis, citing the same Reactor question. Its `role_guess = max(p_b, p_fit)` switches more nf0 questions to the ssa lens: routed dev 86.0 → 86.3, gold ssa 91.8 → 93.0, test 0 changes. My version switches fewer at a wider margin and covers the remainder with the hint guard instead of a lens change. A's nh55 variant is the same guard idea.
+
+The two are interchangeable on test, since neither changes any pack, and they tie on routed dev (A 86.3 against v1 86.0 in A's run; mine 86.2 against v1 85.9 in this run). Suggested integration (pick one):
+- (i) Mine: `routes.ssu = {"lens": "lenses/ssa/b_r3_role.py", "variant": "comb_guard_adv"}` and `routes.multi.params = {"role_module": "lenses/ssa/b_r3_role.py"}`.
+- (ii) A's switch with my guard: the same `routes.ssu`, plus `"params": {"role_module": "lenses/ssa/a_r3_role.py"}` (the guard reads `p_assistant` from the wrapper's debug, so it then uses A's p), and `routes.multi.params.role_module = "lenses/ssa/a_r3_role.py"`. Not swept by me.
+
+`b_r3_role.build` calls the frozen `merged_r2` route lenses directly, so it can sit on the ssu route without recursion.
 
 ## CORE REQUESTs
-1. **Wire `role_guess` into the routed pipeline.** `from lenses.ssa.b_role import role_guess`:
-   - after `route()`: route ssu with p ≥ 0.8 goes to ssa; route multi with p ≥ 0.9 goes to ssa; ku and temporal are untouched.
-   - `lenses/ssa/b_role.py` `build()` is a working reference implementation (it reads `configs/best.json`).
-   - Cost: one `hybrid` call plus a cross-encoder rerank of the top 40 per ssu- or multi-routed question. These are cache-shared with generic `hybrid_rr`; about 0.2 to 0.8 s cold.
-2. Check `core.gold_turns` for "Hoop Dance" (q_6fabbe9a09a6, q_4d6447a7f593): the gold turn has no answer string. It may be a turn-index offset. If it is real, ATR for that question rewards packing the wrong turn.
-3. (Optional) A `route_with_evidence(q, hx)` in `core/router.py`, so that every consumer (audit, sweeps with `--route`) sees the same evidence-aware route.
+1. **Wire the ssu-route guard.** Route `ssu` → `lenses/ssa/b_r3_role.py comb_guard_adv`, and route `multi` → `merged_r2 tight_role9` with `params.role_module = "lenses/ssa/b_r3_role.py"`. Test diff: 0 packs.
+2. **Reactor check of the guard:** re-run q_73a1f68b2421 (dev) with the guarded pack in the next calibration batch. It is the only Reactor-measured case.
+3. (Optional, router) "my example of / the example I gave" → ssa. It affects 1 dev question, which v1 already answers via temporal. Low priority.
+4. (Harness) A "hint conflict" audit flag: an ssu-route pack whose best cross-encoder unit is an assistant unit while the hint says "what the user said". Proxy PA cannot see this failure.
 
 ## Ideas for next round
-- Reuse the role signal on the ku route. Its own detector (ku-B `ku_pair_p`) could combine with `d`: "Where is the painting … currently hanging?" has p = 0.90, so `role_guess` alone must not touch ku.
-- Combine B's role signal with A's structural recommendation-sentence features (A's brief item 3) into one detector. A's sentence scan catches the "Brew Supply" class, and the cross-encoder margin catches content questions.
-- For the ssa lens: gate the session choice on a first-person recommendation with an IDF-weighted category match when the question has no purpose phrase, as A does. Validate it on dev questions of the form "the X you recommended" before using it; dev has few such questions.
-- Trimming is not worth more effort for ssa: test packs are already about 2.7k chars, and on dev every trimming signal loses more PA than the chars are worth.
+- A user-role ssa detector (the user pasted an article or gave an example): the question names a document ("in the article", "the script", "my example of") and the best unit is a long user turn. It needs more than the 2 dev positives available.
+- A semantic quote fallback for the ssa hint when no sentence has a lexical category match (Lisbon / Heden-style paraphrase). Score first-person recommendation sentences in the chosen session with `hx.rerank_texts` against the question's purpose phrase. dev has no "you recommended" questions, so it can only be validated on a synthetic dev set.
+- Calibrate `p_assistant` jointly with the ku detector, so that one detector decides ssa / ku / ssu on the ssu route.

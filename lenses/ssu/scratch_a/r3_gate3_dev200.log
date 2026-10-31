@@ -1,0 +1,2 @@
+dev200 ku q_0fc530dd5882 ['kg3g'] fire ['time'] [10.08, 11.04] 0.714 | What time do I wake up on Saturday mornings?
+dev200 ku q_e88175bc40ba ['kg4', 'kg3', 'kg3g'] fire ['n:month'] [7.16, 12.63] 0.458 | How long have I had my cat, Luna?

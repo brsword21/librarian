@@ -1,112 +1,145 @@
-# Lens B "Semantyka", multi-session: Round 2 report
+# Lens B "Semantyka", multi-session: Round 3 report
 
-New lens: `lenses/multi/b_tight.py`, which imports the round-1 helpers from `b_sweep.py`. **Best variant: `p08c35_aor`.**
-Runs: `runs/r2-multi-b/multi/{generic,b_sweep,b_tight}/<variant>/{dev,dev200}`. Test audit: `runs/audit/multi/b_tight/p08c35_aor`.
-Scratch (offline fits from per_question.jsonl):
-- `scratch_b/prune_fit.py`: gap-threshold pruning
-- `scratch_b/lost.py`: gold sessions far below the top CE score
-- `scratch_b/keep_fit.py`: logistic p(gold session) model, and the keep and cite thresholds
-- `scratch_b/kind_fit.py`: thresholds per question kind (no gain)
+New lens: `lenses/multi/b_r3_full.py`. It is the frozen `b_tight.build` (same retrieval, same p(gold) keep/cite rule), copied with a new renderer and a corrected routine hint. It imports from `b_sweep.py` and `b_tight.py` and edits neither.
+**Best variant: `ufull_h`.** Probe: `lenses/multi/b_r3_combo.py` (lens A's rescue + my renderer).
+Runs: `runs/r3-multi-b/multi/{generic,b_tight,b_r3_full,b_r3_combo}/<variant>/{dev,dev200}`, routed runs in `runs/r3-multi-b/multi-routed/...`.
+Test audits: `runs/audit/multi/b_r3_full/{ufull,ufull_w,ufull_h}` and `runs/audit/multi/b_r3_combo/a_r2m_full12`. The v1 reference with all 20 multi-routed test questions is saved as `scratch_b/v1_test_packs.jsonl`.
+Scratch scripts:
+- `scratch_b/strict.py`: fact-sentence coverage, the new PA_fact metric
+- `scratch_b/keep_fit3.py`: p(gold) refit
+- `scratch_b/test_recall.py`: test-audit check of lexical instance sessions left out of the pack
 
-## Headline
+## Headline: the v1 multi pack drops the fact sentence in half of the "PA = 1" questions
 
-The round-1 winner `deep8_10k` sends about 8 sessions on dev and dev200 and about 12 on test, for 2 to 3 gold sessions. If Reactor cites every passage, S drops by 12.7 on dev (86.6 to 73.9) and by 11.7 on dev200 (85.2 to 73.5).
+**What the real Reactor did.** In the e1 calibration, Reactor answered `INSUFFICIENT_EVIDENCE` on q_2605c5385371 ("hours driving to my three road trip destinations"). The pack held all 3 gold sessions, so offline PA was 1. But the round-1/2 renderer (`b_sweep.trim_text`) trims every unit to 240 chars, keeping the sentences that share the most question terms. It kept "I'm planning another road trip …" and cut "it only took me four hours to drive there" and "I drove for six hours to Washington D.C.". Reactor read both sessions as plans and abstained. The frozen v1 (`b_tight p08c35_aor`) uses the same renderer and still produces this pack (checked: "four hours" and "six hours" are absent from it).
 
-`p08c35_aor` cuts the pack down to the sessions that a small logistic model calls likely gold (3.5 per question on dev, 3.7 on dev200), at about 6k chars instead of 10k:
-- dev: S 86.6 → **87.2**; Sall 73.9 → **85.7** (+11.8).
-- dev200: S 85.2 → **83.3** (−1.9); Sall 73.5 → **82.3** (+8.8).
-- The dev200 S loss is one question out of 22: the "properties viewed before the townhouse offer" question, which has 5 gold sessions.
+**How I measured it.** The harness's ATR counts a turn as included even after trimming. `scratch_b/strict.py` instead checks the passage text. PA_fact = PA and every fact-like sentence of the gold user turns is present verbatim. A sentence is fact-like if it has a number, money, "by the way / I just …", or a first-person event verb.
 
-Against the acceptance rule (S +2 on dev and no loss on dev200), the result is **mixed**: S +0.6 on dev and −1.9 on dev200. On Sall, the robust metric, it wins by +9 to +12. If submission citations are whatever Reactor cites, which the organisers have not confirmed either way, this is the variant to route. If the integrator stays on the strict rule, keep `deep8_10k` for S and take the Sall gain only after the cite-post-filter question is settled. My recommendation is to switch: Sall is +9 to +12, while S is +0.6 on dev and −1.9 on dev200, and the dev200 loss is a single question.
+| | PA | PA_fact dev | PA_fact dev200 | lost fact sentences (dev) |
+|---|---|---|---|---|
+| v1 `b_tight p08c35_aor` | 0.950 / 0.909 | **0.479** | **0.455** | 95 in 107 q |
+| lens A `a_r3_pin pin` (pins the best own sentence) | 0.950 | 0.628 | – | 52 |
+| lens A `a_r3_pin r2m` (rescue) | 0.967 | 0.479 | – | 99 |
+| `fact360` (fact-aware trim, 360 chars) | 0.950 / 0.909 | 0.909 | 0.818 | 6 |
+| `fact480` | 0.950 / 0.909 | 0.950 | 0.909 | 0 |
+| **`ufull` / `ufull_h`** (user units untrimmed) | 0.950 / 0.909 | **0.950** | **0.909** | 0 |
+| combo `a_r2m_full12` (A rescue + no trim, 12k budget) | 0.967 / 0.909 | 0.967 | 0.909 | 0 |
 
-The abstention AUC also improves on dev: 0.644 → **0.731**, by importing multi-A's absence check (credit: `a_tally.abstain_score`). On dev200 it falls from 0.833 to 0.795, but dev200 has only 6 unanswerable questions.
+The dataset plants the fact as a "By the way, I …" aside after a topical opening sentence, and term-hit trimming drops exactly that aside. Examples lost by v1 on dev:
+- "I just got back from a 3-day solo camping trip to Big Sur"
+- "I also got a new set of bike lights installed, which were $40"
+- "I recently finished a Tamiya 1/48 scale Spitfire"
+- "my Twitter follower count has jumped from 420 to 540"
+- "placed an online order with Thrive Market … spent around $150"
+- "Dr. Smith, on March 3rd" (the splitter also broke on "Dr.")
 
-## Results (multi gold type; dev 133 q / 121 answerable, dev200 28 q / 22 answerable)
+The other routes do not have this problem. With the same check, ssu `merged_r2`, ku `b_r2` and temporal `merged_r2` lose 0 sentences (`scratch_b/strict_other_types.txt`), so the fix only concerns multi.
 
-| split | lens / variant | S | Sall | PA | ATR | SR | CF1 | CF1all | chars | AUC |
-|---|---|---|---|---|---|---|---|---|---|---|
-| dev | generic `hybrid_rr` (bar) | 69.1 | 69.1 | 0.744 | 0.873 | 0.961 | 0.817 | 0.817 | 11931 | 0.598 |
-| dev | b_sweep `deep8_10k` (R1 best) | 86.6 | 73.9 | 0.967 | 0.989 | 0.994 | 0.896 | 0.473 | 9949 | 0.644 |
-| dev | b_tight `k8m2` | 80.6 | 80.6 | 0.884 | 0.955 | 0.960 | 0.833 | 0.833 | 5927 | 0.644 |
-| dev | b_tight `k10m2` | 82.3 | 82.3 | 0.934 | 0.976 | 0.982 | 0.789 | 0.789 | 6520 | 0.644 |
-| dev | b_tight `k7m3` | 81.2 | 81.2 | 0.926 | 0.970 | 0.974 | 0.770 | 0.770 | 6482 | 0.644 |
-| dev | b_tight `k8m2_rel` | 82.5 | 80.6 | 0.884 | 0.955 | 0.960 | 0.895 | 0.833 | 5927 | 0.644 |
-| dev | b_tight `s8m2` | 80.6 | 80.6 | 0.884 | 0.956 | 0.960 | 0.831 | 0.831 | 5962 | 0.644 |
-| dev | b_tight `s10m2` | 81.7 | 81.7 | 0.926 | 0.973 | 0.977 | 0.787 | 0.787 | 6560 | 0.644 |
-| dev | b_tight `p06` | 85.2 | 85.2 | 0.950 | 0.983 | 0.985 | 0.843 | 0.843 | 6021 | 0.644 |
-| dev | b_tight `p08` | 85.7 | 85.7 | 0.950 | 0.980 | 0.984 | 0.858 | 0.858 | 5841 | 0.644 |
-| dev | b_tight `p10` | 85.1 | 85.1 | 0.934 | 0.974 | 0.979 | 0.873 | 0.873 | 5648 | 0.644 |
-| dev | b_tight `p15` | 84.0 | 84.0 | 0.909 | 0.968 | 0.971 | 0.887 | 0.887 | 5433 | 0.644 |
-| dev | b_tight `p10f` | 84.9 | 84.9 | 0.934 | 0.974 | 0.979 | 0.866 | 0.866 | 5732 | 0.644 |
-| dev | b_tight `p10c35` | 86.2 | 85.1 | 0.934 | 0.974 | 0.979 | 0.910 | 0.873 | 5648 | 0.644 |
-| dev | b_tight `p08c35` | 87.2 | 85.7 | 0.950 | 0.980 | 0.984 | 0.910 | 0.858 | 5841 | 0.644 |
-| dev | b_tight `p08c35_amax` | 87.2 | 85.7 | 0.950 | 0.980 | 0.984 | 0.910 | 0.858 | 5841 | 0.728 |
-| dev | **b_tight `p08c35_aor`** | **87.2** | **85.7** | 0.950 | 0.980 | 0.984 | 0.910 | 0.858 | 5841 | **0.731** |
-| dev200 | generic `hybrid_rr` (bar) | 63.7 | 63.7 | 0.682 | 0.844 | 0.950 | 0.770 | 0.770 | 11947 | 0.689 |
-| dev200 | b_sweep `deep8_10k` (R1 best) | 85.2 | 73.5 | 0.955 | 0.985 | 0.991 | 0.874 | 0.487 | 9951 | 0.833 |
-| dev200 | b_tight `k10m2` | 76.3 | 76.3 | 0.864 | 0.947 | 0.959 | 0.745 | 0.745 | 7098 | 0.833 |
-| dev200 | b_tight `k7m3` | 79.6 | 79.6 | 0.909 | 0.970 | 0.982 | 0.755 | 0.755 | 6902 | 0.833 |
-| dev200 | b_tight `k8m2_rel` | 80.3 | 77.3 | 0.864 | 0.947 | 0.959 | 0.874 | 0.773 | 6681 | 0.833 |
-| dev200 | b_tight `s10m2` | 76.4 | 76.4 | 0.864 | 0.947 | 0.959 | 0.746 | 0.746 | 6837 | 0.833 |
-| dev200 | b_tight `p06` | 81.8 | 81.8 | 0.909 | 0.962 | 0.973 | 0.820 | 0.820 | 6432 | 0.833 |
-| dev200 | b_tight `p08` | 82.3 | 82.3 | 0.909 | 0.962 | 0.973 | 0.835 | 0.835 | 6279 | 0.833 |
-| dev200 | b_tight `p10` | 82.4 | 82.4 | 0.909 | 0.962 | 0.973 | 0.841 | 0.841 | 6240 | 0.833 |
-| dev200 | b_tight `p10c35` | 83.3 | 82.4 | 0.909 | 0.962 | 0.973 | 0.868 | 0.841 | 6240 | 0.833 |
-| dev200 | b_tight `p08c35` | 83.3 | 82.3 | 0.909 | 0.962 | 0.973 | 0.868 | 0.835 | 6279 | 0.833 |
-| dev200 | b_tight `p08c35_amax` | 83.3 | 82.3 | 0.909 | 0.962 | 0.973 | 0.868 | 0.835 | 6279 | 0.663 |
-| dev200 | **b_tight `p08c35_aor`** | **83.3** | **82.3** | 0.909 | 0.962 | 0.973 | 0.868 | 0.835 | 6279 | **0.795** |
+## Results (gold type multi; dev 133 q / 121 answerable, dev200 28 q / 22 answerable)
 
-ALL for `p08c35_aor`: dev 0.959 (R1: 0.984), dev200 0.909 (R1: 0.955).
+| split | lens / variant | S | Sall | PA | ATR | SR | CF1 | CF1all | chars | AUC | pass. |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| dev | generic `hybrid_rr` (bar) | 69.1 | 69.1 | 0.744 | 0.873 | 0.961 | 0.817 | 0.817 | 11931 | 0.598 | 3.64 |
+| dev | `v1` (= b_tight p08c35_aor, frozen v1) | 87.2 | 85.7 | 0.950 | 0.980 | 0.984 | 0.910 | 0.858 | 5841 | 0.731 | 3.53 |
+| dev | `fact360` | 87.1 | 85.5 | 0.950 | 0.980 | 0.984 | 0.910 | 0.858 | 6427 | 0.731 | 3.53 |
+| dev | `fact480` | 86.9 | 85.4 | 0.950 | 0.980 | 0.984 | 0.910 | 0.858 | 6853 | 0.731 | 3.53 |
+| dev | `ufull` | 86.9 | 85.3 | 0.950 | 0.980 | 0.984 | 0.910 | 0.858 | 7071 | 0.731 | 3.53 |
+| dev | `ufull_d4` | 83.6 | 82.0 | 0.893 | 0.966 | 0.984 | 0.910 | 0.858 | 5483 | 0.731 | 3.53 |
+| dev | `fact360_d4` | 83.8 | 82.2 | 0.893 | 0.966 | 0.984 | 0.910 | 0.858 | 4876 | 0.731 | 3.53 |
+| dev | `ufull_ck` (pack == cite, Sall = S) | 85.3 | 85.3 | 0.950 | 0.980 | 0.984 | 0.858 | 0.858 | 7071 | 0.731 | 3.53 |
+| dev | `ufull_w` / `ufull_hr` | 86.9 | 85.3 | 0.950 | 0.980 | 0.984 | 0.910 | 0.858 | 7072 | 0.731 | 3.53 |
+| dev | **`ufull_h`** | **86.9** | **85.3** | 0.950 | 0.980 | 0.984 | 0.910 | 0.858 | 7072 | 0.731 | 3.53 |
+| dev | `ufull_h12` | 86.8 | 85.2 | 0.950 | 0.980 | 0.984 | 0.910 | 0.858 | 7317 | 0.731 | |
+| dev | combo `a_r2m_full` (10k) | 86.8 | 84.5 | 0.950 | 0.983 | 0.991 | 0.910 | 0.833 | 7245 | 0.731 | |
+| dev | combo `a_r2m_full12` | 87.8 | 85.5 | 0.967 | 0.986 | 0.991 | 0.910 | 0.833 | 7559 | 0.731 | |
+| dev200 | generic `hybrid_rr` (bar) | 63.7 | 63.7 | 0.682 | 0.844 | 0.950 | 0.770 | 0.770 | 11947 | 0.689 | 4.29 |
+| dev200 | `v1` | 83.3 | 82.3 | 0.909 | 0.962 | 0.973 | 0.868 | 0.835 | 6279 | 0.795 | 3.86 |
+| dev200 | `fact360` | 83.0 | 82.0 | 0.909 | 0.962 | 0.973 | 0.868 | 0.835 | 6991 | 0.795 | 3.86 |
+| dev200 | `fact480` | 82.9 | 81.9 | 0.909 | 0.962 | 0.973 | 0.868 | 0.835 | 7437 | 0.795 | 3.86 |
+| dev200 | `ufull` | 82.9 | 81.9 | 0.909 | 0.962 | 0.973 | 0.868 | 0.835 | 7665 | 0.795 | 3.86 |
+| dev200 | `ufull_ck` | 81.9 | 81.9 | 0.909 | 0.962 | 0.973 | 0.835 | 0.835 | 7665 | 0.795 | 3.86 |
+| dev200 | `ufull_w` / `ufull_hr` | 82.9 | 81.9 | 0.909 | 0.962 | 0.973 | 0.868 | 0.835 | 7669 | 0.795 | 3.86 |
+| dev200 | **`ufull_h`** | **82.9** | **81.9** | 0.909 | 0.962 | 0.973 | 0.868 | 0.835 | 7669 | 0.795 | 3.86 |
+| dev200 | `ufull_h12` | 82.8 | 81.7 | 0.909 | 0.962 | 0.973 | 0.868 | 0.835 | 8036 | 0.795 | |
+| dev200 | combo `a_r2m_full` (10k) | 79.8 | 77.9 | 0.864 | 0.961 | 0.982 | 0.868 | 0.804 | 7893 | 0.795 | |
+| dev200 | combo `a_r2m_full12` | 82.7 | 80.7 | 0.909 | 0.970 | 0.982 | 0.868 | 0.804 | 8300 | 0.795 | |
 
-**Routed multi** (dev, questions the router sends to multi, KU misroutes included; tag `r2-multi-b-route`):
+**Routed multi** (`--route --type multi`; the role hand-off is not applied, so 6 dev ssa questions sit at S ≈ 15 in every variant):
 
-| variant | S | Sall | PA | CF1 | CF1all | chars | AUC |
-|---|---|---|---|---|---|---|---|
-| `deep8_10k` | 82.6 | 69.7 | 0.918 | 0.868 | 0.438 | 9944 | 0.668 |
-| **`p08c35_aor`** | **83.1** | **81.8** | 0.897 | 0.882 | 0.839 | 5487 | **0.758** |
+| split | variant | S | Sall | PA | AC | CF1 | chars | per-gold-type notes |
+|---|---|---|---|---|---|---|---|---|
+| dev (170 q) | v1 | 83.8 | 82.4 | 0.904 | 0.904 | 0.889 | 5493 | ssu misroutes PA 0.846 |
+| dev | **ufull** (= ufull_h) | **83.8** | 82.4 | **0.911** | **0.923** | 0.889 | 6627 | **ssu misroutes PA 0.923** |
+| dev | fact480 | 83.9 | 82.5 | 0.911 | 0.923 | 0.889 | 6422 | |
+| dev200 (45 q) | v1 | 79.9 | 78.2 | 0.868 | 0.938 | 0.844 | 6137 | |
+| dev200 | ufull | 79.5 | 77.8 | 0.868 | 0.938 | 0.844 | 7392 | |
+
+The routed AC gain is direct evidence of the trimming problem. On ssu questions misrouted to multi, the gold answer string was in a gold turn that was in the pack, but the trimming removed it. Untrimmed, the matcher finds it.
+
+**Against the acceptance rule** (+2 S on dev, no loss on dev200): `ufull_h` does **not** pass on S. It costs −0.3 on dev and −0.4 on dev200, and the cost is only the chars term: +1.2k chars × 0.05/16k. PA, CF1 and Sall are unchanged apart from that chars term. Offline S cannot see what the change fixes: the answer-bearing sentence is missing from 47% of v1's "answerable" multi packs, and real Reactor reacts to that with a false INSUFFICIENT_EVIDENCE. I recommend it as an explicit exception, as round 2 did for Sall. `fact480` is the same at −200 chars, but it is more code and still trims assistant/user units over 480 chars, so I prefer `ufull`.
+
+## Test audit (no gold) and full change list against v1
+
+`ufull_h` against v1 (`b_tight p08c35_aor`) over all 20 multi-routed test questions:
+- **Passage sets changed: 0 of 20. cite_plan changed: 0 of 20.** Routes unchanged.
+- **Hint changed: 1 pack.** q_6dd9e5e4fb97, "How many watercolour classes do I attend each week?" (the routine-hint fix, below). Its pack holds "At the moment I only have one regular watercolour class, on Saturday mornings" (May) and "I signed up for an additional watercolour class on Wednesday evenings" (July), so the answer is the sum, 2. The old hint said "the most recent statement wins".
+- **Passage text changed: 15 of 20 packs.** These now carry whole user units instead of 240-char trims. Mean chars 6600 → 6815 (+3%); the largest growth is q_90f7c27a95f2 grandchildren (6.3k → 7.2k) and q_8b4f1ff8ce11 books (4.2k → 5.2k).
+- Test user turns are short (synthetic style), so on test the renderer recovers only 8 fact-like user sentences, mostly off-topic. **On test this change is mainly robustness**, at a small cost (+215 chars per pack). The big effect is on LongMemEval-style long turns (dev, dev200 and the e1 calibration failure).
+- Flags: 1 of 20 (the same as v1).
+
+Window breadth (`ufull_w`, brief item 1) changes 3 test packs and adds one session to each: q_47e3f2749c07 orchids, q_8b4f1ff8ce11 books since March, q_2f121a243f4b PhD books. All 3 added sessions are decoys:
+- orchid-care chat
+- "My brother told me he bought five books"
+- "read two articles for my PhD"
+
+**Rejected.**
+
+Combo `a_r2m_full12` (A's rescue): 16 of 20 test packs gain 1–2 uncited sessions. I inspected 5: one recovers an instance (books: "I just finished reading a book about the history of São Paulo"); the rest are noise (grandchildren: neem oil, loyalty programs; tango: bakery savings; feijoada: plant watering). The obvious missing instances are still missing; see failure pattern 2. I would not ship the rescue on test evidence. If the integrator takes A's rescue anyway, it should be rendered with `trim=0` and a 12k budget, as `a_r2m_full12` does: at 10k the untrimmed units push gold depth units out (dev200 PA 0.909 → 0.864).
 
 ## Variants tried (one line each)
+- `v1`: b_tight p08c35_aor copied into the new file; reproduces 87.2 / 83.3 exactly.
+- `fact360` / `fact480`: fact-aware trim. Sentences are scored by term hits plus fact cue (number, `_FACT`, first-person event verb), the splitter is abbreviation-safe, and units are cut at 360 / 480 chars. PA_fact 0.909 / 0.950 on dev.
+- `ufull`: user units untrimmed, assistant units trimmed as before. PA_fact 0.950 / 0.909 at +1.2k chars.
+- `ufull_d4`, `fact360_d4`: at most 4 units per session to pay for the larger units. PA 0.893: gold turns sit 5th–8th inside their session. Rejected.
+- `ufull_ck`: cite = every passage (Sall = S exactly), the fallback asked for in brief item 4. 85.3 / 81.9.
+- `ufull_fs` + `scratch_b/keep_fit3.py`: p(gold) refit with fact-sentence CE features (best CE of a session's own fact sentences, the gap to the best one, their count), fit on dev with dev200 held out (brief item 2).
+  - Offline: dev +0.5 (87.7 at C 0.3, tk 0.08); dev200 ±0.
+  - Lost gold sessions have fact-sentence CE of −8 to −11, so the feature does not separate them. Not adopted.
+- `ufull_w`: in-window sessions with p ≥ tk/2, up to 12, for count questions (brief item 1). No-op on dev and dev200, where the window is never active. Adds decoys on test. Rejected. `ufull_w25` (tk/4) is defined but was not run.
+- `ufull_h`: + **additive routine hint** (see below). **Best.**
+- `ufull_hr` / `ufull_hr0`: + lexical instance rescue (brief item 3).
+  - It takes sessions outside the pack that hold an own, affirmed, fact-cued user sentence with the question's head noun, ranked by sentence CE, at most 2.
+  - It fires once on dev, a correct instance: "I recently participated in the Bike-a-Thon charity event". The S change is ±0.
+  - On test it picks "I repotted two orchids last week" over "I bought two Cattleya orchids", because ms-marco CE scores the decoy 2 logits higher. Not adopted.
+- `ufull_h12`: ufull_h with a 12k budget. −0.1; the budget is not binding for B.
+- combo `a_r2m_full` / `a_g2m_full` / `a_r2m_full12`: lens A's rescue rendered untrimmed (credit: multi-A). See the table and the test audit above.
 
-All variants share the round-1 `deep8_10k` retrieval: multi-query hybrid → CE on the top 90 → intra-session CE over the user units of the top 15 sessions. Each session gets a score, rmax = its best unit CE logit. The variants differ in which sessions they keep, and so in what gets packed.
-- `k8m2` / `k10m2` / `k7m3`: keep the sessions within D = 8 / 10 / 7 logits of the top, at least 2 / 2 / 3 and at most 8. Sall rises to 80–82, but PA drops to 0.88–0.93: gold sessions often rank 2nd to 4th with a 6 to 14 logit gap.
-- `k8m2_rel`: the same, with the round-1 "within 4 logits" cite rule applied inside the kept sessions. S 82.5.
-- `s8m2` / `s10m2` / `s7m3`: add sentence-level CE (`hx.rerank_texts` over the user sentences of the top 10 sessions), max-fused into the session score. **No gain** (−0.6 on dev, ±0 on dev200). The unit-level CE already sees the fact sentence.
-- `p06` / `p08` / `p10` / `p15`: **keep the sessions whose p(gold) ≥ tk**, at least 2 and at most 8, with cite = every kept session (so S = Sall).
-  - p(gold) is a 5-feature logistic model fit on dev only, using:
-    - gap to the top CE logit
-    - rank by CE
-    - question-term coverage of the session's user text
-    - number of the session's units in the top 40 of the final ranking
-    - log of the rank of the session's first unit in the final ranking
-  - Rank and fused rank carry the signal, not the CE gap.
-  - dev200 served as the holdout. Offline, the model predicted dev200 S 84.0 at tk 0.1, against 79.8 for the best gap rule.
-  - Measured: p08 scores 85.7 on dev and 82.3 on dev200.
-- `p10f`: also force each facet's top session into the pack. −0.2; dropped.
-- `p10c35` / **`p08c35`**: pack = sessions with p ≥ 0.10 / 0.08; cite_plan = packed sessions with p ≥ 0.35 (at least 2). This gives S > Sall when cite post-filtering is allowed and leaves Sall unchanged otherwise.
-- `p08c35_amax` / **`p08c35_aor`**: abstain_p combined with multi-A's absence check (titles, capitalised words, conjuncts and noun pairs that never appear in any user turn, plus an empty-window flag) by max / noisy-OR. Noisy-OR wins: AUC 0.731 / 0.795.
-- Hint, added in all `b_tight` variants (it cannot be measured offline): for count and sum questions without a "now / currently" cue, the hint adds "If a later session restates the same item with a new number, the latest statement wins." This covers the KU-style counts routed to multi (brief item 2).
-- Not done: a "cite only the passages that contain a counted item" hint. The pack is now close to the cite set (3.5 sessions for about 2.8 gold), so the hint matters less, and offline metrics cannot see it.
-- Thresholds per question kind (a lower tk for `count`): no gain offline (`kind_fit.py`).
+### The routine hint (in `ufull_h`)
+v1's rate hint reads: "This asks for a current routine value (per day/week) … the most recent statement wins, earlier values are outdated."
+- It fires on 2 dev and 2 dev200 questions, all of them sums over sessions: "How many health-related devices do I use in a day?" (4 devices in 5 sessions) and "How many days a week do I attend fitness classes?" (Zumba Tue+Thu, yoga Wed, weights Sat). On test it fires once, on the watercolour question, also a sum.
+- The new text: "… list every item of it from all sessions with its date and [E#]; different items add up, and only when the same item is restated with a new value does the most recent statement win."
+- It changes no pack contents and is invisible to offline S. Among routed questions (any gold type), it fires on no other dev or dev200 question.
 
-## Failure patterns (p08c35_aor)
-
-1. **Category to instance, many gold sessions.** The question names a category, and the gold sessions name instances with a 7 to 14 logit gap and fused rank 6 to 15.
-   - "How many properties did I view before making an offer on the townhouse in Brookside": 5 gold sessions. Two of them have p 0.07 and 0.006, so the pack keeps 3. This is the dev200 loss, and the same question fails on dev.
-   - "How many pieces of furniture did I buy, assemble, sell, or fix": the 4th gold session has p 0.03 and term coverage 0.
-   - "How many years in total did I spend in formal education from high school to…": the 3rd gold session is rank 6, gap 7.3, p 0.05.
-   - The round-1 deep pack kept these at about 8 sessions, so they are the price of pruning.
-2. **Gold session missing from the hybrid pool entirely.** "projects I led" → case competition / poster. This miss is carried over from round 1.
-3. **Test-style repeated-measurement counts may need more breadth than 8 sessions.** In the test audit, "How many times did my systolic reading exceed 130 in August?" keeps 6 sessions, and "phone calls with my daughter in August" keeps 6. The audit shows several in-window mentions, and the count of in-window sessions could exceed the cap. This cannot be checked on dev, where the window is inactive because the history spans fewer than 45 days.
-4. Decoys still sit inside kept sessions; for example, the test tango-shoes pack holds "I skipped buying new tango shoes". The hint covers this, and the session is cited only when its p ≥ 0.35.
-
-Test audit (12 packs, 0 flagged): 4 to 8 sessions per pack, 4.8k to 9.6k chars. R1 sent about 12 sessions.
+## Top failure patterns (ufull_h)
+1. **Category to instance, low unit CE** (unchanged from round 2; 5 dev and 2 dev200 PA losses):
+   - "How many properties did I view before making an offer on the townhouse in Brookside": the gold sessions say "I viewed a 1-bedroom condo on February 10th" and "that one in Cedar Creek"; they rank 3–6 with p 0.002–0.07.
+   - "How many projects have I led": gold is "case competition" and "poster".
+   - "How many health-related devices": the hearing-aids session ranks 5th.
+2. **Test: obvious instances outside the pack** (`scratch_b/test_recall.py`). The test histories hold 20–30 sessions about the same topic, and CE ranks care chatter above the instance:
+   - Orchids: "Oh, and I bought two Cattleya orchids for the balcony this week" (03/18) scores CE −4.98, below "I repotted two orchids" (−2.88) and "I bought fertilizer for three of my older orchids" (−3.41).
+   - Books since March: "I read two detective novels during my trip to Ubatuba" (06/12) never shares a stem with "books".
+   - Book club attendance: "My book club met last night and 7 people came" (03/09).
+   - All three are missing from v1, from ufull_h and from A's rescue.
+3. **Trimming hides the fact** (fixed by `ufull`): the road-trip hours, Big Sur 3 days, bike lights $40, Spitfire / Tiger I kits, Thrive Market $150.
+4. **Wrong routine hint on additive routines** (fixed by `ufull_h`): health devices, fitness-class days, test watercolour.
 
 ## CORE REQUESTs
-1. **Decide the cite policy for multi with Sall in view.** `p08c35_aor` makes the pack nearly equal to the cite set, so Sall is within 1.5 of S on dev and within 1.0 on dev200. If Reactor's own citations are used, route this variant instead of `deep8_10k`, which scores 12.7 Sall below its S on dev.
-2. Optional: store `kind` / `facets` from each lens's analysis in per_question.jsonl, so offline threshold fits per kind need not re-run `analyze`.
+1. **Route multi to `lenses/multi/b_r3_full.py` `ufull_h`** inside `lenses/multi/merged_r2.py` (`multi_variant`), or in a new wrapper. The test changes are text-only in 15 packs and the hint in 1 pack; passage sets and cite_plan are unchanged in all 20.
+2. **Harness: add text-level ATR / PA_fact.** A gold turn should count as included only if its fact sentences are in the passage text, not just its turn_id (`scratch_b/strict.py` is a drop-in). Today v1 shows PA 0.950 / ATR 0.980 on dev, but PA_fact is 0.479. Every lens that trims passes this check blind; I checked ssu, ku and temporal v1 and they are clean.
+3. If lens A's rescue is adopted, call it with `trim=0, budget=12000` (`b_r3_combo.py a_r2m_full12` shows it); its own renderer keeps the 240-char trim (PA_fact 0.479).
 
 ## Ideas for next round
-- **Adaptive breadth for windowed counts on test:** when the window prior is active and the kind is count, keep every in-window session with p ≥ tk/2, up to 12. This targets failure 3, but it can only be validated by test audit and a Reactor spot check.
-- **Instance expansion for category questions:** multi-A's LEXICON plus `hx.dense_texts` against the user sentences of sessions ranked 4 to 15, used as an extra feature in the p(gold) model. This targets failure 1. Refit the model on dev only and validate it on dev200.
-- **Refit p(gold) with richer features:** whether the best unit states a first-person fact with a number, and facet-hit flags. Fit on dev, check on dev200.
-- A soft "cite only the passages that contain a counted item" hint, once a Reactor spot check is allowed.
+- **Instance verb classes for count questions:** map the question verb ("added to my collection / bought / got / acquired / read / attended / met") to an event class and require it in the instance sentence. This would fix the orchid and book-club misses; CE scores care chatter higher than acquisitions.
+- **Dense on the statement form** ("I bought orchids", "I read a novel") over own fact sentences of the whole history, combined with the verb class; bge handles "novels" ≈ "books", which lexical rules do not.
+- **A cheaper renderer:** whole user units only for the session's top-3 units, depth units fact-trimmed at 360. This would recover about 0.2 S of the chars cost with PA_fact unchanged.
+- **Ask Reactor for a cite-set check** on 5 tight multi packs: does it cite the uncited context sessions? That decides whether `ufull_ck` (Sall = S) or `ufull_h` should ship.

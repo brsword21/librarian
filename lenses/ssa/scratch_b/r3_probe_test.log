@@ -1,0 +1,121 @@
+ssu ? pB=0.18 pA=0.18 d=-1.0 What is my cat's name?
+multi ? pB=0.04 pA=0.35 d=-5.7 How many ceramic pieces am I putting in the class show?
+ssu ? pB=0.07 pA=0.24 d=-4.1 What is the name of the coffee shop I get my morning espresso at?
+ku ? pB=0.03 pA=0.15 d=-7.0 What is the name of my ceramics class instructor now?
+ssu ? pB=0.10 pA=0.33 d=-2.7 What's the name of my neighborhood in Lisbon?
+ku ? pB=0.20 pA=0.17 d=-0.6 What is the name of the accountant I'm using for my freelance taxes no
+temporal ? pB=0.11 pA=0.17 d=-2.6 How many days apart were my son's school play and my daughter's orthod
+ku ? pB=0.18 pA=0.77 d=-0.9 What is my current job title?
+multi ? pB=0.08 pA=0.19 d=-3.6 How many watercolour classes do I attend each week?
+multi ? pB=0.03 pA=0.19 d=-6.3 How many different vegetable varieties have I planted in my garden sin
+ssu ? pB=0.38 pA=0.30 d=+2.0 What is my younger son's name?
+temporal ? pB=0.11 pA=0.26 d=-2.7 How many days apart were the hospital's 'Run for Health' 5K and the an
+temporal ? pB=0.23 pA=0.55 d=-0.1 How many days apart were the watercolour society's annual exhibition o
+ku ? pB=0.36 pA=0.63 d=+1.8 Who teaches my Saturday morning watercolour class now?
+ssu ? pB=0.09 pA=0.53 d=-3.2 What is my dog's name?
+temporal ? pB=0.05 pA=0.18 d=-5.3 How many days apart were my trip to Adelaide to visit James and my tri
+multi ? pB=0.27 pA=0.10 d=+0.5 How much did I add to my used car savings from my March salary and fre
+temporal ? pB=0.14 pA=0.15 d=-1.8 How many days apart were starting my Python for Data Analysis course a
+ku ? pB=0.04 pA=0.25 d=-5.4 How many gigabytes is my current mobile data plan?
+temporal ? pB=0.04 pA=0.12 d=-5.7 How many days apart were my church choir retreat and my first used car
+ku ? pB=0.08 pA=0.44 d=-3.5 What is my current monthly rent?
+ssu ? pB=0.43 pA=0.24 d=+2.7 What is my favorite meal?
+ssu ? pB=0.48 pA=0.29 d=+3.2 What is my favorite color?
+ssu ? pB=0.07 pA=0.23 d=-3.8 What was the name of the milonga in San Telmo I told you about?
+ssu ? pB=0.45 pA=0.50 d=+2.9 What was the name of the French tutor I told you about?
+temporal ? pB=0.05 pA=0.13 d=-5.1 How many days after I entered my alfajor recipe in the city baking con
+multi ? pB=0.08 pA=0.42 d=-3.4 How much is left in my bakery fund after those transactions I told you
+multi ? pB=0.21 pA=0.31 d=-0.3 How much have I spent on tango shoes in total?
+ssu ? pB=0.24 pA=0.28 d=+0.1 What did I end up naming my sourdough starter?
+temporal ? pB=0.11 pA=0.15 d=-2.5 How many days after I bought my ticket to the Buenos Aires Tango Festi
+multi ? pB=0.10 pA=0.29 d=-2.8 How many kilos of dulce de leche did I make in total for the birthday 
+ssu ? pB=0.17 pA=0.12 d=-1.0 What AM intermediate frequency did I end up using in my National R-77 
+ssu ? pB=0.25 pA=0.26 d=+0.3 What speaker impedance did I end up using in my National R-77?
+ssu ? pB=0.04 pA=0.08 d=-5.8 What dial lamp voltage did I end up using in my National R-77?
+ssu ? pB=0.24 pA=0.15 d=+0.2 What output tube cathode resistor value did I end up using in my Natio
+ssu ? pB=0.34 pA=0.37 d=+1.6 What screen grid resistor value did I end up using in my National R-77
+ssu ? pB=0.28 pA=0.24 d=+0.7 What AGC resistor value did I end up using in my National R-77?
+ssu ? pB=0.22 pA=0.16 d=-0.2 What power supply filter capacitor value did I end up using in my Nati
+multi ? pB=0.10 pA=0.08 d=-2.8 How many tubes did I end up replacing in my National R-77?
+ssu ? pB=0.23 pA=0.09 d=-0.0 By how many ohms did I reduce the volume control resistance in my Nati
+multi ? pB=0.10 pA=0.33 d=-2.7 How many orchids have I added to my collection since March?
+ku ? pB=0.26 pA=0.22 d=+0.4 How many laps do I swim each morning these days?
+multi ? pB=0.20 pA=0.33 d=-0.5 How many times did my systolic reading exceed 130 in August?
+temporal ? pB=0.46 pA=0.27 d=+3.0 How many years did I serve as a firefighter?
+multi ? pB=0.46 pA=0.19 d=+3.0 How many phone calls did I have with my daughter in August?
+multi ? pB=0.35 pA=0.18 d=+1.7 How many grandchildren do I have?
+ku ? pB=0.50 pA=0.54 d=+3.4 How many cups of coffee do I drink each morning these days?
+ku ? pB=0.75 pA=0.77 d=+6.6 How many kilometers do I walk each evening these days?
+multi ? pB=0.12 pA=0.31 d=-2.3 How many times did I eat feijoada last month?
+multi ? pB=0.19 pA=0.30 d=-0.6 How many books have I read since March?
+temporal ? pB=0.17 pA=0.15 d=-1.2 How many days apart were my monstera repotting and my lead-climbing co
+temporal ? pB=0.02 pA=0.14 d=-7.3 How many days after submitting my visa application did I book my fligh
+temporal ? pB=0.22 pA=0.15 d=-0.2 How many days after setting up my Montreal flat alerts did I sign a le
+temporal ? pB=0.07 pA=0.12 d=-3.8 How many days after buying my trail-running shoes did I do my first tr
+temporal ? pB=0.31 pA=0.21 d=+1.1 How many days after sending off my passport renewal did my renewed pas
+temporal ? pB=0.62 pA=0.12 d=+4.8 How many days after my pre-departure medical check-up did I get my tra
+temporal ? pB=0.35 pA=0.15 d=+1.7 How many days after my last day of school before summer did I leave fo
+temporal ? pB=0.29 pA=0.20 d=+0.9 How many days after getting my sourdough starter did I bake my first l
+ssu ? pB=0.19 pA=0.28 d=-0.8 What was the name of my language exchange partner from Quebec?
+temporal ? pB=0.03 pA=0.11 d=-6.2 How many days apart were my Toronto Marathon and the big Moroccan fami
+ssu ? pB=0.04 pA=0.14 d=-5.6 What was the name of the physiotherapist I saw after the Toronto Marat
+ssu ? pB=0.05 pA=0.72 d=-4.7 What is the name of the immigration law firm where I work?
+temporal ? pB=0.02 pA=0.08 d=-8.9 How many days apart were the community potluck where I made Moroccan m
+ku ? pB=0.02 pA=0.31 d=-9.0 What is the name of the store where I currently buy Moroccan spices?
+temporal ? pB=0.19 pA=0.21 d=-0.7 How many days apart were my visit to the Aga Khan Museum and the Moroc
+temporal ? pB=0.45 pA=0.49 d=+2.8 How many days apart were the immigration law conference I attended in 
+multi ? pB=0.05 pA=0.51 d=-5.0 How many animals at the shelter where I volunteer are not FIV-positive
+ssu ? pB=0.19 pA=0.44 d=-0.7 What is the name of the museum where I work?
+temporal ? pB=0.30 pA=0.12 d=+1.1 How many days after I registered for my part-time PhD did I have my fi
+ssu ? pB=0.23 pA=0.28 d=-0.0 What brand is the bicycle I ride to work?
+temporal ? pB=0.21 pA=0.19 d=-0.4 How many days after I attended the fresco conservation workshop in Are
+multi ? pB=0.28 pA=0.16 d=+0.7 How many books have I read for my PhD literature review since the star
+ssu ? pB=0.02 pA=0.21 d=-11.9 What is the name of the café where I usually stop for a cappuccino bef
+ssu ? pB=0.17 pA=0.49 d=-1.0 What is the name of the animal shelter where I volunteer?
+multi ? pB=0.47 pA=0.42 d=+3.1 What was the combined attendance at the March and June book club meeti
+ssu ? pB=0.19 pA=0.44 d=-0.8 Which Berlin neighborhood is my new apartment in?
+ku ? pB=0.02 pA=0.13 d=-12.7 How many people are on my UX team now?
+ssu ? pB=0.03 pA=0.12 d=-6.9 What is the name of my sailing instructor?
+ssu ? pB=0.13 pA=0.26 d=-2.0 What is my move date?
+ssu ? pB=0.02 pA=0.18 d=-10.8 What is the name of my brother's new dog?
+temporal ? pB=0.03 pA=0.16 d=-6.9 How many days after my introductory pottery workshop is the glaze-firi
+ssu ? pB=0.19 pA=0.28 d=-0.7 What is the name of the restaurant I booked for my birthday dinner?
+temporal ? pB=0.20 pA=0.40 d=-0.5 How many days after the skate shop grand opening was my audio engineer
+temporal ? pB=0.02 pA=0.02 d=-7.4 How many days after I passed my driver's written test did I buy my MID
+temporal ? pB=0.32 pA=0.22 d=+1.3 How many days after my latte art throwdown did I finish mixing my demo
+temporal ? pB=0.08 pA=0.08 d=-3.4 How many days after my first open mic set did I finish installing my a
+ssu ? pB=0.08 pA=0.14 d=-3.4 What did I name my new podcast?
+temporal ? pB=0.25 pA=0.20 d=+0.3 How many days after the synthesizer workshop did I buy my first hardwa
+ku ? pB=0.36 pA=0.47 d=+1.8 What is my skateboard's name now?
+multi ? pB=0.03 pA=0.11 d=-6.1 How much honey did I harvest in total from my two hives this summer? I
+ssu ? pB=0.06 pA=0.06 d=-4.5 What venue did I book for my daughter's wedding reception? I forgot th
+temporal ? pB=0.18 pA=0.51 d=-0.9 How many days apart were my daughter's wedding dress fitting and the c
+temporal ? pB=0.16 pA=0.36 d=-1.4 How many days apart were my first hive inspection and the varroa treat
+ssu ? pB=0.02 pA=0.07 d=-11.8 What was the name of the shop where I bought my new bee smoker? I forg
+ssu ? pB=0.10 pA=0.22 d=-3.0 What was the name of the photographer I booked for my daughter's weddi
+temporal ? pB=0.02 pA=0.15 d=-7.4 How many days apart were my car's tire change appointment and the annu
+ssu ? pB=0.24 pA=0.47 d=+0.1 What was the style of the last beer I mentioned I'd kegged?
+temporal ? pB=0.12 pA=0.22 d=-2.3 How many days after Opening Day for my son's baseball team was the lea
+ssu ? pB=0.24 pA=0.38 d=+0.2 What was the last book I mentioned I was reading?
+temporal ? pB=0.27 pA=0.43 d=+0.6 How many days after my wife's birthday was our anniversary this year?
+ssu ? pB=0.15 pA=0.20 d=-1.5 What was the last state park I mentioned camping at?
+multi ? pB=0.19 pA=0.40 d=-0.8 What was the total number of students I mentioned going on the two fie
+ssu ? pB=0.04 pA=0.61 d=-5.7 What was the brand of the grill I last mentioned buying?
+ssu ? pB=0.39 pA=0.43 d=+2.1 What was the last restaurant I mentioned trying?
+ku ? pB=0.08 pA=0.45 d=-3.5 What time does my long run start these days?
+ssu ? pB=0.15 pA=0.34 d=-1.5 What's my rescue greyhound's name?
+ssu ? pB=0.08 pA=0.41 d=-3.5 What's my toddler's name?
+ssu ? pB=0.22 pA=0.59 d=-0.2 What's my partner's name?
+ku ? pB=0.44 pA=0.33 d=-3.6 How many rooms have we completely renovated in the bungalow so far?
+ssu ? pB=0.07 pA=0.45 d=-4.0 What's the name of my running group?
+ssu ? pB=0.19 pA=0.51 d=-0.6 What's the name of the renovation company working on our bungalow?
+ssu ? pB=0.34 pA=0.18 d=+1.5 What's the name of the half marathon I'm training for?
+temporal ? pB=0.14 pA=0.41 d=-1.8 How many days after I adopted Juniper did she have her first vet appoi
+multi ? pB=0.46 pA=0.36 d=+3.0 How many trees are in our backyard?
+ku ? pB=0.41 pA=0.47 d=+2.4 How many Icelandic horses do my neighbor Bjørn and I have in total rig
+ku ? pB=0.28 pA=0.43 d=+0.7 How many chapters does my children's book have now?
+ku ? pB=0.24 pA=0.15 d=+0.1 How many beehives do I have on my farm right now?
+temporal ? pB=0.15 pA=0.25 d=-1.5 How many days apart were my trip to Bergen and my trip to Trondheim?
+ku ? pB=0.13 pA=0.26 d=-2.0 How many apple trees do I have in my orchard right now?
+ku ? pB=0.45 pA=0.14 d=+2.8 How many tractors do I have on my farm right now?
+ku ? pB=0.25 pA=0.13 d=+0.3 How many cats do I have on my farm right now?
