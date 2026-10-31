@@ -49,10 +49,15 @@ def main(argv=None) -> None:
     ap.add_argument("--n", type=int, default=999)
     ap.add_argument("--full", action="store_true")
     ap.add_argument("--compare", help="older test_packs.jsonl to diff the new packs against")
+    ap.add_argument("--qids", help="comma-separated question ids or a file with one id per line: build only these")
     a = ap.parse_args(argv)
     lens = load_lens(a.lens)
     params = dict(lens.VARIANTS[a.variant])
     qs = [q for q in questions("test") if not a.type or route(q.question)[0] == a.type][: a.n]
+    if a.qids:
+        from pathlib import Path
+        want = set(Path(a.qids).read_text().split() if Path(a.qids).exists() else a.qids.split(","))
+        qs = [q for q in qs if q.question_id in want]
     out = RUNS / "audit" / (a.type or "all") / a.lens.split("/")[-1].removesuffix(".py") / a.variant
     out.mkdir(parents=True, exist_ok=True)
     n_flag = 0
@@ -84,7 +89,7 @@ def main(argv=None) -> None:
                 print(f"  [{p.id} {p.date}] {p.text[: (3000 if a.full else 350)]!r}")
     print(f"\n{len(qs)} test questions, {n_flag} flagged -> {out}")
     if a.compare:
-        compare(a.compare, out / "test_packs.jsonl")
+        compare(a.compare, out / "test_packs.jsonl", route_filter=a.type, partial_ok=bool(a.qids))
 
 
 _SUFFIX_RX = None
@@ -106,7 +111,7 @@ def _hint_of(r: dict) -> str:
     return _SUFFIX_RX.sub("", qt).strip()
 
 
-def compare(old_path, new_path) -> int:
+def compare(old_path, new_path, route_filter: str | None = None, partial_ok: bool = False) -> int:
     """Print every question whose route, cite_plan, passage set, passage text or hint differs between two
     test_packs.jsonl files (audit rows or reactor packs, any mix). computed / abstain_p changes are printed as info
     (they do not change what Reactor sees). Returns the number of changed packs (route, cite, passages or hint)."""
@@ -129,7 +134,12 @@ def compare(old_path, new_path) -> int:
             ch.append(f"cite {co} -> {cb}")
         visible = False
         if sorted(ps_o) != sorted(ps_b):
-            ch.append(f"passages {len(ps_o)}->{len(ps_b)} (kept {len(set(ps_o) & set(ps_b))})")
+            dates_b = {p["id"]: (p.get("date") or "")[:10] for p in b["passages"]}
+            dates_o = {p["id"]: (p.get("date") or "")[:10] for p in o["passages"]}
+            added = [f"+{x}@{dates_b.get(x, '')}" for x in ps_b if x not in ps_o]
+            dropped = [f"-{x}@{dates_o.get(x, '')}" for x in ps_o if x not in ps_b]
+            ch.append(f"passages {len(ps_o)}->{len(ps_b)} (kept {len(set(ps_o) & set(ps_b))}; "
+                      f"{' '.join(added + dropped)})")
             visible = True
         elif [p["text"] for p in o["passages"]] != [p["text"] for p in b["passages"]] or ps_o != ps_b:
             ch.append(f"passage text/order ({sum(len(p['text']) for p in o['passages'])}->"
@@ -150,8 +160,9 @@ def compare(old_path, new_path) -> int:
                   f"| {b['question'][:90]}")
         elif info:
             print(f"(info)   {qid} {'; '.join(info)} | {b['question'][:90]}")
-    missing = [q for q in old if q not in new]
-    if missing:
+    missing = [q for q in old if q not in new
+               and not (route_filter and old[q].get("route") not in (None, route_filter))]
+    if missing and not partial_ok:
         print(f"PARTIAL DIFF: {len(missing)} questions of {old_path} are not in the new file (use --n 999)")
     print(f"{n} of {len(new)} packs changed against {old_path} ({n_visible} change what Reactor sees: "
           f"passages, passage text or hint)")
@@ -160,7 +171,7 @@ def compare(old_path, new_path) -> int:
 
 if __name__ == "__main__":
     import sys
-    if len(sys.argv) == 4 and sys.argv[1] == "--diff":
-        compare(sys.argv[2], sys.argv[3])
+    if len(sys.argv) in (4, 5) and sys.argv[1] == "--diff":
+        compare(sys.argv[2], sys.argv[3], route_filter=sys.argv[4] if len(sys.argv) == 5 else None)
     else:
         main()

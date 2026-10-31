@@ -5,7 +5,8 @@
  "hint_to_reactor": false,
  "factual_hints_kept": [
   "temporal a_r3_gap own-cut: '<event>: no statement that you did this was found; the closest mention is ...' / 'not mentioned in the history' (3 test packs, abstain_p 0.8)",
-  "ku / ssu lens notes that quote another person's value as someone else's"
+  "ku / ssu lens notes that quote another person's value as someone else's",
+  "ku a_r4 head-absence line when no pair statement names the question noun (1 test pack: cats)"
  ],
  "notes": "Routed v2 abstain_p AUC: dev 0.813, dev200 0.853, pooled 0.821 (45 unanswerable / 606 answerable). No single threshold reaches the enable bar (precision >= 0.7 at recall >= 0.4): pooled >= 0.8 flags 9 TP / 22 FP. Per route: ssu AUC 0.884 but only 1 TP at >= 0.6; multi 0.795 (2 TP / 0 FP at >= 0.6, recall 0.10); temporal 0.825 with 21 answerable packs at >= 0.8. Real Reactor (first 23 v1 test answers): 3 INSUFFICIENT_EVIDENCE: 'my dog's name' (no own dog in the history: likely correct), 'current job title' (answerable, pack lacked the promotion sentence: fixed in v2 by ku a_r3 r3w), 'my neighborhood in Lisbon' (answerable: 'I live in Graça' was never retrieved; the ownership hint is not the cause, the pack had no neighbourhood statement). Reactor already abstains on its own when the pack lacks the fact, so a generic abstention hint would mostly add false abstentions. Keep: factual 'not found' notes from lenses only. Re-enable rule unchanged: a soft hint per route only at precision >= 0.7, recall >= 0.4 pooled; never temporal.",
  "enable_rule": "Re-enable a soft hint (hint_text_if_enabled, never a forced abstention) for a route only when its abstain_p reaches precision >= 0.7 at recall >= 0.4 on dev+dev200 pooled. Never on the temporal route (21 answerable packs at abstain_p >= 0.8).",
@@ -147,5 +148,72 @@
    ]
   },
   "run": "runs/merge2/all/pipeline/routed/{dev,dev200} (final v1 config, router r2)"
- }
+ },
+ "measured_r4": {
+  "run": "runs/merge4/all/pipeline/routed_v3/{dev,dev200} (v3 config)",
+  "routed_v3_dev_auc": 0.813,
+  "routed_v3_dev200_auc": 0.853,
+  "pooled_auc": 0.821,
+  "pooled_45_unanswerable_vs_606_answerable": {
+   "0.5": {
+    "tp": 16,
+    "fp": 39,
+    "precision": 0.29,
+    "recall": 0.36
+   },
+   "0.8": {
+    "tp": 9,
+    "fp": 21,
+    "precision": 0.3,
+    "recall": 0.2
+   },
+   "0.9": {
+    "tp": 4,
+    "fp": 14,
+    "precision": 0.22,
+    "recall": 0.09
+   }
+  },
+  "per_route_pooled": {
+   "ssu": {
+    "n": 120,
+    "pos": 11,
+    "auc": 0.884,
+    "tp_fp_at_0.8": [
+     1,
+     0
+    ]
+   },
+   "multi": {
+    "n": 207,
+    "pos": 20,
+    "auc": 0.795,
+    "tp_fp_at_0.6": [
+     2,
+     0
+    ]
+   },
+   "ku": {
+    "n": 29,
+    "pos": 0,
+    "fp_at_0.6": 1
+   },
+   "ssa": {
+    "n": 126,
+    "pos": 0,
+    "fp_at_0.6": 7
+   },
+   "temporal": {
+    "n": 169,
+    "pos": 14,
+    "auc": 0.825,
+    "tp_fp_at_0.8": [
+     8,
+     21
+    ]
+   }
+  },
+  "real_reactor_test_first_49": "6 INSUFFICIENT_EVIDENCE: dog's name and screen-grid resistor (only decoy / tried-and-removed statements in the history: correct abstentions), job title, Lisbon neighbourhood, bakery fund, volume-control ohms (all four were missing-evidence pack defects; repaired in v2/v3 packs). Reactor abstains on its own when the pack lacks the fact, so the bottleneck is recall, not an abstention hint."
+ },
+ "notes_r4": "Policy unchanged for v3: no generic abstention hint, abstain_p logged only. The v3 ku head-absence note (a_r4 head: 'None of the statements found gives a number of <noun> that you yourself have ... If no passage states it, answer INSUFFICIENT_EVIDENCE.') is a lens-factual absence line of the same class as the temporal own-cut note (1 test pack, cats). Re-enable rule unchanged."
 }

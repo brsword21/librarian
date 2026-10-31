@@ -1,0 +1,5 @@
+qid	reason	v1_answer
+q_607d3cf5b4f1	neighbourhood in Lisbon: + own "I live in Graca" unit (res hop); v2 pack lacked it	INSUFFICIENT_EVIDENCE (re-ask)
+q_6fa4f8620294	wedding reception venue: + own "We finally booked the Van Nelle Factory" sentence hidden in a mixed unit (sentence hop, CE 3.51 vs in-pack 0.55)	not asked yet
+q_4b0e37d9cd0c	last beer I kegged: + latest own "I finally kegged my peach saison" (lv hop); v2 pack held only Feb/Mar pale ale / wheat	not asked yet
+q_33b11e8a4d44	volume control ohms reduced: + own 500k-ohm (03/05) and 250k-ohm (05/19) volume pot sentences (delta hop); v2 pack had no volume statement	not asked yet

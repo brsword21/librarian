@@ -1,132 +1,125 @@
-# KU lens B ("Semantyka"): round 3 report
+# KU lens B ("Semantyka"): round 4 report (final lens round, test-visible defects only)
 
-Earlier reports: round 2 is in `b_report_r2.md` (restored from this file's round-2 contents) and round 1 is in `b_report_r1.md`.
-Files this round (all new, no frozen file edited):
-- `lenses/ku/b_r3_gate.py`: **ssu-route lens with a value-type ku hand-off**. It reuses `lenses/ssu/merged_r2.py` (role hand-off, unchanged) and the frozen ku lens `lenses/ku/b_r2.py` r2b.
-- `lenses/ku/b_r3_ku.py`: a copy of the b_r2 r2b packing, plus the own-value pair fix (brief item 2) and coverage-gated bigram abstention (brief item 3).
-- `lenses/ku/b_r3_routed.py` + `scratch_b/r3_cfg_qt3c*.json`: the full routed system with only the ssu route swapped. Gives e5-style numbers.
-- Scratch: `scratch_b/r3_rules.py`, `r3_rules2.py` (offline gate fitting over the dumped `ku_feats`), logs `scratch_b/r3_*.log`.
+Earlier reports: `b_report_r3.md`, `b_report_r2.md`, `b_report_r1.md`.
 
-Runs are in `runs/r3-ku-b/{ku,ssu-routed,all}/...`. Test audits are in `runs/audit/ssu/b_r3_gate/{v1,qt3c,qt3c_ap}` and `runs/audit/ku/b_r3_ku/own`.
+New files (no frozen file edited):
+- `lenses/ku/b_r4_ku.py`: post-processing wrapper over the frozen ku lens `lenses/ku/a_r3.py` r3w (KU-A's lens, credited). It imports r3w and changes the pack only in the two cases below.
+- `lenses/ku/b_r4_ssuroute.py`: evaluation-only wrapper. It is the frozen v2 ssu route with its ku hand-off lens swapped to b_r4_ku. Result: 0 change on dev, dev200 and test, so it is **not** proposed.
+- Supporting files in `lenses/ku/scratch_b/`:
+  - ready configs `r4_cfg_nolate_c.json` and `r4_cfg_nolate_c_cnt2.json` (configs/best.json with only routes.ku swapped);
+  - `r4_changed.tsv` (changed test qids with reasons);
+  - logs `r4_*.log`, probes `r4_probe_cnt*.py`, and the v2 ku test pack dump `r4_ku_test_v2.txt`.
 
-**Best variant: `lenses/ku/b_r3_gate.py` / `qt3c_ap`, as the ssu route.**
-- Full routed system against v1:
-  - dev: S 86.0 -> 86.5, Sall 84.8 -> 85.0.
-  - dev200: S 84.9 -> 86.3, Sall 83.2 -> 84.6.
-- **0 of 45 test ssu-routed packs change** (`harness.audit --compare runs/audit/all/pipeline/routed/test_packs.jsonl`). It also does not fire on any of the 6 test questions where the r2 detector fired.
-- The r2 detector (e5) gained +0.3 dev / +1.3 dev200 but moved 6 test packs.
+**Best variant: `lenses/ku/b_r4_ku.py` `nolate_c`** as the ku route.
 
-## What the gate does (brief item 1)
-`ku_gate(q, hx)` fires on an ssu-routed question (after the role hand-off) in either of two cases. The pair comes from b_semantic, and both members must be the user's own sentences (own > 0), not assistant recaps, and not an abandoned trial.
+**Optional add-on: `nolate_c_cnt2`.** It changes the same packs as `nolate_c` plus one more, and fixes a real PA defect on test (rooms renovated). On dev and dev200 it fires only on unanswerable questions, so its gold effect cannot be measured there.
 
-- **(a) Typed-value update.**
-  - `q_types(question)` decides which value types the question asks for:
-    - "what time", "personal best" -> time;
-    - "how often" -> frequency / quantity / weekday;
-    - "what day" -> weekday;
-    - "how many / much / long", "amount / value / voltage / price / limit ..." -> quantity / money.
-  - Names, titles and places are excluded on purpose. Capitalised-word drift is the planted ssu decoy (sourdough name, café, restaurant).
-  - Both pair sentences must carry a value of one of those types, with disjoint values: 8:30 am -> 7:30 am, 6 -> 9 months, $350k -> $400k, Thursday -> Friday, twice -> three times a week.
-  - Thresholds: min pair score >= 3, min attribute coverage >= 0.25.
-  - "... three weeks ago" is not counted as a value.
-- **(b) The question itself asks about a change.**
-  - That is b_semantic mode old / compare / both: "previous", "before I ...", "initially", "more ... than", "increase or decrease".
-  - Thresholds: min pair score >= 1, coverage >= 0.3.
-  - On dev and dev200, the gold-ssu questions in these modes all have negative pair scores (≤ −3.3): "previous occupation", "last name before I changed it", "initially think was just a cold".
-- **Abandoned-trial filter (`REVERT`).** A sentence like "I briefly tried a 68 µF capacitor ... and I removed it" or "I bought a 12-volt lamp, but it was too dim" is not an update.
-  - On test this is what keeps the gate off the three R-77 questions (dial lamp, filter capacitor, volume-control ohms): they have typed quantity differences, but the newer member is a reverted trial.
-  - Caveat: I saw this pattern in the test audit of the features. It is a general linguistic rule (it only makes the hand-off more conservative), not a per-question rule.
-- `qt3c_ap` = `qt3c` plus one change on hand-offs: abstain_p = min(ku lens, ssu lens).
-  - The ku lens's bigram signal runs high on these questions ("coffee-to-water ratio" 0.88, "language exchange" 0.53), which cost routed AUC: dev200 0.855 -> 0.845 with `qt3c`.
-  - With `_ap` the ssu-route slice AUC is back to v1 (0.931 / 0.905). Packs and routes are identical to `qt3c`.
+## Test defects found (v1 Reactor answers + v2 ku packs, 20 ku-routed test questions)
+1. **Rent (q_e165458f4cff), answered wrong by v1 Reactor: "9,000 shillings [E2][E3]".**
+   - The storyline is 18,000 (04/14, Kilimani) → 22,000 (08/11, "moved to a new bedsitter in South B").
+   - The pack also carried an uncited session dated 08/20 (s_8729a1a905d8). It is a brother decoy ("My brother Brian pays 22,000 shillings"), and it also says "My current rent is only 9,000, shared. I'll stay." Reactor followed the "MOST RECENT value" instruction and took 9,000.
+   - r3w had already flagged this session as `gate.threat`, and r3w's cite_plan and hint statements both say 22,000.
+2. **Rooms renovated (q_982391af62c7): PA defect.**
+   - The pack has no completion statement; its hint lists "ripping up the carpet" and "living room is a dust zone".
+   - The history has: kitchen finished (03/10), dining room refinished (04/18), bathroom done (05/02), toddler's room painted (06/07), main bedroom finished (07/19), and hallway done "but I don't count it as a room" (07/25). It also has two non-instances: the guest room barely started (06/05) and the neighbour's contractor finishing 4 rooms (a decoy).
+   - This is a count of events, not a value that was updated.
+3. **Late uncited noise sessions on two more packs.**
+   - Job title (q_b3e5afe916c8): a 09/11 "role of a Marketing Director" session follows the 08/24 "now I am Director of Clinical Services".
+   - Tractors: a beehives session.
+4. **Wrong old-member cites; answers are fine.** CF1 only, not fixed: the integrator asked for visible defects only, and these change cite_plan only.
+   - Skateboard: the old 'Decaf' naming session is in the pack, but the cited one is "skateboard rolling by as texture".
+   - Spices: the "Spice Souk on Danforth" (05/10) session is not in the pack.
+   - Coffee: Carlos's "three cups" is listed and cited as the earlier value.
+5. **Cats (q_1a034c66813d): no change made.** Only other people's cats have counts (sister 2, Bjørn 3), so the question is most likely unanswerable. Its pack holds horses and beehives, which should lead to INSUFFICIENT_EVIDENCE.
+
+## What the lens does
+- **`nolate`**: drop uncited context sessions dated AFTER the newest cite_plan session.
+  - The newest cited session is the lens's claim for the latest value. A later session the lens did not cite is a decoy or noise, and it can only contradict that claim. Earlier context sessions are kept.
+- **`_c` guard**: skip `nolate` on count-of-instances questions. These match `how many <x> have/has/did I/we <verb>` and have no number in the statement list (digits, number words, once/twice, second..tenth). They make no latest-value claim, so there is nothing to protect. Without this guard `nolate` also dropped the dining-room line from the rooms pack.
+- **`cnt2`** (on those same questions): the pack is rebuilt from the user's own units that contain the question's verb stem or a completion verb (finished / done / wrapped up / completed / finally).
+  - Units are ranked by bge similarity to the question's statement form ("we renovated in the bungalow the rooms") and pinned by rank under a 6000-char budget. build_pack renders them chronologically.
+  - The hint becomes "list every instance as 'date | [E#] | item', then count; only what I actually did; ignore others', planned, not-finished or 'does not count' items".
+  - abstain_p stays on the ku lens's scale.
 
 ## Variants tried (one line each)
-- `v1`: frozen ssu route (merged_r2 role8_r3rn), no ku hand-off. Reference.
-- `r2ku`: the r2 detector (b_r2.ku_pair_p, distinct values + score ≥ 6 + cov ≥ 0.5) = e5. 0 FP on dev/dev200, but 6 test firings.
-- `vt`: r2 detector AND same-type differing values AND own AND attribute head in both sentences. Too strict: 1 dev / 1 dev200 ku hand-off.
-- `vt_cue`: vt plus an update cue word. Fires on nothing.
-- `vt_nohead`: vt without the head check. 2 / 1 hand-offs.
-- `qt2` / `qt3` / `qt4`: question-typed disjoint values + REVERT, with score/cov thresholds 2/.25, 3/.25 and 4/.4.
-  - qt2 and qt3: 7 dev + 2 dev200 ku hand-offs, 0 FP.
-  - qt4: 5 + 2.
-- **`qt3c`**: qt3 plus the question-cue branch (b). 12 dev + 4 dev200 ku hand-offs, 0 FP on gold ssu/ssa/multi/temporal, 0 test changes.
-- **`qt3c_ap`**: qt3c with abstain_p = min(ku, ssu) on hand-offs. Only AUC changes.
-- `b_r3_ku own`: own-value pair fix (brief item 2).
-  - First version (own < 0): −0.6 dev, because the ownership regex has false negatives: "to my friend's birthday party", "He's actually ...", "getting used to".
-  - Restricted to own < 0 with no first-person word at all: neutral on dev/dev200, 1 test pack changes (coffee).
-  - Not adopted; see failures.
-- `b_r3_ku bgm1` / `bgm2` / `bgm3`: bigram abstention at full weight only when attribute miss ≥ 0.1 / 0.2 / 0.3 (else 0.3 / 0.3 / 0).
-  - bgm2 raises KU AUC: dev 0.926 -> 0.928, dev200 0.898 -> 0.920, pooled 0.910 -> 0.916.
-  - S is identical; only abstain_p changes.
+- `r3w`: control, the frozen v2 ku route (a_r3 r3w through the wrapper). Reproduces v2 exactly.
+- `nolate`: drop uncited sessions after the newest cite. Fires on 1 of 78 dev and 2 of 26 dev200. 4 test packs change, including rooms, where it does harm by dropping the dining-room line.
+- `cnt`: hand count-of-instances questions to the frozen multi route lens (merged_r2 tight_role9). **Rejected.**
+  - The rooms multi pack was 9.7k chars of renovation chatter with none of the completion lines.
+  - With min(abstain_p) it also cost AUC (dev .926 → .919, dev200 .898 → .864).
+- `nolate_cnt`: both of the above. Rejected for the same reasons.
+- `nolate_v`: nolate only when the newest cited hint statement carries a value. Too blunt: it also blocked the dev200 "old"-mode question, which has no statement list.
+- **`nolate_c`**: nolate except on count-of-instances questions. **Recommended.**
+- **`nolate_c_cnt2`**: plus the instance pack.
+  - The first version (k=14, cite_plan = all pack sessions) fired on the answerable dev question "How many times have I met up with Alex from Germany?" and cut its CF1 from 1.0 to 0.5 (dev S −0.2). The fix was to add once/twice/thrice and second..tenth to the count words: the Alex statement says "met up twice before".
+  - A second fix pins units by rank instead of chronologically, so the budget trims the least similar units, not the newest ones.
 
 ## Results
 
-### Baseline and KU gold type (ku lens; dev 78 q / dev200 26 q)
-| variant | dev S | Sall | PA | ATR | SR | CF1 | chars | AUC | dev200 S | Sall | PA | ATR | SR | CF1 | chars | AUC |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| generic hybrid_rr (bar) | 83.8 | 83.8 | .972 | .979 | .986 | .812 | 11936 | .806 | 83.5 | 83.5 | 1.000 | 1.000 | 1.000 | .740 | 11923 | .852 |
-| b_r3_ku r2b (= v1 ku route) | 93.4 | 93.6 | 1.000 | .993 | 1.000 | .979 | 3043 | .926 | 93.3 | 92.7 | 1.000 | 1.000 | 1.000 | .977 | 3072 | .898 |
-| b_r3_ku own | 93.4 | 93.6 | 1.000 | .993 | 1.000 | .979 | 3043 | .926 | 93.3 | 92.7 | 1.000 | 1.000 | 1.000 | .977 | 3072 | .898 |
-| b_r3_ku bgm2 | 93.4 | 93.6 | 1.000 | .993 | 1.000 | .979 | 3043 | **.928** | 93.3 | 92.7 | 1.000 | 1.000 | 1.000 | .977 | 3072 | **.920** |
-
-### ssu route slice (`--route --type ssu`: dev 140 q, dev200 38 q; all gold types)
-| variant | dev S | Sall | PA | ATR | SR | CF1 | chars | AUC | ku->ku | dev200 S | Sall | PA | ATR | SR | CF1 | chars | AUC | ku->ku |
+### KU gold type (dev 78 q, dev200 26 q)
+| variant | dev S | Sall | PA | ATR | SR | CF1 | CF1all | chars | AUC | dev200 S | Sall | PA | ATR | SR | CF1 | CF1all | chars | AUC |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| v1 | 86.1 | 88.3 | .932 | .960 | .980 | .894 | 4159 | .931 | 0/27 | 82.3 | 82.6 | .886 | .929 | .943 | .867 | 4234 | .905 | 0/9 |
-| r2ku (= e5 detector) | 87.3 | 88.9 | .939 | .963 | .984 | .917 | 4068 | .924 | 7 | 86.5 | 86.8 | .943 | .957 | .971 | .881 | 4117 | .905 | 3 |
-| vt | 86.8 | 88.8 | .939 | .963 | .984 | .901 | 4146 | .929 | 1 | 84.4 | 84.7 | .914 | .943 | .957 | .876 | 4205 | .905 | 1 |
-| vt_cue | 86.1 | 88.3 | .932 | .960 | .980 | .894 | 4159 | .931 | 0 | 82.3 | 82.6 | .886 | .929 | .943 | .867 | 4234 | .905 | 0 |
-| vt_nohead | 86.9 | 88.9 | .939 | .963 | .984 | .904 | 4135 | .926 | 2 | 84.4 | 84.7 | .914 | .943 | .957 | .876 | 4205 | .905 | 1 |
-| qt2 / qt3 | 87.2 | 88.9 | .939 | .963 | .984 | .914 | 4056 | .933 | 7 | 84.7 | 84.7 | .914 | .943 | .957 | .886 | 4148 | .886 | 2 |
-| qt4 | 87.1 | 88.9 | .939 | .963 | .984 | .909 | 4085 | .936 | 5 | 84.7 | 84.7 | .914 | .943 | .957 | .886 | 4148 | .886 | 2 |
-| qt3c | 87.6 | 88.9 | .939 | .963 | .984 | .927 | 3980 | .911 | 12 | 86.8 | 86.8 | .943 | .957 | .971 | .890 | 4062 | .857 | 4 |
-| **qt3c_ap** | **87.6** | **88.9** | .939 | .963 | .984 | .927 | 3980 | **.931** | 12 | **86.8** | **86.8** | .943 | .957 | .971 | .890 | 4062 | **.905** | 4 |
+| generic hybrid_rr (bar) | 83.8 | 83.8 | .972 | .979 | .986 | .812 | .812 | 11936 | .806 | 83.5 | 83.5 | 1.000 | 1.000 | 1.000 | .740 | .740 | 11923 | .852 |
+| r3w (= v2 ku route) | 93.4 | 93.6 | 1.000 | .993 | 1.000 | .979 | .986 | 3044 | .926 | 93.3 | 92.7 | 1.000 | 1.000 | 1.000 | .977 | .955 | 3072 | .898 |
+| nolate | 93.4 | 93.7 | 1.000 | .993 | 1.000 | .979 | .989 | 3032 | .926 | 93.4 | 93.0 | 1.000 | 1.000 | 1.000 | .977 | .964 | 3021 | .898 |
+| cnt (min ap) | 93.4 | 93.6 | 1.000 | .993 | 1.000 | .979 | .986 | 3102 | .919 | 93.3 | 92.7 | 1.000 | 1.000 | 1.000 | .977 | .955 | 3353 | .864 |
+| nolate_cnt (min ap) | 93.4 | 93.7 | 1.000 | .993 | 1.000 | .979 | .989 | 3090 | .919 | 93.4 | 93.0 | 1.000 | 1.000 | 1.000 | .977 | .964 | 3321 | .864 |
+| nolate_v | 93.4 | 93.7 | 1.000 | .993 | 1.000 | .979 | .989 | 3032 | .926 | 93.3 | 92.7 | 1.000 | 1.000 | 1.000 | .977 | .955 | 3072 | .898 |
+| **nolate_c** | **93.4** | **93.7** | 1.000 | .993 | 1.000 | .979 | .989 | 3032 | .926 | **93.4** | **93.0** | 1.000 | 1.000 | 1.000 | .977 | .964 | 3040 | .898 |
+| nolate_c_cnt2 (k=14 v1) | 93.2 | 93.5 | 1.000 | .993 | 1.000 | .972 | .982 | 3087 | .926 | 93.4 | 93.0 | 1.000 | 1.000 | 1.000 | .977 | .964 | 3167 | .898 |
+| **nolate_c_cnt2** (final) | 93.4 | 93.7 | 1.000 | .993 | 1.000 | .979 | .989 | 3073 | .926 | 93.4 | 93.0 | 1.000 | 1.000 | 1.000 | .977 | .964 | 3169 | .898 |
 
-Hand-off false positives on gold ssu / ssa / multi / temporal: **0** for every qt variant on both splits. The ssa questions are handed off by role_guess first.
+### ku route slice (`--route --type ku`, all gold types the text router sends to ku: dev 17 q, dev200 4 q)
+| variant | dev S | Sall | CF1all | chars | dev200 S | Sall | CF1all | chars |
+|---|---|---|---|---|---|---|---|---|
+| r3w (v2) | 89.0 | 88.1 | .929 | 3065 | 91.6 | 88.8 | .825 | 2939 |
+| nolate_c | 89.1 | 88.8 | .951 | 2989 | 91.6 | 90.1 | .867 | 2890 |
+| nolate_c_cnt2 | 89.1 | 88.8 | .951 | 2989 | 91.6 | 90.1 | .867 | 2890 |
 
-### Full routed system (e5-style; `lenses/ku/b_r3_routed.py`, all 526 dev / 125 dev200 q)
-| system | dev S | Sall | PA | ATR | SR | CF1 | chars | AUC | dev200 S | Sall | PA | ATR | SR | CF1 | chars | AUC | test packs changed |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| v1 (configs/best.json) | 86.0 | 84.8 | .935 | .967 | .985 | .899 | 5583 | .812 | 84.9 | 83.2 | .918 | .956 | .970 | .894 | 5478 | .855 | – |
-| e5 (r2 detector, from SYNTHESIS_r2, pre-router-r2) | +0.3 vs e2 | | | | | | | | +1.3 vs e2 | | | | | | | | 6 / 45 |
-| **qt3c** | **86.5** | **85.0** | .938 | .968 | .986 | .908 | 5535 | .810 | **86.3** | **84.6** | .936 | .965 | .979 | .902 | 5426 | .845 | **0 / 45** |
-| **qt3c_ap (recommended)** | **86.5** | **85.0** | .938 | .968 | .986 | .908 | 5535 | .811 | **86.3** | **84.6** | .936 | .965 | .979 | .902 | 5426 | **.855** | **0 / 45** |
+### ssu route with the ku hand-off swapped (`b_r4_ssuroute.py`, dev 140 q / dev200 38 q)
+All three variants tie v2 exactly: 88.8 / Sall 89.3 on dev and 88.8 / Sall 88.9 on dev200. **0 of 45 test ssu packs change**, so this is not proposed.
 
-On the routed system, ku gold-type S goes 87.9 -> 90.7 on dev and 76.8 -> 84.0 on dev200. Every other gold type is unchanged.
+**Acceptance.**
+- The +2 S bar is not reachable: the type is saturated at PA 1.0 and CF1 .98 on gold.
+- The round-4 rule is test defects only, with no dev/dev200 regression. `nolate_c` meets it:
+  - S +0.0 / +0.1 and Sall +0.1 / +0.3 on gold ku (dev / dev200);
+  - Sall +0.7 / +1.3 on the ku route;
+  - 0 losses anywhere.
 
-**Acceptance.** Routed dev is +0.5 S (below the +2 bar, because 140 of 526 questions are ssu-routed). Routed dev200 is +1.4 S with no loss on either split. Test risk is zero: no test pack changes. The ku -> ssu cell improves from dev 27 q at S 77.4 to 85.5, and from dev200 9 q at S 54.7 to 72.1.
+## Test packs changed vs `runs/final/v2_test_packs.jsonl`
+`harness.audit --compare ... --n 999`, ku route, 20 packs. Details are in `scratch_b/r4_changed.tsv`.
 
-## Brief items 2-3 (ku route)
-- **Own-value constraint (`b_r3_ku own`)**: replace a pair member that is someone else's value (own < 0 and no first-person word) with the best own same-type session among the top 8.
-  - Neutral on dev and dev200.
-  - On test it changes one pack, q_355094c7f34a (coffee). "Carlos drinks three cups" is replaced as the old member by "do you think it's okay to have a cup or two a day" (s_6e8e872282a3), which is a question, not a stated value. The new member ("switched to just one cup") and the answer are unchanged.
-  - The sign of the CF1 change is unknown, so **not recommended** (one test change of uncertain value).
-- **Abstention calibration (`bgm2`)**: the bigram signal at full weight only when attribute coverage of the best sentences misses ≥ 0.2 (weight 0.3 otherwise).
-  - Pooled dev+dev200 KU AUC 0.910 -> 0.916; dev200 0.898 -> 0.920.
-  - It only changes abstain_p, and the current policy uses no abstention hint, so it has no Reactor effect. Optional.
+| qid | what | variant | re-ask? |
+|---|---|---|---|
+| q_e165458f4cff | **rent**: drop the 08/20 brother-decoy session with "current rent is only 9,000" (r3w's own `threat`). v1 answered 9,000; the pack now holds only 18,000 → 22,000. | nolate_c | **yes**: v1 answer cached under the old pack_hash |
+| q_b3e5afe916c8 | **job title**: drop the 09/11 "role of a Marketing Director" session (late title decoy) | nolate_c | already re-asked in v2 (in v2_changed); not yet answered |
+| q_07a3d3d857f4 | **tractors**: drop the irrelevant 06/01 beehives session. Cosmetic. | nolate_c | not yet asked (v2 file order 144); free if swapped in before then |
+| q_982391af62c7 | **rooms renovated**: the instance pack replaces a pack with no completion line (15 own lines, 5.9k chars, list-then-count hint) | nolate_c_cnt2 only | not yet asked (order 130) |
 
-## Top failure patterns (after qt3c)
-1. **ku -> ssu questions whose update carries no typed value stay on ssu.** Dev 15, dev200 5. Most still have PA 1 and lose only the second cite (S about 83). Examples:
-   - "Did I finish reading 'The Nightingale'?": a status update;
-   - "Where am I planning to stay for my birthday trip to Hawaii?": a name;
-   - "What time do I usually go to the gym?": the newer sentence restates the days, not the time;
-   - "How long have my parents been staying with me?": the old member has no value.
-2. **Real PA losses on the ssu route that the gate cannot see**, because the pair scores are negative:
-   - "What new kitchen gadget did I invest in before getting the Air Fryer?" (dev and dev200, S 19): "my new Instant Pot" has no lexical overlap.
-   - "Is my mom using the same grocery list method as me?" (dev200, S 19): own = 0.5 on the newer member.
-   - A "before X" rule would also catch the gold-ssu "last name before I changed it", so I did not add one.
-3. **The ownership regex has false negatives** that make own < 0 unusable as a hard constraint: "my friend's birthday party", "He's actually ...", "getting used to" (PAST_OTHER "used to"). Only "own < 0 and no first-person word" is safe.
-4. **The test ssu route is full of planted near-updates** (R-77 sibling components, abandoned trials, name candidates). Any looser gate (the r2 detector, or qt without REVERT) fires on them. Test ku -> ssu gains therefore probably need answer-type-aware evidence, not a looser gate.
+Reactor cost: one real re-ask (rent, about 105 s). The other three are either already queued or not yet asked.
+
+Caveats:
+- **Rent.** Gold is unknown. The 9,000 line is literally the user's latest own statement. But it sits in a decoy session, says "I'll stay" eleven days after the user moved, and says "shared" about a bedsitter. On dev and dev200, no session dropped by `nolate` was ever gold (PA unchanged; 3 firings).
+- **Rooms.** The instance pack lacks the 04/18 "we just refinished the dining room" line (it ranks 15th, past the budget). Reactor will probably count kitchen, bathroom and main bedroom (maybe the toddler's room). I did not tune further on that one question.
+
+## Top failure patterns (remaining)
+1. **Count-of-instances questions phrased as updates** ("how many rooms have we renovated so far").
+   - The latest-value machinery has nothing to say, and lexical/CE retrieval ranks the completion lines at 44-117 (CE −9 to −11), because the instance sentences name the item (kitchen, bathroom) and not the category (room).
+   - The statement-form query + bge over own completion/event units puts all of them in the top 15. Validation is thin: dev and dev200 have no answerable example of this shape.
+2. **Off-attribute or someone else's old member.** These cost CF1, not answers:
+   - skateboard: cites a "skateboard rolling by" session instead of the "named it 'Decaf'" session;
+   - coffee: Carlos's "three cups" is listed as the earlier value;
+   - spices: "Spice Souk on Danforth" was never retrieved.
+3. **Late contradicting self-statements inside decoy sessions** (rent). This is now handled by `nolate`. The same signal already exists as r3w's `gate.threat`, but r3w uses it only for the gate.
 
 ## CORE REQUESTs
-1. **Route ssu to `lenses/ku/b_r3_gate.py` variant `qt3c_ap`** in the next config. Ready-made config: `lenses/ku/scratch_b/r3_cfg_qt3c_ap.json`; `qt3c` is the same without the AUC fix.
-   - It wraps the frozen `lenses/ssu/merged_r2.py` (role8_r3rn behaviour, by calling `choose(..., ku_pair=False)` and the same inner lenses) and the frozen `lenses/ku/b_r2.py` r2b.
-   - Routed: +0.5 dev / +1.4 dev200 S, +0.2 / +1.4 Sall, **0 of 45 test packs changed**, so it costs nothing on the remaining Reactor pass.
-   - It adds one `b_semantic.analyze` call per ssu-routed question (about 100-300 ms warm).
-2. Optional, no Reactor effect: switch the ku route to `lenses/ku/b_r3_ku.py` `bgm2`. Packs are byte-identical to r2b; only abstain_p changes (KU AUC dev200 0.898 -> 0.920).
-3. A fix inside `b_semantic.ownership`, owned by me but frozen: "used to" in PAST_OTHER should not match "getting used to", and "my friend's <event>" should not make the whole sentence someone else's. Deferred because b_semantic is imported by the frozen b_r2.
+1. **Route ku to `lenses/ku/b_r4_ku.py` `nolate_c`.** The ready config is `lenses/ku/scratch_b/r4_cfg_nolate_c.json`. It imports the frozen a_r3 r3w unchanged and changes 3 ku test packs; re-ask rent.
+2. Optional: `nolate_c_cnt2` (`r4_cfg_nolate_c_cnt2.json`). It adds the rooms fix (1 more pack, not yet asked). It is dev/dev200-neutral; on dev/dev200 it fires only on 2 unanswerable questions, adding ~2.5-3.3k chars each with the same abstain_p.
+3. Do not wire `b_r4_ku` into the ssu route's ku hand-off: there are 0 changes anywhere.
+4. Harness: a `--diff` flag that prints the dropped and added session dates per changed pack would make reviewing changes like these faster (I used custom scripts).
 
-## Ideas for the next round
-- Answer-type-aware second hop for paraphrased updates ("Instant Pot" for "kitchen gadget"): dense_texts / rerank_texts over own sentences carrying an entity of the asked type (gadget = product name).
-- Extend `q_types` with status (finished / started / still) and place (moved to X), each guarded by a REVERT-style negation check. That would cover Nightingale-like status updates without opening the name-drift door.
-- Per-route isotonic calibration of abstain_p, so hand-off lenses produce comparable scales (the `_ap` min-trick is a stopgap).
+## Ideas for next round
+- **Old-member backlink** (cite_plan only, no Reactor cost): when the newest statement names the value it replaced ("renamed ... 'Flat White'; 'Decaf' just made me think of work", "after Miguel moved to Porto"), cite the earliest own session that mentions that old value. Fixes the skateboard cite; leaves the ceramics, accountant and watercolour cites unchanged.
+- Drop non-own statements from the hint's statement list (Carlos's coffee, the neighbour's laps) and leave the earlier slot empty when the user never stated an old value.
+- **Category second hop for instance counts**: dense_texts("<category> such as X") between the question noun ("rooms") and the candidate items (kitchen, bathroom, bedroom), to lift recall of instance lines beyond completion verbs.
+- Expose `gate.threat` as a general signal: a later own-sounding statement that contradicts the pair should be shown to Reactor with an ownership note, or dropped as `nolate` does.

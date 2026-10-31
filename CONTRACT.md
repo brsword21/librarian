@@ -118,3 +118,14 @@ Outputs: `runs/<tag>/<type>/<lens>/<variant>/<split>/{per_question.jsonl, summar
 
 ## Report (your final message, also saved as `lenses/<type>/<a|b>_report.md`)
 Variants tried (one line each: idea + params), table of S / PA / ATR / SR / CF1 / chars on dev and dev200, best variant, top failure patterns with 2-3 concrete examples, CORE REQUESTs, ideas for next round.
+
+### Harness additions after round 4
+- `configs/best_v3.json` = v3 (= `configs/best.json`, tag v3; pipeline variant `routed_v3`). Route lenses ssu / multi / ku
+  are integrator wrappers `lenses/<type>/merged_r4.py` (variant `r4`; `v2` = the frozen v2 route): `core/merge.py`
+  `first_changed` builds the frozen v2 pack, then each gated round-4 wrapper in priority order; the first one whose
+  Reactor-visible pack (passage ids + texts, hint) differs wins. New fixes should be gated post-processes of the v3
+  route lens and report which test packs they change.
+- `harness.audit --qids q1,q2|FILE`: build only those test questions. `--compare` with `--type X` ignores other routes'
+  packs; changed passage sets print `+sid@date` / `-sid@date`. `python -m harness.audit --diff OLD NEW [route]`.
+- `python -m harness.reactor_monitor --results runs/final/v1_results.jsonl --packs runs/final/v3_test_packs.jsonl`:
+  INSUFFICIENT_EVIDENCE answers, answers citing outside cite_plan, uncited and stale answers, per route (read-only).

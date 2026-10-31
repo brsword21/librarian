@@ -1,0 +1,8 @@
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+nolate_v                   93.4 1.000 0.993 1.000 1.000 1.000 1.000 0.979   3032  142.0 0.926 0
+   if Reactor cites every passage: CF1all=0.989 Sall=93.7
+   -> runs/r4-ku-b/ku/b_r4_ku/nolate_v/dev
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+nolate_v                   93.3 1.000 1.000 1.000 1.000 1.000     - 0.977   3072  565.6 0.898 0
+   if Reactor cites every passage: CF1all=0.955 Sall=92.7
+   -> runs/r4-ku-b/ku/b_r4_ku/nolate_v/dev200

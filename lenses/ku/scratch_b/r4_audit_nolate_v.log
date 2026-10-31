@@ -1,0 +1,6 @@
+20 test questions, 0 flagged -> /Users/mikolaj/Developer/start-hackathon-2/librarian/runs/audit/ku/b_r4_ku/nolate_v
+ku       q_b3e5afe916c8 passages 3->2 (kept 2) | What is my current job title?
+ku       q_e165458f4cff passages 3->2 (kept 2) | What is my current monthly rent?
+ku       q_07a3d3d857f4 passages 3->2 (kept 2) | How many tractors do I have on my farm right now?
+PARTIAL DIFF: 126 questions of runs/final/v2_test_packs.jsonl are not in the new file (use --n 999)
+3 of 20 packs changed against runs/final/v2_test_packs.jsonl (3 change what Reactor sees: passages, passage text or hint)

@@ -1,0 +1,18 @@
+45 questions x 2 variants on dev200 in 29s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+v2                         84.2 0.921 0.965 0.984 0.947 1.000     - 0.872   6061  728.5 0.789 0
+   if Reactor cites every passage: CF1all=0.822 Sall=82.7
+   -> runs/r4-multi-b/multi-routed/b_r4_inst/v2/dev200
+     ssu       n=  4 S= 67.2 Sall= 63.9 PA=0.750 CF1=0.667 routes={'multi': 4}
+     ssa       n=  2 S= 93.6 Sall= 93.6 PA=1.000 CF1=1.000 routes={'ssa': 2}
+     multi     n= 24 S= 82.5 Sall= 81.4 PA=0.900 CF1=0.865 routes={'multi': 24}
+     ku        n= 12 S= 92.2 Sall= 90.2 PA=1.000 CF1=0.956 routes={'multi': 12}
+     temporal  n=  3 S= 88.2 Sall= 86.6 PA=1.000 CF1=0.861 routes={'multi': 3}
+vc2                        84.2 0.921 0.965 0.984 0.947 1.000     - 0.872   6061  255.6 0.789 0
+   if Reactor cites every passage: CF1all=0.822 Sall=82.7
+   -> runs/r4-multi-b/multi-routed/b_r4_inst/vc2/dev200
+     ssu       n=  4 S= 67.2 Sall= 63.9 PA=0.750 CF1=0.667 routes={'multi': 4}
+     ssa       n=  2 S= 93.6 Sall= 93.6 PA=1.000 CF1=1.000 routes={'ssa': 2}
+     multi     n= 24 S= 82.5 Sall= 81.4 PA=0.900 CF1=0.865 routes={'multi': 24}
+     ku        n= 12 S= 92.2 Sall= 90.2 PA=1.000 CF1=0.956 routes={'multi': 12}
+     temporal  n=  3 S= 88.2 Sall= 86.6 PA=1.000 CF1=0.861 routes={'multi': 3}

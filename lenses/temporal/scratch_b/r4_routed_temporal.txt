@@ -1,0 +1,12 @@
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+routed_v2                  80.3 0.882 0.953 0.971 0.929 0.969 1.000 0.843   7255  201.3 0.853 0
+   if Reactor cites every passage: CF1all=0.750 Sall=77.6
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+last_pipe                  80.3 0.882 0.953 0.971 0.929 0.969 1.000 0.843   7254  237.8 0.853 0
+   if Reactor cites every passage: CF1all=0.750 Sall=77.6
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+routed_v2                  84.2 0.909 0.955 0.968 0.909 1.000 1.000 0.909   7272  900.0 0.966 0
+   if Reactor cites every passage: CF1all=0.734 Sall=78.9
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+last_pipe                  84.2 0.909 0.955 0.968 0.909 1.000 1.000 0.909   7272  899.4 0.966 0
+   if Reactor cites every passage: CF1all=0.734 Sall=78.9

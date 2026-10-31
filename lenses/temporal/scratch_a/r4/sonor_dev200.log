@@ -1,0 +1,5 @@
+26 questions x 1 variants on dev200 in 19s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+so_nor                     83.8 0.909 0.955 0.968 0.909 1.000 1.000 0.897   7411 1223.5 0.966 0
+   if Reactor cites every passage: CF1all=0.723 Sall=78.5
+   -> runs/r4-temporal-a/temporal/a_r3_gap/so_nor/dev200

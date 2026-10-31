@@ -1,0 +1,14 @@
+23 questions x 4 variants on dev200 in 27s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+v2                         92.5 1.000 1.000 1.000 1.000 1.000 1.000 0.955   3859  857.8 0.955 0
+   if Reactor cites every passage: CF1all=0.864 Sall=89.7
+   -> runs/r4-ssu-a/ssu/a_r4_route/v2/dev200
+h                          92.5 1.000 1.000 1.000 1.000 1.000 1.000 0.955   3798  418.3 0.955 0
+   if Reactor cites every passage: CF1all=0.864 Sall=89.7
+   -> runs/r4-ssu-a/ssu/a_r4_route/h/dev200
+hp                         92.5 1.000 1.000 1.000 1.000 1.000 1.000 0.955   3798  404.7 0.955 0
+   if Reactor cites every passage: CF1all=0.864 Sall=89.7
+   -> runs/r4-ssu-a/ssu/a_r4_route/hp/dev200
+hpd                        92.5 1.000 1.000 1.000 1.000 1.000 1.000 0.955   3798  399.3 0.955 0
+   if Reactor cites every passage: CF1all=0.864 Sall=89.7
+   -> runs/r4-ssu-a/ssu/a_r4_route/hpd/dev200

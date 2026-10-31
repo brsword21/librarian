@@ -1,0 +1,18 @@
+170 questions x 2 variants on dev in 17s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+v2                         86.7 0.943 0.978 0.984 0.962 0.981     - 0.905   5481  108.5 0.800 0
+   if Reactor cites every passage: CF1all=0.863 Sall=85.5
+   -> runs/r4-multi-b/multi-routed/b_r4_inst/v2/dev
+     ssu       n= 14 S= 73.0 Sall= 72.0 PA=0.846 CF1=0.646 routes={'multi': 14}
+     ssa       n=  6 S= 93.4 Sall= 93.4 PA=1.000 CF1=1.000 routes={'ssa': 6}
+     multi     n=114 S= 86.8 Sall= 85.2 PA=0.943 CF1=0.911 routes={'multi': 114}
+     ku        n= 32 S= 93.3 Sall= 92.5 PA=1.000 CF1=0.986 routes={'multi': 32}
+     temporal  n=  4 S= 72.7 Sall= 73.1 PA=0.750 CF1=0.867 routes={'multi': 4}
+vc2                        86.7 0.943 0.978 0.984 0.962 0.981     - 0.905   5481   50.5 0.800 0
+   if Reactor cites every passage: CF1all=0.863 Sall=85.5
+   -> runs/r4-multi-b/multi-routed/b_r4_inst/vc2/dev
+     ssu       n= 14 S= 73.0 Sall= 72.0 PA=0.846 CF1=0.646 routes={'multi': 14}
+     ssa       n=  6 S= 93.4 Sall= 93.4 PA=1.000 CF1=1.000 routes={'ssa': 6}
+     multi     n=114 S= 86.8 Sall= 85.2 PA=0.943 CF1=0.911 routes={'multi': 114}
+     ku        n= 32 S= 93.3 Sall= 92.5 PA=1.000 CF1=0.986 routes={'multi': 32}
+     temporal  n=  4 S= 72.7 Sall= 73.1 PA=0.750 CF1=0.867 routes={'multi': 4}

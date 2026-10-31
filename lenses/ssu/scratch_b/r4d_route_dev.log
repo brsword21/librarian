@@ -1,0 +1,10 @@
+140 questions x 1 variants on dev in 16s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+g_res_lv_d                 88.8 0.947 0.971 0.984 0.962 0.967 1.000 0.952   4193  193.7 0.934 0
+   if Reactor cites every passage: CF1all=0.968 Sall=89.3
+   -> runs/r4-ssu-b/ssu-routed/b_r4_sent/g_res_lv_d/dev
+     ssu       n= 49 S= 93.3 Sall= 93.3 PA=1.000 CF1=0.978 routes={'ssu': 49}
+     ssa       n= 50 S= 92.4 Sall= 92.4 PA=0.980 CF1=1.000 routes={'ssa': 43, 'ssu': 7}
+     multi     n=  9 S= 61.4 Sall= 62.8 PA=0.571 CF1=0.857 routes={'ssu': 9}
+     ku        n= 27 S= 87.7 Sall= 89.4 PA=0.960 CF1=0.893 routes={'ssu': 21, 'ku': 6}
+     temporal  n=  5 S= 57.3 Sall= 59.9 PA=0.600 CF1=0.667 routes={'ssu': 5}

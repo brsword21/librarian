@@ -1,0 +1,5 @@
+ssu      q_607d3cf5b4f1 cite ['s_02e229aaa490'] -> ['s_25010d68d7cc']; passages 3->4 (kept 3) | What's the name of my neighborhood in Lisbon?
+ssu      q_6fa4f8620294 cite ['s_524fe0fc02bf'] -> ['s_d8b1a3729067']; passages 3->4 (kept 3) | What venue did I book for my daughter's wedding reception? I forgot the name.
+ssu      q_4b0e37d9cd0c cite ['s_9d394409bd09'] -> ['s_9c4dc842da3d']; passages 3->4 (kept 3) | What was the style of the last beer I mentioned I'd kegged?
+PARTIAL DIFF: 101 questions of runs/final/v2_test_packs.jsonl are not in the new file (use --n 999)
+3 of 45 packs changed against runs/final/v2_test_packs.jsonl (3 change what Reactor sees: passages, passage text or hint)

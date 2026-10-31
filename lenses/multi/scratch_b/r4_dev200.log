@@ -1,0 +1,14 @@
+28 questions x 4 variants on dev200 in 10s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+v2                         83.3 0.909 0.962 0.973 0.909 1.000     - 0.868   6279  307.2 0.795 0
+   if Reactor cites every passage: CF1all=0.835 Sall=82.3
+   -> runs/r4-multi-b/multi/b_r4_inst/v2/dev200
+vc2                        83.3 0.909 0.962 0.973 0.909 1.000     - 0.868   6279   97.1 0.795 0
+   if Reactor cites every passage: CF1all=0.835 Sall=82.3
+   -> runs/r4-multi-b/multi/b_r4_inst/vc2/dev200
+vc1                        83.3 0.909 0.962 0.973 0.909 1.000     - 0.868   6279   75.0 0.795 0
+   if Reactor cites every passage: CF1all=0.835 Sall=82.3
+   -> runs/r4-multi-b/multi/b_r4_inst/vc1/dev200
+vc2_t4                     83.3 0.909 0.962 0.973 0.909 1.000     - 0.868   6279   75.9 0.795 0
+   if Reactor cites every passage: CF1all=0.835 Sall=82.3
+   -> runs/r4-multi-b/multi/b_r4_inst/vc2_t4/dev200

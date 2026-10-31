@@ -1,0 +1,5 @@
+112 questions x 1 variants on dev in 18s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+r2_conf2                   93.6 1.000 1.000 1.000 1.000 1.000 1.000 1.000   4542  303.9     - 0
+   if Reactor cites every passage: CF1all=1.000 Sall=93.6
+   -> runs/r4-ssa-b/ssa/a_recsent/r2_conf2/dev

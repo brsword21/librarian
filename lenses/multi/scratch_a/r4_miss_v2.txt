@@ -1,0 +1,63 @@
+== q_068d0a4b3f7b How many ceramic pieces am I putting in the class show? | verb None
+     (32, 's_1a338a7b8df5', '2023/07/22', 'I have ceramics at 7 and the kids have football until 6:45, so something ready in about 20 minutes would be a lifesaver.')
+     (60, 's_30c76dac9b0a', '2023/06/15', 'Also, I have clay under my nails from ceramics and a deadline in two hours.')
+     (77, 's_af842296e994', '2023/05/28', 'And maybe one for Saturday to clean my workspace before class.')
+== q_6dd9e5e4fb97 How many watercolour classes do I attend each week? | verb attend
+     (1, 's_3d2463ce88e1', '2023/09/14', 'I attended a one-off watercolour workshop at the gallery last month.')
+     (5, 's_3eb11d05ab63', '2023/08/12', "By the way, I went to the watercolour society's annual exhibition opening on 12 August 2023.—it was lovely to see what other members are doing.")
+     (7, 's_df3cd1df7501', '2023/04/13', "I've been taking sculpting classes for about 3 months now, and I've been really enjoying the process of learning and experimenting with different tech")
+     (12, 's_2657f1490cba', '2023/07/05', "I went to the watercolour society's winter exhibition opening on 5 July 2023.")
+== q_eefdc20af97b How many different vegetable varieties have I planted in my garden since April? | verb planted
+== q_91ae9daa0edc How much did I add to my used car savings from my March salary and freelance data work? | verb add
+     (14, 's_cfe19d4da7af', '2023/05/05', 'I’ve saved about 120,000 KSh and I’m looking at cars around 400,000 to 450,000 KSh.')
+     (53, 's_8f29ffa6f1cf', '2023/07/10', 'I also need at least one evening for budgeting and car savings stuff.')
+     (73, 's_672c0e2d671f', '2023/04/18', "By the way, I've been getting a 10% bonus of my salary annually for the past 2 years, so that should be factored in.")
+     (77, 's_e2e5c447dfd4', '2023/07/15', 'I finished a Python data visualization project on 2023-07-15.')
+== q_bcd6d210710b How much is left in my bakery fund after those transactions I told you about? | verb None
+     (2, 's_af3c748536c9', '2023/05/06', 'I finally opened a separate savings account for the bakery and deposited 25,000 pesos.')
+     (8, 's_373d3bac551d', '2023/06/21', 'I moved 7,500 pesos into my travel fund after selling a batch of alfajores.')
+     (41, 's_a892896c672c', '2023/09/16', 'I’m trying to plan a Sunday dinner for three friends without blowing my bakery fund.')
+== q_31e7201b2c55 How much have I spent on tango shoes in total? | verb spent
+     (11, 's_a1844eb568fa', '2023/08/11', 'I’ve been practicing tango three nights a week, so by the time I get home I just want something warm and fast.')
+     (13, 's_9bf1971dc8f0', '2023/06/20', 'I finally got two nights off in a row, and I used one to go to a tango practica.')
+     (44, 's_37727bd7d4c4', '2023/08/02', 'Honestly, between the restaurant, tango, and French flashcards, I feel like I need 30 hours in a day.')
+     (46, 's_b87ec3154547', '2023/08/05', "I have to be at the tango studio by 9 tomorrow, but I also promised myself I'd study French tonight.")
+== q_bb61022c7cfc How many kilos of dulce de leche did I make in total for the birthday and anniversary cake | verb make
+== q_6834eb0349a2 How many tubes did I end up replacing in my National R-77? | verb None
+     (5, 's_674765a5f383', '2023/06/02', 'I have a National R-77 on the bench right now.')
+     (7, 's_3fc6f43ff307', '2023/07/02', "Actually, I've been tinkering with my National R-77 this week.")
+     (10, 's_efca82c7612f', '2023/07/19', 'I bought a 12-volt dial lamp for the National R-77, but it was too dim on the AC heater winding.')
+     (11, 's_cb1ea62bdf47', '2023/03/04', 'While recapping the AGC line of my National R-77, I put in an 18k-ohm resistor.')
+== q_47e3f2749c07 How many orchids have I added to my collection since March? | verb added
+     (0, 's_395ed2423a9b', '2023/05/02', "I repotted two orchids last week and now I'm worried I overwatered.")
+     (2, 's_9b84ce601f9a', '2023/05/22', 'I picked up one Phalaenopsis orchid at the market yesterday.')
+     (6, 's_0ea896131f04', '2023/06/11', 'Today I repotted two orchids with fresh bark.')
+     (7, 's_11b3d1451200', '2023/03/18', 'Oh, and I bought two Cattleya orchids for the balcony this week.')
+== q_43e6976bec02 How many times did my systolic reading exceed 130 in August? | verb None
+== q_4d36a6e5d796 How many phone calls did I have with my daughter in August? | verb have
+== q_90f7c27a95f2 How many grandchildren do I have? | verb have
+== q_c2e25b33ec30 How many times did I eat feijoada last month? | verb eat
+== q_8b4f1ff8ce11 How many books have I read since March? | verb read
+== q_6a3d4c6ff3c4 How many animals at the shelter where I volunteer are not FIV-positive? | verb None
+     (20, 's_3640f091cd5c', '2023/06/08', 'Thursdays are the worst because I’m at the shelter until seven.')
+     (46, 's_733a787dc678', '2023/07/21', 'Anyway, after work I cycled to the shelter and walked three dogs, so the bike is definitely getting use.')
+     (53, 's_016dc738812f', '2023/08/15', 'On top of that, I read five journal articles for my PhD literature review last week., so my brain is a bit full, but the shelter usually resets me.')
+     (70, 's_486ea74c5256', '2023/10/12', "Between the museum, the shelter, and my PhD reading I'm getting home starving at 8.")
+== q_2f121a243f4b How many books have I read for my PhD literature review since the start of June? | verb read
+     (7, 's_ab0e15884b3e', '2023/09/05', 'One talk on early varnish recipes gave me a few ideas for my PhD chapter, but now I have even more reading to do.')
+     (11, 's_b28d31490631', '2023/06/28', 'Maybe the PhD study plan—I have two chapters to revise and I keep procrastinating because they feel huge.')
+     (14, 's_24b6286811a4', '2023/07/20', 'I attended my first PhD seminar on 2023-07-20.')
+     (19, 's_751a0730cec7', '2023/08/21', 'After the shelter shift and a full day at the museum, I still have to read two articles for my PhD.')
+== q_d52f60bba453 What was the combined attendance at the March and June book club meetings I told you about | verb None
+     (14, 's_1eae726624ce', '2023/04/10', 'Maybe I should borrow that idea for our book club: one facilitator, two minutes per person, then open discussion.')
+     (16, 's_3131aafe9c48', '2023/03/01', "I'll keep the next three book club selections accessible.")
+     (23, 's_4830afadd91b', '2023/04/18', "I'm drowning in moving boxes, and my book club just picked a 600-page novel for next month.")
+     (24, 's_dfa390bb5703', '2023/06/15', "One last thing—I'm hosting book club at my old place one more time.")
+== q_cd53d3a105e4 How much honey did I harvest in total from my two hives this summer? I lost track. | verb harvest
+     (4, 's_daea5c52ffdc', '2023/04/28', 'Also, I almost forgot: My first full hive inspection this year is scheduled for 2023-05-01.')
+     (8, 's_e62b82cfe466', '2023/06/05', 'Just back from the hives—my bees are still grumpy after I pulled two frames.')
+     (11, 's_e8c39c40d2c2', '2023/07/02', 'My bees have been unusually defensive the last two days, even following me after I close the hive.')
+     (18, 's_eaf8bc892868', '2023/09/02', 'I keep two hives near Kralingse Bos.')
+== q_a5599a726aef What was the total number of students I mentioned going on the two field trips this spring | verb None
+     (69, 's_c98a265e36d2', '2023/06/27', "I'm still struggling with packing light, like I realized on my last trip to Europe, I packed five different sweaters and only wore two of them.")
+== q_0920dea94636 How many trees are in our backyard? | verb None

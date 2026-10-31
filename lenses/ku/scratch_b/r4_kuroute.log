@@ -1,0 +1,24 @@
+r3w                        89.0 0.941 0.912 1.000 1.000 0.929     - 0.961   3065   69.4     - 0
+   if Reactor cites every passage: CF1all=0.929 Sall=88.1
+     ssu       n=  2 S= 51.3 Sall= 46.3 PA=0.500 CF1=0.667 routes={'ku': 2}
+     ku        n= 15 S= 94.1 Sall= 93.7 PA=1.000 CF1=1.000 routes={'ku': 15}
+nolate_c                   89.1 0.941 0.912 1.000 1.000 0.929     - 0.961   2989    9.9     - 0
+   if Reactor cites every passage: CF1all=0.951 Sall=88.8
+     ssu       n=  2 S= 51.4 Sall= 48.9 PA=0.500 CF1=0.667 routes={'ku': 2}
+     ku        n= 15 S= 94.1 Sall= 94.1 PA=1.000 CF1=1.000 routes={'ku': 15}
+nolate_c_cnt2              89.1 0.941 0.912 1.000 1.000 0.929     - 0.961   2989    8.5     - 0
+   if Reactor cites every passage: CF1all=0.951 Sall=88.8
+     ssu       n=  2 S= 51.4 Sall= 48.9 PA=0.500 CF1=0.667 routes={'ku': 2}
+     ku        n= 15 S= 94.1 Sall= 94.1 PA=1.000 CF1=1.000 routes={'ku': 15}
+r3w                        91.6 1.000 1.000 1.000 1.000 1.000     - 0.917   2939  283.5     - 0
+   if Reactor cites every passage: CF1all=0.825 Sall=88.8
+     ssu       n=  1 S= 84.0 Sall= 79.0 PA=1.000 CF1=0.667 routes={'ku': 1}
+     ku        n=  3 S= 94.1 Sall= 92.1 PA=1.000 CF1=1.000 routes={'ku': 3}
+nolate_c                   91.6 1.000 1.000 1.000 1.000 1.000     - 0.917   2890   16.7     - 0
+   if Reactor cites every passage: CF1all=0.867 Sall=90.1
+     ssu       n=  1 S= 84.1 Sall= 84.1 PA=1.000 CF1=0.667 routes={'ku': 1}
+     ku        n=  3 S= 94.1 Sall= 92.1 PA=1.000 CF1=1.000 routes={'ku': 3}
+nolate_c_cnt2              91.6 1.000 1.000 1.000 1.000 1.000     - 0.917   2890   14.0     - 0
+   if Reactor cites every passage: CF1all=0.867 Sall=90.1
+     ssu       n=  1 S= 84.1 Sall= 84.1 PA=1.000 CF1=0.667 routes={'ku': 1}
+     ku        n=  3 S= 94.1 Sall= 92.1 PA=1.000 CF1=1.000 routes={'ku': 3}

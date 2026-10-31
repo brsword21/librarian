@@ -1,0 +1,232 @@
+==========================================================================================
+q_62e927862f62 chars 2530 cite ['s_37476ff1f7d6', 's_e5548745730d'] abst 0.0474 comp None
+Q: What is the name of my ceramics class instructor now?
+--- [E1] s_37476ff1f7d6 2023/04/11 (Tue) 08:34
+user: Good tip. I'll set some rules tonight. Random note from class: My ceramics class instructor is Miguel Silva. He offered to bring me some special glaze samples to try at home.
+--- [E2] s_651a8bb6626d 2023/07/19 (Wed) 10:49
+user: Sombra. She's a tiny black cat with too much confidence. I posted a glaze test bowl from Tuesday's class. My old instructor Miguel still comments on my ceramic photos online. It's motivating.
+--- [E3] s_e5548745730d 2023/08/03 (Thu) 13:18
+user: Good point. I forgot to close my studio door yesterday and she walked straight through a tray of wet clay, leaving tiny paw prints across the floor. On another note: The studio hired Ana Ferreira to teach my Wednesday ceramics class after Miguel moved to Porto. I'm relieved the time slot didn't change.
+[...]
+user: It really is. With two teenagers and freelance work, two hours of ceramics midweek keeps me sane. I'll move my tools and clay into the high cupboard and keep the door shut.
+==========================================================================================
+q_cd41ef1d48d1 chars 2270 cite ['s_baf4965f1481', 's_f1d12777eb9a'] abst 0.2538 comp None
+Q: What is the name of the accountant I'm using for my freelance taxes now?
+--- [E1] s_baf4965f1481 2023/04/18 (Tue) 09:45
+user: Better now that I have more time in the evenings. I finally organized my studio corner and stopped stressing about the admin side — I've been using Marta Nogueira to handle my freelance tax paperwork this year. — so I can focus on glazing without guilt.
+--- [E2] s_f1d12777eb9a 2023/07/24 (Mon) 18:51
+user: That could work. I can shop for everything Saturday morning. Also, regarding my accountant, Marta Nogueira went on maternity leave and referred me to her colleague Bruno Almeida for the rest of the year., so I need to scan all my receipts this weekend too.
+==========================================================================================
+q_b3e5afe916c8 chars 2682 cite ['s_2e822fd22f27', 's_01aca3a03579'] abst 0.4106 comp None
+Q: What is my current job title?
+--- [E1] s_2e822fd22f27 2023/06/27 (Tue) 18:12
+user: can you write a press release for App My Community that announces new content management services offered
+[...]
+user: This press release will also announce a new employee, Diane Frantz, that was previously a customer of App My Community and was a campground owner
+[...]
+user: The reason for this service being offered is to address app deployment with the lack of time available to campground owners
+--- [E2] s_01aca3a03579 2023/08/24 (Thu) 20:11
+user: Good idea. I’ll try that tomorrow. Between the garden and painting, I’m nearly back to normal after the hospital's accreditation visit. I got another promotion, so now I am Director of Clinical Services. My diary has been a bit full this fortnight.
+--- [E3] s_1b8c83929a01 2023/09/11 (Mon) 21:07
+user: I'm interested in learning more about the role of a Marketing Director. Can you provide some information on the typical responsibilities and skills required for this position?
+[...]
+user: I'd like to know more about the role of a Marketing Director in terms of the skills and qualities required to be successful in this position. Can you provide some insights on the key skills and qualities that are essential for a Marketing Director?
+==========================================================================================
+q_1a6b4fa2ede3 chars 2153 cite ['s_694e7fbd5fda', 's_c89660cbaad4'] abst 0.1011 comp None
+Q: Who teaches my Saturday morning watercolour class now?
+--- [E1] s_694e7fbd5fda 2023/04/22 (Sat) 17:42
+user: Perfect. I'll make a batch Saturday afternoon. My Saturday morning watercolour class is taught by Margaret. So the morning is already taken, but the afternoon is free for cooking.
+--- [E2] s_c89660cbaad4 2023/09/02 (Sat) 11:04
+assistant: You mentioned your sons are coming on Sunday. Also, a quick note on Saturday: Margaret has retired, so your Saturday morning watercolour class is now taught by Priya Nair. I thought I’d mention it so you’re not caught off guard.
+user: Oh, thanks for the heads-up. Margaret never mentioned it when I saw her last month. I’ll bring my usual kit anyway. Could you add an 8:30 Saturday reminder and put the slice ingredients on my shopping list?
+==========================================================================================
+q_fc41aad935fc chars 2224 cite ['s_8541f88a1e31', 's_8f29ffa6f1cf'] abst 0.2777 comp None
+Q: How many gigabytes is my current mobile data plan?
+--- [E1] s_8541f88a1e31 2023/04/18 (Tue) 14:40
+user: Just saving for now. I want to have a bigger down payment before I start visiting car yards. Between choir trips and Python practice, the evenings disappear. I switched to a 15GB monthly mobile data plan because my Python tutorials used too much data. Still, I've started downloading lessons at work so I don't burn through the bundle.
+--- [E2] s_8f29ffa6f1cf 2023/07/10 (Mon) 21:36
+user: That could work. I also want to avoid burning out before Sunday’s choir performance. Oh, and I made one practical change this week: I upgraded my mobile data plan to 25GB because 15GB was not enough for video tutorials. Hopefully that means I can download the course videos faster and study offline if the power goes out.
+==========================================================================================
+q_e165458f4cff chars 2725 cite ['s_52bb6489d5a8', 's_88902b00305c'] abst 0.1192 comp None
+Q: What is my current monthly rent?
+--- [E1] s_52bb6489d5a8 2023/04/14 (Fri) 10:36
+user: Okay, that works. I just renewed the lease on my studio in Kilimani; my rent is 18,000 shillings a month., so I'm trying to keep my other expenses as low as I can for a while.
+--- [E2] s_88902b00305c 2023/08/11 (Fri) 08:09
+user: Hey, I'm trying to build a simple Python script to track my monthly expenses so I can save for a used car. Can you help me get started?
+[...]
+user: I have a rough spreadsheet but I want something more automatic. Maybe I can log expenses as I go and see totals at the end of the month.
+[...]
+user: Yes, please. By the way, I moved to a new bedsitter in South B and now pay 22,000 shillings a month., so my rent changed and I need to update my budget categories.
+--- [E3] s_8729a1a905d8 2023/08/20 (Sun) 17:14
+user: Yes, that would help. By the way, housing costs are on my mind because I was comparing areas. My brother Brian pays 22,000 shillings a month for his apartment in Nakuru. That makes me wonder if I should stay put and keep my rent low.
+[...]
+user: Good point. My current rent is only 9,000, shared. I'll stay. Maybe I can use part of the data-analysis project to track my spending automatically.
+==========================================================================================
+q_074ae81650db chars 2228 cite ['s_35313312a916', 's_78a718e37713'] abst 0.0474 comp None
+Q: How many laps do I swim each morning these days?
+--- [E1] s_54550b279d32 2023/04/12 (Wed) 13:59
+user: Good morning! I swam my usual 40 laps, but my blood pressure was 138/86 before breakfast. Do you think the heat and a bad night's sleep could be behind that?
+--- [E2] s_35313312a916 2023/04/15 (Sat) 18:50
+user: Good morning! I just finished my swim—40 laps today—but my blood pressure was 148/90 when I checked right afterward. I'm not sure if I should worry.
+--- [E3] s_78a718e37713 2023/08/21 (Mon) 11:53
+user: Before coffee, but I slept badly. After my check-up I increased my morning swim to 30 laps. The water was cool and calm, so it helped clear my head.
+==========================================================================================
+q_355094c7f34a chars 2957 cite ['s_0ea896131f04', 's_6b21a3ef86b0'] abst 0.0474 comp None
+Q: How many cups of coffee do I drink each morning these days?
+--- [E1] s_6e8e872282a3 2023/04/08 (Sat) 19:19
+user: I think I'll try to incorporate some of those snacks into my daily routine. I've been relying too much on coffee to get me through the afternoon slump, but I know that's not the healthiest habit. Speaking of coffee, do you think it's okay to have a cup or two a day, or should I try to cut back?
+```
+[...]
+user: I think I'll try to cut back on my coffee consumption and see how my body reacts. Maybe I can try switching to green tea or herbal tea in the afternoons instead of reaching for a cup of coffee. And I'll definitely make sure to drink more water throughout the day. Thanks for the tips!
+--- [E2] s_0ea896131f04 2023/06/11 (Sun) 08:08
+user: Swimming helps my blood pressure. Yesterday it was 12/8 after the pool. My neighbor Carlos saw my pressure monitor and told me he averages 14/9. He drinks three cups of coffee every morning and says he won't give it up.
+assistant: That’s a good reading after exercise. You mentioned that Carlos drinks three cups of coffee every morning. Maybe he could ask his doctor if that is affecting his pressure.
+user: I told him that, but he says coffee is his only vice. Today I repotted two orchids with fresh bark.
+--- [E3] s_6b21a3ef86b0 2023/07/18 (Tue) 14:50
+user: Good idea. I repotted it last year, so maybe it's still settling. After my check-up I switched to just one cup of coffee in the morning. I think it's helping me feel less jittery during my swims.
+[...]
+user: I'll do that. My orchids are liking the humidity, but I'm starting to worry about fungus on the phalaenopsis.
+==========================================================================================
+q_e509e8e931c1 chars 2154 cite ['s_3d7b281d50cf', 's_c0b846477df0'] abst 0.0474 comp None
+Q: How many kilometers do I walk each evening these days?
+--- [E1] s_3d7b281d50cf 2023/04/12 (Wed) 14:00
+user: I do rest, but maybe I should wait longer after walking home from the pool. I've been taking a three-kilometer walk around the neighborhood after dinner. I think the evening movement helps, but I don't want it to skew my morning numbers.
+--- [E2] s_c0b846477df0 2023/08/10 (Thu) 21:38
+assistant: That’s a solid reading, and the downward trend is good. Your consistency is paying off. You mentioned you increased your evening walk to five kilometers after your stamina improved. Have you been checking at the same time each day, like before your swim or a few hours after?
+user: Yes, I check around 10 am after my swim and a shower, but I rest seated for 10 minutes first. My sleep has been much better lately too.
+==========================================================================================
+q_8e9be6f580d2 chars 2569 cite ['s_dfdd379dd740', 's_5d33d4c0fd17'] abst 0.2103 comp None
+Q: What is the name of the store where I currently buy Moroccan spices?
+--- [E1] s_dfdd379dd740 2023/05/02 (Tue) 14:33
+user: I'm hosting Friday dinner for about twelve relatives and I want to do a proper Moroccan spread: chicken tagine with preserved lemon, couscous, maybe two salads. Can you help me figure out what I can make ahead? I'm also trying to ease back into running after that calf strain.
+[...]
+user: Perfect. I also need a vegetarian main for my niece. Would a chickpea and spinach stew work with the same Moroccan spice palette?
+--- [E2] s_09650474ef8e 2023/05/23 (Tue) 21:42
+user: I finally used preserved lemons and a little ras el hanout from the shop on Danforth. My aunt said it reminded her of Fez.
+[...]
+user: Toronto half in May. I’m trying not to overdo it while work is busy—lots of visa applications right now. On 2023-05-20, Lina saw a Moroccan textile exhibit at the Royal Ontario Museum. She wants to drag me back to see it again before it closes.
+--- [E3] s_5d33d4c0fd17 2023/07/18 (Tue) 18:46
+user: True. I'll do tagine. I need fresh ras el hanout. My sister Nadia lives out that way, so I've started buying all my Moroccan spices at Marrakech Market in Mississauga—it's closer to Nadia. Their ras el hanout is really fresh.
+==========================================================================================
+q_25e9a4b961d7 chars 2077 cite ['s_412dc03b9790', 's_15d8da57c778'] abst 0.0474 comp None
+Q: How many people are on my UX team now?
+--- [E1] s_412dc03b9790 2023/03/14 (Tue) 19:49
+user: Still deciding. Work is chaotic today. My UX team has six people right now, and we are all on the project kickoff call. I haven't even looked at the book club poll yet. I just want something easy and fun for this month.
+--- [E2] s_15d8da57c778 2023/06/19 (Mon) 10:58
+user: We're reading The Cat Who Saved Books. It's short, which helps because work has been full on. My UX team now has eight people after the two new hires started today. So I told the group not to expect a perfectly tidy apartment, just tea and snacks.
+[...]
+user: Honestly, hosting forces me to clear at least one room. And I booked a sailing lesson for Saturday morning as a reward.
+==========================================================================================
+q_f14893711b1a chars 2449 cite ['s_4b82d548a1c1', 's_4b9098e4b8be'] abst 0.0474 comp None
+Q: What is my move date?
+--- [E1] s_400e8f4348dc 2023/03/12 (Sun) 21:44
+user: April 30. And I have book club on the 18th plus sailing lessons every Saturday morning, so I can't spend whole weekends on it.
+--- [E2] s_4b82d548a1c1 2023/03/15 (Wed) 14:41
+user: Honestly, after a couple of heavier reads, I think we need a comfort read. I just got the schedule from the moving company: my move date is September 2. So I won't have much time to prep a dense discussion.
+--- [E3] s_4b9098e4b8be 2023/07/10 (Mon) 10:12
+assistant: Makes sense. I'll keep the questions to one page. Since your move date is now September 16, I can help you change the utility registration.
+user: Good point, thanks. I keep forgetting the date shifted. Do you think I should also change my address with the library?
+[...]
+user: Perfect. Let's go with Remarkably Bright Creatures then, and I'll mention the date change in the club chat.
+==========================================================================================
+q_8933b400c72a chars 2608 cite ['s_feb4ef7c558b', 's_6295be2557d9'] abst 0.1192 comp None
+Q: What is my skateboard's name now?
+--- [E1] s_774400ddc6de 2023/07/15 (Sat) 12:03
+user: Yeah, it’s been a weird week. I named the new deck I picked up at the skate shop grand opening 'Decaf' yesterday, because I spilled a latte on it before I even skated it. So now it’s officially part coffee, part skateboard, fully cursed.
+--- [E2] s_feb4ef7c558b 2023/09/03 (Sun) 12:53
+user: Mostly vocals, a Minilogue, and sometimes my skateboard rolling by as unwanted texture. Budget is around $250 CAD.
+--- [E3] s_6295be2557d9 2023/11/20 (Mon) 10:38
+user: Yeah, good call. I ended up cruising around the Plateau for a bit and it actually helped. I actually renamed my skateboard 'Flat White' this week; 'Decaf' just made me think of work every time I looked at it. My ride to the roastery feels less like punching in for a shift now.
+[...]
+user: Spiritual rebrand for now, but I'm tempted to paint the deck. I've been trying to finish a demo for my audio engineering applications, and the skate breaks are the only thing keeping me from overthinking every snare. How much do schools care about a produced track versus raw recordings?
+==========================================================================================
+q_eb3a2b633378 chars 2872 cite ['s_212c3d3d95af', 's_88459a4efc85'] abst 0.1202 comp None
+Q: What time does my long run start these days?
+--- [E1] s_6982e7cc04a7 2023/03/12 (Sun) 16:02
+user: That might be the compromise. The bedrooms are in better shape anyway. Speaking of chaos, I'm doing my half-marathon long runs on Saturdays at 7:00 a.m. while my partner watches the toddler. So at least Saturday mornings are blocked out for running, and I’m not trying to keep the dog and toddler out of the room while comparing floor samples.
+--- [E2] s_212c3d3d95af 2023/06/24 (Sat) 19:21
+assistant: One thing that might help is a Sunday afternoon batch of something hearty. You mentioned your long run has shifted to Sundays at 6:30 a.m. because your Saturday shifts changed. So a post-run breakfast-lunch hybrid followed by a make-ahead dinner could save you later in the week.
+user: That’s true—I keep forgetting Sunday is now my long run day. I like the idea of a post-run meal and then a big pot of something. What travels well for lunch at the hospital?
+--- [E3] s_88459a4efc85 2023/07/08 (Sat) 22:00
+user: Decent, but Sunday is tight. The toddler's Sunday playgroup got moved to 9:00 a.m., so I need to keep my long-run start early. I'm thinking I'll start at 6:00, do eight miles, and still make it with damp hair.
+==========================================================================================
+q_982391af62c7 chars 2877 cite ['s_6982e7cc04a7', 's_14e583f70e68'] abst 0.2361 comp None
+Q: How many rooms have we completely renovated in the bungalow so far?
+--- [E1] s_6982e7cc04a7 2023/03/12 (Sun) 16:02
+user: Okay, I need a practical opinion. We’re ripping up the floral carpet in the bungalow this weekend, and I can’t decide whether to refinish the original oak floors or go with engineered hardwood. The toddler spills everything, and the greyhound does laps through the living room at least once a day.
+[...]
+user: Exactly. I also need to figure out the finish color before the weekend. We have fir trim and a lot of dark wood built-ins, but I don’t want the house to feel like a cave.
+--- [E2] s_14e583f70e68 2023/04/12 (Wed) 10:22
+user: That's fair. I always feel guilty skipping a run, but my knees were creaky on the stairs today. The bungalow renovation means our living room is currently a dust zone, so the couch isn't even that inviting. Maybe I'll do some yoga in the kitchen.
+--- [E3] s_88222f7078f3 2023/04/18 (Tue) 16:16
+user: Hey, I need some help juggling things. I'm a pediatric nurse in Portland, training for a half marathon, and we're mid-renovation on our old bungalow. Some weeks I barely get a run in.
+[...]
+user: We just refinished the dining room, so maybe that becomes the toddler zone. I want to run the Shamrock half in March. Is it too late to build up from five miles?
+==========================================================================================
+q_a90a3ef2db02 chars 2219 cite ['s_be7cd58eb335', 's_6c15ba52021c', 's_75d5885a4f04'] abst 0.1585 comp 16
+Q: How many Icelandic horses do my neighbor Bjørn and I have in total right now?
+--- [E1] s_be7cd58eb335 2023/01/20 (Fri) 21:52
+user: Perfect. I'll start it after evening chores. Even though I currently have 9 Icelandic horses on my farm., I try to keep Sundays a bit slower, so a stew that simmers by itself is ideal.
+--- [E2] s_6c15ba52021c 2023/03/14 (Tue) 11:53
+assistant: Celeriac will add a nice sweetness. For the chapter, maybe let her solve one small problem before supper so the scene ends with hope. By the way, Your neighbor Bjørn has 5 Icelandic horses. If you need a break from writing, a short ride might clear your head.
+--- [E3] s_75d5885a4f04 2023/05/02 (Tue) 08:14
+user: That's exactly the tone I want. By the way, I bought 2 more Icelandic horses at the spring auction. so the barn is feeling a bit fuller this week.
+==========================================================================================
+q_e0e8cc3f07b6 chars 2409 cite ['s_bffed6e26e01', 's_04f46bc85c4c'] abst 0.0474 comp None
+Q: How many chapters does my children's book have now?
+--- [E1] s_bffed6e26e01 2023/02/14 (Tue) 08:38
+user: Good point. I always forget about insulating the outside. I've been distracted lately—I currently have 8 chapters written for my children's book. so my head is full of talking foxes and stubborn ponies.
+[...]
+user: A bit. The main pony is basically my mare Skjerva, just with more opinions. I was going to ask, do you know if carrots or apples are better for a quick cold-weather treat? I want to give the yearlings something after the frost check.
+--- [E2] s_04f46bc85c4c 2023/05/20 (Sat) 09:35
+user: I'll try the seed mat. By the way, I expanded the outline, so my children's book now has 12 chapters., which means I'm trying not to let the writing eat into barn time too much.
+==========================================================================================
+q_fd2d7909a58a chars 2844 cite ['s_77413de90637', 's_7d8d10cc0a90'] abst 0.0474 comp None
+Q: How many beehives do I have on my farm right now?
+--- [E1] s_77413de90637 2023/02/10 (Fri) 08:06
+user: She does, and her mane is practically white against a dark bay coat. The clover is finally blooming, and I have 3 beehives on my farm right now., so the garden has been full of buzzing while I write outside.
+[...]
+user: Mostly they help, except when the rams decide to shout at each other. I’ve rewritten one line four times today. Maybe I need a child’s word for the sound a hoof makes on wet grass.
+--- [E2] s_43aa0096315e 2023/04/18 (Tue) 21:16
+user: There is an old orchard behind the barn. I wanted to make it more alive for real and for the book, so I tried something with pollination. Last autumn I had 3 beehives on my farm. The hives sat under the crooked apple trees, and the horses watched from the fence line.
+[...]
+user: They were suspicious but sensible. Mostly they stood very still and listened to the hum. I got a small bit of honey, but the real gift was sitting on the porch with coffee while the bees worked.
+--- [E3] s_7d8d10cc0a90 2023/06/01 (Thu) 08:29
+user: I used that patience trick today with one of the yearlings. By the way, I’ve been so busy outside. I split one of my beehives, so now I have 4 beehives on my farm. I’m wondering if I should scale back before winter.
+[...]
+user: True. I don’t want the bees to become a chore. The book has a deadline from a small publisher, and I need to protect my writing time.
+==========================================================================================
+q_be4ffb1f8c06 chars 2744 cite ['s_ed235d12545b', 's_087a778ccc25'] abst 0.0474 comp 7
+Q: How many apple trees do I have in my orchard right now?
+--- [E1] s_ed235d12545b 2023/03/21 (Tue) 18:46
+user: I have tried voice notes, but they turn into rambling observations about fjord light and stubborn ponies. Some of it might be usable later if I shape it. The orchard needs attention soon. I currently have four established apple trees in my orchard. I am trying to figure out whether to add another tree or keep the space open for a small writing shed.
+--- [E2] s_087a778ccc25 2023/05/16 (Tue) 11:50
+user: I have a pile of old wood chips from when the electric company trimmed the roadside. I could use that. I also need to check the young apple trees before winter; the three I added after the last frost are still so small.
+assistant: Wood chips are perfect for that. You mentioned you added three new apple trees to the orchard after the last frost. Are you doing anything special to protect them from the wind this year?
+user: I've wrapped the trunks with mesh to keep the hares off, but wind is another matter. The orchard is a bit exposed on the north side. I thought about planting a low hedge, but maybe that's a spring job.
+[...]
+user: That's a good idea. I can ask my neighbor for old fence posts. On a different note, I promised the children at the riding school a story about a horse who plants a garden, so I've been thinking about apple trees as characters.
+==========================================================================================
+q_07a3d3d857f4 chars 2559 cite ['s_0a87f3626ed9', 's_101108fcf260'] abst 0.0474 comp None
+Q: How many tractors do I have on my farm right now?
+--- [E1] s_0a87f3626ed9 2023/03/27 (Mon) 18:35
+user: Lóa is lovely, I'll try that. I need to keep chapters short because I'm reading drafts to my neighbor's kids. The mare is due next week and the hay needs moving. Last year I had only one tractor on my farm. I suppose I'll have to prioritize the animals and write at night with a headlamp.
+[...]
+user: Voice memos are a great idea—I can pretend I'm talking to the filly. What about the raven that follows her? Should he be a trickster or a grumpy old uncle type? I'm leaning toward grumpy but secretly kind.
+--- [E2] s_101108fcf260 2023/04/12 (Wed) 18:38
+user: I do, but my sourdough starter has been neglected lately. It's a bit chaotic here because I have two tractors on my farm right now..
+[...]
+user: One is mine and the other belongs to a neighbor; I'm letting him store it here while his barn is being rebuilt. It's only fair since he helped me clear snow last month.
+--- [E3] s_7d8d10cc0a90 2023/06/01 (Thu) 08:29
+user: I used that patience trick today with one of the yearlings. By the way, I’ve been so busy outside. I split one of my beehives, so now I have 4 beehives on my farm. I’m wondering if I should scale back before winter.
+==========================================================================================
+q_1a034c66813d chars 2405 cite ['s_be7cd58eb335', 's_7d8d10cc0a90'] abst 0.1773 comp None
+Q: How many cats do I have on my farm right now?
+--- [E1] s_be7cd58eb335 2023/01/20 (Fri) 21:52
+user: Perfect. I'll start it after evening chores. Even though I currently have 9 Icelandic horses on my farm., I try to keep Sundays a bit slower, so a stew that simmers by itself is ideal.
+--- [E2] s_77413de90637 2023/02/10 (Fri) 08:06
+user: She does, and her mane is practically white against a dark bay coat. The clover is finally blooming, and I have 3 beehives on my farm right now., so the garden has been full of buzzing while I write outside.
+[...]
+user: Mostly they help, except when the rams decide to shout at each other. I’ve rewritten one line four times today. Maybe I need a child’s word for the sound a hoof makes on wet grass.
+--- [E3] s_7d8d10cc0a90 2023/06/01 (Thu) 08:29
+user: I used that patience trick today with one of the yearlings. By the way, I’ve been so busy outside. I split one of my beehives, so now I have 4 beehives on my farm. I’m wondering if I should scale back before winter.

@@ -1,0 +1,5 @@
+26 questions x 1 variants on dev200 in 14s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+span_own                   83.7 0.909 0.955 0.968 0.909 1.000 1.000 0.897   7453  868.4 0.966 0
+   if Reactor cites every passage: CF1all=0.680 Sall=77.3
+   -> runs/r4-temporal-b/temporal/a_r3_gap/span_own/dev200

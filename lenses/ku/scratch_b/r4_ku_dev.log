@@ -1,0 +1,14 @@
+78 questions x 4 variants on dev in 5s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+r3w                        93.4 1.000 0.993 1.000 1.000 1.000 1.000 0.979   3044   77.4 0.926 0
+   if Reactor cites every passage: CF1all=0.986 Sall=93.6
+   -> runs/r4-ku-b/ku/b_r4_ku/r3w/dev
+nolate                     93.4 1.000 0.993 1.000 1.000 1.000 1.000 0.979   3032    9.1 0.926 0
+   if Reactor cites every passage: CF1all=0.989 Sall=93.7
+   -> runs/r4-ku-b/ku/b_r4_ku/nolate/dev
+cnt                        93.4 1.000 0.993 1.000 1.000 1.000 1.000 0.979   3102   10.0 0.919 0
+   if Reactor cites every passage: CF1all=0.986 Sall=93.6
+   -> runs/r4-ku-b/ku/b_r4_ku/cnt/dev
+nolate_cnt                 93.4 1.000 0.993 1.000 1.000 1.000 1.000 0.979   3090    9.9 0.919 0
+   if Reactor cites every passage: CF1all=0.989 Sall=93.7
+   -> runs/r4-ku-b/ku/b_r4_ku/nolate_cnt/dev

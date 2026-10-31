@@ -1,0 +1,14 @@
+70 questions x 4 variants on dev in 33s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+v2                         93.4 1.000 1.000 1.000 1.000 1.000 1.000 0.984   3619  310.6 0.906 0
+   if Reactor cites every passage: CF1all=0.961 Sall=92.7
+   -> runs/r4-ssu-a/ssu/a_r4_route/v2/dev
+h                          93.4 1.000 1.000 1.000 1.000 1.000 1.000 0.984   3566  189.8 0.906 0
+   if Reactor cites every passage: CF1all=0.961 Sall=92.7
+   -> runs/r4-ssu-a/ssu/a_r4_route/h/dev
+hp                         93.4 1.000 1.000 1.000 1.000 1.000 1.000 0.984   3566  190.0 0.906 0
+   if Reactor cites every passage: CF1all=0.961 Sall=92.7
+   -> runs/r4-ssu-a/ssu/a_r4_route/hp/dev
+hpd                        93.4 1.000 1.000 1.000 1.000 1.000 1.000 0.984   3566  188.0 0.906 0
+   if Reactor cites every passage: CF1all=0.961 Sall=92.7
+   -> runs/r4-ssu-a/ssu/a_r4_route/hpd/dev

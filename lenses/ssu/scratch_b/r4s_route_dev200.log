@@ -1,0 +1,16 @@
+38 questions x 2 variants on dev200 in 26s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+g_res_lv                   88.8 0.971 0.971 0.986 0.971 0.962 1.000 0.900   4271  713.7 0.914 0
+   if Reactor cites every passage: CF1all=0.903 Sall=88.9
+   -> runs/r4-ssu-b/ssu-routed/b_r4_sent/g_res_lv/dev200
+     ssu       n= 18 S= 92.0 Sall= 89.1 PA=1.000 CF1=0.941 routes={'ssu': 18}
+     ssa       n=  7 S= 93.8 Sall= 93.8 PA=1.000 CF1=1.000 routes={'ssa': 7}
+     multi     n=  4 S= 88.3 Sall= 93.3 PA=1.000 CF1=0.833 routes={'ssu': 4}
+     ku        n=  9 S= 79.1 Sall= 83.9 PA=0.889 CF1=0.759 routes={'ssu': 7, 'ku': 2}
+g_res                      88.8 0.971 0.971 0.986 0.971 0.962 1.000 0.900   4271  413.4 0.914 0
+   if Reactor cites every passage: CF1all=0.903 Sall=88.9
+   -> runs/r4-ssu-b/ssu-routed/b_r4_sent/g_res/dev200
+     ssu       n= 18 S= 92.0 Sall= 89.1 PA=1.000 CF1=0.941 routes={'ssu': 18}
+     ssa       n=  7 S= 93.8 Sall= 93.8 PA=1.000 CF1=1.000 routes={'ssa': 7}
+     multi     n=  4 S= 88.3 Sall= 93.3 PA=1.000 CF1=0.833 routes={'ssu': 4}
+     ku        n=  9 S= 79.1 Sall= 83.9 PA=0.889 CF1=0.759 routes={'ssu': 7, 'ku': 2}

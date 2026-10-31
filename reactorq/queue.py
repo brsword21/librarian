@@ -14,6 +14,7 @@ import time
 from collections import OrderedDict
 from pathlib import Path
 
+import core.paths  # noqa: F401  (kit on sys.path)
 from core.paths import BASE, CACHE
 
 REACTOR = BASE / "reactor.sh"
@@ -27,6 +28,21 @@ def call(*args: str, timeout: float) -> dict:
         return json.loads(proc.stdout.strip().splitlines()[-1])
     except (ValueError, IndexError):
         return {"status": "error", "error": (proc.stderr or proc.stdout).strip()[-800:]}
+
+
+def recover(res: dict, pending: dict, current: dict) -> dict | None:
+    """If a late reply for an earlier timed-out ref of the CURRENT question arrived, and this ask failed, use it."""
+    if res.get("status") == "answered":
+        return None
+    for lr in res.get("late_replies") or []:
+        p = pending.get(lr.get("ref"))
+        if p is not None and p["question_id"] == current["question_id"]:
+            from client import _INSUFFICIENT, citations
+            passages = [{"id": x.get("id"), "text": x["text"]} for x in p["passages"]]
+            cited, unknown = citations(lr["answer"], passages)
+            return {"status": "answered", "answer": lr["answer"], "citations": cited, "unknown_citations": unknown,
+                    "abstained": bool(_INSUFFICIENT.match(lr["answer"])), "ref": lr["ref"], "recovered_late": True}
+    return None
 
 
 def load_cache() -> dict[str, dict]:
@@ -44,7 +60,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--packs", required=True)
     ap.add_argument("--out", required=True)
-    ap.add_argument("--timeout", type=float, default=240)
+    ap.add_argument("--timeout", type=float, default=600)
     ap.add_argument("--limit", type=int)
     ap.add_argument("--no-cache", action="store_true")
     ap.add_argument("--max-chars", default="32000")
@@ -66,6 +82,7 @@ def main(argv=None) -> int:
     todo = sum(len(v) for v in groups.values())
     print(f"{todo} questions in {len(groups)} histories to ask ({len(done)} already answered)", flush=True)
     asked = 0
+    pending: dict[str, dict] = {}   # ref of an unanswered (timed-out) question -> its pack
     CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
     with open(out, "a", encoding="utf-8") as fo, open(CACHE_FILE, "a", encoding="utf-8") as fc, \
             tempfile.TemporaryDirectory() as tmp:
@@ -97,16 +114,26 @@ def main(argv=None) -> int:
                         args += ["--evidence", str(ev)]
                     t0 = time.time()
                     res = call(*args, timeout=a.timeout)
-                    for attempt in range(2):  # closed / error / timeout / refused: start a fresh history, ask again
+                    for attempt in range(2):
+                        # Kosti (Discord): never reset inside a dataset history; a client timeout does not cancel the
+                        # question server-side, so wait, then ask again in the SAME Reactor history (the client retries
+                        # previous_pending by itself) and keep any late reply for the earlier ref.
                         if res.get("status") == "answered":
                             break
+                        if res.get("ref"):
+                            pending[res["ref"]] = p
                         print(f"   retry {p['question_id']} after {res.get('status')} {res.get('code') or ''}", flush=True)
-                        time.sleep(5)
-                        nh = call("--new-history", timeout=120)
-                        if nh.get("status") == "history":
-                            rh = nh["history_id"]
-                            args[1] = rh
+                        time.sleep(15)
+                        if res.get("status") == "refused" and res.get("code") == "history_changed":
+                            rh = None
+                            nh = call("--new-history", timeout=120)
+                            if nh.get("status") == "history":
+                                rh = nh["history_id"]
+                                args[1] = rh
                         res = call(*args, timeout=a.timeout)
+                    late = recover(res, pending, p)
+                    if late is not None:
+                        res = late
                     res.update(question_id=p["question_id"], pack_hash=p["pack_hash"], dataset_history=hid,
                                wall_s=round(time.time() - t0, 1))
                     fc.write(json.dumps(res) + "\n")

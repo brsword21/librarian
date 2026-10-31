@@ -1,0 +1,5 @@
+133 questions x 1 variants on dev in 15s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+span_own                   81.3 0.898 0.957 0.980 0.953 1.000 1.000 0.843   7520  190.6 0.839 0
+   if Reactor cites every passage: CF1all=0.722 Sall=77.6
+   -> runs/r4-temporal-a/temporal/a_r3_gap/span_own/dev

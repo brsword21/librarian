@@ -1,0 +1,48 @@
+{
+ "round": "r4-ku-b",
+ "routes": {
+  "ssu": {
+   "lens": "lenses/ssu/a_r3_route.py",
+   "variant": "kg3crga",
+   "params": {
+    "ssu_lens": "lenses/ssu/merged_r3.py",
+    "ssu_variant": "ku11fn4s_p5",
+    "role_module": "lenses/ssa/a_r3_role.py",
+    "ku_lens": "lenses/ku/a_r3.py",
+    "ku_variant": "r3w"
+   }
+  },
+  "ssa": {
+   "lens": "lenses/ssa/a_recsent.py",
+   "variant": "r2_conf2"
+  },
+  "multi": {
+   "lens": "lenses/multi/merged_r2.py",
+   "variant": "tight_role9",
+   "params": {
+    "role_module": "lenses/ssa/a_r3_role.py"
+   }
+  },
+  "ku": {
+   "lens": "lenses/ku/b_r4_ku.py",
+   "variant": "nolate_c_cnt2"
+  },
+  "temporal": {
+   "lens": "lenses/temporal/a_r3_gap.py",
+   "variant": "span_own"
+  }
+ },
+ "fallback": {
+  "lens": "lenses/generic.py",
+  "variant": "hybrid_rr"
+ },
+ "notes": {
+  "ssu": "lenses/ssu/a_r3_route.py kg3crga (SSU-A: role hand-off, typed own value-disagreement ku gate, comp/runner cite) with inner lens lenses/ssu/merged_r3.py ku11fn4s_p5 (SSU-B ku-cue recall backstop + pass-through of ru_cite), role detector lenses/ssa/a_r3_role.py (SSA-A refit), ku hand-off lens ku a_r3 r3w. Routed ssu route: dev 86.1 -> 88.8, dev200 82.3 -> 88.8 (A alone 87.7/85.0, B alone 87.6/88.1). Test: move date ssu -> ku (visible), cafe cite_plan only.",
+  "ssa": "unchanged a_recsent r2_conf2 (saturated: 93.6 / 93.7, PA = CF1 = 1).",
+  "multi": "unchanged b_tight p08c35_aor via merged_r2 tight_role9, role detector -> lenses/ssa/a_r3_role.py (0 test change). b_r3_full ufull_h (untrimmed user units) NOT taken: -0.3/-0.4 S, 15 of 20 test packs change, and on test the added text is chatter or planted decoys (PhD 'five journal articles' for a books count, orchid repotting in the grandchildren pack); revisit after a Reactor check.",
+  "ku": "lenses/ku/b_r4_ku.py nolate_c_cnt2: wrapper over frozen ku/a_r3 r3w (KU-A). nolate = drop uncited sessions dated after the newest cite_plan session (skipped on count-of-instances questions); cnt2 = own completion/event-sentence pack + list-then-count hint for count-of-instances questions with no numeric statement",
+  "temporal": "lenses/temporal/a_r3_gap.py span_own (= v1 merged_r2 evA_mixB + span computation for 'how many years did I serve' + own-cut for gap questions with no own statement). 4 test packs change, 0 dev answerable questions affected.",
+  "routed": "routed v2: dev 86.9 (Sall 85.3), dev200 87.0 (Sall 85.2); v1 same run 86.0 (84.9) / 84.9 (83.2).",
+  "test_diff": "10 Reactor-visible test pack changes vs runs/final/v1_test_packs.jsonl: runs/final/v2_changed_qids.txt, reasons in runs/final/v2_changed.tsv"
+ }
+}

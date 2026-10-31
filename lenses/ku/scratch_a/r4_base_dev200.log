@@ -1,0 +1,5 @@
+26 questions x 1 variants on dev200 in 7s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+hybrid_rr                  83.5 1.000 1.000 1.000 1.000 1.000     - 0.740  11923  337.7 0.852 0
+   if Reactor cites every passage: CF1all=0.740 Sall=83.5
+   -> runs/r4-ku-a/ku/generic/hybrid_rr/dev200

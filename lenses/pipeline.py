@@ -22,6 +22,7 @@ VARIANTS = {"routed": {"config": "configs/best.json"},
             "routed_r1": {"config": "configs/best_r1.json"},
             "routed_v1": {"config": "configs/best_v1.json"},
             "routed_v2": {"config": "configs/best_v2.json"},
+            "routed_v3": {"config": "configs/best_v3.json"},
             # round-2 merge experiments (configs/exp/*.json)
             "x_e1": {"config": "configs/exp/e1_nb3t0_role.json"},
             "x_e2": {"config": "configs/exp/e2_r3rn_role.json"},

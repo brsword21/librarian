@@ -1,0 +1,129 @@
+     q_40f751819121 in=  1.91 out= -1.70 | What is my cat's name?
+     q_b3a794e382da in=  7.54 out= -3.35 | What is the name of the coffee shop I get my morning espresso at?
+     q_607d3cf5b4f1 in= -3.08 out= -7.08 | What's the name of my neighborhood in Lisbon?
+FLAG q_82e48d120380 in=  0.97 out=  2.55 | What is my younger son's name?
+      IN    0.97 s_08905681a9a6 | It's funny how time goes—My younger son Daniel is moving to Brisbane for work.—so the house will feel a bit quieter, but I'm tryin
+      OUT   2.55 s_2657f1490cba 2023/07/05 | My younger son is coming for Sunday lunch and he's vegetarian, so that could be the centrepiece.
+      OUT   2.31 s_1a07ab7f27a2 2023/08/23 | My younger son says it looks like a biology diagram.
+      OUT   2.02 s_694e7fbd5fda 2023/04/22 | My younger son is coming over Sunday, he's vegetarian at the moment, so that might work.
+FLAG q_aa27ddd3b7c5 in= -3.35 out= -2.33 | What is my dog's name?
+      IN   -3.35 s_89fae3533a9d | The hospital's children's ward has a therapy dog named Archie who visits on Fridays.
+      OUT  -2.33 s_9092178cb312 2023/05/14 | On a happier note, My friend Helen just adopted a cavoodle puppy named Luna.
+      OUT  -7.17 s_022c5423f13d 2023/06/12 | Their dog kept dropping a ball at my feet while I drew.
+      OUT  -8.27 s_10be1194ebca 2023/08/23 | I am a foodie.
+     q_7b0aefc8ba1b in=  7.45 out=  4.14 | What is my favorite meal?
+     q_8a621b50dc72 in=  7.28 out=  4.76 | What is my favorite color?
+     q_1969c49ff4e7 in=  4.53 out=  0.94 | What was the name of the milonga in San Telmo I told you about?
+FLAG q_b5232f0c896b in= -2.28 out= -2.19 | What was the name of the French tutor I told you about?
+      IN   -2.28 s_7503fb2d409d | Maybe I'll ask my French tutor to help me draft an email.
+      OUT  -2.19 s_cd4eef2f92c8 2023/06/08 | I signed up for a French class at Alliance Française with a teacher named Hélène., so my schedule needs a little rearranging.
+      OUT  -6.36 s_9bf1971dc8f0 2023/06/20 | My French homework is also glaring at me from the table.
+      OUT  -7.37 s_96225694225d 2023/06/12 | By the way, did I tell you?
+     q_2ea50c2672ba in=  5.49 out=  4.14 | What did I end up naming my sourdough starter?
+FLAG q_1fae05d78e0c in=  3.11 out=  2.26 | What AM intermediate frequency did I end up using in my National R-77 
+      IN    3.11 s_06329147434d | I ended up fitting a 6.3-volt dial lamp in my National R-77 after the original 8-volt lamp burned out.
+      OUT   2.26 s_b67ab696a0f6 2023/03/11 | I aligned the AM IF of my National R-77 to 455 kHz, the value I remembered from old tube sets.
+      OUT   1.42 s_3c3d11248e74 2023/07/08 | Speaking of the workbench, I briefly tried a 47k-ohm AGC resistor in my National R-77, but the radio lost sensitivity and I remove
+      OUT   1.09 s_b9852db4296b 2023/05/18 | I aligned the FM IF of my National R-77 to 10.7 MHz.
+FLAG q_1a8be2824d48 in=  5.33 out=  5.35 | What speaker impedance did I end up using in my National R-77?
+      IN    5.33 s_3fc6f43ff307 | I briefly tested a 220-ohm cathode resistor in my National R-77 but the audio output was too low and I didn't keep it.
+      OUT   5.35 s_3c3d11248e74 2023/07/08 | Speaking of the workbench, I briefly tried a 47k-ohm AGC resistor in my National R-77, but the radio lost sensitivity and I remove
+      OUT   5.26 s_497393889fe1 2023/07/07 | I measured a 16-ohm speaker for my National R-77 but it did not fit the mounting holes.
+      OUT   5.23 s_489d66ffb392 2023/07/14 | By the way, I briefly tried a 22k-ohm screen grid resistor in my National R-77, but the audio was weak and I removed it.
+     q_ca7af42dbd6c in=  8.97 out=  6.31 | What dial lamp voltage did I end up using in my National R-77?
+     q_862f0a129d66 in=  7.67 out=  6.11 | What output tube cathode resistor value did I end up using in my Natio
+FLAG q_3664132a79f0 in=  2.70 out=  6.54 | What screen grid resistor value did I end up using in my National R-77
+      IN    2.70 s_3816ff8a2b58 | I changed the output tube cathode resistor in my National R-77 from 150 ohms to 180 ohms after measuring the plate current and fin
+      OUT   6.54 s_489d66ffb392 2023/07/14 | By the way, I briefly tried a 22k-ohm screen grid resistor in my National R-77, but the audio was weak and I removed it.
+      OUT   3.02 s_3c3d11248e74 2023/07/08 | Speaking of the workbench, I briefly tried a 47k-ohm AGC resistor in my National R-77, but the radio lost sensitivity and I remove
+      OUT   2.80 s_3fc6f43ff307 2023/07/02 | I briefly tested a 220-ohm cathode resistor in my National R-77 but the audio output was too low and I didn't keep it.
+FLAG q_6434e8c4a3ae in=  5.81 out=  6.01 | What AGC resistor value did I end up using in my National R-77?
+      IN    5.81 s_cb1ea62bdf47 | While recapping the AGC line of my National R-77, I put in an 18k-ohm resistor.
+      OUT   6.01 s_3c3d11248e74 2023/07/08 | Speaking of the workbench, I briefly tried a 47k-ohm AGC resistor in my National R-77, but the radio lost sensitivity and I remove
+      OUT   3.85 s_3fc6f43ff307 2023/07/02 | I briefly tested a 220-ohm cathode resistor in my National R-77 but the audio output was too low and I didn't keep it.
+      OUT   3.59 s_489d66ffb392 2023/07/14 | By the way, I briefly tried a 22k-ohm screen grid resistor in my National R-77, but the audio was weak and I removed it.
+     q_6e893bcca955 in=  6.59 out=  4.07 | What power supply filter capacitor value did I end up using in my Nati
+FLAG q_33b11e8a4d44 in=  4.76 out=  4.83 | By how many ohms did I reduce the volume control resistance in my Nati
+      IN    4.76 s_3816ff8a2b58 | I changed the output tube cathode resistor in my National R-77 from 150 ohms to 180 ohms after measuring the plate current and fin
+      OUT   4.83 s_d9508863ee6a 2023/04/15 | Anyway, on the radio bench this week, I increased the AGC resistor in my National R-77 by 15k ohms after noticing distortion on st
+      OUT   3.51 s_76c839c5c8cb 2023/03/05 | While cleaning the controls on my National R-77, I replaced the scratchy volume pot with a 500k-ohm log taper unit from my parts d
+      OUT   3.11 s_54c596fde291 2023/03/12 | By the way, While recapping the audio stage of my National R-77, I put in a 150-ohm cathode resistor for the output tube., so I’ve
+     q_976e9c69229f in=  6.70 out= -6.62 | What was the name of my language exchange partner from Quebec?
+FLAG q_962a82f81f3a in= -5.93 out=  5.64 | What was the name of the physiotherapist I saw after the Toronto Marat
+      IN   -5.93 s_9a341842ca7a | On 2023-04-16, I ran the Toronto Marathon and my legs were sore for days.
+      OUT   5.64 s_a23930130cb7 2023/04/20 | My sister Nadia saw a physiotherapist after the Ottawa Marathon and said it helped her recovery.
+      OUT  -7.96 s_3f29d5f9a38b 2023/07/05 | I've been rebuilding after a fall marathon.
+      OUT  -8.72 s_0cd7aeeab538 2023/05/10 | My friend Lina just joined the Toronto Triathlon Swim Club for cross-training.
+     q_f46f10460ac8 in=  4.86 out=  2.34 | What is the name of the immigration law firm where I work?
+FLAG q_4483117bcef2 in= -7.66 out= -4.69 | What is the name of the museum where I work?
+      IN   -7.66 s_87bceccc598d | Between the museum, my PhD reading, and a shelter shift, I keep losing evenings.
+      OUT  -4.69 s_a9da47eaa98d 2023/08/15 | I cycled to the museum in drizzle, spent hours repairing a tear in a canvas backing, and then came home to PhD reading.
+      OUT  -4.70 s_4541449a1b69 2023/06/12 | Anyway, I'm at the museum now, starting on some frame consolidation.
+      OUT  -5.99 s_0b956b108cef 2023/06/12 | The museum lab is great, but it's set up for ceramics rather than paper.
+     q_1d7f43897caa in=  3.08 out= -2.92 | What brand is the bicycle I ride to work?
+     q_b7053d97740b in=  7.97 out= -4.94 | What is the name of the café where I usually stop for a cappuccino bef
+     q_a54f3880de36 in=  3.45 out=  1.41 | What is the name of the animal shelter where I volunteer?
+FLAG q_1b638b1afb30 in=  0.45 out= -0.40 | Which Berlin neighborhood is my new apartment in?
+      IN    0.45 s_1ff29a4cd7bc | Berlin housing is absolutely unhinged right now.
+      OUT  -0.40 s_ec1ac4ff48ba 2023/07/12 | Just the usual Berlin apartment stuff, plus a very heavy sofa.
+      OUT  -2.60 s_1eae726624ce 2023/04/10 | That's very Berlin.
+      OUT  -4.14 s_98d9bf2cdd87 2023/03/05 | We’re reading 'The House in the Cerulean Sea' — a nice escape from Berlin rental stress.
+FLAG q_74c6d5125665 in=  3.84 out=  6.53 | What is the name of my sailing instructor?
+      IN    3.84 s_6805e721fa49 | My sailing instructor, Marta, said I need to keep my weight low during tacking.
+      OUT   6.53 s_dfa390bb5703 2023/06/15 | My friend Ines's sailing instructor is named Tomas, and she says he is very patient.
+      OUT   0.85 s_bb6666181572 2023/04/10 | The sailing school's coordinator, Birgit, emailed me the class schedule.
+      OUT  -1.99 s_1ff29a4cd7bc 2023/05/18 | Maybe from my sailing class?
+     q_f14893711b1a in=  7.10 out=  3.89 | What is my move date?
+     q_7a0b603e6a97 in=  4.40 out=  3.35 | What is the name of my brother's new dog?
+FLAG q_6d1f42a4c0a8 in=  7.71 out=  7.17 | What is the name of the restaurant I booked for my birthday dinner?
+      IN    7.71 s_5a438a7aae42 | I booked a table at Osteria Numero for my birthday dinner.
+      OUT   7.17 s_45a6a82cfffc 2023/05/04 | Also, totally unrelated: My friend Ines booked her birthday dinner at Trattoria Otto for next Friday.
+      OUT  -1.86 s_fa876e1cbfd7 2023/03/21 | My coworker Lena recommended a restaurant called Casa Mia for our team dinner.
+      OUT  -6.79 s_d76959b64c26 2023/07/26 | Before that, I had gone to Trader Joe's on Wednesday to grab some specialty items like quinoa and almond milk, so I'm excited to i
+     q_c3323b671e67 in=  5.67 out=  2.26 | What did I name my new podcast?
+FLAG q_6fa4f8620294 in=  0.55 out=  3.51 | What venue did I book for my daughter's wedding reception? I forgot th
+      IN    0.55 s_524fe0fc02bf | Hey, I’m trying to figure out wedding venues for my daughter.
+      OUT   3.51 s_d8b1a3729067 2023/05/20 | Oh, and one piece of good news on the family front: We finally booked the Van Nelle Factory for my daughter's wedding reception.
+      OUT   0.35 s_fbb5f7af1fea 2023/06/20 | Actually, I booked Marloes Fotografie for my daughter's wedding photography.
+      OUT  -1.05 s_b08725ecc4cf 2023/05/03 | I've been a bit distracted: My daughter's wedding dress fitting is scheduled for 2023-09-05 at the bridal shop in Rotterdam.
+     q_077981c7eecc in=  6.59 out=  0.58 | What was the name of the shop where I bought my new bee smoker? I forg
+     q_59e9b0aab70e in=  6.85 out= -0.25 | What was the name of the photographer I booked for my daughter's weddi
+FLAG q_4b0e37d9cd0c in= -4.25 out= -3.81 | What was the style of the last beer I mentioned I'd kegged?
+      IN   -4.25 s_9d394409bd09 | I do have a keg, but I was saving it for a pale ale I'm brewing next week.
+      OUT  -3.81 s_3694c1f04932 2023/06/24 | Oh, and I'm thinking about kegging a blonde ale for the Fourth of July barbecue., so I need to swing by the homebrew supply place 
+      OUT  -4.44 s_9c4dc842da3d 2023/05/21 | Oh, and homebrew update: I finally kegged my peach saison last weekend.
+      OUT  -5.70 s_c097fe03bc6d 2023/02/10 | I also need to keg the pale ale I’ve got sitting in the fermenter.
+     q_e3fb401aa669 in= -0.87 out= -5.11 | What was the last book I mentioned I was reading?
+     q_b3b5d7c68d27 in=  3.81 out= -2.21 | What was the last state park I mentioned camping at?
+FLAG q_373a730f491d in= -0.90 out= -0.90 | What was the brand of the grill I last mentioned buying?
+      IN   -0.90 s_09a512d03931 | Oh, and I bought a Weber kettle grill for our backyard cookouts.
+      OUT  -0.90 s_4d116a685182 2023/06/12 | My brother just bought a Blackstone flat-top grill for his backyard cookouts.
+      OUT  -3.63 s_74fbb846e608 2023/06/18 | My neighbor swears by his Weber charcoal grill, but he's had it for years.
+      OUT  -5.87 s_cbe56b8badd7 2023/02/15 | I love these ideas, especially the grilled peach and prosciutto skewers.
+FLAG q_2b8785c0664b in= -7.08 out= -1.74 | What was the last restaurant I mentioned trying?
+      IN   -7.08 s_6a820766921f | I've been experimenting with different cuisines lately, and I'm thinking of trying something Asian-inspired.
+      OUT  -1.74 s_055a98377bb0 2023/03/29 | Oh, and My wife tried a new wood-fired pizza restaurant in Decatur last weekend and said it was fantastic. — I’m thinking we could
+      OUT  -4.19 s_1a818d7952b3 2023/05/14 | Bar-B-Q is the best barbecue restaurant in Atlanta, but I haven't tried it yet.
+      OUT  -7.10 s_30d38aab34e6 2023/04/03 | I've also been trying to cook more dinner meals at home instead of ordering takeout.
+     q_ffc9e6cb19b2 in=  5.93 out= -1.52 | What's my rescue greyhound's name?
+     q_bb52fdaffb76 in=  4.55 out=  1.54 | What's my toddler's name?
+FLAG q_90d3741d99e9 in= -2.11 out= -3.09 | What's my partner's name?
+      IN   -2.11 s_14e583f70e68 | I'll ask my partner.
+      OUT  -3.09 s_f27f0787e356 2023/03/05 | My running partner is training for the Bridge to Brews Half Marathon and wants me to pace her for part of it.
+      OUT  -3.14 s_f8e86d5a16d7 2023/06/30 | My running partner's husband Ben isn't a contractor, but he recommended a company called Bridge City Builders for our porch.
+      OUT  -4.74 s_6ea8fbf81f69 2023/05/22 | My sister's partner Alex came over to see the bungalow renovation.
+FLAG q_b8179c3b814f in= -4.82 out=  2.20 | What's the name of my running group?
+      IN   -4.82 s_ed9a6ecd94df | Oh that’s right, my running partner has been trying to get me to join for months.
+      OUT   2.20 s_8a04408b5c21 2023/06/07 | A nurse at work invited me to a hospital running group called Stumptown Joggers, but I didn't join.
+      OUT  -5.90 s_ec99d9f85e52 2023/07/25 | Yes, though I’m behind on long runs.
+      OUT  -5.99 s_f27f0787e356 2023/03/05 | My running partner is training for the Bridge to Brews Half Marathon and wants me to pace her for part of it.
+FLAG q_a77da671eff0 in=  1.80 out=  1.65 | What's the name of the renovation company working on our bungalow?
+      IN    1.80 s_14e583f70e68 | The bungalow renovation means our living room is currently a dust zone, so the couch isn't even that inviting.
+      OUT   1.65 s_6ea8fbf81f69 2023/05/22 | My sister's partner Alex came over to see the bungalow renovation.
+      OUT  -0.23 s_88222f7078f3 2023/04/18 | I'm a pediatric nurse in Portland, training for a half marathon, and we're mid-renovation on our old bungalow.
+      OUT  -1.46 s_3395cc712db0 2023/03/14 | Our bungalow reno has the stove out of commission for a few days.
+FLAG q_77b167c622d3 in=  1.31 out=  3.26 | What's the name of the half marathon I'm training for?
+      IN    1.31 s_1c02f0648b79 | I need a reality check on half-marathon training.
+      OUT   3.26 s_f27f0787e356 2023/03/05 | My running partner is training for the Bridge to Brews Half Marathon and wants me to pace her for part of it.
+      OUT   2.79 s_8a04408b5c21 2023/06/07 | Between that and work, my half marathon training is slipping.
+      OUT   1.40 s_88222f7078f3 2023/04/18 | I'm a pediatric nurse in Portland, training for a half marathon, and we're mid-renovation on our old bungalow.

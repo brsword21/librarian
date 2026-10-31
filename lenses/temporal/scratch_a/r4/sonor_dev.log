@@ -1,0 +1,5 @@
+133 questions x 1 variants on dev in 34s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+so_nor                     81.3 0.898 0.961 0.980 0.953 1.000 1.000 0.843   7486  438.9 0.839 0
+   if Reactor cites every passage: CF1all=0.733 Sall=78.0
+   -> runs/r4-temporal-a/temporal/a_r3_gap/so_nor/dev

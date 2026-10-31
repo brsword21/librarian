@@ -1,0 +1,5 @@
+78 questions x 1 variants on dev in 5s
+variant                       S    PA   ATR    SR   ALL    AC    HA   CF1  chars     ms   AUC err
+hybrid_rr                  83.8 0.972 0.979 0.986 0.972 0.983     - 0.812  11936   93.5 0.806 0
+   if Reactor cites every passage: CF1all=0.812 Sall=83.8
+   -> runs/r4-ku-a/ku/generic/hybrid_rr/dev

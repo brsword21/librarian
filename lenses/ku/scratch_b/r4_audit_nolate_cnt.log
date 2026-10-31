@@ -1,0 +1,60 @@
+  [s_75d5885a4f04 2023/05/02 (Tue) 08:14] "user: That's exactly the tone I want. By the way, I bought 2 more Icelandic horses at the spring auction. so the barn is feeling a bit fuller this week."
+====================================================================================================
+How many chapters does my children's book have now?  (asked 2023/07/04 (Tue) 00:00)  chars=2218 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/02/14: "I've been distracted lately—I currently have 8 chapters written for my children's book. so my head is full of talking foxes and stubborn ponies."
+- 2023/04/18: "My children's book, however, is still stuck at chapter four."
+- 2023/04/25: "I'm stuck on chapter three of the children's book."
+- 2023/05/20: "By the way, I expanded the o
+DEBUG: {'pair': ['s_bffed6e26e01', 's_04f46bc85c4c'], 'sess_rank': ['s_04f46bc85c4c', 's_bffed6e26e01', 's_43aa0096315e', 's_02306915f27c', 's_a01b8930838c', 's_0ccccd69d613', 's_c743e10ac17a', 's_101108fcf260'], 'mode': 'new', 'qd': "chapters does my children's book have", 'miss': 0.0, 'absent': [], 'gate': {'distinct': True, 'own_ok': True, 'cov_min': 1.0, 'margin': 4.901, 'threat': [], 'top3': [13.04, 10.99, 6.09], 'pair_sc': [10.99, 13.04], 'cov_max': 1.0, 'confident': True}, 'miss_ph': [], 'n_pass': 2}
+  [s_bffed6e26e01 2023/02/14 (Tue) 08:38] "user: Good point. I always forget about insulating the outside. I've been distracted lately—I currently have 8 chapters written for my children's book. so my head is full of talking foxes and stubborn ponies.\n[...]\nuser: A bit. The main pony is basically my mare Skjerva, just with more opinions. I was going to ask, do you know if carrots or apples "
+  [s_04f46bc85c4c 2023/05/20 (Sat) 09:35] "user: I'll try the seed mat. By the way, I expanded the outline, so my children's book now has 12 chapters., which means I'm trying not to let the writing eat into barn time too much."
+====================================================================================================
+How many beehives do I have on my farm right now?  (asked 2023/07/04 (Tue) 00:00)  chars=2653 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/02/10: "The clover is finally blooming, and I have 3 beehives on my farm right now., so the garden has been full of buzzing while I write outside."
+- 2023/06/01: "I split one of my beehives, so now I have 4 beehives on my farm."
+If the value changed over time, answer with the MOST RECENT value the user states about their own situation; ign
+DEBUG: {'pair': ['s_77413de90637', 's_7d8d10cc0a90'], 'sess_rank': ['s_7d8d10cc0a90', 's_77413de90637', 's_43aa0096315e', 's_be7cd58eb335', 's_0a87f3626ed9', 's_d4a23d434e08', 's_b20fbc5bf336', 's_75d5885a4f04'], 'mode': 'new', 'qd': 'beehives I have on my farm', 'miss': 0.0, 'absent': [], 'gate': {'distinct': True, 'own_ok': True, 'cov_min': 1.0, 'margin': 1.126, 'threat': [], 'top3': [11.76, 10.37, 9.24], 'pair_sc': [10.37, 11.76], 'cov_max': 1.0, 'confident': False}, 'miss_ph': [], 'n_pass': 3}
+  [s_77413de90637 2023/02/10 (Fri) 08:06] 'user: She does, and her mane is practically white against a dark bay coat. The clover is finally blooming, and I have 3 beehives on my farm right now., so the garden has been full of buzzing while I write outside.\n[...]\nuser: Mostly they help, except when the rams decide to shout at each other. I’ve rewritten one line four times today. Maybe I need'
+  [s_43aa0096315e 2023/04/18 (Tue) 21:16] 'user: There is an old orchard behind the barn. I wanted to make it more alive for real and for the book, so I tried something with pollination. Last autumn I had 3 beehives on my farm. The hives sat under the crooked apple trees, and the horses watched from the fence line.\n[...]\nuser: They were suspicious but sensible. Mostly they stood very still '
+  [s_7d8d10cc0a90 2023/06/01 (Thu) 08:29] 'user: I used that patience trick today with one of the yearlings. By the way, I’ve been so busy outside. I split one of my beehives, so now I have 4 beehives on my farm. I’m wondering if I should scale back before winter.\n[...]\nuser: True. I don’t want the bees to become a chore. The book has a deadline from a small publisher, and I need to protect'
+====================================================================================================
+How many apple trees do I have in my orchard right now?  (asked 2023/07/04 (Tue) 00:00)  chars=2553 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/03/21: "I currently have four established apple trees in my orchard."
+- 2023/05/16: "I added three new apple trees to the orchard after the last frost."
+If the value changed over time, answer with the MOST RECENT value the user states about their own situation; ignore values about other people, other places or past/hypothetical ones.
+The l
+COMPUTED: 7
+DEBUG: {'pair': ['s_ed235d12545b', 's_087a778ccc25'], 'sess_rank': ['s_ed235d12545b', 's_087a778ccc25', 's_43aa0096315e', 's_cf62399d9bdc', 's_9a9cb1afe2b6', 's_77413de90637', 's_c932e0681ec9', 's_f2dbd81d4ae4'], 'mode': 'new', 'qd': 'apple trees I have in my orchard', 'miss': 0.0, 'absent': [], 'gate': {'distinct': True, 'own_ok': True, 'cov_min': 1.0, 'margin': 10.465, 'threat': [], 'top3': [11.38, 7.17, -3.29], 'pair_sc': [11.38, 7.17], 'cov_max': 1.0, 'confident': True}, 'miss_ph': [], 'n_pass': 2, 'rel': (4, 3, 7)}
+  [s_ed235d12545b 2023/03/21 (Tue) 18:46] 'user: I have tried voice notes, but they turn into rambling observations about fjord light and stubborn ponies. Some of it might be usable later if I shape it. The orchard needs attention soon. I currently have four established apple trees in my orchard. I am trying to figure out whether to add another tree or keep the space open for a small writin'
+  [s_087a778ccc25 2023/05/16 (Tue) 11:50] 'user: I have a pile of old wood chips from when the electric company trimmed the roadside. I could use that. I also need to check the young apple trees before winter; the three I added after the last frost are still so small.\nassistant: Wood chips are perfect for that. You mentioned you added three new apple trees to the orchard after the last fros'
+====================================================================================================
+How many tractors do I have on my farm right now?  (asked 2023/07/04 (Tue) 00:00)  chars=2086 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/03/27: "Last year I had only one tractor on my farm."
+- 2023/04/12: "It's a bit chaotic here because I have two tractors on my farm right now.."
+If the value changed over time, answer with the MOST RECENT value the user states about their own situation; ignore values about other people, other places or past/hypothetical ones.
+Cite both the
+DEBUG: {'pair': ['s_0a87f3626ed9', 's_101108fcf260'], 'sess_rank': ['s_0a87f3626ed9', 's_101108fcf260', 's_7d8d10cc0a90', 's_be7cd58eb335', 's_77413de90637', 's_43aa0096315e', 's_1eddde014871', 's_b20fbc5bf336'], 'mode': 'new', 'qd': 'tractors I have on my farm', 'miss': 0.0, 'absent': [], 'gate': {'distinct': True, 'own_ok': False, 'cov_min': 1.0, 'margin': 2.828, 'threat': [], 'top3': [6.88, 2.64, -0.18], 'pair_sc': [6.88, 2.64], 'cov_max': 1.0, 'confident': False}, 'miss_ph': [], 'n_pass': 3, 'b_r4': {'nolate_dropped': ['s_7d8d10cc0a90']}}
+  [s_0a87f3626ed9 2023/03/27 (Mon) 18:35] "user: Lóa is lovely, I'll try that. I need to keep chapters short because I'm reading drafts to my neighbor's kids. The mare is due next week and the hay needs moving. Last year I had only one tractor on my farm. I suppose I'll have to prioritize the animals and write at night with a headlamp.\n[...]\nuser: Voice memos are a great idea—I can pretend "
+  [s_101108fcf260 2023/04/12 (Wed) 18:38] "user: I do, but my sourdough starter has been neglected lately. It's a bit chaotic here because I have two tractors on my farm right now..\n[...]\nuser: One is mine and the other belongs to a neighbor; I'm letting him store it here while his barn is being rebuilt. It's only fair since he helped me clear snow last month."
+====================================================================================================
+How many cats do I have on my farm right now?  (asked 2023/07/04 (Tue) 00:00)  chars=2214 flags=[]
+HINT: Statements about this in the history, oldest first:
+- 2023/01/20: "Even though I currently have 9 Icelandic horses on my farm., I try to keep Sundays a bit slower, so a stew that simmers by itself is ideal."
+- 2023/06/01: "I split one of my beehives, so now I have 4 beehives on my farm."
+If the value changed over time, answer with the MOST RECENT value the user states about their own situation; ig
+DEBUG: {'pair': ['s_be7cd58eb335', 's_7d8d10cc0a90'], 'sess_rank': ['s_7d8d10cc0a90', 's_be7cd58eb335', 's_77413de90637', 's_43aa0096315e', 's_0a87f3626ed9', 's_306f37abcd60', 's_b8c20db9dba7', 's_9bb49e359afd'], 'mode': 'new', 'qd': 'cats I have on my farm', 'miss': 0.488, 'absent': [], 'gate': {'distinct': True, 'own_ok': True, 'cov_min': 0.512, 'margin': 0.393, 'threat': [], 'top3': [0.37, -2.0, -2.39], 'pair_sc': [-2.0, 0.37], 'cov_max': 0.512, 'confident': False}, 'miss_ph': [], 'n_pass': 3}
+  [s_be7cd58eb335 2023/01/20 (Fri) 21:52] "user: Perfect. I'll start it after evening chores. Even though I currently have 9 Icelandic horses on my farm., I try to keep Sundays a bit slower, so a stew that simmers by itself is ideal."
+  [s_77413de90637 2023/02/10 (Fri) 08:06] 'user: She does, and her mane is practically white against a dark bay coat. The clover is finally blooming, and I have 3 beehives on my farm right now., so the garden has been full of buzzing while I write outside.\n[...]\nuser: Mostly they help, except when the rams decide to shout at each other. I’ve rewritten one line four times today. Maybe I need'
+  [s_7d8d10cc0a90 2023/06/01 (Thu) 08:29] 'user: I used that patience trick today with one of the yearlings. By the way, I’ve been so busy outside. I split one of my beehives, so now I have 4 beehives on my farm. I’m wondering if I should scale back before winter.'
+
+20 test questions, 0 flagged -> /Users/mikolaj/Developer/start-hackathon-2/librarian/runs/audit/ku/b_r4_ku/nolate_cnt
+ku       q_b3e5afe916c8 passages 3->2 (kept 2) | What is my current job title?
+ku       q_e165458f4cff passages 3->2 (kept 2) | What is my current monthly rent?
+ku       q_982391af62c7 cite ['s_14e583f70e68', 's_6982e7cc04a7'] -> ['s_14e583f70e68', 's_6982e7cc04a7', 's_6ea8fbf81f69', 's_8ba59dc355ab']; passages 3->8 (kept 3); hint | How many rooms have we completely renovated in the bungalow so far?
+ku       q_07a3d3d857f4 passages 3->2 (kept 2) | How many tractors do I have on my farm right now?
+PARTIAL DIFF: 126 questions of runs/final/v2_test_packs.jsonl are not in the new file (use --n 999)
+4 of 20 packs changed against runs/final/v2_test_packs.jsonl (4 change what Reactor sees: passages, passage text or hint)

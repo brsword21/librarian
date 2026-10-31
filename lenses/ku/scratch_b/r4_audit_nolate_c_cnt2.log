@@ -1,0 +1,6 @@
+ku       q_b3e5afe916c8 passages 3->2 (kept 2) | What is my current job title?
+ku       q_e165458f4cff passages 3->2 (kept 2) | What is my current monthly rent?
+ku       q_982391af62c7 cite ['s_14e583f70e68', 's_6982e7cc04a7'] -> ['s_06e06b5d18dc', 's_15145d5611f0', 's_1ab5e399421f', 's_4e7002b2b3a4', 's_4edcf2db9d55', 's_8a04408b5c21', 's_8ba59dc355ab', 's_a6c35f1208de', 's_a9b29fadcbc3', 's_b0f1becbdfbb', 's_c3aab6754aa9', 's_c47215144712', 's_ec99d9f85e52', 's_f1f68885359e', 's_f8e86d5a16d7']; passages 3->15 (kept 0); hint | How many rooms have we completely renovated in the bungalow so far?
+ku       q_07a3d3d857f4 passages 3->2 (kept 2) | How many tractors do I have on my farm right now?
+PARTIAL DIFF: 126 questions of runs/final/v2_test_packs.jsonl are not in the new file (use --n 999)
+4 of 20 packs changed against runs/final/v2_test_packs.jsonl (4 change what Reactor sees: passages, passage text or hint)
