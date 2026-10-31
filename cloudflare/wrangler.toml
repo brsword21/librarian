@@ -1,0 +1,16 @@
+# Cloudflare Pages project for the public demo (https://librarian67.pages.dev).
+# Static files: built into ./public by tools/build_site.sh. Functions: /api/* and /m/* are proxied to the live
+# backend (demo/server.py on a laptop, exposed by a Cloudflare tunnel); its URL lives in KV under "backend",
+# written by tools/serve_live.sh. With no backend registered, the site runs in replay mode.
+name = "librarian67"
+pages_build_output_dir = "./public"
+compatibility_date = "2026-10-01"
+
+[[kv_namespaces]]
+binding = "LIB"
+id = "3860d719c39540b682b283bce3f88f71"
+
+# The hosted backend (cloudflare/api): Cloudflare Container behind the librarian67-api Worker
+[[services]]
+binding = "API"
+service = "librarian67-api"

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Librarian · Pitch</title>
+  <meta name="description" content="Librarian: memory with receipts. Pitch deck, Reactive AI Memory Retrieval Challenge, START Warsaw × Poland Tech Week 2026.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cg fill='%23f9f5ea'%3E%3Ccircle cx='5' cy='5' r='2.2'/%3E%3Ccircle cx='15' cy='5' r='2.2'/%3E%3Ccircle cx='5' cy='15' r='2.2'/%3E%3Ccircle cx='15' cy='15' r='2.2'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="preload" href="fonts/Newsreader-normal-300-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Inter-normal-300-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="deck/ribbons.jpg" as="image">
+  <link rel="stylesheet" href="fonts.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="pitch.css?v=6">
+</head>
+<body class="deck-page">
+  <main class="viewport" id="viewport">
+    <div class="stage" id="stage">
+
+      <!-- 1 Title -->
+      <section class="slide s-title ribbons" aria-label="Title">
+        <div class="brandline"><svg viewBox="0 0 20 20" aria-hidden="true"><g fill="#f9f5ea"><rect x="1" y="1" width="4" height="4"/><rect x="8" y="1" width="4" height="4"/><rect x="15" y="1" width="4" height="4"/><rect x="1" y="8" width="4" height="4"/><rect x="15" y="8" width="4" height="4"/><rect x="1" y="15" width="4" height="4"/><rect x="8" y="15" width="4" height="4"/></g><rect x="8" y="8" width="4" height="4" fill="#4fc13e"/><rect x="15" y="15" width="4" height="4" fill="#8c7dff"/></svg>Librarian</div>
+        <h1 class="mega">Memory with receipts.</h1>
+        <p class="lead">A memory plugin for AI chats that outgrow their context window.</p>
+        <p class="foot">Team Ptysie · Reactive AI track · START Warsaw × Poland Tech Week 2026</p>
+        <aside class="notes">Hi, we're Ptysie. We built Librarian: memory with receipts. It's a memory plugin for AI chats that have grown past what fits in a context window.</aside>
+      </section>
+
+      <!-- 2 Hook -->
+      <section class="slide s-hook" aria-label="A real example">
+        <div class="chat">
+          <div class="msg"><span class="when">28 May</span><p>I just adopted a cat — her name is Fig.</p></div>
+          <div class="msg"><span class="when">19 Jul</span><p>Sombra. She's a tiny black cat with too much confidence.</p></div>
+          <div class="msg ask"><span class="when">17 Sep</span><p>What is my cat's name?</p></div>
+        </div>
+        <h2 class="punch">200 conversations later,<br>which one is true?</h2>
+        <aside class="notes">These are real messages from one user in the challenge test set. In May she names the cat Fig. In July she calls her Sombra. In September she asks for the name. Two hundred conversations later, an assistant has to pick one, and it has to show where it got it.</aside>
+      </section>
+
+      <!-- 3 Problem -->
+      <section class="slide s-problem" aria-label="The problem">
+        <h2 class="big">Long chats break memory.</h2>
+        <ol class="five">
+          <li><b>Facts</b><span>“What's my cat called?”</span></li>
+          <li><b>Advice</b><span>“That book you recommended?”</span></li>
+          <li><b>Updates</b><span>“I moved in July.”</span></li>
+          <li><b>Dates</b><span>“How long since…?”</span></li>
+          <li class="warn"><b>Inventions</b><span>“Remember Rome?”</span></li>
+        </ol>
+        <p class="cap">The five question types of the Reactive AI challenge.</p>
+        <aside class="notes">Long chats break memory in five ways, and they're exactly the challenge's five question types: plain facts, the assistant's own advice, updates where the latest value wins, date arithmetic, and the dangerous one, inventing a memory that never happened.</aside>
+      </section>
+
+      <!-- 4 Product -->
+      <section class="slide s-product" aria-label="The product">
+        <h2 class="t">One question, a few pages, a cited answer.</h2>
+        <figure class="shot">
+          <img src="deck/answer.png" alt="Librarian demo: answer 14 days, with the two cited conversations lit in the archive and a memory audit">
+          <span class="call c1">Reads 0.2% of the archive</span>
+          <span class="call c2">Every fact with its receipt</span>
+        </figure>
+        <aside class="notes">This is the product. A question about two dates. Librarian picks two conversations out of two hundred, our code computes the gap, Reactor answers fourteen and cites both conversations. The dots are the archive: Reactor read 0.2% of it. Under the answer, a memory audit lists every other mention.</aside>
+      </section>
+
+      <!-- 5 How -->
+      <section class="slide s-how" aria-label="How it works">
+        <h2 class="t">How it works</h2>
+        <ol class="flow">
+          <li><span class="n">1</span><b>Route</b><span>the question</span></li>
+          <li><span class="n">2</span><b>Search</b><span>200 chats, locally</span></li>
+          <li><span class="n">3</span><b>Pack</b><span>~3 dated passages</span></li>
+          <li class="last"><span class="n">4</span><b>Reactor</b><span>answers or says “not in memory”</span></li>
+        </ol>
+        <p class="sub">Dates and counts are computed in code.</p>
+        <aside class="notes">Under the hood: we route the question to one of five types, search every turn with keyword and meaning search plus a reranker, all on our own models, pack about three dated passages, and Reactor answers with citations or says not in memory. Dates and counts are computed in code, not guessed by the model.</aside>
+      </section>
+
+      <!-- 6 Use case -->
+      <section class="slide s-agent" aria-label="Use case: before an agent acts">
+        <div class="agent-text">
+          <h2 class="t">Before an agent acts</h2>
+          <p class="lead2">A 24/7 agent is about to plan your daughter's wedding week.</p>
+          <p class="result"><b>3 facts</b> with receipts<br><b class="v">1 question</b> for you</p>
+        </div>
+        <figure class="shot tall"><img src="deck/agent.png" alt="Before it acts: four pre-flight checks, three answered with dated evidence, one not in memory"></figure>
+        <aside class="notes">Here's the use case we care about most: proactive agents. Before an agent books the venue or messages the family, it runs a pre-flight check against your memory. Three facts come back with the conversation they were said in. The officiant isn't in memory, so the agent asks you instead of guessing. For agents like Boski: a 24/7 agent acting for you needs memory it can prove.</aside>
+      </section>
+
+      <!-- 7 Results -->
+      <section class="slide s-results" aria-label="Results">
+        <div class="score"><span class="giant">87.1</span><span class="what">offline score<br>(keyword search: 42.9)</span></div>
+        <ol class="bars" aria-label="Score by round">
+          <li style="--h:42.9"><i></i><span>42.9</span></li>
+          <li style="--h:73.4"><i></i><span>73.4</span></li>
+          <li style="--h:80.4"><i></i><span>80.4</span></li>
+          <li style="--h:86.0"><i></i><span>86.0</span></li>
+          <li class="now" style="--h:87.1"><i></i><span>87.1</span></li>
+        </ol>
+        <div class="row">
+          <div><b>146/146</b><span>answered by Reactor</span></div>
+          <div><b>13</b><span>“not in memory”</span></div>
+          <div><b>0.2%</b><span>of each archive read</span></div>
+        </div>
+        <p class="sub">Scored offline in minutes, so one slow shared model got five rounds of fixes in one night.</p>
+        <aside class="notes">Results. Our offline score went from 42.9 for plain keyword search to 87.1. All 146 test questions were answered by Reactor, 13 of them as not in memory, reading 0.2% of each archive. The trick was scoring evidence packs offline in minutes, so one slow shared Reactor got five rounds of fixes overnight.</aside>
+      </section>
+
+      <!-- 8 Plugin -->
+      <section class="slide s-plugin" aria-label="Plugin">
+        <h2 class="t">Use it as a plugin</h2>
+        <pre class="cmd"><code>claude mcp add --transport http librarian \
+  https://librarian67.pages.dev/mcp</code></pre>
+        <p class="works">Claude Code · Claude Desktop · Cursor</p>
+        <ul class="chips"><li>recall</li><li>search</li><li>timeline</li><li>ask_reactor</li></ul>
+        <aside class="notes">And it's a plugin today. One command adds Librarian as an MCP server: recall, search, timeline, ask Reactor. Any agent gets the same memory with receipts.</aside>
+      </section>
+
+      <!-- 9 Next -->
+      <section class="slide s-next" aria-label="What's next">
+        <h2 class="t">What's next</h2>
+        <div class="next-main">
+          <p class="nm-title">Ask-back</p>
+          <p class="nm-text">When the first pack misses, the model searches the archive again.</p>
+          <p class="nm-stat"><b>11 of 16</b> missed facts recovered offline</p>
+          <p class="nm-honest">Works through MCP today. Next: Reactor follows the link itself.</p>
+        </div>
+        <ul class="next-list">
+          <li>Open source, with your own Reactor key</li>
+          <li>Import ChatGPT and Claude chat exports</li>
+        </ul>
+        <aside class="notes">What's next. Ask-back: when the first pack misses, the model searches the archive again. Offline that recovered 11 of 16 facts we missed. It works through MCP today; in our live test Reactor didn't open the link yet, so that's the next step. Then open source with your own Reactor key, and importing real ChatGPT and Claude chat exports.</aside>
+      </section>
+
+      <!-- 10 Close -->
+      <section class="slide s-close ribbons" aria-label="Thank you">
+        <div class="close-left">
+          <h2 class="mega2">Memory with receipts.</h2>
+          <p class="url">librarian67.pages.dev/demo</p>
+          <p class="gh">github.com/Concorde002/librarian</p>
+        </div>
+        <div class="qr" aria-label="QR code to librarian67.pages.dev/demo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35" shape-rendering="crispEdges"><path fill="#f9f5ea" d="M0 0h35v35H0z"/><path stroke="#0d1012" d="M3 3.5h7m1 0h1m1 0h2m6 0h1m3 0h7M3 4.5h1m5 0h1m2 0h2m1 0h1m3 0h2m1 0h1m2 0h1m5 0h1M3 5.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h4m3 0h1m1 0h3m1 0h1M3 6.5h1m1 0h3m1 0h1m1 0h4m2 0h3m1 0h1m3 0h1m1 0h3m1 0h1M3 7.5h1m1 0h3m1 0h1m1 0h2m1 0h4m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1M3 8.5h1m5 0h1m1 0h2m1 0h1m1 0h3m3 0h2m1 0h1m5 0h1M3 9.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M11 10.5h1m5 0h1m2 0h2M3 11.5h1m3 0h1m1 0h5m2 0h3m1 0h1m1 0h1m1 0h5m2 0h1M3 12.5h2m5 0h1m14 0h7M4 13.5h1m1 0h4m2 0h1m1 0h5m5 0h4m3 0h1M3 14.5h2m3 0h1m1 0h3m1 0h1m1 0h1m3 0h4m1 0h2m1 0h1m1 0h2M4 15.5h1m1 0h2m1 0h1m2 0h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m3 0h1M3 16.5h1m1 0h1m8 0h1m1 0h6m1 0h9M4 17.5h1m1 0h2m1 0h1m1 0h1m1 0h1m4 0h1m2 0h1m1 0h7m1 0h1M4 18.5h1m2 0h1m2 0h2m1 0h1m3 0h2m1 0h1m1 0h3m1 0h1m3 0h2M5 19.5h3m1 0h2m1 0h1m2 0h4m1 0h1m1 0h1m1 0h1m5 0h1M3 20.5h1m1 0h2m4 0h3m4 0h2m1 0h1m1 0h1m1 0h4m1 0h2M6 21.5h2m1 0h1m2 0h2m2 0h3m1 0h2m2 0h1m4 0h1m1 0h1M5 22.5h1m4 0h2m3 0h2m1 0h1m1 0h1m1 0h2m1 0h3m2 0h2M3 23.5h4m1 0h2m3 0h4m3 0h1m1 0h7m2 0h1M11 24.5h1m2 0h1m1 0h4m1 0h1m1 0h1m3 0h1m3 0h1M3 25.5h7m1 0h1m1 0h3m2 0h6m1 0h1m1 0h3m1 0h1M3 26.5h1m5 0h1m2 0h1m2 0h1m1 0h2m1 0h2m1 0h1m3 0h1m2 0h1M3 27.5h1m1 0h3m1 0h1m1 0h1m2 0h4m2 0h1m1 0h7M3 28.5h1m1 0h3m1 0h1m2 0h1m2 0h2m1 0h2m2 0h1m1 0h1m6 0h1M3 29.5h1m1 0h3m1 0h1m3 0h2m3 0h1m2 0h4m3 0h4M3 30.5h1m5 0h1m2 0h2m1 0h2m3 0h1m2 0h4m1 0h1m1 0h2M3 31.5h7m1 0h2m3 0h3m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1"/></svg></div>
+        <aside class="notes">Memory with receipts. Try it now at librarian67.pages.dev/demo, the code is open on GitHub. Thank you.
+
+Likely questions:
+1. Why not just a long context window? 1.6M characters per user don't fit, cost grows with every message, and models lose facts in the middle. We read 0.2% and cite it.
+2. How do you know when to abstain? Reactor answers only from the pack; when the fact isn't there it says not in memory. 13 of 146 test questions; 5 of 5 correct on our dev sample.
+3. Latency? Retrieval is about a second on a laptop and a few seconds on our hosted CPU; Reactor itself takes 1–2 minutes per answer.
+4. Does it work beyond this dataset? The pipeline is generic: any dated chat log. Import of ChatGPT and Claude exports is next.
+5. Business model? Per active memory for apps that keep long relationships: companions, coaching, support, personal agents.</aside>
+      </section>
+
+    </div>
+  </main>
+  <div class="hud"><span id="count">1 / 10</span><span class="keys">← → · N notes · F fullscreen</span></div>
+  <aside class="notes-panel" id="notesPanel" hidden></aside>
+  <script src="pitch.js?v=3"></script>
+</body>
+</html>

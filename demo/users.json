@@ -1,0 +1,298 @@
+[
+ {
+  "id": "user-1",
+  "n": 1,
+  "history_id": "h_d99a2da8f8ee",
+  "question_date": "2023/09/17 (Sun) 00:00",
+  "questions": [
+   "What is my cat's name?",
+   "What was the name of that time-tracking app you recommended for my freelance work?",
+   "How many ceramic pieces am I putting in the class show?",
+   "What was the name of that coworking space you recommended to me in Lisbon?",
+   "What is the name of the coffee shop I get my morning espresso at?",
+   "What is the name of my ceramics class instructor now?",
+   "What's the name of my neighborhood in Lisbon?",
+   "What is the name of the accountant I'm using for my freelance taxes now?",
+   "How many days apart were my son's school play and my daughter's orthodontist appointment?"
+  ],
+  "sessions": 200,
+  "chars": 1651865
+ },
+ {
+  "id": "user-2",
+  "n": 2,
+  "history_id": "h_961be7a385ce",
+  "question_date": "2023/10/06 (Fri) 00:00",
+  "questions": [
+   "What is my current job title?",
+   "How many watercolour classes do I attend each week?",
+   "How many different vegetable varieties have I planted in my garden since April?",
+   "What was the name of the restaurant you recommended for dinner with my sons?",
+   "What is my younger son's name?",
+   "How many days apart were the hospital's 'Run for Health' 5K and the annual charity gala I attended?",
+   "How many days apart were the watercolour society's annual exhibition opening and the hospital leadership conference I attended?",
+   "Who teaches my Saturday morning watercolour class now?",
+   "What is my dog's name?",
+   "How many days apart were my trip to Adelaide to visit James and my trip to Brisbane to help Daniel settle in?"
+  ],
+  "sessions": 200,
+  "chars": 1663428
+ },
+ {
+  "id": "user-3",
+  "n": 3,
+  "history_id": "h_ba495aa00d0c",
+  "question_date": "2023/09/25 (Mon) 00:00",
+  "questions": [
+   "How much did I add to my used car savings from my March salary and freelance data work?",
+   "How many days apart were starting my Python for Data Analysis course and finishing my first Python data cleaning project?",
+   "How many gigabytes is my current mobile data plan?",
+   "Which Python library did you recommend for my data cleaning project?",
+   "How many days apart were my church choir retreat and my first used car test drive?",
+   "What is my current monthly rent?",
+   "What is my favorite meal?",
+   "Which code editor did you recommend I use for my Python practice scripts?",
+   "What is my favorite color?"
+  ],
+  "sessions": 200,
+  "chars": 1618456
+ },
+ {
+  "id": "user-4",
+  "n": 4,
+  "history_id": "h_4fa7f122fcdb",
+  "question_date": "2023/10/15 (Sun) 00:00",
+  "questions": [
+   "What was the name of that French flour brand you recommended for my croissants?",
+   "What was the name of the milonga in San Telmo I told you about?",
+   "What was the name of the French tutor I told you about?",
+   "How many days after I entered my alfajor recipe in the city baking contest were the winners announced?",
+   "How much is left in my bakery fund after those transactions I told you about?",
+   "How much have I spent on tango shoes in total?",
+   "What did I end up naming my sourdough starter?",
+   "How many days after I bought my ticket to the Buenos Aires Tango Festival was the closing night?",
+   "How many kilos of dulce de leche did I make in total for the birthday and anniversary cake orders?"
+  ],
+  "sessions": 200,
+  "chars": 1701202
+ },
+ {
+  "id": "user-5",
+  "n": 5,
+  "history_id": "h_8224cd1fdcd0",
+  "question_date": "2023/08/17 (Thu) 00:00",
+  "questions": [
+   "What AM intermediate frequency did I end up using in my National R-77 restoration?",
+   "What speaker impedance did I end up using in my National R-77?",
+   "What dial lamp voltage did I end up using in my National R-77?",
+   "What output tube cathode resistor value did I end up using in my National R-77?",
+   "What screen grid resistor value did I end up using in my National R-77?",
+   "What value did you recommend for the audio coupling capacitor in my Panasonic RF-2200?",
+   "What AGC resistor value did I end up using in my National R-77?",
+   "What power supply filter capacitor value did I end up using in my National R-77?",
+   "How many tubes did I end up replacing in my National R-77?",
+   "By how many ohms did I reduce the volume control resistance in my National R-77?"
+  ],
+  "sessions": 200,
+  "chars": 1606801
+ },
+ {
+  "id": "user-6",
+  "n": 6,
+  "history_id": "h_5e62f4533db4",
+  "question_date": "2023/09/04 (Mon) 00:00",
+  "questions": [
+   "How many orchids have I added to my collection since March?",
+   "How many laps do I swim each morning these days?",
+   "How many times did my systolic reading exceed 130 in August?",
+   "How many years did I serve as a firefighter?",
+   "How many phone calls did I have with my daughter in August?",
+   "How many grandchildren do I have?",
+   "How many cups of coffee do I drink each morning these days?",
+   "How many kilometers do I walk each evening these days?",
+   "How many times did I eat feijoada last month?",
+   "How many books have I read since March?"
+  ],
+  "sessions": 200,
+  "chars": 1604466
+ },
+ {
+  "id": "user-7",
+  "n": 7,
+  "history_id": "h_3c02cbc43fc9",
+  "question_date": "2023/07/27 (Thu) 00:00",
+  "questions": [
+   "How many days apart were my monstera repotting and my lead-climbing course?",
+   "How many days after submitting my visa application did I book my flight to Montreal?",
+   "How many days after setting up my Montreal flat alerts did I sign a lease?",
+   "How many days after buying my trail-running shoes did I do my first trail run?",
+   "What was the name of the bank you recommended for my year in Canada?",
+   "How many days after sending off my passport renewal did my renewed passport arrive?",
+   "How many days after my pre-departure medical check-up did I get my travel vaccines?",
+   "How many days after my last day of school before summer did I leave for my Ardèche canoe trip?",
+   "How many days after getting my sourdough starter did I bake my first loaf?",
+   "What was the name of my language exchange partner from Quebec?"
+  ],
+  "sessions": 200,
+  "chars": 1631682
+ },
+ {
+  "id": "user-8",
+  "n": 8,
+  "history_id": "h_d98b301f60c5",
+  "question_date": "2023/09/02 (Sat) 00:00",
+  "questions": [
+   "How many days apart were my Toronto Marathon and the big Moroccan family dinner I cooked?",
+   "What was the name of the swim club you recommended for cross-training?",
+   "What was the name of the physiotherapist I saw after the Toronto Marathon?",
+   "What was the name of the coach you recommended for my speedwork?",
+   "What is the name of the immigration law firm where I work?",
+   "How many days apart were the community potluck where I made Moroccan mint tea and the family picnic on Toronto Island where I cooked fish tagine?",
+   "What is the name of the store where I currently buy Moroccan spices?",
+   "What was the name of the park you recommended for hill repeats?",
+   "How many days apart were my visit to the Aga Khan Museum and the Moroccan pastilla cooking class I took?",
+   "How many days apart were the immigration law conference I attended in Ottawa and the citizenship workshop I led at the Toronto Public Library?"
+  ],
+  "sessions": 200,
+  "chars": 1678402
+ },
+ {
+  "id": "user-9",
+  "n": 9,
+  "history_id": "h_1cc2a7a4bf69",
+  "question_date": "2023/11/07 (Tue) 00:00",
+  "questions": [
+   "What was the name of that adhesive you recommended for repairing canvas tears?",
+   "How many animals at the shelter where I volunteer are not FIV-positive?",
+   "What is the name of the museum where I work?",
+   "How many days after I registered for my part-time PhD did I have my first supervision meeting?",
+   "What brand is the bicycle I ride to work?",
+   "How many days after I attended the fresco conservation workshop in Arezzo did I visit the exhibition of restored altarpieces at the Uffizi?",
+   "How many books have I read for my PhD literature review since the start of June?",
+   "What is the name of the café where I usually stop for a cappuccino before work?",
+   "What is the name of the animal shelter where I volunteer?"
+  ],
+  "sessions": 200,
+  "chars": 1705111
+ },
+ {
+  "id": "user-10",
+  "n": 10,
+  "history_id": "h_633af92ad5b6",
+  "question_date": "2023/08/22 (Tue) 00:00",
+  "questions": [
+   "What was the combined attendance at the March and June book club meetings I told you about?",
+   "Which Berlin neighborhood is my new apartment in?",
+   "How many people are on my UX team now?",
+   "What was the name of the café you recommended for my remote work days?",
+   "What is the name of my sailing instructor?",
+   "What is my move date?",
+   "What is the name of my brother's new dog?",
+   "How many days after my introductory pottery workshop is the glaze-firing workshop?",
+   "What is the name of the restaurant I booked for my birthday dinner?",
+   "What is the name of the dentist you recommended for my check-up?"
+  ],
+  "sessions": 200,
+  "chars": 1615018
+ },
+ {
+  "id": "user-11",
+  "n": 11,
+  "history_id": "h_712dab179f1b",
+  "question_date": "2023/12/02 (Sat) 00:00",
+  "questions": [
+   "How many days after the skate shop grand opening was my audio engineering program interview?",
+   "How many days after I passed my driver's written test did I buy my MIDI keyboard?",
+   "What was the name of the plugin you recommended for organizing my drum samples?",
+   "How many days after my latte art throwdown did I finish mixing my demo EP?",
+   "How many days after my first open mic set did I finish installing my acoustic panels?",
+   "What did I name my new podcast?",
+   "What was the name of the microphone you recommended for recording vocals at home?",
+   "How many days after the synthesizer workshop did I buy my first hardware synth?",
+   "What was the name of the studio headphones you recommended for long mixing sessions?",
+   "What is my skateboard's name now?"
+  ],
+  "sessions": 200,
+  "chars": 1676365
+ },
+ {
+  "id": "user-12",
+  "n": 12,
+  "history_id": "h_3e016fa1e511",
+  "question_date": "2023/10/18 (Wed) 00:00",
+  "questions": [
+   "What opening did you recommend I try against 1.e4? I forgot the name.",
+   "How much honey did I harvest in total from my two hives this summer? I lost track.",
+   "What venue did I book for my daughter's wedding reception? I forgot the name.",
+   "What was the name of the route planning software you recommended for my logistics work? I forgot.",
+   "What was the title of that book you recommended about improving supply chain efficiency? I forgot.",
+   "How many days apart were my daughter's wedding dress fitting and the cake tasting?",
+   "How many days apart were my first hive inspection and the varroa treatment?",
+   "What was the name of the shop where I bought my new bee smoker? I forgot.",
+   "What was the name of the photographer I booked for my daughter's wedding? I forgot.",
+   "How many days apart were my car's tire change appointment and the annual car inspection? I lost track."
+  ],
+  "sessions": 200,
+  "chars": 1616302
+ },
+ {
+  "id": "user-13",
+  "n": 13,
+  "history_id": "h_dc718905421e",
+  "question_date": "2023/07/05 (Wed) 00:00",
+  "questions": [
+   "What was the style of the last beer I mentioned I'd kegged?",
+   "How many days after Opening Day for my son's baseball team was the league jamboree?",
+   "What was the last book I mentioned I was reading?",
+   "What was the name of the coffee shop you recommended for grading papers?",
+   "How many days after my wife's birthday was our anniversary this year?",
+   "What was the last state park I mentioned camping at?",
+   "What was the name of the homebrew supply shop you recommended?",
+   "What was the total number of students I mentioned going on the two field trips this spring?",
+   "What was the brand of the grill I last mentioned buying?",
+   "What was the last restaurant I mentioned trying?"
+  ],
+  "sessions": 200,
+  "chars": 1690110
+ },
+ {
+  "id": "user-14",
+  "n": 14,
+  "history_id": "h_b1bb331d3d3d",
+  "question_date": "2023/08/26 (Sat) 00:00",
+  "questions": [
+   "What time does my long run start these days?",
+   "What's my rescue greyhound's name?",
+   "What's my toddler's name?",
+   "What's my partner's name?",
+   "How many rooms have we completely renovated in the bungalow so far?",
+   "What's the name of my running group?",
+   "What's the name of the renovation company working on our bungalow?",
+   "What's the name of the half marathon I'm training for?",
+   "How many days after I adopted Juniper did she have her first vet appointment?",
+   "How many trees are in our backyard?"
+  ],
+  "sessions": 200,
+  "chars": 1631722
+ },
+ {
+  "id": "user-15",
+  "n": 15,
+  "history_id": "h_dbd495da8ce2",
+  "question_date": "2023/07/04 (Tue) 00:00",
+  "questions": [
+   "How many Icelandic horses do my neighbor Bjørn and I have in total right now?",
+   "How many chapters does my children's book have now?",
+   "How many beehives do I have on my farm right now?",
+   "How many days apart were my trip to Bergen and my trip to Trondheim?",
+   "What was the name of the farrier you recommended for my Icelandic horses?",
+   "What was the name of the joint supplement you recommended for my senior Icelandic horse?",
+   "How many apple trees do I have in my orchard right now?",
+   "What was the name of the illustrator you recommended for my children's book?",
+   "How many tractors do I have on my farm right now?",
+   "How many cats do I have on my farm right now?"
+  ],
+  "sessions": 200,
+  "chars": 1611089
+ }
+]

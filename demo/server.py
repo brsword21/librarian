@@ -15,6 +15,12 @@ Endpoints:
   GET  /api/archive?split=&history_id=   the archive's sessions, newest first: id, date, turns, chars, preview
   GET  /api/session?split=&history_id=&session_id=   one session's turns
   GET  /api/outputs[?history_id=]        live answers logged by /api/ask (newest first; cache/live_outputs.jsonl)
+  POST /api/search {"split", "history_id", "query", "k"}   top-k sessions for free text, oldest first
+  POST /api/jobs  {"kind": "ask"|"askback", ...pack body}  -> 202 {"job_id"}; GET /api/jobs/<id> polls it
+                                         (Reactor runs as a queued job: hosted proxies cut requests at ~100 s)
+  GET  /m/<token>/search?q=              plain-text search over ONE archive for the model (reactorq/memory.py)
+  GET  /api/log                          container diagnostics (model/server log tails, memory)
+Hosted: Cloudflare Container (cloudflare/api) behind librarian67.pages.dev; MCP server at /mcp (cloudflare/functions).
 Ask an uploaded archive with {"split": "upload", "history_id": ..., "question": ...}. One Reactor call at a time across
 all demo servers on this machine (file lock); a second caller gets 409. API responses allow any origin (CORS).
 Needs core.model_server running (for packs) and, for /api/ask, ../reactor.env + the keychain key.
@@ -24,10 +30,16 @@ from __future__ import annotations
 import argparse
 import fcntl
 import json
+import os
 import re
+import socket
 import subprocess
 import tempfile
 import threading
+import time
+import traceback
+import uuid
+from collections import deque
 from datetime import datetime
 from urllib.parse import parse_qs, urlparse
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -46,6 +58,13 @@ UPLOADS: dict[str, dict] = {}          # history_id -> summary + indexing state
 REACTOR_LOCK = CACHE / "reactor_demo.lock"
 OUTPUTS = CACHE / "live_outputs.jsonl"
 MAX_BODY = 40_000_000
+ALLOW_REACTOR = os.environ.get("LIBRARIAN_REACTOR") == "1"
+PUBLIC_URL = os.environ.get("PUBLIC_URL", "").rstrip("/")
+MAX_QUEUE = 4
+JOBS: dict[str, dict] = {}
+QUEUE: deque[str] = deque()
+COND = threading.Condition()
+HEAVY = threading.BoundedSemaphore(int(os.environ.get("LIBRARIAN_HEAVY", "2")))   # pack/search at once
 
 
 class Busy(Exception):
@@ -54,7 +73,30 @@ class Busy(Exception):
 
 def reactor_busy() -> bool:
     # anchored to a python process, so a shell or grep that merely mentions the module does not count
-    return subprocess.run(["pgrep", "-f", r"^[^ ]*python[^ ]* -m reactorq\.queue"], capture_output=True).returncode == 0
+    try:   # no pgrep in the container
+        return subprocess.run(["pgrep", "-f", r"^[^ ]*python[^ ]* -m reactorq\.queue"], capture_output=True).returncode == 0
+    except FileNotFoundError:
+        return False
+
+
+def reactor_configured() -> bool:
+    if not ((BASE / "reactor.sh").exists() and (BASE / "reactor.env").exists()):
+        return False
+    if os.environ.get("LIBRARIAN_FAKE_REACTOR") == "1" or os.environ.get("REACTOR_ACCESS_KEY"):
+        return True   # tests / hosted container (key arrives as a secret env var)
+    try:   # macOS keychain (laptop)
+        return subprocess.run(["security", "find-generic-password", "-a", os.environ.get("USER", ""), "-s",
+                               "reactor-hackathon-key"], capture_output=True).returncode == 0
+    except FileNotFoundError:
+        return False
+
+
+def models_ok() -> bool:
+    try:
+        with socket.create_connection(("127.0.0.1", 8765), timeout=0.5):
+            return True
+    except OSError:
+        return False
 
 
 def make_question(body: dict) -> tuple[str, Question]:
@@ -207,6 +249,80 @@ def upload(raw: str, name: str) -> dict:
     return {**UPLOADS[hid], "split": "upload"}
 
 
+# ---- Reactor jobs (queued, one at a time, sharing REACTOR_LOCK with /api/ask) ------------------------------------
+def reactor_state() -> str:
+    if not (ALLOW_REACTOR and reactor_configured()):
+        return "disabled"
+    running = any(j["status"] == "running" for j in JOBS.values())
+    return "busy" if running or reactor_busy() or len(QUEUE) >= MAX_QUEUE else "enabled"
+
+
+def submit(kind: str, body: dict, base_url: str) -> dict:
+    make_question(body)   # validate before queueing
+    job = {"job_id": uuid.uuid4().hex[:12], "kind": kind, "body": body, "base_url": base_url, "status": "queued",
+           "stage": "queued", "t0": time.time(), "pack": None, "token": None, "result": None, "error": None}
+    with COND:
+        JOBS[job["job_id"]] = job
+        QUEUE.append(job["job_id"])
+        COND.notify()
+    return job
+
+
+def run_job(job: dict) -> None:
+    from reactorq.askback import new_history, run_one
+    job["status"], job["stage"] = "running", "pack"
+    split = make_question(job["body"])[0]
+    p = {**pack_for(job["body"]), "split": split}
+    job["pack"] = {k: v for k, v in p.items() if k != "question_text"}
+    REACTOR_LOCK.parent.mkdir(parents=True, exist_ok=True)
+    with open(REACTOR_LOCK, "w") as lf:
+        fcntl.flock(lf, fcntl.LOCK_EX)   # wait for a running /api/ask
+        t0 = time.time()
+        rh = new_history()
+        out = run_one(p, split, job["base_url"], rh, timeout=600, askback=job["kind"] == "askback",
+                      on_stage=lambda s: job.__setitem__("stage", s), on_token=lambda t: job.__setitem__("token", t))
+    job["result"] = {**out["final"], "latency_s": round(time.time() - t0, 1),
+                     "first": out["first"] if job["kind"] == "askback" else None}
+    job["status"], job["stage"], job["t_end"] = "done", "done", time.time()
+
+
+def worker() -> None:
+    while True:
+        with COND:
+            while not QUEUE:
+                COND.wait()
+            jid = QUEUE.popleft()
+        job = JOBS[jid]
+        try:
+            run_job(job)
+        except Exception as exc:
+            job["status"], job["error"], job["t_end"] = "error", repr(exc), time.time()
+            traceback.print_exc()
+
+
+def job_view(job: dict) -> dict:
+    from reactorq import memory
+    searches = [{"q": s["q"], "hits": s["hits"]} for s in memory.requests_for(job["token"])] if job["token"] else []
+    pos = list(QUEUE).index(job["job_id"]) + 1 if job["job_id"] in QUEUE else 0
+    return {"job_id": job["job_id"], "kind": job["kind"], "status": job["status"], "stage": job["stage"],
+            "position": pos, "elapsed_s": round(job.get("t_end", time.time()) - job["t0"], 1), "pack": job["pack"],
+            "searches": searches, "result": job["result"], "error": job["error"]}
+
+
+def diagnostics() -> str:
+    out = []
+    try:
+        mem = {l.split(":")[0]: l.split(":")[1].strip() for l in open("/proc/meminfo") if l.split(":")[0] in ("MemTotal", "MemAvailable")}
+        names = sorted(k for k in os.environ if k.startswith(("REACTOR", "PUBLIC", "OMP", "LIBRARIAN")))
+        out.append(f"== memory {mem}\n== env names {names} allow_reactor={ALLOW_REACTOR} configured={reactor_configured()}\n")
+    except Exception as exc:
+        out.append(f"== diagnostics n/a {exc!r}\n")
+    for f in ("/tmp/model.log", "/tmp/server.log"):
+        if os.path.exists(f):
+            out.append(f"== {f}\n" + "".join(open(f, errors="replace").readlines()[-40:]))
+    return "\n".join(out)
+
+
 class Handler(SimpleHTTPRequestHandler):
     web: Path = ROOT / "demo" / "web"
 
@@ -240,6 +356,39 @@ class Handler(SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(data)
 
+    def _text(self, text: str, code=200):
+        body = text.encode()
+        self.send_response(code)
+        self._cors()
+        self.send_header("Content-Type", "text/plain; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        self.wfile.write(body)
+
+    def _public_base(self) -> str:
+        return PUBLIC_URL or self.headers.get("X-Public-Origin", "") or f"http://{self.headers.get('Host', '')}"
+
+    def _memory(self):
+        """GET /m/<token>[/search?q=..&k=..]: the model's own search over one archive (reactorq/memory.py)."""
+        from urllib.parse import urlsplit
+        from reactorq import memory
+        parts = urlsplit(self.path)
+        seg = [x for x in parts.path.split("/") if x]
+        reg = memory.lookup(seg[1]) if len(seg) >= 2 else None
+        if reg is None:
+            return self._text("unknown or expired archive link\n", 404)
+        base = f"{self._public_base()}/m/{seg[1]}"
+        qs = parse_qs(parts.query)
+        query = (qs.get("q") or qs.get("query") or [""])[0]
+        if len(seg) == 2 or not query:
+            return self._text(memory.help_text(base))
+        k = max(1, min(8, int((qs.get("k") or ["5"])[0])))
+        with HEAVY:
+            hits = memory.search(reg["split"], reg["history_id"], query, k=k)
+        memory.log_request(seg[1], query, hits, self.headers.get("User-Agent", ""))
+        self._text(memory.as_text(query, hits))
+
     def do_OPTIONS(self):
         self.send_response(204)
         self._cors()
@@ -250,7 +399,20 @@ class Handler(SimpleHTTPRequestHandler):
         if self.path.startswith("/replay.json"):
             self._file(ROOT / "demo" / "replay.json", "application/json; charset=utf-8")
         elif self.path.startswith("/api/status"):
-            self._json({"reactor_busy": reactor_busy()})
+            self._json({"reactor_busy": reactor_busy(), "online": True, "models": models_ok(),
+                        "reactor": reactor_state(), "queue": len(QUEUE)})
+        elif self.path.startswith("/m/"):
+            try:
+                self._memory()
+            except Exception as exc:
+                self._text(f"search failed: {exc!r}\n", 500)
+        elif self.path.startswith("/api/jobs/"):
+            job = JOBS.get(self.path.split("/")[3].split("?")[0])
+            self._json(job_view(job) if job else {"error": "unknown job"}, 200 if job else 404)
+        elif self.path.startswith("/api/log"):
+            self._text(diagnostics() or "no logs\n")
+        elif self.path.startswith("/askback.json"):
+            self._file(ROOT / "demo" / "askback.json", "application/json; charset=utf-8")
         elif self.path.startswith("/api/uploads"):
             self._json({"uploads": sorted(UPLOADS.values(), key=lambda u: u["uploaded"], reverse=True)})
         elif self.path.rstrip("/") == "/live" or self.path.startswith("/live?"):
@@ -289,7 +451,26 @@ class Handler(SimpleHTTPRequestHandler):
                 return self._json(upload(raw.decode("utf-8", "replace"), self.headers.get("X-Filename") or "upload"))
             body = json.loads(raw or b"{}")
             if self.path.startswith("/api/pack"):
-                self._json(pack_for(body))
+                with HEAVY:
+                    self._json(pack_for(body))
+            elif self.path.startswith("/api/search"):
+                from reactorq import memory
+                split, q = make_question({**body, "question": body.get("query") or body.get("question")})
+                k = max(1, min(10, int(body.get("k", 5))))
+                with HEAVY:
+                    hits = memory.search(split, q.history_id, q.question, k=k)
+                self._json({"history_id": q.history_id, "query": q.question, "question_date": q.date_str, "hits": hits})
+            elif self.path.startswith("/api/jobs"):
+                kind = body.get("kind")
+                if kind not in ("ask", "askback"):
+                    self._json({"error": "kind must be ask or askback"}, 400)
+                elif reactor_state() == "disabled":
+                    self._json({"error": "reactor_disabled"}, 403)
+                elif len(QUEUE) >= MAX_QUEUE:
+                    self._json({"error": "busy"}, 409)
+                else:
+                    job = submit(kind, body, self._public_base())
+                    self._json({"job_id": job["job_id"], "position": len(QUEUE)}, 202)
             elif self.path.startswith("/api/ask"):
                 if reactor_busy():
                     self._json({"error": "Reactor is busy with the benchmark run; replay mode only"}, 409)
@@ -299,7 +480,7 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({"error": "unknown endpoint"}, 404)
         except Busy as exc:
             self._json({"error": str(exc)}, 409)
-        except (ValueError, KeyError) as exc:
+        except (ValueError, KeyError, StopIteration) as exc:
             self._json({"error": str(exc)}, 400)
         except Exception as exc:
             self._json({"error": repr(exc)}, 500)
@@ -309,15 +490,21 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--web", default="demo/web")
     ap.add_argument("--port", type=int, default=8800)
+    ap.add_argument("--host", default="127.0.0.1", help="0.0.0.0 inside the container")
+    ap.add_argument("--allow-reactor", action="store_true", help="let queued /api/jobs call Reactor (one at a time)")
     a = ap.parse_args()
+    global ALLOW_REACTOR
+    ALLOW_REACTOR = ALLOW_REACTOR or a.allow_reactor
+    threading.Thread(target=worker, daemon=True).start()
     Handler.web = (ROOT / a.web).resolve()
     if UPLOAD_DIR.exists():   # archives uploaded before a restart: embeddings are cached, so they are ready again
         for f in UPLOAD_DIR.glob("u_*.json"):
             info = json.loads(f.read_text(encoding="utf-8")).get("upload_info") or {"history_id": f.stem, "name": f.stem}
             UPLOADS[f.stem] = {"uploaded": datetime.fromtimestamp(f.stat().st_mtime).strftime(DATE_FMT), **info,
                                "state": "ready", "progress": 1.0}
-    print(f"demo on http://127.0.0.1:{a.port}  (static: {Handler.web})", flush=True)
-    ThreadingHTTPServer(("127.0.0.1", a.port), Handler).serve_forever()
+    print(f"demo on http://{a.host}:{a.port}  (static: {Handler.web}; reactor jobs: "
+          f"{'allowed' if ALLOW_REACTOR else 'off'}, configured: {reactor_configured()})", flush=True)
+    ThreadingHTTPServer((a.host, a.port), Handler).serve_forever()
 
 
 if __name__ == "__main__":

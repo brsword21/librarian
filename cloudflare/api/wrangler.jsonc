@@ -1,0 +1,19 @@
+{
+  // Librarian backend: Worker + Cloudflare Container. Deploy: cd cloudflare/api && npx wrangler deploy
+  // Reactor key (once): npx wrangler secret put REACTOR_ACCESS_KEY
+  "name": "librarian67-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-01",
+  "containers": [
+    { "class_name": "Backend", "image": "./Dockerfile", "instance_type": "standard-4", "max_instances": 1 }
+  ],
+  "durable_objects": { "bindings": [{ "name": "BACKEND", "class_name": "Backend" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Backend"] }],
+  "vars": {
+    "PUBLIC_URL": "https://librarian67.pages.dev",
+    "REACTOR_BASE_URL": "https://t08.api.reactor-hackathon.rxai.dev",
+    "REACTOR_AGENT_ID": "agt_38fb69425b64a19e"
+  },
+  "triggers": { "crons": ["*/10 * * * *"] },
+  "observability": { "enabled": true }
+}

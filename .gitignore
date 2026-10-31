@@ -32,3 +32,11 @@ reactor.env
 *.tar
 *.tar.gz
 .gstack/
+# hosted site + backend builds (tools/build_site.sh, tools/build_backend_bundle.py)
+dist/
+cloudflare/public/
+cloudflare/.wrangler/
+cloudflare/api/bundle/
+cloudflare/api/node_modules/
+cloudflare/api/.wrangler/
+cloudflare/api/.admin_key

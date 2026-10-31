@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Librarian · Use cases &amp; plugin</title>
+<meta name="description" content="Where the Librarian helps, and how to give any agent the same memory: an MCP server and a plain HTTP API.">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="library.css">
+<link rel="stylesheet" href="uses.css">
+<link rel="icon" type="image/webp" href="assets/logo_emblem.webp">
+</head>
+<body class="library-ui uses-page">
+<a class="skip-link" href="#uses">Skip to the use cases</a>
+
+<nav class="uses-top" aria-label="Site">
+  <a class="uses-brand" href="index.html"><img src="assets/logo_emblem.webp" alt="" width="34" height="37"><span>The Librarian</span></a>
+  <div class="uses-links">
+    <a href="#uses">Use cases</a>
+    <a href="#plugin">Plugin</a>
+    <a href="#api">API</a>
+    <a class="btn btn-gold" href="index.html">Open the demo</a>
+  </div>
+</nav>
+
+<main class="method uses-main">
+  <header class="method-heading">
+    <div>
+      <p class="eyebrow">USE CASES &amp; PLUGIN</p>
+      <h2>Where a memory with receipts helps.</h2>
+    </div>
+    <a class="back-link" href="index.html">Back to the demo ↑</a>
+  </header>
+
+  <!-- ============ USE CASES ============ -->
+  <section id="uses" class="lens-section uses-section" aria-labelledby="usesTitle">
+    <p class="eyebrow">01 / USE CASES</p>
+    <h3 id="usesTitle">Who it is for</h3>
+
+    <article class="uses-lead">
+      <img src="assets/char_librarian_search.webp" alt="" loading="lazy">
+      <div>
+        <h4>Proactive personal agents</h4>
+        <p>Agents that book, buy and plan for you need your preferences and commitments, with proof. Before acting, the agent checks your diet, your Friday and who's coming. Every fact comes with the conversation it was said in. Anything not in memory becomes a question for you.</p>
+        <ul class="uses-check" aria-label="Example pre-flight check: book dinner for Friday">
+          <li class="ok"><b>Your diet</b><span>found, with the conversation it came from</span></li>
+          <li class="ok"><b>Your Friday</b><span>found, with its date</span></li>
+          <li class="ask"><b>Who's coming</b><span>not in memory, so the agent asks you</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <div class="uses-grid">
+      <article>
+        <img src="assets/icon_lens_ku.webp" alt="" loading="lazy">
+        <h4>Companions and coaching personas</h4>
+        <p>The longer the relationship, the more a persona has to remember. One real test user named the cat three ways over the summer:</p>
+        <ol class="uses-timeline" aria-label="Every dated mention of the cat's name">
+          <li><time>6 May</time><span>Sombra</span></li>
+          <li><time>28 May</time><span>Fig</span></li>
+          <li><time>19 Jul</time><span>Sombra</span></li>
+        </ol>
+        <p>The Librarian shows every dated version, so the persona can ask instead of guessing. It covers the five question types: facts, recommendations, updates, dates, and memories that were never there (“not in memory”).</p>
+      </article>
+      <article>
+        <img src="assets/icon_lens_ssa.webp" alt="" loading="lazy">
+        <h4>Customer support</h4>
+        <p class="uses-q">“What did we promise this customer in March?”</p>
+        <p>The promise, the date and the conversation it was made in.</p>
+      </article>
+      <article>
+        <img src="assets/icon_lens_multi.webp" alt="" loading="lazy">
+        <h4>Team memory</h4>
+        <p class="uses-q">“What did we decide about pricing?”</p>
+        <p>The decision and when it was made, or “never decided”.</p>
+      </article>
+      <article>
+        <img src="assets/icon_router.webp" alt="" loading="lazy">
+        <h4>Your own archive</h4>
+        <p>Drop in a ChatGPT export, a WhatsApp chat or dated notes and ask it through the same pipeline.</p>
+        <p class="uses-links-inline"><a href="/live">Bring your own archive →</a><a href="/inbox">The memory inbox →</a></p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ PLUGIN (MCP) ============ -->
+  <section id="plugin" class="lens-section uses-section" aria-labelledby="pluginTitle">
+    <p class="eyebrow">02 / PLUGIN</p>
+    <h3 id="pluginTitle">Give any agent this memory</h3>
+    <div class="uses-two">
+      <div>
+        <p class="uses-lede">Librarian runs as an MCP server. Add it to Claude Code, Claude Desktop or Cursor and the agent can recall, search and cite the same archives as the demo.</p>
+        <div class="uses-code">
+          <div class="uses-code-head"><span>Claude Code</span><button class="btn uses-copy" type="button" data-copy="cc">Copy</button></div>
+          <pre id="cc"><code>claude mcp add --transport http librarian https://librarian67.pages.dev/mcp</code></pre>
+        </div>
+        <div class="uses-code">
+          <div class="uses-code-head"><span>Claude Desktop · Cursor</span><button class="btn uses-copy" type="button" data-copy="cd">Copy</button></div>
+          <pre id="cd"><code>{
+  "mcpServers": {
+    "librarian": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://librarian67.pages.dev/mcp"]
+    }
+  }
+}</code></pre>
+        </div>
+      </div>
+      <dl class="uses-tools" aria-label="MCP tools">
+        <div><dt>recall</dt><dd>Evidence for a question, or not in memory</dd></div>
+        <div><dt>search</dt><dd>Free-text search over one archive</dd></div>
+        <div><dt>timeline</dt><dd>Every dated mention of a topic</dd></div>
+        <div><dt>ask_reactor</dt><dd>Reactor answers with citations</dd></div>
+        <div><dt>get_answer</dt><dd>Poll a Reactor answer</dd></div>
+        <div><dt>list_users</dt><dd>The 15 demo archives</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ API ============ -->
+  <section id="api" class="lens-section uses-section" aria-labelledby="apiTitle">
+    <p class="eyebrow">03 / HTTP API</p>
+    <h3 id="apiTitle">Or call it over plain HTTP</h3>
+    <div class="uses-two">
+      <dl class="uses-api" aria-label="API endpoints">
+        <div><dt>POST /api/pack</dt><dd><code>{"split": "test", "history_id", "question"}</code> → the evidence pack: a few dated passages and notes computed in code</dd></div>
+        <div><dt>POST /api/search</dt><dd><code>{"split", "history_id", "query", "k"}</code> → the top sessions for any text, oldest first</dd></div>
+        <div><dt>POST /api/jobs</dt><dd><code>{"kind": "ask" | "askback", …}</code> → a job id; <code>GET /api/jobs/&lt;id&gt;</code> → Reactor's answer with citations</dd></div>
+        <div><dt>POST /api/upload</dt><dd>Your own archive (ChatGPT export, WhatsApp chat, notes) → a new history to ask</dd></div>
+        <div><dt>GET /api/status</dt><dd>Whether the search models and Reactor are available</dd></div>
+      </dl>
+      <div class="uses-code">
+        <div class="uses-code-head"><span>Example</span><button class="btn uses-copy" type="button" data-copy="curl">Copy</button></div>
+        <pre id="curl"><code>curl -s https://librarian67.pages.dev/api/pack \
+  -H 'content-type: application/json' \
+  -d '{"split": "test", "history_id": "h_d99a2da8f8ee",
+       "question": "What is my cat'\''s name?"}'</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <div class="closing-story">
+    <img src="assets/char_librarian_eureka.webp" alt="The Librarian holds up the right page." loading="lazy">
+    <div>
+      <p class="eyebrow">OPEN SOURCE</p>
+      <h3>Read the code, run it yourself.</h3>
+      <p>Retrieval runs on local models. Reactor writes the answer and cites its pages. The code is MIT licensed.</p>
+      <p class="uses-actions"><a class="btn btn-gold" href="index.html">Open the demo</a><a class="btn" href="https://github.com/Concorde002/librarian">github.com/Concorde002/librarian</a></p>
+    </div>
+  </div>
+
+  <footer class="method-footer"><span>The Librarian · START Warsaw 2026</span><span>Local retrieval. Reactor answers. Evidence included.</span></footer>
+</main>
+
+<script>
+document.querySelectorAll(".uses-copy").forEach((b) => b.addEventListener("click", async () => {
+  const el = document.getElementById(b.dataset.copy);
+  const text = el ? el.innerText : "";
+  try { await navigator.clipboard.writeText(text); b.textContent = "Copied"; }
+  catch { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Selected"; }
+  setTimeout(() => { b.textContent = "Copy"; }, 1600);
+}));
+</script>
+</body>
+</html>

@@ -104,3 +104,16 @@ The submitted file is rebuilt byte for byte from the recorded Reactor answers:
   `data-v1` release (https://github.com/RxAI-dev/memory-challenge). They are included only to reproduce the submission
   and the demo.
 - **Fonts:** the fonts in `demo/*/fonts` are SIL OFL 1.1 (see `OFL.txt` there).
+
+## Hosted: https://librarian67.pages.dev
+
+The demo above, `/live`, `/inbox`, `/uses` (use cases, plugin and API) and `/pitch/`, on Cloudflare Pages; the same
+Python backend runs in a Cloudflare Container (`cloudflare/api`, 4 vCPU) and the Pages Functions in
+`cloudflare/functions` proxy `/api/*` and `/m/*` to it. MCP server: `claude mcp add --transport http librarian
+https://librarian67.pages.dev/mcp` (tools: recall, search, timeline, ask_reactor, get_answer, list_users).
+Reactor runs as queued jobs too (`POST /api/jobs`, poll `GET /api/jobs/<id>`), since proxies cut long requests.
+```sh
+sh tools/build_site.sh --deploy                       # publish the site + functions
+.venv/bin/python tools/build_backend_bundle.py && (cd cloudflare/api && npx wrangler deploy) && sh tools/restart_backend.sh
+```
+Reactor key for the container: `cd cloudflare/api && npx wrangler secret put REACTOR_ACCESS_KEY`.
