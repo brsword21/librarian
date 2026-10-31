@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Librarian Live</title>
+<style>
+:root {
+  --bg: #f4ecdc; --panel: #fbf6ec; --ink: #2b2117; --muted: #6f5f4b; --rule: #d9c9ad; --accent: #8a5a1c;
+  --accent-ink: #fffaf0; --cite: #e9d6a8; --bad: #9b2c2c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1d1712; --panel: #2a2119; --ink: #f1e6d2; --muted: #b9a68a; --rule: #4a3b2c; --accent: #d8a55a;
+    --accent-ink: #1d1712; --cite: #5a4320; --bad: #f08a8a;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.5 Georgia, "Iowan Old Style", serif; }
+main { max-width: 860px; margin: 0 auto; padding: 28px 16px 64px; }
+h1 { font-size: 28px; margin: 0 0 4px; letter-spacing: .01em; }
+.sub { color: var(--muted); margin: 0 0 24px; }
+section { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 18px; margin-bottom: 16px; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin: 0 0 12px; font-family: system-ui, sans-serif; }
+.drop { border: 2px dashed var(--rule); border-radius: 8px; padding: 22px; text-align: center; cursor: pointer; }
+.drop.over { border-color: var(--accent); }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+select, textarea { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; }
+select { max-width: 100%; }
+textarea { width: 100%; min-height: 64px; resize: vertical; }
+button { font: 600 15px system-ui, sans-serif; border-radius: 6px; padding: 10px 16px; cursor: pointer; border: 1px solid var(--accent); background: transparent; color: var(--accent); }
+button.primary { background: var(--accent); color: var(--accent-ink); }
+button:disabled { opacity: .45; cursor: not-allowed; }
+.meta { font: 14px/1.5 system-ui, sans-serif; color: var(--muted); margin-top: 10px; }
+.bar { height: 6px; background: var(--rule); border-radius: 3px; overflow: hidden; margin-top: 8px; }
+.bar > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+.pill { font: 12px system-ui, sans-serif; padding: 3px 9px; border-radius: 99px; border: 1px solid var(--rule); color: var(--muted); }
+.answer { font-size: 24px; margin: 4px 0 8px; }
+.err { color: var(--bad); font: 14px system-ui, sans-serif; white-space: pre-wrap; }
+.passage { border-top: 1px solid var(--rule); padding: 12px 0; }
+.passage.cited { background: linear-gradient(90deg, var(--cite), transparent 70%); padding-left: 10px; border-radius: 4px; }
+.passage .head { font: 13px system-ui, sans-serif; color: var(--muted); margin-bottom: 4px; }
+.passage .text { white-space: pre-wrap; max-height: 9em; overflow: hidden; }
+.passage.open .text { max-height: none; }
+.passage button { padding: 2px 8px; font-size: 12px; margin-top: 4px; }
+.note { font: 14px system-ui, sans-serif; color: var(--muted); white-space: pre-wrap; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Librarian · live archive</h1>
+  <p class="sub">Upload any archive, ask it a question. Librarian picks the pages; Reactor reads them and answers with sources. <span class="pill" id="status">Reactor: checking…</span></p>
+
+  <section>
+    <h2>1 · Archive</h2>
+    <label class="drop" id="drop">
+      <input type="file" id="file" hidden accept=".json,.jsonl,.txt,.md,.markdown,.csv,text/*,application/json">
+      <strong>Drop a file here</strong> or click to choose.<br>
+      <span class="meta">Challenge history (.json / .jsonl), ChatGPT export (conversations.json), WhatsApp export (.txt), notes (.md / .txt).</span>
+    </label>
+    <div class="row" style="margin-top:12px">
+      <select id="archives" aria-label="Uploaded archives"><option value="">No archive yet</option></select>
+    </div>
+    <div class="meta" id="info"></div>
+    <div class="bar" id="bar" hidden><i></i></div>
+  </section>
+
+  <section>
+    <h2>2 · Question</h2>
+    <textarea id="q" placeholder="e.g. What is my dog's name?"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button id="packBtn">Show the pages (fast)</button>
+      <button id="askBtn" class="primary">Ask Reactor (~1–2 min)</button>
+      <span class="meta" id="timer"></span>
+    </div>
+    <div class="err" id="err"></div>
+  </section>
+
+  <section id="result" hidden>
+    <h2 id="resTitle">Answer</h2>
+    <div class="answer" id="answer"></div>
+    <div class="meta" id="resMeta"></div>
+    <div class="note" id="notes"></div>
+    <div id="passages"></div>
+  </section>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const API = new URLSearchParams(location.search).get("api") || "";   // ?api=https://host to use another server
+let uploads = [], current = null, poller = null, ticking = null;
+
+function setErr(m) { $("#err").textContent = m || ""; }
+async function call(path, opts) {
+  const r = await fetch(API + path, opts);
+  const j = await r.json().catch(() => ({ error: `HTTP ${r.status}` }));
+  if (!r.ok || j.error) throw new Error(j.error || `HTTP ${r.status}`);
+  return j;
+}
+
+function showInfo() {
+  const u = uploads.find(x => x.history_id === current);
+  const bar = $("#bar");
+  if (!u) { $("#info").textContent = ""; bar.hidden = true; return; }
+  const bits = [u.name, u.format, u.sessions && `${u.sessions} sessions`, u.turns && `${u.turns} messages`,
+    u.chars && `${Math.round(u.chars / 1000)}k characters`, u.first_date && `${u.first_date.slice(0, 10)} → ${(u.last_date || "").slice(0, 10)}`];
+  const state = u.state === "ready" ? "ready to ask" : u.state === "error" ? `indexing failed: ${u.error}` : `indexing ${Math.round((u.progress || 0) * 100)}%`;
+  $("#info").textContent = bits.filter(Boolean).join(" · ") + " — " + state;
+  bar.hidden = u.state !== "indexing";
+  bar.firstElementChild.style.width = `${Math.round((u.progress || 0) * 100)}%`;
+}
+
+async function refresh() {
+  try {
+    uploads = (await call("/api/uploads")).uploads;
+    const sel = $("#archives");
+    sel.replaceChildren(...(uploads.length ? uploads : [{ history_id: "", name: "No archive yet" }]).map(u => {
+      const o = document.createElement("option"); o.value = u.history_id;
+      o.textContent = u.history_id ? `${u.name} (${u.history_id})` : u.name; return o;
+    }));
+    if (current) sel.value = current; else if (uploads[0]) current = sel.value = uploads[0].history_id;
+    showInfo();
+    const busy = uploads.some(u => u.state === "indexing");
+    if (busy && !poller) poller = setInterval(refresh, 1000);
+    if (!busy && poller) { clearInterval(poller); poller = null; }
+  } catch (e) { setErr(e.message); }
+}
+
+async function send(file) {
+  setErr(""); $("#info").textContent = `Reading ${file.name}…`;
+  try {
+    const content = await file.text();
+    const u = await call("/api/upload", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: file.name, content }) });
+    current = u.history_id; await refresh();
+  } catch (e) { setErr(e.message); $("#info").textContent = ""; }
+}
+
+function render(p, live) {
+  $("#result").hidden = false;
+  $("#resTitle").textContent = live ? "Reactor's answer" : "The pages Librarian would hand to Reactor";
+  $("#answer").textContent = live ? (p.abstained ? "I don't know (the archive does not say)." : p.answer || "(no answer)") : "";
+  $("#answer").hidden = !live;
+  const cited = new Set(p.cited || []);
+  $("#resMeta").textContent = [`route: ${p.route}`, `${p.passages.length} passages`,
+    `${p.passages.reduce((n, x) => n + x.text.length, 0).toLocaleString()} characters`, `pages in ${p.build_ms} ms`,
+    live && p.latency_s && `Reactor ${Math.round(p.latency_s)} s`, live && cited.size && `cites ${cited.size} session(s)`].filter(Boolean).join(" · ");
+  $("#notes").textContent = p.notes ? `Librarian's note to Reactor: ${p.notes}` : "";
+  const box = $("#passages"); box.replaceChildren();
+  p.passages.forEach((x, i) => {
+    const d = document.createElement("div"); d.className = "passage" + (cited.has(x.id) ? " cited" : "");
+    const h = document.createElement("div"); h.className = "head";
+    h.textContent = `[E${i + 1}] ${x.date || "computed note"}${x.id ? " · " + x.id : ""}${cited.has(x.id) ? " · cited by Reactor" : ""}`;
+    const t = document.createElement("div"); t.className = "text"; t.textContent = x.text;
+    const b = document.createElement("button"); b.textContent = "Show all";
+    b.onclick = () => { d.classList.toggle("open"); b.textContent = d.classList.contains("open") ? "Show less" : "Show all"; };
+    d.append(h, t, b); box.append(d);
+  });
+}
+
+async function run(live) {
+  setErr("");
+  const question = $("#q").value.trim();
+  if (!current) return setErr("Upload an archive first.");
+  if (!question) return setErr("Type a question.");
+  $("#packBtn").disabled = $("#askBtn").disabled = true;
+  const t0 = Date.now();
+  ticking = setInterval(() => { $("#timer").textContent = `${live ? "Reactor is reading" : "Searching"}… ${Math.round((Date.now() - t0) / 1000)} s`; }, 500);
+  try {
+    const p = await call(live ? "/api/ask" : "/api/pack", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ split: "upload", history_id: current, question }) });
+    render(p, live);
+  } catch (e) { setErr(e.message); }
+  finally { clearInterval(ticking); $("#timer").textContent = ""; $("#packBtn").disabled = $("#askBtn").disabled = false; status(); }
+}
+
+async function status() {
+  try { const s = await call("/api/status"); $("#status").textContent = s.reactor_busy ? "Reactor: busy (benchmark run)" : "Reactor: available"; }
+  catch { $("#status").textContent = "Reactor: server offline"; }
+}
+
+const drop = $("#drop");
+$("#file").onchange = e => e.target.files[0] && send(e.target.files[0]);
+["dragenter", "dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
+["dragleave", "drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
+drop.addEventListener("drop", e => e.dataTransfer.files[0] && send(e.dataTransfer.files[0]));
+$("#archives").onchange = e => { current = e.target.value; showInfo(); };
+$("#packBtn").onclick = () => run(false);
+$("#askBtn").onclick = () => run(true);
+$("#q").addEventListener("keydown", e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) run(true); });
+refresh(); status(); setInterval(status, 20000);
+</script>
+</body>
+</html>

@@ -224,6 +224,12 @@ code's margin notes appear next to them, and Reactor answers and seals the pages
 the archive was read. The 5-stop tour covers one question per type, ending with an honest "not in the archive" in which
 two other people's dogs are rejected as decoys. With Reactor free, a live question goes through the same pipeline.
 
+`/live` (same server) takes any archive: a challenge history, a ChatGPT export, a WhatsApp export or dated notes
+(`demo/ingest.py`). It indexes the upload locally (BM25 + embeddings, about a second for a 1.7M-character history whose
+embeddings are cached), then asks Reactor through the same pipeline. On `demo/samples/founder_notes.md`, a fictional
+startup notebook unrelated to LongMemEval, the code computed "16 days" between the demo day and the first paying
+customer, and Reactor answered 16 with both sessions cited, in 47 s.
+
 Business use: any assistant with long-lived memory (support, coaching, health, personal agents) needs to answer from
 months of history:
 - cheaply: it reads ~0.2% of the archive per question;

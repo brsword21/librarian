@@ -48,6 +48,11 @@ python3 -m demo.server --web demo/web --port 8800    # then open http://127.0.0.
 It replays the recorded Reactor answers from `demo/replay.json`. Keys: Space starts the tour, ←/→ step through it,
 F toggles fullscreen.
 
+**Your own archive:** open http://127.0.0.1:8800/live, drop a file (challenge history, ChatGPT `conversations.json`,
+WhatsApp `.txt` export, or Markdown notes with date headings; try `demo/samples/founder_notes.md`) and ask. This needs
+`core.model_server` running; "Ask Reactor" also needs Reactor access (see Reproduce). API: `POST /api/upload`, then
+`POST /api/pack` or `/api/ask` with `{"split": "upload", "history_id", "question"}` (see `demo/server.py`).
+
 ## Reproduce
 Requirements: macOS or Linux, [uv](https://docs.astral.sh/uv/), git, curl.
 

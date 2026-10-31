@@ -6,31 +6,48 @@ Endpoints:
   GET  /api/status                       {"reactor_busy": bool}  (busy while the benchmark queue is running)
   POST /api/pack  {"question_id"} or {"split", "history_id", "question"}  -> the evidence pack (fast, local)
   POST /api/ask   same body                -> pack + Reactor's answer (slow: ~1-2 min; only when Reactor is idle)
+  POST /api/upload {"name", "content"} (or the raw file as the body) -> {"history_id", "split": "upload", ...}
+                                         any archive (see demo/ingest.py); indexing continues in the background
+  GET  /api/uploads                      uploaded archives with their indexing state ("indexing" / "ready" / "error")
+  GET  /live                             minimal page: upload an archive, ask it, see the pages and Reactor's answer
+Ask an uploaded archive with {"split": "upload", "history_id": ..., "question": ...}. One Reactor call at a time across
+all demo servers on this machine (file lock); a second caller gets 409. API responses allow any origin (CORS).
 Needs core.model_server running (for packs) and, for /api/ask, ../reactor.env + the keychain key.
 """
 from __future__ import annotations
 
 import argparse
+import fcntl
 import json
 import re
 import subprocess
 import tempfile
+import threading
 from datetime import datetime
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 import core.paths  # noqa: F401
-from core.data import questions
-from core.paths import BASE, ROOT
+from core.data import DATE_FMT, questions, shard_dir
+from core.paths import BASE, CACHE, ROOT
 from core.types import Question
 
 SUFFIX = ("Write the final answer line as: only the answer itself (a name, number, date or short phrase), followed by "
           "the [E#] label(s) of the passage(s) that state it. No explanation, no alternatives.")
 PIPE = None
+UPLOAD_DIR = shard_dir("upload")
+UPLOADS: dict[str, dict] = {}          # history_id -> summary + indexing state
+REACTOR_LOCK = CACHE / "reactor_demo.lock"
+MAX_BODY = 40_000_000
+
+
+class Busy(Exception):
+    pass
 
 
 def reactor_busy() -> bool:
-    return subprocess.run(["pgrep", "-f", "reactorq.queue"], capture_output=True).returncode == 0
+    # anchored to a python process, so a shell or grep that merely mentions the module does not count
+    return subprocess.run(["pgrep", "-f", r"^[^ ]*python[^ ]* -m reactorq\.queue"], capture_output=True).returncode == 0
 
 
 def make_question(body: dict) -> tuple[str, Question]:
@@ -43,6 +60,12 @@ def make_question(body: dict) -> tuple[str, Question]:
                     return split, q
         raise KeyError(body["question_id"])
     split = body.get("split", "test")
+    if split == "upload":
+        if not (UPLOAD_DIR / f"{body['history_id']}.json").exists():
+            raise KeyError(f"no uploaded archive {body['history_id']}")
+        d = datetime.strptime(body["question_date"], DATE_FMT) if body.get("question_date") \
+            else datetime.now().replace(second=0, microsecond=0)
+        return split, Question("q_live", body["history_id"], body["question"], d, d.strftime(DATE_FMT))
     ref = next(q for q in questions(split) if q.history_id == body["history_id"])
     return split, Question("q_live", ref.history_id, body["question"], ref.date, ref.date_str)
 
@@ -66,20 +89,70 @@ def pack_for(body: dict) -> dict:
             "question_text": question_text(q, "\n".join(x for x in (pack.hint, SUFFIX) if x))}
 
 
+def _reactor(args: list[str]) -> dict:
+    r = subprocess.run([str(BASE / "reactor.sh"), *args], capture_output=True, text=True)
+    lines = r.stdout.strip().splitlines()
+    if r.returncode or not lines:
+        raise RuntimeError(f"Reactor client failed (exit {r.returncode}): {(r.stderr or '').strip()[-300:]}")
+    return json.loads(lines[-1])
+
+
 def ask(p: dict) -> dict:
-    sh = str(BASE / "reactor.sh")
-    nh = json.loads(subprocess.run([sh, "--new-history"], capture_output=True, text=True).stdout.strip().splitlines()[-1])
+    nh = _reactor(["--new-history"])
     with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as f:
         json.dump([{k: v for k, v in x.items() if v is not None} for x in p["passages"]], f, ensure_ascii=False)
-    args = [sh, "--history", nh["history_id"], "--question", p["question_text"], "--question-date", p["question_date"],
+    args = ["--history", nh["history_id"], "--question", p["question_text"], "--question-date", p["question_date"],
             "--timeout", "600", "--max-chars", "32000"]
     if p["passages"]:
         args += ["--evidence", f.name]
-    r = json.loads(subprocess.run(args, capture_output=True, text=True).stdout.strip().splitlines()[-1])
+    r = _reactor(args)
     answer = re.sub(r"\s*\[\s*E\d+(?:\s*[,;]\s*E\d+)*\s*\]", "", r.get("answer") or "").strip()
     return {**p, "status": r.get("status"), "answer": answer, "abstained": bool(r.get("abstained")),
             "cited": [c["id"] for c in r.get("citations") or [] if c.get("id")], "latency_s": r.get("latency_s"),
             "reasoning": (r.get("reply") or "")[:4000]}
+
+
+def ask_locked(body: dict) -> dict:
+    """Pack + Reactor under a machine-wide lock, so two demo servers never talk to Reactor at once."""
+    REACTOR_LOCK.parent.mkdir(parents=True, exist_ok=True)
+    with open(REACTOR_LOCK, "w") as lf:
+        try:
+            fcntl.flock(lf, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            raise Busy("Reactor is answering another live question; try again in a minute")
+        return ask(pack_for(body))
+
+
+def _index_upload(hid: str) -> None:
+    """Builds BM25 and embeds every unit now, so the first question on a new archive is as fast as on test."""
+    st = UPLOADS[hid]
+    try:
+        from core.index import HistoryIndex
+        hx = HistoryIndex.load("upload", hid)
+        hx.bm25_scores("warm up")
+        uids, step = list(range(len(hx.units))), 256
+        st["units"] = len(uids)
+        for i in range(0, len(uids), step):
+            hx.vectors(uids[i:i + step])
+            st["progress"] = round(min(1.0, (i + step) / max(1, len(uids))), 3)
+        st["state"] = "ready"
+    except Exception as exc:
+        st.update(state="error", error=repr(exc))
+
+
+def upload(raw: str, name: str) -> dict:
+    from demo.ingest import to_history
+    hist, info = to_history(raw, name)
+    hid = hist["history_id"]
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    path = UPLOAD_DIR / f"{hid}.json"
+    if hid in UPLOADS and UPLOADS[hid]["state"] != "error":
+        return {**UPLOADS[hid], "split": "upload"}
+    info["uploaded"] = datetime.now().strftime(DATE_FMT)
+    path.write_text(json.dumps({**hist, "upload_info": info}, ensure_ascii=False), encoding="utf-8")
+    UPLOADS[hid] = {**info, "state": "indexing", "progress": 0.0}
+    threading.Thread(target=_index_upload, args=(hid,), daemon=True).start()
+    return {**UPLOADS[hid], "split": "upload"}
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -91,39 +164,78 @@ class Handler(SimpleHTTPRequestHandler):
     def log_message(self, *a):
         pass
 
+    def _cors(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, X-Filename")
+        self.send_header("Access-Control-Allow-Private-Network", "true")   # a hosted page calling this laptop
+
     def _json(self, obj, code=200):
         body = json.dumps(obj, ensure_ascii=False).encode()
         self.send_response(code)
+        self._cors()
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
 
+    def _file(self, path: Path, ctype: str):
+        data = path.read_bytes()
+        self.send_response(200)
+        self._cors()
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
+
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self._cors()
+        self.send_header("Content-Length", "0")
+        self.end_headers()
+
     def do_GET(self):
         if self.path.startswith("/replay.json"):
-            data = (ROOT / "demo" / "replay.json").read_bytes()
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json; charset=utf-8")
-            self.send_header("Content-Length", str(len(data)))
-            self.end_headers()
-            self.wfile.write(data)
+            self._file(ROOT / "demo" / "replay.json", "application/json; charset=utf-8")
         elif self.path.startswith("/api/status"):
             self._json({"reactor_busy": reactor_busy()})
+        elif self.path.startswith("/api/uploads"):
+            self._json({"uploads": sorted(UPLOADS.values(), key=lambda u: u["uploaded"], reverse=True)})
+        elif self.path.rstrip("/") == "/live" or self.path.startswith("/live?"):
+            self._file(ROOT / "demo" / "live.html", "text/html; charset=utf-8")
         else:
             super().do_GET()
 
     def do_POST(self):
         try:
-            body = json.loads(self.rfile.read(int(self.headers.get("Content-Length", 0))) or b"{}")
+            n = int(self.headers.get("Content-Length", 0))
+            if n > MAX_BODY:
+                return self._json({"error": f"file too large (limit {MAX_BODY // 1_000_000} MB)"}, 413)
+            raw = self.rfile.read(n)
+            if self.path.startswith("/api/upload"):
+                body = None
+                if "json" in (self.headers.get("Content-Type") or ""):
+                    try:
+                        body = json.loads(raw)
+                    except json.JSONDecodeError:
+                        body = None
+                if isinstance(body, dict) and isinstance(body.get("content"), str):
+                    return self._json(upload(body["content"], body.get("name") or "upload"))
+                return self._json(upload(raw.decode("utf-8", "replace"), self.headers.get("X-Filename") or "upload"))
+            body = json.loads(raw or b"{}")
             if self.path.startswith("/api/pack"):
                 self._json(pack_for(body))
             elif self.path.startswith("/api/ask"):
                 if reactor_busy():
                     self._json({"error": "Reactor is busy with the benchmark run; replay mode only"}, 409)
                 else:
-                    self._json(ask(pack_for(body)))
+                    self._json(ask_locked(body))
             else:
                 self._json({"error": "unknown endpoint"}, 404)
+        except Busy as exc:
+            self._json({"error": str(exc)}, 409)
+        except (ValueError, KeyError) as exc:
+            self._json({"error": str(exc)}, 400)
         except Exception as exc:
             self._json({"error": repr(exc)}, 500)
 
@@ -134,6 +246,11 @@ def main() -> None:
     ap.add_argument("--port", type=int, default=8800)
     a = ap.parse_args()
     Handler.web = (ROOT / a.web).resolve()
+    if UPLOAD_DIR.exists():   # archives uploaded before a restart: embeddings are cached, so they are ready again
+        for f in UPLOAD_DIR.glob("u_*.json"):
+            info = json.loads(f.read_text(encoding="utf-8")).get("upload_info") or {"history_id": f.stem, "name": f.stem}
+            UPLOADS[f.stem] = {"uploaded": datetime.fromtimestamp(f.stat().st_mtime).strftime(DATE_FMT), **info,
+                               "state": "ready", "progress": 1.0}
     print(f"demo on http://127.0.0.1:{a.port}  (static: {Handler.web})", flush=True)
     ThreadingHTTPServer(("127.0.0.1", a.port), Handler).serve_forever()
 
