@@ -37,11 +37,11 @@ Pitch w jednym zdaniu: **pamięć dla asystentów AI, która wie, czego nie wie*
 - **Reactor jest jeden i wolny** (~105 s na pytanie). Pytać może tylko jeden proces naraz. Nie odpalaj niczego, co go woła, bez uzgodnienia z Mikołajem.
 - Wyniki symulatora (lokalny LLM, `PROXY.md`) nigdy nie idą do zgłoszenia. `finalize` je odrzuca.
 
-## 3. Stan (31.10, ~07:00)
+## 3. Stan (31.10, 06:55)
 
 | Co | Stan |
 |---|---|
-| Test (146 pytań) na Reactorze | 143 odpowiedzi + 7 ponowień (pytania, których paczka zmieniła się w v3). 3 pytania padły na zerwanym DNS ~06:30 i są ponawiane automatycznie (`runs/final/after_err.sh`). Potem skrypt sam składa `submission/predictions.jsonl` i odświeża `demo/replay.json`. |
+| Test (146 pytań) na Reactorze | **gotowe: 146/146 odpowiedzi Reactora**, 13 abstencji, 0 błędów formatu, 0 odpowiedzi bez źródeł → `submission/predictions.jsonl`. W tym 7 ponowień v3 i 3 ponowienia po zerwanym DNS (~06:30). `demo/replay.json` odświeżony. |
 | System | v3 (`configs/best.json`, tag `v3`) |
 | Offline S, routed, dev / dev200 | kit naive 42,9 → generic hybrid 73,4 → R1 80,4/79,9 → v1 86,0/84,9 → v2 86,9/87,0 → **v3 87,1/87,0** |
 | v3 per typ (dev) | ssu 93,4 · ssa 93,6 · multi 87,8 · ku 93,4 · temporal 81,3 |
@@ -64,7 +64,7 @@ Wszystkie przebiegi są w `runs/leaderboard.csv`. Nowy wariant przyjmujemy przy 
 | Kiedy | Co |
 |---|---|
 | teraz – 09:00 | pitch (3 min + 2 min Q&A), demo, ewentualne poprawki systemu |
-| ~07:15 | Reactor wolny: można sprawdzić pytanie na żywo w demie (`/api/ask`) |
+| już | Reactor wolny: można sprawdzić pytanie na żywo w demie (`/api/ask`), ale tylko jedna osoba naraz |
 | 09:00 – 10:15 | publiczne repo do zgłoszenia (README/SOLUTION.md), walidacja 146 predykcji, formularz |
 | **11:00** | **code freeze + deadline zgłoszenia** |
 | 11:30 | pitch w tracku; 13:30 finał (top 3) |
