@@ -64,7 +64,7 @@ body.uses-page { overflow-x: hidden; overflow-y: auto; }
 .uses-actions .btn { text-decoration: none; }
 
 @media (max-width: 1100px) {
-  .uses-two { grid-template-columns: 1fr; }
+  .uses-two { grid-template-columns: minmax(0, 1fr); }   /* long code lines scroll inside their box */
 }
 @media (max-width: 760px) {
   .uses-top { padding: 12px 18px; }
