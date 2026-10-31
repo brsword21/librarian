@@ -38,7 +38,7 @@ Test submission (`submission/predictions.jsonl`):
 - every answer has at least one citation;
 - 0 format errors (`score.validate`).
 
-Team onboarding: [ONBOARDING.md](ONBOARDING.md) (Polish). Lens contract: [CONTRACT.md](CONTRACT.md). Research notes:
+**How it works and how we got here: [SOLUTION.md](SOLUTION.md).** Team onboarding: [ONBOARDING.md](ONBOARDING.md) (Polish). Lens contract: [CONTRACT.md](CONTRACT.md). Research notes:
 [RESEARCH.md](RESEARCH.md). Reports from the agent rounds: `runs/SYNTHESIS_r*.md`.
 
 ## Quick demo (no data, no dependencies)

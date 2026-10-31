@@ -15,7 +15,7 @@ find lenses -path '*/scratch_*' -type f \( -name '*.log' -o -name '*.txt' -o -na
 rm -f demo/*/qa/*.png demo/*/source-art/*.png
 sed -i.bak -e 's#^REACTOR_BASE_URL=.*#REACTOR_BASE_URL=https://tNN.api.reactor-hackathon.rxai.dev#' \
   -e 's#^REACTOR_AGENT_ID=.*#REACTOR_AGENT_ID=agt_...#' tools/reactor.env.example
-sed -i.bak -e 's#^Team onboarding: \[ONBOARDING.md\](ONBOARDING.md) (Polish). ##' README.md
+sed -i.bak -e "s# Team onboarding: \\[ONBOARDING.md\\](ONBOARDING.md) (Polish).##" README.md
 sed -i.bak -e 's#Read ONBOARDING.md first; docs/NIGHT_LOG.md has the full#See README.md for the#' \
   -e 's#^event context. Team language: Polish.#pipeline and how to run it.#' CLAUDE.md
 find . -name '*.bak' -delete
