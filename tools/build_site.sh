@@ -16,6 +16,7 @@ cp "$LIB/demo/replay.json" "$LIB/demo/askback.json" "$LIB/demo/users.json" "$OUT
 cp -R "$LIB/demo/pitch" "$OUT/pitch"          # the pitch deck at /pitch/
 cat > "$OUT/_redirects" <<'R'
 /demo        /     302
+/demo/*      /:splat 302
 /demo.html   /     302
 /pitch.html  /pitch/ 301
 R
