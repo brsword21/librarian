@@ -1,4 +1,5 @@
-/* Cold open for the pitch (?stage=1 or #hero): the key art with a few living details, then smoke into the demo.
+/* The landing: every visit to / opens on the key art with a few living details, then smoke into the demo.
+   Skipped when the link asks for something else (?tour, ?q, or a #section such as #developers or #app).
    Every moving part is a crop of the key art itself (or a moth sprite), so nothing on top can drift out of style. */
 (() => {
  const hero = document.getElementById('hero'); if (!hero) return;
@@ -65,5 +66,5 @@
   if ([' ', 'Enter', 'ArrowRight', 'PageDown'].includes(e.key)) { e.preventDefault(); e.stopImmediatePropagation(); enter(); }
   else if (e.key !== 'f' && e.key !== 'F') e.stopImmediatePropagation();
  }, true);
- if ((stage && !qs.has('tour') && !qs.has('q')) || location.hash === '#hero') show();
+ if (location.hash === '#hero' || (!location.hash && !qs.has('tour') && !qs.has('q'))) show();
 })();
