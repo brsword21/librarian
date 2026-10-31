@@ -28,3 +28,4 @@ reactor.env
 # team cache / proxy kit archives (contain organiser kit code and data)
 *.tar
 *.tar.gz
+.gstack/
