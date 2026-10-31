@@ -3,86 +3,120 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Librarian Inbox</title>
+<title>The Librarian · Memory inbox</title>
+<link rel="icon" type="image/webp" href="/assets/logo_emblem.webp">
+<link rel="stylesheet" href="/fonts/fonts.css">
 <style>
+/* Same world as the library demo: walnut, brass, parchment; the frames are the illustrated assets. */
 :root {
-  --bg: #f4ecdc; --panel: #fbf6ec; --ink: #2b2117; --muted: #6f5f4b; --rule: #d9c9ad; --accent: #8a5a1c;
-  --accent-ink: #fffaf0; --pick: #efe0bd; --cite: #e2c27f; --bad: #9b2c2c; --ok: #3f6b2a;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #1d1712; --panel: #2a2119; --ink: #f1e6d2; --muted: #b9a68a; --rule: #4a3b2c; --accent: #d8a55a;
-    --accent-ink: #1d1712; --pick: #3a2d1d; --cite: #6b4e22; --bad: #f08a8a; --ok: #9fcf7f;
-  }
+  --serif: 'Alegreya', Georgia, serif; --caps: 'Almendra', Georgia, serif; --deco: 'Grenze Gotisch', Georgia, serif;
+  --text: #eee2ca; --muted: #d0bd98; --gold: #e3c796; --brass: #d5ba84; --ink: #2b2118; --ink-soft: #5e4830;
+  --rule: #c9b78c; --pick: #e6d3a7; --cite: #edca86; --bad: #f0a08a; --ok: #b6c493;
+  --wood: url('/assets/ui_panel_wood.webp') 230 fill / 22px stretch;
+  --parch: url('/assets/ui_panel_parchment.webp') 205 fill / 24px stretch;
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 Georgia, "Iowan Old Style", serif; }
-header { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--rule); }
-h1 { font-size: 22px; margin: 0; }
-.ui { font-family: system-ui, sans-serif; }
-select, input[type=search], textarea { font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 7px 10px; }
-select { max-width: 340px; }
-button, .btn { font: 600 14px system-ui, sans-serif; border-radius: 6px; padding: 8px 14px; cursor: pointer; border: 1px solid var(--accent); background: transparent; color: var(--accent); }
-button.primary { background: var(--accent); color: var(--accent-ink); }
+html { background: #120e0a; }
+body { margin: 0; min-height: 100vh; color: var(--text); font: 18px/1.5 var(--serif);
+  background: linear-gradient(#120e0ad9, #120e0aeb), url('/assets/bg_library.webp') center / cover fixed; }
+a { color: var(--gold); }
+header { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; padding: 14px 28px; max-width: 1480px; margin: 0 auto; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+.brand img { width: 44px; height: 48px; object-fit: contain; }
+.brand b { font: 32px/1 var(--deco); color: #eddbb6; text-shadow: 0 3px 3px #17120d; }
+h1 { font: 24px/1 var(--caps); color: var(--gold); margin: 0 6px 0 0; padding-left: 18px; border-left: 1px solid #77603d; }
+#archInfo { flex: 1 1 0; min-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 15px; }
+@media (max-width: 900px) { #archInfo { flex-basis: 100%; white-space: normal; } }
+select, input[type=search], textarea { font: 18px/1.4 var(--serif); color: #ecdbb9; background: #19130e; border: 1px solid #80613a; border-radius: 2px; padding: 9px 12px; }
+select { max-width: 360px; }
+button, .btn { font: 17px var(--serif); border-radius: 3px; padding: 9px 16px; min-height: 42px; cursor: pointer; border: 1px solid #77603d;
+  background: #32281c; color: #e8d9bd; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+button:hover, .btn:hover { background: #473823; border-color: #c9a563; }
+button.primary { background: var(--brass); color: #2a2115; border-color: #dfc798; font-weight: 700; }
+button.primary:hover { background: #e7ce9e; }
 button:disabled { opacity: .45; cursor: not-allowed; }
-.pill { font: 12px system-ui, sans-serif; padding: 3px 9px; border-radius: 99px; border: 1px solid var(--rule); color: var(--muted); white-space: nowrap; }
-main { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 16px; padding: 16px; max-width: 1400px; margin: 0 auto; }
-@media (max-width: 900px) { main { grid-template-columns: 1fr; } }
-section { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 14px; min-width: 0; }
-h2 { font: 600 12px system-ui, sans-serif; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin: 0 0 10px; }
-.meta { font: 13px/1.45 system-ui, sans-serif; color: var(--muted); }
-#inbox { max-height: calc(100vh - 210px); overflow: auto; margin-top: 10px; border-top: 1px solid var(--rule); }
+.up-ico { width: 30px; height: 30px; object-fit: contain; margin: -6px 0; }
+.pill { font: 16px var(--serif); color: var(--ok); white-space: nowrap; }
+.meta { font: 16px/1.45 var(--serif); color: var(--muted); }
+main { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 18px; padding: 4px 28px 28px; max-width: 1480px; margin: 0 auto; }
+@media (max-width: 900px) { main { grid-template-columns: 1fr; padding: 4px 14px 20px; } header { padding: 12px 14px; } }
+section { border: solid 22px transparent; border-image: var(--wood); padding: 2px 6px 6px; min-width: 0; }
+section.paper { border-width: 24px; border-image: var(--parch); color: var(--ink); padding: 0 4px 2px; }
+h2 { font: 700 23px/1.15 var(--caps); color: var(--gold); margin: 0 0 12px; display: flex; align-items: center; gap: 10px; }
+h2 img { width: 34px; height: 34px; object-fit: contain; }
+.paper h2 { color: #523e23; }
+.paper .meta { color: var(--ink-soft); }
+.paper input[type=search] { background: #f3e8cf; color: var(--ink); border-color: #b29b6b; }
+#inbox { max-height: calc(100vh - 230px); overflow: auto; margin-top: 10px; border-top: 1px solid var(--rule); scrollbar-width: thin; scrollbar-color: #b59c70 transparent; }
 @media (max-width: 900px) { #inbox { max-height: 60vh; } }
-.row { border-bottom: 1px solid var(--rule); padding: 9px 6px; cursor: pointer; }
-.row:hover { background: color-mix(in srgb, var(--pick) 50%, transparent); }
-.row.picked { background: var(--pick); }
-.row.cited { background: var(--cite); }
-.row .top { display: flex; gap: 8px; align-items: baseline; font: 12px system-ui, sans-serif; color: var(--muted); }
-.row .prev { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.row .badge { font: 600 11px system-ui, sans-serif; padding: 1px 7px; border-radius: 99px; background: var(--accent); color: var(--accent-ink); }
-.row .full { margin-top: 8px; font-size: 15px; white-space: pre-wrap; cursor: text; }
-.row .full .turn { margin: 6px 0; }
-.row .full .who { font: 600 12px system-ui, sans-serif; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
-textarea { width: 100%; min-height: 58px; resize: vertical; }
-.actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
-ol.flow { list-style: none; padding: 0; margin: 14px 0 0; }
-ol.flow li { display: grid; grid-template-columns: 26px 1fr; gap: 8px; padding: 8px 0; border-top: 1px solid var(--rule); }
-ol.flow .dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--rule); margin-top: 2px; display: grid; place-items: center; font: 700 11px system-ui, sans-serif; color: var(--muted); }
-ol.flow li.run .dot { border-color: var(--accent); border-top-color: transparent; animation: spin 1s linear infinite; }
-ol.flow li.done .dot { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.row { border-bottom: 1px solid var(--rule); padding: 10px 8px; cursor: pointer; }
+.row:hover { background: #e9dbb980; }
+.row.picked { background: var(--pick); box-shadow: inset 3px 0 #896334; }
+.row.cited { background: var(--cite); box-shadow: inset 3px 0 #9e4235; }
+.row .top { display: flex; gap: 10px; align-items: center; font: 700 15px var(--caps); color: #7a3d22; }
+.row .top span:nth-child(2) { font: 15px var(--serif); color: var(--ink-soft); }
+.row .prev { font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row .badge { font: 700 14px var(--caps); padding: 1px 8px 1px 22px; border-radius: 2px; background: #725734 url('/assets/icon_citation.webp') 6px center / 10px 16px no-repeat; color: #fff0cf; }
+.row.picked .badge { background-image: none; padding-left: 8px; }
+.row .full { margin-top: 10px; font-size: 18px; white-space: pre-wrap; cursor: text; background: #f3e8cf; padding: 8px 12px; border-left: 3px solid #c9b78c; }
+.row .full .turn { margin: 8px 0; }
+.row .full .who { font: 700 14px var(--caps); color: #654a2a; }
+textarea { width: 100%; min-height: 64px; resize: vertical; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
+ol.flow { list-style: none; padding: 0; margin: 16px 0 0; }
+ol.flow li { display: grid; grid-template-columns: 48px 1fr; gap: 12px; align-items: start; padding: 10px 0; border-top: 1px solid #5e4830; }
+ol.flow .ico { position: relative; width: 44px; height: 44px; }
+ol.flow .ico img { width: 100%; height: 100%; object-fit: contain; filter: saturate(.55) brightness(.75); transition: filter .3s; }
+ol.flow li.run .ico img, ol.flow li.done .ico img { filter: none; }
+ol.flow .dot { position: absolute; right: -4px; bottom: -4px; width: 21px; height: 21px; border-radius: 50%; border: 2px solid #77603d; background: #211a12;
+  display: grid; place-items: center; font: 700 12px var(--serif); color: var(--muted); }
+ol.flow li.run .dot { border-color: var(--brass); border-top-color: transparent; animation: spin 1s linear infinite; }
+ol.flow li.done .dot { background: var(--brass); border-color: var(--brass); color: #2a2115; }
 ol.flow li.err .dot { border-color: var(--bad); color: var(--bad); }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { ol.flow li.run .dot { animation: none; } }
-ol.flow .t { font: 600 14px system-ui, sans-serif; }
-ol.flow .d { font: 13px/1.45 system-ui, sans-serif; color: var(--muted); white-space: pre-wrap; }
-.answer { font-size: 26px; margin: 6px 0; }
-.err { color: var(--bad); font: 13px system-ui, sans-serif; white-space: pre-wrap; }
-.chips { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0; }
-.chip { font: 12px system-ui, sans-serif; border: 1px solid var(--accent); color: var(--accent); border-radius: 99px; padding: 2px 9px; cursor: pointer; background: transparent; }
-.out { border-top: 1px solid var(--rule); padding: 8px 0; font: 14px/1.4 system-ui, sans-serif; }
-.out b { font-weight: 600; }
+ol.flow .t { font: 700 19px var(--caps); color: #ecdab4; }
+ol.flow .d { font: 17px/1.45 var(--serif); color: var(--muted); white-space: pre-wrap; }
+.answer { font: 500 40px/1.15 var(--serif); color: var(--ink); margin: 4px 0 8px; }
+.err { color: var(--bad); font: 16px var(--serif); white-space: pre-wrap; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 4px; }
+.chip { font: 16px var(--caps); min-height: 0; padding: 4px 12px 4px 26px; border: 1px solid #b29b6b; border-radius: 2px; color: var(--ink); cursor: pointer;
+  background: #ecdcb6 url('/assets/icon_citation.webp') 8px center / 11px 18px no-repeat; }
+.chip:hover { background-color: #f3e5c2; border-color: #9e4235; }
+.paper button:not(.chip) { background: #ecdcb6; color: var(--ink); border-color: #b29b6b; }
+.paper button:not(.chip):hover { background: #f3e5c2; }
+.out { border-top: 1px solid #5e4830; padding: 10px 0; font: 17px/1.45 var(--serif); }
+.out b { font: 700 17px var(--caps); color: var(--gold); }
+.out .meta { font-size: 15px; }
+.reactor-mark { float: right; width: 70px; height: 92px; object-fit: contain; margin: -6px 0 4px 10px; }
 [hidden] { display: none !important; }
+.examples { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
+.examples .meta { font: 700 16px var(--caps); color: var(--gold); margin-right: 2px; }
+.examples button { font-size: 16px; line-height: 1.3; min-height: 0; padding: 6px 12px; text-align: left; }
 </style>
 </head>
 <body>
 <header>
-  <h1>Librarian · memory inbox</h1>
+  <a class="brand" href="/#hero" title="Back to the cover"><img src="/assets/logo_emblem.webp" alt=""><b>The Librarian</b></a>
+  <h1>Memory inbox</h1>
   <select id="archive" class="ui" aria-label="Archive"></select>
-  <label class="btn">Upload archive<input type="file" id="file" hidden accept=".json,.jsonl,.txt,.md,.markdown,text/*,application/json"></label>
+  <label class="btn"><img class="up-ico" src="/assets/icon_upload.webp" alt="" onerror="this.remove()">Upload archive<input type="file" id="file" hidden accept=".json,.jsonl,.txt,.md,.markdown,text/*,application/json"></label>
   <span class="pill" id="status">Reactor: checking…</span>
   <span class="meta" id="archInfo"></span>
+  <a class="btn" href="/">← The library</a>
 </header>
 <main>
-  <section aria-label="Inbox">
+  <section aria-label="Inbox" class="paper">
     <h2>Inbox <span id="count"></span></h2>
     <input type="search" id="filter" class="ui" placeholder="Filter messages" style="width:100%">
     <div id="inbox"></div>
   </section>
 
-  <div style="display:grid; gap:16px; align-content:start; min-width:0">
+  <div style="display:grid; gap:18px; align-content:start; min-width:0">
     <section aria-label="Ask">
-      <h2>Ask the memory</h2>
+      <h2><img src="/assets/char_librarian_search.webp" alt="">Ask the memory</h2>
       <textarea id="q" placeholder="e.g. How many days passed between the demo day and our first paying customer?"></textarea>
+      <div class="examples" id="examples" hidden></div>
       <div class="actions">
         <button id="run" class="primary">Run workflow + Reactor</button>
         <button id="dry">Retrieval only</button>
@@ -90,16 +124,17 @@ ol.flow .d { font: 13px/1.45 system-ui, sans-serif; color: var(--muted); white-s
       </div>
       <div class="err" id="err"></div>
       <ol class="flow" id="flow">
-        <li data-k="route"><span class="dot">1</span><div><div class="t">Read the question</div><div class="d">Which kind of question is it?</div></div></li>
-        <li data-k="search"><span class="dot">2</span><div><div class="t">Search the archive</div><div class="d">Hybrid search + rerank picks the few sessions that matter.</div></div></li>
-        <li data-k="notes"><span class="dot">3</span><div><div class="t">Code notes</div><div class="d">Dates, counts and latest values are computed by code, not guessed.</div></div></li>
-        <li data-k="reactor"><span class="dot">4</span><div><div class="t">Reactor reads the pages</div><div class="d">Only the picked pages go to Reactor.</div></div></li>
-        <li data-k="output"><span class="dot">5</span><div><div class="t">Output</div><div class="d">Answer with its sources.</div></div></li>
+        <li data-k="route"><span class="ico"><img src="/assets/icon_router.webp" alt=""><span class="dot">1</span></span><div><div class="t">Read the question</div><div class="d">Which kind of question is it?</div></div></li>
+        <li data-k="search"><span class="ico"><img src="/assets/icon_lens_ssu.webp" alt=""><span class="dot">2</span></span><div><div class="t">Search the archive</div><div class="d">Hybrid search + rerank picks the few sessions that matter.</div></div></li>
+        <li data-k="notes"><span class="ico"><img src="/assets/icon_lens_temporal.webp" alt=""><span class="dot">3</span></span><div><div class="t">Code notes</div><div class="d">Dates, counts and latest values are computed by code, not guessed.</div></div></li>
+        <li data-k="reactor"><span class="ico"><img src="/assets/icon_reactor.webp" alt=""><span class="dot">4</span></span><div><div class="t">Reactor reads the pages</div><div class="d">Only the picked pages go to Reactor.</div></div></li>
+        <li data-k="output"><span class="ico"><img src="/assets/icon_citation.webp" alt=""><span class="dot">5</span></span><div><div class="t">Output</div><div class="d">Answer with its sources.</div></div></li>
       </ol>
     </section>
 
-    <section aria-label="Output" id="outCard" hidden>
-      <h2>Output</h2>
+    <section aria-label="Output" id="outCard" class="paper" hidden>
+      <img class="reactor-mark" src="/assets/reactor_tower.webp" alt="">
+      <h2>Reactor's answer</h2>
       <div class="answer" id="answer"></div>
       <div class="meta" id="outMeta"></div>
       <div class="chips" id="cites"></div>
@@ -110,7 +145,7 @@ ol.flow .d { font: 13px/1.45 system-ui, sans-serif; color: var(--muted); white-s
     </section>
 
     <section aria-label="Outbox">
-      <h2>Outbox · every Reactor answer on this archive</h2>
+      <h2><img src="/assets/icon_citation.webp" alt="">Outbox</h2>
       <div class="actions" style="margin:0 0 6px"><button id="dlAll">Download all (JSONL)</button></div>
       <div id="outbox" class="meta">No answers yet.</div>
     </section>
@@ -122,6 +157,11 @@ const API = new URLSearchParams(location.search).get("api") || "";
 const ROUTES = { ssu: "a fact you stated", ssa: "something the assistant said", multi: "facts spread over sessions",
   ku: "a value that changed over time", temporal: "dates and time gaps" };
 const S = { archives: [], cur: null, arch: null, picked: new Set(), cited: new Set(), last: null, outputs: [], open: new Set() };
+// demo/samples/founder_notes.md: one question per kind, each checked against the local retrieval.
+const SAMPLE_EXAMPLES = [["Started a notebook for the company.", ["How many days passed between the demo day and our first paying customer?", "Who is our CTO now?", "How many investor meetings have we had?", "Which invoicing tool did the assistant recommend?", "What is the monthly price for new shops now?"]]];
+// Benchmark questions for each test history (data/test/questions.jsonl), matched by the oldest session's first line,
+// so an uploaded copy of any test history shows its own dataset questions. Generated; one question per kind where possible.
+const DATASET_EXAMPLES = [["I'm looking for some photography tips for captur", ["What is my cat's name?", "What was the name of that time-tracking app you recommended for my freelance work?", "What is the name of my ceramics class instructor now?", "How many days apart were my son's school play and my daughter's orthodontist appointment?", "How many ceramic pieces am I putting in the class show?"]], ["I'm planning to attend the Los Angeles Asian Pac", ["What is my younger son's name?", "What was the name of the restaurant you recommended for dinner with my sons?", "What is my current job title?", "How many days apart were the hospital's 'Run for Health' 5K and the annual charity gala I attended?", "How many watercolour classes do I attend each week?"]], ["Can you give me a project idea for undergraduate", ["Which Python library did you recommend for my data cleaning project?", "How many gigabytes is my current mobile data plan?", "How many days apart were starting my Python for Data Analysis course and finishing my first Python data cleaning project?", "How much did I add to my used car savings from my March salary and freelance data work?"]], ["I'm looking for some recipe ideas for meal prep.", ["What was the name of the milonga in San Telmo I told you about?", "What was the name of that French flour brand you recommended for my croissants?", "What did I end up naming my sourdough starter?", "How many days after I entered my alfajor recipe in the city baking contest were the winners announced?", "How much is left in my bakery fund after those transactions I told you about?"]], ["How did Worcester's urban planning or architectu", ["What value did you recommend for the audio coupling capacitor in my Panasonic RF-2200?", "What AM intermediate frequency did I end up using in my National R-77 restoration?", "What speaker impedance did I end up using in my National R-77?", "What dial lamp voltage did I end up using in my National R-77?"]], ["I'm thinking of switching to a more eco-friendly", ["How many years did I serve as a firefighter?", "How many orchids have I added to my collection since March?", "How many laps do I swim each morning these days?", "How many times did my systolic reading exceed 130 in August?"]], ["I'm feeling a bit sluggish today and I think it'", ["What was the name of my language exchange partner from Quebec?", "What was the name of the bank you recommended for my year in Canada?", "How many days apart were my monstera repotting and my lead-climbing course?", "How many days after submitting my visa application did I book my flight to Montreal?"]], ["I'm looking for some advice on how to optimize m", ["What was the name of the physiotherapist I saw after the Toronto Marathon?", "What was the name of the swim club you recommended for cross-training?", "What is the name of the store where I currently buy Moroccan spices?", "How many days apart were my Toronto Marathon and the big Moroccan family dinner I cooked?"]], ["is there any difference between strategic sellin", ["What is the name of the museum where I work?", "What was the name of that adhesive you recommended for repairing canvas tears?", "How many days after I registered for my part-time PhD did I have my first supervision meeting?", "How many animals at the shelter where I volunteer are not FIV-positive?"]], ["How did the punk rock ethos of independence and ", ["What was the combined attendance at the March and June book club meetings I told you about?", "What was the name of the café you recommended for my remote work days?", "How many people are on my UX team now?", "How many days after my introductory pottery workshop is the glaze-firing workshop?"]], ["I'm trying to keep track of my expenses. Can you", ["What did I name my new podcast?", "What was the name of the plugin you recommended for organizing my drum samples?", "What is my skateboard's name now?", "How many days after the skate shop grand opening was my audio engineering program interview?"]], ["please include the w3c vc standard as described ", ["What opening did you recommend I try against 1.e4? I forgot the name.", "What was the name of the route planning software you recommended for my logistics work? I forgot.", "How many days apart were my daughter's wedding dress fitting and the cake tasting?", "How much honey did I harvest in total from my two hives this summer? I lost track."]], ["What are the benefits of composting and how does", ["What was the style of the last beer I mentioned I'd kegged?", "What was the name of the coffee shop you recommended for grading papers?", "How many days after Opening Day for my son's baseball team was the league jamboree?", "What was the total number of students I mentioned going on the two field trips this spring?"]], ["Excellent, now provide a possible template that ", ["What time does my long run start these days?", "How many days after I adopted Juniper did she have her first vet appointment?", "How many rooms have we completely renovated in the bungalow so far?", "What's my rescue greyhound's name?"]], ["Considering the circumstances of the wrongdoing,", ["What was the name of the farrier you recommended for my Icelandic horses?", "How many Icelandic horses do my neighbor Bjørn and I have in total right now?", "How many days apart were my trip to Bergen and my trip to Trondheim?", "How many chapters does my children's book have now?"]]];
 
 async function call(path, opts) {
   const r = await fetch(API + path, opts);
@@ -151,7 +191,20 @@ async function openArchive(hid) {
   catch (e) { $("#err").textContent = e.message; return; }
   $("#archInfo").textContent = [u.format, `${S.arch.sessions.length} sessions`, `${Math.round(S.arch.chars / 1000).toLocaleString()}k characters`,
     u.state === "indexing" ? `indexing ${Math.round((u.progress || 0) * 100)}%` : u.state === "error" ? "indexing failed" : "ready"].filter(Boolean).join(" · ");
-  renderInbox(); loadOutputs();
+  renderInbox(); renderExamples(); loadOutputs();
+}
+
+// Example questions for the open archive: clicking one only fills the box (nothing is sent to Reactor).
+function renderExamples() {
+  const previews = (S.arch?.sessions || []).map(s => s.preview || "");
+  const hit = [...SAMPLE_EXAMPLES, ...DATASET_EXAMPLES].find(([key]) => previews.some(p => p.startsWith(key)));
+  const box = $("#examples");
+  box.replaceChildren(el("span", "meta", "Try"), ...(hit ? hit[1] : []).map(q => {
+    const b = el("button", null, q); b.type = "button";
+    b.onclick = () => { $("#q").value = q; $("#q").focus(); };
+    return b;
+  }));
+  box.hidden = !hit;
 }
 
 function renderInbox() {

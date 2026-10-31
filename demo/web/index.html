@@ -5,30 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Librarian</title>
 <link rel="stylesheet" href="fonts/fonts.css">
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="library.css">
+<link rel="stylesheet" href="style.css?v=demo6">
+<link rel="stylesheet" href="library.css?v=demo6">
+<link rel="stylesheet" href="stage.css?v=demo6">
 <link rel="icon" type="image/webp" href="assets/logo_emblem.webp">
 </head>
-<body class="library-ui">
+<body class="library-ui" data-repo="https://github.com/brsword21/librarian-recall">
 <a class="skip-link" href="#method">Skip to how it works</a>
+<section id="hero" class="hero" aria-label="The Librarian" hidden>
+  <div class="hero-canvas" id="heroCanvas">
+    <img class="hero-art" src="assets/keyart.webp" alt="The Librarian at work in a library of books, vacuum tubes and tape machines">
+    <div class="hero-moth" aria-hidden="true"><img src="assets/char_moth_up.webp" alt=""><img src="assets/char_moth_down.webp" alt=""></div>
+  </div>
+  <div class="hero-panel">
+    <h2 class="hero-title">The Librarian</h2>
+    <p class="hero-tag">Find the right memory.<br>Show the evidence.</p>
+    <p class="hero-lede">An assistant that remembers months of conversations, and says so when it doesn't.</p>
+    <div class="hero-cta"><button class="btn btn-gold" id="heroEnter">Enter the library</button><span class="hero-key">or press <kbd>Space</kbd></span></div>
+  </div>
+  <div class="hero-smoke" aria-hidden="true"><img src="assets/fx_smoke_1.webp" alt=""><img src="assets/fx_smoke_2.webp" alt=""><img src="assets/fx_smoke_3.webp" alt=""></div>
+</section>
 <canvas id="motes" aria-hidden="true"></canvas>
 <div id="runesBg" aria-hidden="true"></div>
 
 <div id="app">
   <!-- ============ HEADER ============ -->
   <header id="top">
-    <div class="brand">
+    <a class="brand" href="#hero" title="Back to the cover">
       <img class="brand-emblem" src="assets/logo_emblem.webp" alt="" width="45" height="49">
       <div>
         <h1>The Librarian</h1>
         <p class="tagline">Find the right memory. Show the evidence.</p>
       </div>
-    </div>
+    </a>
     <div class="top-controls">
       <span id="statusPill" class="pill" title="Is Reactor (Reactor) free for live questions?"><i></i><span>Replay mode</span></span>
       <button id="btnQuestions" class="btn" title="Choose a question (Q)"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Questions</button>
+      <a id="btnInbox" class="btn" href="/inbox" title="Your own archive as an inbox: upload, search, ask"><svg viewBox="0 0 24 24"><path d="M3 13l3-8h12l3 8v6H3zM3 13h5l1.5 3h5l1.5-3h5"/></svg>Inbox</a>
       <a class="btn" href="uses.html" title="Use cases, MCP plugin and API" style="text-decoration:none"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z M9 10h7M9 14h7M9 18h4"/></svg>Use cases &amp; plugin</a>
       <button id="btnHow" class="btn" title="How it works (H)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.6 2.6 0 1 1 3.6 2.4c-.8.4-1.1.9-1.1 1.8M12 17h.01"/></svg>How it works</button>
+      <a id="btnDev" class="btn" href="#developers" title="API, MCP and source code"><svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>Developers</a>
+      <a class="btn btn-icon" data-repo-link hidden target="_blank" rel="noopener" title="Source on GitHub" aria-label="Source on GitHub"><svg viewBox="0 0 24 24"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
       <button id="btnTour" class="btn btn-gold" title="Demo tour (Space)"><svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></svg><span>Begin the tour</span></button>
       <button id="btnFull" class="btn btn-icon" title="Fullscreen (F)"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
     </div>
@@ -86,7 +103,7 @@
     </div>
 
     <aside id="margin" class="margin">
-      <div class="margin-head"><span>Context &amp; checks</span><small>the Librarian’s notes</small></div>
+      <div class="margin-head"><span>The Librarian’s notes</span></div>
       <div id="computed" class="computed" hidden></div>
       <div id="notes" class="notes"><p class="note-empty">The Librarian writes notes in the margin: dates, day gaps, which value is newest, which mention is a decoy.</p></div>
     </aside>
@@ -94,6 +111,7 @@
     <aside id="oracle" class="oracle" data-state="idle">
       <div class="oracle-head"><span>Reactor</span><small>answer model</small></div>
       <div class="orb-wrap">
+        <img class="reactor-burst" src="assets/fx_burst.webp" alt="">
         <img class="reactor-art" src="assets/reactor_tower.webp" alt="The brass vacuum-tube Reactor">
         <img class="reactor-diode" src="assets/fx_lamp_green.webp" alt="">
         <svg class="orb-ring" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="94" /><g id="ringRunes"></g></svg>
@@ -116,6 +134,7 @@
         <div class="gold" id="gold" hidden></div>
         <div class="oracle-actions" id="oracleActions"></div>
       </div>
+      <div class="moth" aria-hidden="true"><img src="assets/char_moth_up.webp" alt=""><img src="assets/char_moth_down.webp" alt=""></div>
     </aside>
   </section>
 
@@ -198,11 +217,13 @@
  <div class="problem-story"><div class="problem-copy"><p class="eyebrow">01 / THE PROBLEM</p><h3>A whole archive.<br>A handful of useful pages.</h3><p>Months of conversation hide the small details that matter. Some facts change. Some mentions belong to someone else. Some answers were never there.</p><p>The Librarian finds the relevant evidence, checks its context, and gives Reactor just the pages it needs.</p><div class="problem-facts"><span><strong>200</strong>conversations per test archive</span><span><strong>1.65M</strong>characters, approximately</span><span><strong>A few</strong>pages selected per question</span></div></div><figure><img src="assets/illo_haystack.webp" alt="The tiny Librarian searches an enormous heap of books for one glowing page." loading="lazy"><figcaption>A library of near misses. One detail that answers your question.</figcaption></figure></div>
  <div class="walkthrough" id="walkthrough"><div class="walkthrough-top"><div><p class="eyebrow">02 / FROM QUESTION TO ANSWER</p><h3>The journey of a memory.</h3></div><div class="chapter-controls"><button id="chapterPrev" aria-label="Previous explanation step">←</button><span id="chapterCount">01 / 05</span><button id="chapterNext" aria-label="Next explanation step">→</button></div></div><div class="chapter-tabs" role="tablist" aria-label="How the Librarian works"><button role="tab" data-chapter="0" aria-selected="true" aria-controls="chapterPanel" id="chapterTab0">01 Question</button><button role="tab" data-chapter="1" aria-selected="false" aria-controls="chapterPanel" id="chapterTab1" tabindex="-1">02 Choose a lens</button><button role="tab" data-chapter="2" aria-selected="false" aria-controls="chapterPanel" id="chapterTab2" tabindex="-1">03 Find the pages</button><button role="tab" data-chapter="3" aria-selected="false" aria-controls="chapterPanel" id="chapterTab3" tabindex="-1">04 Prepare evidence</button><button role="tab" data-chapter="4" aria-selected="false" aria-controls="chapterPanel" id="chapterTab4" tabindex="-1">05 Reactor answers</button></div><div class="chapter-panel" id="chapterPanel" role="tabpanel" aria-labelledby="chapterTab0"><img id="chapterImage" src="assets/comic_1.webp" alt="The Librarian receives a question through a pneumatic tube." loading="lazy"><div><p class="eyebrow" id="chapterLabel">THE QUESTION</p><h4 id="chapterTitle">First, a question.</h4><p id="chapterDescription">A single fact may be buried in months of conversation. Start with what you want to remember.</p><p class="chapter-detail" id="chapterDetail">Every replay above starts with a real question from the benchmark.</p></div></div></div>
  <section class="lens-section" aria-labelledby="lensTitle"><p class="eyebrow">03 / FIVE SPECIALISED LENSES</p><h3 id="lensTitle">Different questions need different reading.</h3><div class="lens-grid"><article><img src="assets/icon_lens_ssu.webp" alt="" loading="lazy"><h4>Personal facts</h4><p>What the user said about themselves, rather than someone else.</p></article><article><img src="assets/icon_lens_ssa.webp" alt="" loading="lazy"><h4>Advice &amp; recommendations</h4><p>What the assistant actually recommended in an earlier conversation.</p></article><article><img src="assets/icon_lens_multi.webp" alt="" loading="lazy"><h4>Across conversations</h4><p>Bring scattered facts together, then count or compare.</p></article><article><img src="assets/icon_lens_ku.webp" alt="" loading="lazy"><h4>Things that changed</h4><p>Read the timeline carefully. The latest relevant value wins.</p></article><article><img src="assets/icon_lens_temporal.webp" alt="" loading="lazy"><h4>Dates &amp; durations</h4><p>Find the right events. Let code do the date arithmetic.</p></article></div></section>
+ <section class="dev-section" id="developers" aria-labelledby="devTitle"><p class="eyebrow">04 / FOR DEVELOPERS</p><h3 id="devTitle">Give your own assistant this memory.</h3><figure class="dev-illo"><img src="assets/illo_switchboard.webp" alt="The Librarian at a switchboard, patching the library into machines outside it." loading="lazy"></figure><div class="dev-grid"><article><img src="assets/icon_api.webp" alt="" loading="lazy"><h4>HTTP API</h4><p class="dev-status now">Works today</p><p><code>POST /api/pack</code> question → cited pages<br><code>POST /api/ask</code> question → Reactor’s answer<br><code>POST /api/upload</code> your own archive</p></article><article class="soon"><img src="assets/icon_mcp.webp" alt="" loading="lazy"><h4>MCP server</h4><p class="dev-status">Coming soon</p><p>The same memory as a tool for any MCP client: find the pages, answer with evidence.</p></article><article class="soon" data-repo-card><img src="assets/icon_repo.webp" alt="" loading="lazy"><h4>Source code</h4><p class="dev-status">Public at submission</p><p>The retrieval filter, with its Python and HTTP API. We have a business use case, but we share the code with the community. <a data-repo-link hidden target="_blank" rel="noopener">Open on GitHub →</a></p></article></div></section>
  <div class="closing-story"><img src="assets/char_librarian_shrug.webp" alt="The Librarian shrugs with a blank book." loading="lazy"><div><p class="eyebrow">AND WHEN THE ANSWER ISN’T THERE?</p><h3>A good memory knows its limits.</h3><p>Reactor can abstain instead of inventing an answer. The selected pages and citations stay open to inspection.</p><a class="btn btn-gold" href="#app">Try the demo ↑</a></div></div>
  <footer class="method-footer"><span>The Librarian · START Warsaw 2026</span><span>Local retrieval. Reactor answers. Evidence included.</span></footer>
 </section>
 
-<script src="app.js"></script>
-<script src="presentation.js"></script>
+<script src="app.js?v=demo6"></script>
+<script src="presentation.js?v=demo6"></script>
+<script src="hero.js?v=demo6"></script>
 </body>
 </html>

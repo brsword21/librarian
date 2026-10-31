@@ -11,7 +11,7 @@
  let chapter=0;
  function select(i,{focus=false}={}){
   chapter=(i+chapters.length)%chapters.length;const c=chapters[chapter];
-  $('#chapterImage').src=`assets/comic_${chapter+1}.webp`;$('#chapterImage').alt=c.alt;
+  $('#chapterImage').src=chapter===2?'assets/comic_3.webp?v=hands-fix-1':`assets/comic_${chapter+1}.webp`;$('#chapterImage').alt=c.alt;
   $('#chapterLabel').textContent=c.label;$('#chapterTitle').textContent=c.title;$('#chapterDescription').textContent=c.description;$('#chapterDetail').textContent=c.detail;$('#chapterCount').textContent=`0${chapter+1} / 05`;
   for(const tab of document.querySelectorAll('[data-chapter]')){const chosen=Number(tab.dataset.chapter)===chapter;tab.setAttribute('aria-selected',chosen);tab.tabIndex=chosen?0:-1;if(chosen&&focus)tab.focus({preventScroll:true});}
   $('#chapterPanel').setAttribute('aria-labelledby',`chapterTab${chapter}`);
@@ -20,10 +20,13 @@
  document.querySelector('.chapter-tabs').addEventListener('click',e=>{const tab=e.target.closest('[data-chapter]');if(tab)select(Number(tab.dataset.chapter));});
  document.querySelector('.chapter-tabs').addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();e.stopPropagation();select(chapter+(e.key==='ArrowRight'?1:-1),{focus:true});}else if(e.key==='Home'||e.key==='End'){e.preventDefault();select(e.key==='Home'?0:4,{focus:true});}});
  const librarian=$('#librarian img');
- function updatePose(){const state=$('#oracle').dataset.state;const active=document.querySelector('#steps li.on')?.dataset.step;const pose=state==='abstained'?'shrug':state==='answered'?'eureka':state==='sleeping'?'doze':active==='1'?'search':'idle';librarian.src=`assets/char_librarian_${pose}.webp`;}
+ function updatePose(){const state=$('#oracle').dataset.state;const active=document.querySelector('#steps li.on')?.dataset.step;const pose=state==='abstained'?'shrug':state==='answered'?'eureka':state==='sleeping'?'doze':state==='thinking'?'cast':active==='1'?'search':'idle';librarian.src=`assets/char_librarian_${pose}.webp`;}
  const observer=new MutationObserver(updatePose);observer.observe($('#oracle'),{attributes:true,attributeFilter:['data-state']});observer.observe($('#steps'),{subtree:true,attributes:true,attributeFilter:['class']});updatePose();
  // A tour should not advance behind an explanation the presenter is reading.
  new IntersectionObserver(entries=>{if(!entries[0].isIntersecting&&window.__librarian?.S.tour.playing)$('#btnTour').click();},{threshold:.05}).observe($('#app'));
+ // GitHub slot: links stay hidden until <body data-repo="https://github.com/..."> names the public repo.
+ const repo=document.body.dataset.repo;
+ if(repo){for(const a of document.querySelectorAll('[data-repo-link]')){a.href=repo;a.hidden=false;}const card=$('[data-repo-card]');card.classList.remove('soon');card.querySelector('.dev-status').textContent='Open source · MIT';}
  select(0);
 })();
 // Keep keyboard focus inside the existing modal surfaces while they are open.

@@ -8,6 +8,12 @@ From `librarian/`:
 .venv/bin/python -m demo.server --web demo/web --port 8800
 ```
 
+## On stage (presenter mode)
+
+Open http://127.0.0.1:8800/?stage=1 , press F for fullscreen. It starts on the key-art cover; Space (or →) enters and plays the first tour question. After that every Space/→ plays the next question and nothing advances on its own; 1–5 jump straight to a tour question (1 changed, 2 dates, 3 advice, 4 counting, 5 not written), S skips the animation, Q opens the question chooser, Home returns to the cover. Presenter mode hides the Reactor status and the live "Consult Reactor" button; "Find the pages" on your own question still runs locally (~1 s). Backup recording of this flow: `output/librarian-demo-backup.mp4` (1920×1080). If an older version shows up, hard-reload (Cmd+Shift+R).
+
+The margin shows only what the code found (dates, timelines, the likely line, decoys) under a rule ribbon; "What the code told Reactor" opens the full notes. "Developers" jumps to the API / MCP / source slots at the end of the explanation. The GitHub links stay hidden until `<body data-repo="https://github.com/...">` in `index.html` names the public repo.
+
 ## What changed
 
 - `library.css` adds the visual treatment after the original `style.css`: walnut/brass colors, local fonts, readable evidence and notes, illustrated books and Reactor, responsive fallback.

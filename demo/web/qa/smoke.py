@@ -1,5 +1,6 @@
 """Verify the styled existing demo. All API writes intercepted; no Reactor calls."""
 import json
+import re
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parent.parent
@@ -69,7 +70,7 @@ with sync_playwright() as p:
     expect(page.locator('#chapterTab1')).to_be_focused()
     for n in range(5):
         page.locator(f'#chapterTab{n}').click()
-        expect(page.locator('#chapterImage')).to_have_attribute('src',f'assets/comic_{n+1}.webp')
+        expect(page.locator('#chapterImage')).to_have_attribute('src',re.compile(rf'assets/comic_{n+1}\.webp(?:\?.*)?$'))
     page.locator('#walkthrough').scroll_into_view_if_needed();page.screenshot(path=str(ROOT/'qa/walkthrough-1440.png'))
     page.locator('#lensTitle').scroll_into_view_if_needed();page.screenshot(path=str(ROOT/'qa/lenses-1440.png'))
     page.locator('.closing-story a').click();page.wait_for_function('scrollY < 20')

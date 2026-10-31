@@ -48,7 +48,7 @@ const ABSTAIN_RE = /^\s*(INSUFFICIENT[_ ]EVIDENCE|NOT[_ ]IN[_ ]ARCHIVE)\s*$/i;
 
 /* ------------------------------------------------------------------ state */
 const S = {
-  data: null, sizes: {}, byId: new Map(), hid: null, rec: null, run: 0, fast: false,
+  data: null, sizes: {}, byId: new Map(), hid: null, rec: null, run: 0, fast: false, stage: false,
   tour: { idx: -1, playing: false, timer: null }, busy: null, statusOk: false, liveSeq: 0, askTimer: null,
 };
 const $ = (s, el = document) => el.querySelector(s);
@@ -413,16 +413,31 @@ function renderPassage(text, rec, who, pid) {
 }
 
 /* ------------------------------------------------------------------ marginalia */
-function cleanNotes(notes) {
-  return String(notes || "").split("\n").map((l) => l.trim()).filter((l) => l && !/^Write the final answer line/i.test(l));
+/* the margin shows only what the code found (timelines, dates, the likely line, decoys); its instructions to Reactor are one click away */
+const NOTE_RULE = { ssu: "Only the user's own facts", ssa: "The assistant's own advice", multi: "Count each thing once", ku: "The newest value wins", temporal: "Code does the date math" };
+const NOTE_EMPTY = { multi: "Reactor lists every mention with its page, then adds them up." };
+const dayOf = (s) => { const m = /(\d{4})[/-](\d{2})[/-](\d{2})/.exec(s || ""); return m ? `${+m[3]} ${MONTHS[+m[2] - 1]} ${m[1]}` : ""; };
+const unfill = (q) => { const m = /^(?:[^:"]{3,40}:|On an? [a-z ]{3,20} note,|Also,|Oh,)\s+(.{20,})$/i.exec(q); const s = m ? m[1] : q; return s.length > 84 ? s.slice(0, 82).replace(/\s+\S*$/, "") + "…" : s; };
+function noteFacts(rec) {
+  const text = String(rec.notes || ""), facts = [];
+  const bullets = text.split("\n").map((l) => /^\s*[-•*]\s+(.*)$/.exec(l)?.[1]).filter(Boolean);
+  bullets.forEach((b, i) => {
+    let m;
+    if ((m = /^"(.+?)"\s*=\s*(\d{4}-\d{2}-\d{2})/.exec(b))) facts.push(`<span class="dt">${dayOf(m[2])}</span> ${esc(m[1])}`);
+    else if ((m = /^(\d{4}\/\d{2}\/\d{2}):\s*"(.*)"\s*$/.exec(b))) facts.push(`<span class="dt">${dayOf(m[1])}</span> “${esc(unfill(m[2]))}”${rec.route === "ku" && i === bullets.length - 1 ? ' <span class="em">newest</span>' : ""}`);
+    else facts.push(esc(b.length > 170 ? b.slice(0, 168) + "…" : b));
+  });
+  let m;
+  if ((m = /Likely the line you need \((\w+), session of (\d{4}\/\d{2}\/\d{2}).*?\):\s*"(.*)"/.exec(text))) facts.push(`<span class="dt">${dayOf(m[2])}</span> ${esc(m[1])}: “${esc(m[3])}”`);
+  for (const d of text.matchAll(/Note: the (\d{4}\/\d{2}\/\d{2}) line "(.*?)" is about ([^,.]+?), not the user's own/g)) {
+    facts.push(`<span class="em">decoy</span> <span class="dt">${dayOf(d[1])}</span> “${esc(unfill(d[2]))}” is about ${esc(d[3])}`);
+  }
+  return facts;
 }
-function noteHtml(line) {
-  let h = esc(line);
-  h = h.replace(/(&quot;|“)([^&”]{3,}?)(&quot;|”)/g, '<span class="q">“$2”</span>');
-  h = h.replace(/\b(\d{4}[-/]\d{2}[-/]\d{2})\b/g, '<span class="dt">$1</span>');
-  h = h.replace(/(Difference between the two dates:[^.<]*\.?)/, '<span class="em">$1</span>');
-  h = h.replace(/\b(MOST RECENT|most recent value wins|decoys?|not the user's own|not the answer|INSUFFICIENT_EVIDENCE)\b/g, '<span class="em">$1</span>');
-  return h;
+function openNotes(rec) {
+  $("#glassHead").innerHTML = `<b>Margin notes sent to Reactor</b> · ${esc(rec.question)}`;
+  $("#glassBody").innerHTML = `<pre>${esc(rec.notes || "")}</pre>`; $("#glassBody").classList.remove("rejected");
+  openOverlay("#glass");
 }
 
 /* ------------------------------------------------------------------ verdict vs answer key */
@@ -659,7 +674,7 @@ async function play(rec, opts = {}) {
     setStep(3);
     if (rec.live && rec.answer == null) { await oracleLive(rec, tok, opts); return; }
     await revealOracle(rec, tok);
-    if (S.tour.playing && opts.fromTour) {
+    if (S.tour.playing && opts.fromTour && !S.stage) {
       S.tour.timer = setTimeout(() => { if (tok === S.run && S.tour.playing) tourStep(1); }, 9000);
     }
   } catch (e) {
@@ -668,10 +683,8 @@ async function play(rec, opts = {}) {
 }
 
 async function writeNotes(rec, tok) {
-  const lines = cleanNotes(rec.notes);
-  const box = $("#notes"); box.innerHTML = "";
-  const len = lines.join(" ").length;
-  box.classList.toggle("small", len > 380 && len <= 600); box.classList.toggle("tiny", len > 600);
+  const facts = noteFacts(rec);
+  const box = $("#notes"); box.innerHTML = ""; box.className = "notes";
   const comp = $("#computed");
   if (rec.computed != null && String(rec.computed).trim() !== "") {
     if (rec.route === "temporal") {
@@ -683,18 +696,22 @@ async function writeNotes(rec, tok) {
     comp.hidden = false; comp.classList.add("write");
     await sleep(700, tok);
   }
-  if (!lines.length) {
-    box.innerHTML = '<p class="note-empty">No margin notes for this one: the pages speak for themselves.</p>';
-    return;
+  const rule = comp.hidden && NOTE_RULE[rec.route]; // a computed value already says what the code did
+  if (rule) {
+    box.insertAdjacentHTML("beforeend", `<div class="note-rule write" data-r="${esc(rec.route)}"><span>${esc(rule)}</span></div>`);
+    await sleep(450, tok);
   }
-  for (const l of lines) {
+  if (!facts.length) box.insertAdjacentHTML("beforeend", `<p class="note-empty">${esc(NOTE_EMPTY[rec.route] || "The pages speak for themselves.")}</p>`);
+  for (const f of facts) {
     const p = document.createElement("p");
-    const bullet = /^[-•*]\s+/.test(l);
-    p.className = (bullet ? "bullet " : "") + "write";
-    p.innerHTML = noteHtml(bullet ? l.replace(/^[-•*]\s+/, "") : l);
+    p.className = "fact write"; p.innerHTML = f;
     box.appendChild(p);
     box.scrollTop = box.scrollHeight;
-    await sleep(Math.min(900, 260 + l.length * 4), tok);
+    await sleep(Math.min(900, 300 + f.length * 2), tok);
+  }
+  if (String(rec.notes || "").trim()) {
+    box.insertAdjacentHTML("beforeend", '<button class="notes-link">What the code told Reactor</button>');
+    box.querySelector(".notes-link").addEventListener("click", () => openNotes(rec));
   }
   await sleep(300, tok);
   box.scrollTop = 0;
@@ -739,14 +756,14 @@ function showAnswer(rec) {
     setOracle("abstained");
     $("#verdictLabel").textContent = "Reactor answers";
     ans.className = "answer none reveal";
-    ans.innerHTML = `Not written in the archive<span class="sub">It read ${n} page${n === 1 ? "" : "s"} and found no answer, so it says so instead of guessing.</span>`;
+    ans.innerHTML = `Not written in the archive<span class="sub">So it doesn't guess.</span>`;
     orb.className = "orb-text"; orb.innerHTML = sigil("none");
   } else {
     setOracle("answered");
     $("#verdictLabel").textContent = "Reactor answers";
     const a = String(rec.answer || "").trim();
-    ans.className = "answer reveal" + (a.length > 26 ? " long" : "");
-    ans.textContent = a;
+    ans.className = "answer reveal" + (a.length > 26 ? " long" : a.length > 6 ? " mid" : "");
+    ans.innerHTML = `<span class="aval">${esc(a)}</span>`; // the brass answer window sizes itself to this
     ans.insertAdjacentHTML("beforeend", tallyHtml(oracleTally(rec), a));
     orb.className = "orb-text" + (a.length > 4 ? " med" : "");
     orb.innerHTML = a.length <= 14 ? esc(a) : sigil((KINDS[rec.route] || KINDS.ssu).sigil);
@@ -795,6 +812,10 @@ async function oracleLive(rec, tok, opts) {
   if (S.busy) { oracleBusy(); return; }
   if (opts.ask) { await askOracle(rec, tok); return; }
   setOracle("sleeping");
+  if (S.stage) { /* on stage a live answer (1-2 min) is never started; the dossier is the live part */
+    acts.innerHTML = `<p>The Librarian built this dossier${rec.build_ms != null ? ` in ${fmt(rec.build_ms)} ms` : ""}, live. Reactor's own answer takes 1–2 minutes, so the recorded questions show that step.</p>`;
+    return;
+  }
   acts.innerHTML = `<p>The Librarian built this dossier${rec.build_ms != null ? ` in ${fmt(rec.build_ms)} ms` : ""}.</p><button class="btn btn-gold" id="consultBtn"><svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></svg>Consult Reactor</button><p>about 1–2 minutes</p>`;
   $("#consultBtn").addEventListener("click", () => askOracle(rec, S.run));
 }
@@ -876,7 +897,7 @@ function updateRibbon(rec, done) {
   const pctTxt = pct > 0 && pct < .01 ? "<0.01" : pct.toFixed(2);
   $("#readBig").innerHTML = n ? `Reactor read <em>${n} page${n === 1 ? "" : "s"}</em> out of ${convs} · <em>${pctTxt}%</em> of the archive` : `Reactor read <em>nothing</em> from the archive`;
   $("#readFill").style.width = `${Math.max(pct ? 1.2 : 0, Math.min(100, pct * 8))}%`;
-  const lat = rec.latency_s != null ? ` · Reactor ${Number(rec.latency_s).toFixed(0)} s` : rec.build_ms != null ? ` · pages found in ${(rec.build_ms / 1000).toFixed(1)} s` : "";
+  const lat = rec.latency_s == null && rec.build_ms != null ? ` · pages found in ${(rec.build_ms / 1000).toFixed(1)} s` : "";
   $("#readSmall").textContent = `${fmt(sent)} of ${fmt(st.total)} characters${st.estimated ? " (est.)" : ""}${lat}`;
 }
 
@@ -897,11 +918,12 @@ function tourGo(i, playing) {
   S.tour.playing = !!playing; syncTourBtn();
   $$("#tourDots .tdot").forEach((b, k) => b.classList.toggle("on", k === S.tour.idx));
   const t = tr[S.tour.idx];
-  play(t.rec, { caption: t.caption, fromTour: true });
+  play(t.rec, { fromTour: true });
 }
 function tourStep(d) { tourGo(S.tour.idx < 0 ? (d > 0 ? 0 : tourRecords().length - 1) : S.tour.idx + d, S.tour.playing); }
 function stopTour() { S.tour.playing = false; clearTimeout(S.tour.timer); syncTourBtn(); $$("#tourDots .tdot").forEach((b) => b.classList.remove("on")); S.tour.idx = -1; }
 function togglePlay() {
+  if (S.stage) { tourStep(1); return; } /* presenter mode: every press plays the next question, nothing advances on its own */
   if (S.tour.playing) { S.tour.playing = false; clearTimeout(S.tour.timer); syncTourBtn(); return; }
   S.tour.playing = true; syncTourBtn();
   const cur = S.rec && $("#oracle").dataset.state;
@@ -911,8 +933,8 @@ function togglePlay() {
 }
 function syncTourBtn() {
   const b = $("#btnTour");
-  b.querySelector("span").textContent = S.tour.playing ? "Pause the tour" : S.tour.idx >= 0 ? "Resume the tour" : "Begin the tour";
-  b.querySelector("svg").innerHTML = S.tour.playing ? '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>' : '<path d="M8 5l11 7-11 7z"/>';
+  b.querySelector("span").textContent = S.stage ? (S.tour.idx >= 0 ? "Next question" : "Begin the tour") : S.tour.playing ? "Pause the tour" : S.tour.idx >= 0 ? "Resume the tour" : "Begin the tour";
+  b.querySelector("svg").innerHTML = S.tour.playing && !S.stage ? '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>' : '<path d="M8 5l11 7-11 7z"/>';
 }
 function markSeen() { if (S.tour.idx >= 0) $$("#tourDots .tdot")[S.tour.idx]?.classList.add("seen"); }
 
@@ -1041,6 +1063,8 @@ function wire() {
       case "h": case "H": closeOverlays(); document.querySelector("#method").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); break;
       case "s": case "S": S.fast = true; break;
       case "Escape": closeOverlays(); break;
+      default:
+        if (/^[1-9]$/.test(e.key) && +e.key <= tourRecords().length) { e.preventDefault(); closeOverlays(); tourGo(+e.key - 1, S.tour.playing); }
     }
   });
   let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if ($("#oracle").dataset.state === "idle" || $("#oracle").dataset.state === "answered" || $("#oracle").dataset.state === "abstained") parkLibrarian(); }, 150); });
@@ -1048,6 +1072,8 @@ function wire() {
 
 /* ------------------------------------------------------------------ boot */
 async function boot() {
+  S.stage = new URLSearchParams(location.search).get("stage") === "1";
+  document.body.classList.toggle("stage", S.stage);
   decorate(); wire();
   try {
     const r = await fetch("/replay.json", { cache: "no-store" });
@@ -1068,9 +1094,9 @@ async function boot() {
   pollStatus(); setInterval(pollStatus, 10000);
   const qs = new URLSearchParams(location.search);
   S.instant = qs.get("instant") === "1" || matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (qs.get("q") && S.byId.get(qs.get("q"))) play(S.byId.get(qs.get("q")), { caption: TOUR.find((t) => t.id === qs.get("q"))?.caption });
+  if (qs.get("q") && S.byId.get(qs.get("q"))) play(S.byId.get(qs.get("q")), {});
   else if (qs.has("tour")) tourGo(+(qs.get("tour") || 0), qs.get("play") === "1");
 }
-window.__librarian = { play, S };
+window.__librarian = { play, S, tourGo };
 boot();
 })();

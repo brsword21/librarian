@@ -1,0 +1,229 @@
+/* Demo-day pass: fit every screen, presenter mode (?stage=1), projector contrast, a living Reactor. Loaded after library.css. */
+
+/* ---------- fit: no fixed minimum height, the question banner grows instead of overflowing ---------- */
+#app{min-height:0;grid-template-rows:60px minmax(112px,auto) 190px minmax(0,1fr) 64px}
+@media(min-width:1700px){#app{grid-template-rows:70px minmax(126px,auto) 220px minmax(0,1fr) 72px}}
+@media(max-width:1250px){#app{min-height:0;grid-template-rows:62px minmax(120px,auto) 190px minmax(0,1fr) 74px}}
+@media(max-width:900px){#app{min-height:100svh;grid-template-rows:auto auto 200px auto auto}}
+
+/* short screens: projector at 720p, laptop with the browser bar */
+@media(max-height:820px) and (min-width:901px){
+#app{grid-template-rows:50px minmax(92px,auto) 150px minmax(0,1fr) 54px;gap:8px;padding:8px 22px}
+.brand-emblem{height:40px;width:37px}.brand h1{font-size:28px}.tagline{font-size:14px;margin-top:2px}
+.btn{min-height:36px;padding:7px 12px;font-size:15px}.btn-icon{min-width:36px;padding:7px}
+#banner{padding:9px 16px}
+.question,.question.mid{font-size:24px}.question.long{font-size:21px}
+.caption{font-size:14px;margin-top:4px}
+#archive{height:150px}.beam{height:30px}.shelves{top:34px;bottom:4px}
+.librarian{width:56px;height:88px}
+.desk,.margin,.oracle{padding:10px 12px}
+.desk-label,.margin-head,.oracle-head{font-size:16px;margin-bottom:6px}
+.page-head{min-height:34px;padding:7px 9px 6px}
+.page-body{font-size:16px;padding:8px 10px 26px}
+.notes,.notes.small,.notes.tiny{font-size:16px}
+.computed{padding:6px 9px;margin-bottom:8px}.computed .cval{font-size:22px}
+.orb-wrap{height:118px}.reactor-art{height:118px}
+.oracle.compact .orb-wrap,.oracle.compact .reactor-art{height:86px}
+.answer{font-size:30px}.answer.long{font-size:23px}.answer.none{font-size:23px}.answer .sub{font-size:14px;margin-top:6px}
+.answer .tally{font-size:16px}
+#ribbon{padding:5px 12px}.read-big{font-size:17px}.read-small{font-size:13px}
+.tdot{padding:5px 7px}
+}
+
+/* ---------- presenter mode ---------- */
+body.stage #statusPill,body.stage #btnAsk{display:none}
+#statusPill.pill{flex-direction:row;align-items:center;gap:8px;white-space:nowrap;max-width:none}
+
+/* ---------- truncated text says so ---------- */
+.page-body{padding-bottom:28px;-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 30px),transparent);mask-image:linear-gradient(180deg,#000 calc(100% - 30px),transparent)}
+#notes{padding-bottom:16px;-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(180deg,#000 calc(100% - 26px),transparent)}
+.page{cursor:zoom-in;transition:box-shadow .2s}
+.page:hover,.page:focus-visible{box-shadow:0 0 0 2px #d9b675}
+.page::after{content:'click to read the whole page';position:absolute;left:50%;bottom:5px;transform:translateX(-50%);white-space:nowrap;font:12px var(--caps);color:#6e573a;opacity:0;transition:opacity .2s;pointer-events:none}
+.page:hover::after{opacity:1}
+
+/* ---------- projector contrast for small type ---------- */
+.steps li{color:#c9b48d}.steps span{font-size:13px}
+#bannerDate{color:#cdb894}.caption{color:#d0bc98}
+.legend{color:#dcc8a4}.legend .lg-s{width:11px;height:17px}
+.desk-label small{color:#d2bf9a}
+.margin .margin-head small{color:#6d5636}
+.oracle-head small{color:#d0b98f}
+.verdict-label{color:#d6bf94}
+.cites{color:#d4bd96}
+.oracle-actions p{color:#cdb68f}
+.read-small{color:#cdb894}
+.tdot{color:#dac6a2}
+
+/* ---------- the Reactor hums while it reads, flashes when it answers ---------- */
+.orb-wrap{overflow:visible}
+.reactor-art{position:relative;z-index:1}
+.reactor-diode{z-index:2}
+.reactor-burst{position:absolute;left:50%;top:36%;width:240%;max-width:none;height:auto;transform:translate(-50%,-50%) scale(.4);opacity:0;pointer-events:none;z-index:0}
+.oracle[data-state=thinking] .reactor-art{animation:reactorHum .7s ease-in-out infinite alternate}
+.oracle[data-state=thinking] .reactor-diode{animation:indicatorBlink .6s steps(1) infinite}
+.oracle[data-state=answered] .reactor-art{filter:drop-shadow(0 0 10px #e09a3e88)}
+.oracle[data-state=answered] .reactor-burst{animation:reactorBurst 1.2s ease-out both}
+@keyframes reactorHum{from{filter:brightness(1) drop-shadow(0 0 2px #e09a3e00)}to{filter:brightness(1.4) drop-shadow(0 0 16px #e09a3ee6)}}
+@keyframes reactorBurst{0%{opacity:0;transform:translate(-50%,-50%) scale(.35)}20%{opacity:.95}100%{opacity:0;transform:translate(-50%,-50%) scale(1.1)}}
+
+/* ---------- abstain: a moth leaves the empty book (the first "bug", Harvard 1947) ---------- */
+.moth{position:absolute;left:50%;top:68%;width:62px;height:37px;pointer-events:none;opacity:0;z-index:5}
+.moth img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 2px #0008)}
+.moth img:first-child{animation:flapA .18s linear infinite}
+.moth img+img{animation:flapB .18s linear infinite}
+.oracle[data-state=abstained] .moth{animation:mothOut 3.6s ease-in .6s both}
+@keyframes flapA{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes flapB{0%,49%{opacity:0}50%,100%{opacity:1}}
+@keyframes mothOut{0%{opacity:0;transform:translate(-50%,0) scale(.6)}10%{opacity:1;transform:translate(-50%,-10px) scale(1)}35%{transform:translate(-5%,-70px) rotate(-14deg)}60%{transform:translate(-95%,-130px) rotate(12deg)}85%{opacity:1}100%{opacity:0;transform:translate(30%,-280px) rotate(-8deg) scale(.8)}}
+
+/* ---------- cold open (hero.js): the key art, cover-scaled, with crops of itself that breathe ---------- */
+.hero{position:fixed;inset:0;z-index:120;overflow:hidden;background:#100c08}
+.hero[hidden]{display:none}
+body.hero-on{overflow:hidden}
+.hero-canvas{position:absolute;left:50%;top:50%;width:max(100vw,calc(100vh * 1672 / 941));aspect-ratio:1672/941;transform:translate(-50%,-50%)}
+.hero-art{position:absolute;inset:0;width:100%;height:100%;max-width:none;display:block}
+.hz{position:absolute;overflow:hidden;pointer-events:none}
+.hz img{position:absolute;max-width:none;height:auto;display:block}
+.hz.glow{opacity:0;animation:hzGlow var(--dur) ease-in-out var(--delay) infinite alternate;-webkit-mask-image:radial-gradient(closest-side,#000 50%,transparent);mask-image:radial-gradient(closest-side,#000 50%,transparent)}
+.hz.glow img{filter:brightness(1.55) saturate(1.15)}
+.hz.lamp{opacity:0;border-radius:50%;animation:hzLamp var(--dur) steps(1) var(--delay) infinite}
+.hz.lamp img{filter:brightness(.22) saturate(.3)}
+.hz.reel{border-radius:50%}
+.hz.reel img{animation:hzReel var(--dur) linear infinite}
+.hz.flame{-webkit-mask-image:radial-gradient(closest-side,#000 55%,transparent);mask-image:radial-gradient(closest-side,#000 55%,transparent)}
+.hz.flame img{animation:hzFlame var(--dur) ease-in-out var(--delay) infinite alternate}
+@keyframes hzGlow{from{opacity:0}to{opacity:.85}}
+@keyframes hzLamp{0%,68%{opacity:0}69%,76%{opacity:1}77%,85%{opacity:0}86%,91%{opacity:1}92%,100%{opacity:0}}
+@keyframes hzReel{from{transform:scaleY(1.13) rotate(0deg) scaleY(.885)}to{transform:scaleY(1.13) rotate(360deg) scaleY(.885)}}
+@keyframes hzFlame{0%{transform:scale(1,1) skewX(0);filter:brightness(1)}35%{transform:scale(.93,1.08) skewX(2.5deg);filter:brightness(1.18)}70%{transform:scale(1.05,.94) skewX(-2deg);filter:brightness(.95)}100%{transform:scale(.97,1.05) skewX(1deg);filter:brightness(1.1)}}
+.hero-moth{position:absolute;left:11%;top:40%;width:1.9%;aspect-ratio:647/383;pointer-events:none;animation:heroMoth 11s ease-in-out infinite}
+.hero-moth img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 2px #0009)}
+.hero-moth img:first-child{animation:flapA .16s linear infinite}
+.hero-moth img+img{animation:flapB .16s linear infinite}
+@keyframes heroMoth{0%{left:11%;top:41%;transform:rotate(8deg)}14%{left:7%;top:44.5%;transform:rotate(-10deg)}27%{left:3.5%;top:41%;transform:rotate(14deg)}40%{left:6.5%;top:38.5%;transform:rotate(-6deg)}52%{left:10.5%;top:43.5%;transform:rotate(10deg)}66%{left:14%;top:40%;transform:rotate(-12deg)}80%{left:9%;top:37.5%;transform:rotate(6deg)}100%{left:11%;top:41%;transform:rotate(8deg)}}
+.hero-panel{position:absolute;left:2.2vw;bottom:3.2vh;z-index:3;width:min(27vw,500px);min-width:340px;box-sizing:border-box;border:solid clamp(30px,2.6vw,46px) transparent;border-image:url('assets/ui_panel_wood.webp') 230 fill / clamp(30px,2.6vw,46px) stretch;padding:2px 8px 4px;color:#ecdfc2;text-shadow:0 2px 3px #000b}
+.hero-title{font:clamp(40px,3.4vw,64px)/1 var(--deco);color:#f1e0b9;margin:0;letter-spacing:.01em}
+.hero-tag{font:clamp(17px,1.35vw,25px)/1.25 var(--serif);color:#e6c78c;margin:10px 0 0}
+.hero-lede{font:clamp(15px,1.05vw,19px)/1.42 var(--serif);color:#dccaa6;margin:10px 0 18px}
+.hero-cta{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.hero-cta .btn{font-size:clamp(16px,1.15vw,20px);padding:11px 20px;text-shadow:none}
+.hero-key{font:14px var(--serif);color:#d2bd98}
+.hero-smoke img{position:absolute;bottom:18%;width:42vw;max-width:none;opacity:0;pointer-events:none;z-index:4}
+.hero-smoke img:nth-child(1){left:2%}.hero-smoke img:nth-child(2){left:30%;bottom:28%}.hero-smoke img:nth-child(3){left:58%}
+.hero.leaving{animation:heroOut 1.15s ease-in forwards}
+.hero.leaving .hero-smoke img{animation:smokeIn 1s ease-out forwards}
+.hero.leaving .hero-smoke img:nth-child(2){animation-delay:.08s}.hero.leaving .hero-smoke img:nth-child(3){animation-delay:.15s}
+@media(max-height:820px){.hero-panel{min-width:300px;width:min(26vw,440px);border-width:26px;border-image-width:26px}.hero-title{font-size:36px}.hero-tag{font-size:16px;margin-top:6px}.hero-lede{font-size:14px;margin:6px 0 12px}.hero-cta .btn{font-size:15px;padding:8px 14px;min-height:0}}
+@keyframes heroOut{0%,30%{opacity:1}100%{opacity:0}}
+@keyframes smokeIn{0%{opacity:0;transform:scale(.3) translateY(10vh)}45%{opacity:.95;transform:scale(1.5) translateY(0)}100%{opacity:0;transform:scale(2.4) translateY(-12vh)}}
+
+@media(prefers-reduced-motion:reduce){.moth,.hero-moth{display:none}}
+
+/* ---------- v2: fewer widgets and labels, bigger type, the art does the framing ---------- */
+.tagline,#steps,#beamRunes .legend,#deskSub,.margin-head small,.oracle-head small,.tally small,.page-head .ptime,.page-head .pnum{display:none}
+.oracle[data-state=answered] .verdict-label,.oracle[data-state=abstained] .verdict-label{display:none}
+.verdict:has(.tally) .cites{display:none}
+a.btn{text-decoration:none}
+[data-repo-link][hidden]{display:none!important}
+/* illustrated frames instead of bordered boxes */
+#banner,.desk,.oracle{border:solid 22px transparent;border-image:url('assets/ui_panel_wood.webp') 230 fill / 22px stretch;background:none;border-radius:0}
+#banner{grid-template-columns:auto minmax(0,1fr);padding:0 6px}
+.desk,.oracle{padding:2px 4px 4px}
+.margin{border:solid 24px transparent;border-image:url('assets/ui_panel_parchment.webp') 205 fill / 24px stretch;background:none;border-radius:0;padding:0 4px}
+#ribbon{border:0;background:#241b12e6}
+/* type */
+.banner-sigil{width:60px;height:62px}
+.banner-kind{font-size:16px;color:#e3ca94}#bannerDate{font-size:15px;color:#d6c29c}
+.question,.question.mid{font-size:31px}.question.long{font-size:27px}
+.caption{font-size:17px;color:#d8c5a2}
+.beam-title,#archiveCount{font-size:17px;color:#e2cfa9}
+.desk-label,.margin-head,.oracle-head{font-size:21px}
+.page-head .elabel{font-size:15px}.page-head .pdate{font-size:17px;color:#4e3a24}
+.ln .who{font-size:13px}
+.pile-title{font-size:13px;color:#e0cba5}.ptab{font-size:14px}.ptab b{font-size:17px}
+.verdict-label{font-size:16px}
+.answer .tally{font-size:21px}.tally b{font-size:26px}
+.cites{font-size:17px;color:#e0caa2}.cites .c i{width:13px;height:20px}
+.oracle-actions p{font-size:16px;color:#d6bf96}.reply-link{font-size:15px}
+.read-big{font-size:22px}.read-small{font-size:16px;color:#d6c29c}
+.read-bar{width:150px;height:27px;border:0;background:url('assets/ui_bar_frame.webp') center/100% 100% no-repeat;position:relative}
+.read-bar i{position:absolute;left:17%;top:33%;height:34%;max-width:66%;background:#e8a54c;box-shadow:0 0 8px #e09a3e;border-radius:2px}
+.tdot{font-size:15px;padding:7px 11px}.tdot img{width:24px;height:25px}
+/* margin: a rule ribbon, then only the facts the code found */
+.note-rule{display:flex;align-items:center;justify-content:center;width:100%;max-width:340px;aspect-ratio:805/189;margin:2px auto 12px;padding:0 17% 5px;background:url('assets/ui_ribbon_ku.webp') center/contain no-repeat;color:#fbebcb;font:700 17px/1.05 var(--caps);text-align:center;text-shadow:0 1px 2px #000c}
+.note-rule[data-r=ssu]{background-image:url('assets/ui_ribbon_ssu.webp')}.note-rule[data-r=ssa]{background-image:url('assets/ui_ribbon_ssa.webp')}.note-rule[data-r=multi]{background-image:url('assets/ui_ribbon_multi.webp')}.note-rule[data-r=temporal]{background-image:url('assets/ui_ribbon_temporal.webp')}
+.notes .fact{margin:0 0 13px;font:19px/1.4 var(--book);color:#3a2b1c}
+.notes .fact .dt{font:700 15px var(--caps);color:#7a3d22;margin-right:4px;white-space:nowrap}
+.oracle[data-state=abstained] .cites{display:none}
+.notes .fact .em{font:700 15px var(--caps);text-transform:uppercase;letter-spacing:.04em;text-decoration:none;color:#9a2f1c}
+.note-empty{font-size:19px;color:#4e3b26}
+.answer{font-size:44px}.answer.long{font-size:30px}.answer.none{font-size:31px}
+.notes-link{display:block;margin:6px 0 0;padding:0;border:0;background:none;font:15px var(--caps);color:#7a5a36;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+/* developers: slots for the API, the MCP server and the public repo */
+.dev-section{max-width:1320px;margin:80px auto 0}
+.dev-section>h3{margin-bottom:35px}
+.dev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.dev-grid article{border:solid 22px transparent;border-image:url('assets/ui_panel_wood.webp') 230 fill / 22px stretch;padding:4px 8px 8px}
+.dev-grid article>img{height:76px;max-width:120px;object-fit:contain;object-position:left center;margin-bottom:16px}
+.dev-grid h4{font:24px/1.15 var(--caps);margin:0 0 6px;color:#e3c796}
+.dev-grid p{font:18px/1.5 var(--book);color:#cdb894;margin:0}
+.dev-grid code{font:15px ui-monospace,Menlo,monospace;color:#f0d9a8;background:#00000040;padding:1px 4px}
+.dev-grid a{color:#e9c47f}
+.dev-status{font:700 14px var(--caps)!important;letter-spacing:.06em;text-transform:uppercase;color:#a99573!important;margin-bottom:10px!important}
+.dev-status.now{color:#a9c98a!important}
+.dev-grid .soon>img{filter:saturate(.45) brightness(.85)}
+@media(max-width:900px){.dev-grid{grid-template-columns:1fr}.dev-section{margin-top:55px}}
+@media(min-width:1700px){
+.banner-sigil{width:76px;height:78px}.banner-kind{font-size:19px}#bannerDate{font-size:17px}
+.question,.question.mid{font-size:40px}.question.long{font-size:33px}
+.caption{font-size:20px}.beam-title,#archiveCount{font-size:20px}
+.desk-label,.margin-head,.oracle-head{font-size:26px}
+.page-head .elabel{font-size:18px}.page-head .pdate{font-size:21px}.ln .who{font-size:15px}
+.pile-title{font-size:15px}.ptab{font-size:16px}.ptab b{font-size:20px}
+.verdict-label{font-size:19px}.answer .tally{font-size:26px}.tally b{font-size:32px}
+.cites{font-size:20px}.oracle-actions p{font-size:19px}.reply-link{font-size:17px}
+.read-big{font-size:28px}.read-small{font-size:19px}.read-bar{width:190px;height:34px}
+.tdot{font-size:18px;padding:9px 14px}.tdot img{width:28px;height:29px}
+#banner,.desk,.oracle{border-width:28px;border-image-width:28px}.margin{border-width:30px;border-image-width:30px}
+.answer{font-size:64px}.answer.long{font-size:38px}.answer.none{font-size:38px}
+.orb-wrap{width:200px!important;height:230px}.reactor-art{height:230px}.oracle.compact .orb-wrap,.oracle.compact .reactor-art{height:150px}
+.pile.has{width:86px}
+.note-rule{font-size:21px;max-width:400px}.notes .fact{font-size:21px}.notes .fact .dt,.notes .fact .em{font-size:18px}.note-empty{font-size:22px}.notes-link{font-size:17px}
+}
+@media(max-height:820px) and (min-width:901px){
+#banner,.desk,.oracle{border-width:16px;border-image-width:16px}.margin{border-width:18px;border-image-width:18px}
+.banner-sigil{width:46px;height:48px}.banner-kind{font-size:14px}#bannerDate{font-size:13px}
+.question,.question.mid{font-size:25px}.question.long{font-size:22px}.caption{font-size:14px}
+.beam-title,#archiveCount{font-size:15px}
+.desk-label,.margin-head,.oracle-head{font-size:17px}
+.page-head .pdate{font-size:15px}.ptab b{font-size:15px}
+.answer .tally{font-size:17px}.tally b{font-size:21px}.cites{font-size:15px}.oracle-actions p{font-size:14px}
+.read-big{font-size:18px}.read-small{font-size:14px}.read-bar{width:120px;height:22px}
+.tdot{font-size:14px;padding:5px 8px}.tdot img{width:20px;height:21px}
+.note-rule{font-size:15px;max-width:280px;margin-bottom:8px}.notes .fact{font-size:16px;margin-bottom:9px}.notes .fact .dt,.notes .fact .em{font-size:13px}.note-empty{font-size:16px}.notes-link{font-size:13px}
+}
+
+/* ---------- v3: the new art (B26-B31) and navigation ---------- */
+a.brand{text-decoration:none;color:inherit;cursor:pointer}
+a.brand:hover h1{color:#f6e4bd}
+/* panel titles on a brass nameplate, page dates on paper tags */
+.desk-label>span,.margin-head>span,.oracle-head>span{display:inline-block;padding:.3em 1.2em .36em;background:url('assets/ui_plate.webp') center/100% 100% no-repeat;color:#f7e6c0;text-shadow:0 1px 2px #000d}
+.page-head .pdate{padding:2px 12px 2px 2.5em;background:url('assets/ui_tag.webp') center/100% 100% no-repeat;color:#3b2a18}
+/* the answer in a brass-rimmed glass window; abstention gets a wax seal */
+.answer .aval{display:inline-block;box-sizing:border-box;max-width:100%;min-width:4.4em;padding:.32em .85em .36em;line-height:1.1;text-align:center;background:url('assets/ui_answer_plate.webp') center/100% 100% no-repeat;color:#f8e7bf;text-shadow:0 0 14px #e09a3e80,0 2px 2px #000c;overflow-wrap:anywhere}
+.answer.long .aval{display:inline;min-width:0;padding:0;background:none}
+.answer.mid{font-size:30px}
+@media(min-width:1700px){.answer.mid{font-size:40px}}
+@media(max-height:820px) and (min-width:901px){.answer.mid{font-size:23px}}
+.answer.none::before{content:'';display:block;width:2.4em;height:3.1em;margin:0 auto .15em;background:url('assets/ui_seal_abstain.webp') center/contain no-repeat;filter:drop-shadow(0 3px 3px #000a)}
+/* developers: the switchboard scene and the new icons */
+.dev-illo{margin:0 0 30px}
+.dev-illo img{display:block;width:100%;max-height:420px;object-fit:cover;object-position:center 40%;border:solid 18px transparent;border-image:url('assets/ui_panel_wood.webp') 230 / 18px stretch;box-sizing:border-box}
+.dev-grid article{position:relative}
+.dev-grid .soon::after{content:'';position:absolute;right:6px;top:4px;width:58px;height:54px;background:url('assets/icon_soon.webp') center/contain no-repeat;opacity:.9}
+@media(min-width:1700px){.notes .fact{font-size:19px;margin-bottom:10px}}
+/* abstention: the seal takes the tower's place so the verdict fits */
+.oracle[data-state=abstained] .orb-wrap{display:none}
+.oracle[data-state=abstained] .answer.none::before{width:3.2em;height:4.1em;margin-top:.3em}
+@media(max-height:820px) and (min-width:901px){.oracle[data-state=abstained] .answer.none::before{width:2.3em;height:2.9em;margin-top:0}}
