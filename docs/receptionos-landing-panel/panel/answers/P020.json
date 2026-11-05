@@ -1,0 +1,13 @@
+{
+  "id": "P020",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "Pracuję na Estomedzie od lat, a oni zapisują wizyty tylko w Felgdencie i IQ Dental, u mnie zostawialiby recepcji notatki, czyli to samo co kartka przy telefonie. Nie znam nikogo, kto tego używa, więc nie będę wpuszczać obcych firm, żeby dzwoniły do moich dziewczyn jako fałszywi pacjenci.",
+  "objection": "Nie działa z moim systemem, a poza tym 'top 1% klinik', Forbes i 30+ klinik to dla mnie marketing. Nikt z moich znajomych lekarzy tego nie poleca.",
+  "would_change_my_mind": "Gdyby koleżanka z kliniki, która też pracuje na Estomedzie, powiedziała mi, że używa tego od kilku miesięcy i wizyty zapisują się same.",
+  "price_too_cheap": 300,
+  "price_cheap": 700,
+  "price_expensive": 1500,
+  "price_too_expensive": 2500
+}

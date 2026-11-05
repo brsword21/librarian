@@ -1,0 +1,13 @@
+{
+  "id": "P002",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "need",
+  "reason": "Płacę za reklamy implantów i ortodoncji i liczę każdy lead, a nie wiem, ile z nich ginie przy telefonie w recepcji. Darmowy audyt z nagraniami pytań o implant i cennik to dla mnie konkretne dane o konwersji, które zostają u mnie, więc go umówię, choć to hasło o 'top 1%' trochę mnie odpycha.",
+  "objection": "Pracuję na Estomedzie od lat, a oni zapisują wizyty tylko w Felgdencie i IQ Dental. U mnie AI zostawiałoby recepcji notatki, więc te 60% spraw załatwianych samodzielnie raczej mnie nie dotyczy, a nie zmienię systemu w kilku lokalizacjach dla jednego narzędzia. Do tego nie podają ceny.",
+  "would_change_my_mind": "Zrezygnowałbym, gdyby przed audytem kazali mi siedzieć na długiej prezentacji sprzedażowej albo okazało się, że raport z nagraniami dostanę dopiero po rozmowie o cenie.",
+  "price_too_cheap": 700,
+  "price_cheap": 2000,
+  "price_expensive": 5000,
+  "price_too_expensive": 8500
+}

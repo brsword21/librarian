@@ -1,0 +1,222 @@
+[
+ {
+  "id": "P001",
+  "name": "Omar",
+  "age": 30,
+  "segment": "Menedżer kliniki zatrudniony przez właściciela, odpowiada za recepcję i grafik",
+  "income": 37000,
+  "behaviour": "Pyta kolegów po fachu",
+  "behaviour_how": "Zanim cokolwiek wdroży, pyta na grupie właścicieli gabinetów na Facebooku albo znajomego z innej kliniki.",
+  "objection": "Nie chcę, żeby ktoś obcy dzwonił do mojej recepcji jako pacjent i ją oceniał",
+  "habit": "wieczorami czytasz grupę właścicieli gabinetów na Facebooku"
+ },
+ {
+  "id": "P002",
+  "name": "Raj",
+  "age": 48,
+  "segment": "Właściciel dużej kliniki lub małej sieci (2+ lokalizacje, 4+ osoby na recepcji)",
+  "income": 302000,
+  "behaviour": "Nastawiony na wzrost",
+  "behaviour_how": "Inwestuje w reklamy implantów i ortodoncji, liczy leady i konwersję na wizyty.",
+  "objection": "To dla 'top 1%', nie dla takiego gabinetu jak mój",
+  "habit": "używasz Estomedu od lat"
+ },
+ {
+  "id": "P003",
+  "name": "Emil",
+  "age": 53,
+  "segment": "Właściciel średniej kliniki (3–6 foteli, 2–3 recepcjonistki)",
+  "income": 230000,
+  "behaviour": "Lojalny wobec obecnych dostawców",
+  "behaviour_how": "Ma już centralę, wirtualną recepcję albo agencję marketingową i nie chce kolejnego dostawcy.",
+  "objection": "Recepcjonistki poczują się kontrolowane i odejdą",
+  "habit": "recepcja kończy pracę o 18:00, a telefony po godzinach przepadają"
+ },
+ {
+  "id": "P004",
+  "name": "Owen",
+  "age": 62,
+  "segment": "Menedżer kliniki zatrudniony przez właściciela, odpowiada za recepcję i grafik",
+  "income": 49000,
+  "behaviour": "Liczy każdą złotówkę",
+  "behaviour_how": "Porównuje oferty, chce znać cenę z góry i pilnuje kosztów stałych.",
+  "objection": "Moi pacjenci nie będą chcieli rozmawiać z robotem",
+  "habit": "płacisz za reklamy implantów na Facebooku i w Google"
+ },
+ {
+  "id": "P005",
+  "name": "Sana",
+  "age": 55,
+  "segment": "Właściciel średniej kliniki (3–6 foteli, 2–3 recepcjonistki)",
+  "income": 192000,
+  "behaviour": "Pyta kolegów po fachu",
+  "behaviour_how": "Zanim cokolwiek wdroży, pyta na grupie właścicieli gabinetów na Facebooku albo znajomego z innej kliniki.",
+  "objection": "To dla 'top 1%', nie dla takiego gabinetu jak mój",
+  "habit": "przyjmujesz pacjentów 4 dni w tygodniu i między wizytami oddzwaniasz do nieodebranych połączeń"
+ },
+ {
+  "id": "P006",
+  "name": "Maya",
+  "age": 60,
+  "segment": "Właściciel-lekarz małego gabinetu (1–2 fotele, jedna osoba na recepcji albo lekarz sam oddzwania)",
+  "income": 104000,
+  "behaviour": "Liczy każdą złotówkę",
+  "behaviour_how": "Porównuje oferty, chce znać cenę z góry i pilnuje kosztów stałych.",
+  "objection": "Moi pacjenci nie będą chcieli rozmawiać z robotem",
+  "habit": "recepcja kończy pracę o 18:00, a telefony po godzinach przepadają"
+ },
+ {
+  "id": "P007",
+  "name": "Selin",
+  "age": 34,
+  "segment": "Menedżer kliniki zatrudniony przez właściciela, odpowiada za recepcję i grafik",
+  "income": 50000,
+  "behaviour": "Nastawiony na wzrost",
+  "behaviour_how": "Inwestuje w reklamy implantów i ortodoncji, liczy leady i konwersję na wizyty.",
+  "objection": "Za dużo modułów, nie wiem, co właściwie kupuję",
+  "habit": "recepcja kończy pracę o 18:00, a telefony po godzinach przepadają"
+ },
+ {
+  "id": "P008",
+  "name": "Ruby",
+  "age": 37,
+  "segment": "Właściciel-lekarz małego gabinetu (1–2 fotele, jedna osoba na recepcji albo lekarz sam oddzwania)",
+  "income": 84000,
+  "behaviour": "Gasi pożary",
+  "behaviour_how": "Nie ma czasu, recepcja jest przeciążona, zajmuje się tym, co pali się dzisiaj.",
+  "objection": "Moi pacjenci nie będą chcieli rozmawiać z robotem",
+  "habit": "przyjmujesz pacjentów 4 dni w tygodniu i między wizytami oddzwaniasz do nieodebranych połączeń"
+ },
+ {
+  "id": "P009",
+  "name": "Nora",
+  "age": 30,
+  "segment": "Właściciel dużej kliniki lub małej sieci (2+ lokalizacje, 4+ osoby na recepcji)",
+  "income": 527000,
+  "behaviour": "Liczy każdą złotówkę",
+  "behaviour_how": "Porównuje oferty, chce znać cenę z góry i pilnuje kosztów stałych.",
+  "objection": "Ile to kosztuje? Czemu nie ma ceny na stronie?",
+  "habit": "wieczorami czytasz grupę właścicieli gabinetów na Facebooku"
+ },
+ {
+  "id": "P010",
+  "name": "Fatima",
+  "age": 31,
+  "segment": "Właściciel-lekarz małego gabinetu (1–2 fotele, jedna osoba na recepcji albo lekarz sam oddzwania)",
+  "income": 65000,
+  "behaviour": "Gasi pożary",
+  "behaviour_how": "Nie ma czasu, recepcja jest przeciążona, zajmuje się tym, co pali się dzisiaj.",
+  "objection": "Mam inny system gabinetowy niż Felgdent czy IQ Dental",
+  "habit": "używasz Estomedu od lat"
+ },
+ {
+  "id": "P011",
+  "name": "Tariq",
+  "age": 54,
+  "segment": "Właściciel średniej kliniki (3–6 foteli, 2–3 recepcjonistki)",
+  "income": 147000,
+  "behaviour": "Sceptyk technologii",
+  "behaviour_how": "Ma ten sam system gabinetowy od lat, nie lubi zmian i kupuje dopiero, gdy zna kogoś, kto już tego używa.",
+  "objection": "Nagrywanie rozmów z pacjentami i RODO: czy to bezpieczne?",
+  "habit": "wieczorami czytasz grupę właścicieli gabinetów na Facebooku"
+ },
+ {
+  "id": "P012",
+  "name": "Felix",
+  "age": 53,
+  "segment": "Właściciel-lekarz małego gabinetu (1–2 fotele, jedna osoba na recepcji albo lekarz sam oddzwania)",
+  "income": 93000,
+  "behaviour": "Wczesny użytkownik",
+  "behaviour_how": "Lubi nowinki, był na konferencji o AI w stomatologii, testował już jakiegoś chatbota.",
+  "objection": "Ile to kosztuje? Czemu nie ma ceny na stronie?",
+  "habit": "płacisz za reklamy implantów na Facebooku i w Google"
+ },
+ {
+  "id": "P013",
+  "name": "Zoe",
+  "age": 59,
+  "segment": "Właściciel dużej kliniki lub małej sieci (2+ lokalizacje, 4+ osoby na recepcji)",
+  "income": 492000,
+  "behaviour": "Nastawiony na wzrost",
+  "behaviour_how": "Inwestuje w reklamy implantów i ortodoncji, liczy leady i konwersję na wizyty.",
+  "objection": "Nagrywanie rozmów z pacjentami i RODO: czy to bezpieczne?",
+  "habit": "przyjmujesz pacjentów 4 dni w tygodniu i między wizytami oddzwaniasz do nieodebranych połączeń"
+ },
+ {
+  "id": "P014",
+  "name": "Dev",
+  "age": 39,
+  "segment": "Właściciel średniej kliniki (3–6 foteli, 2–3 recepcjonistki)",
+  "income": 138000,
+  "behaviour": "Wczesny użytkownik",
+  "behaviour_how": "Lubi nowinki, był na konferencji o AI w stomatologii, testował już jakiegoś chatbota.",
+  "objection": "Recepcjonistki poczują się kontrolowane i odejdą",
+  "habit": "masz recepcjonistkę, która pracuje u Ciebie od 10 lat"
+ },
+ {
+  "id": "P015",
+  "name": "Yusuf",
+  "age": 46,
+  "segment": "Właściciel średniej kliniki (3–6 foteli, 2–3 recepcjonistki)",
+  "income": 206000,
+  "behaviour": "Lojalny wobec obecnych dostawców",
+  "behaviour_how": "Ma już centralę, wirtualną recepcję albo agencję marketingową i nie chce kolejnego dostawcy.",
+  "objection": "Nie chcę, żeby ktoś obcy dzwonił do mojej recepcji jako pacjent i ją oceniał",
+  "habit": "używasz Estomedu od lat"
+ },
+ {
+  "id": "P016",
+  "name": "Theo",
+  "age": 31,
+  "segment": "Właściciel-lekarz małego gabinetu (1–2 fotele, jedna osoba na recepcji albo lekarz sam oddzwania)",
+  "income": 74000,
+  "behaviour": "Pyta kolegów po fachu",
+  "behaviour_how": "Zanim cokolwiek wdroży, pyta na grupie właścicieli gabinetów na Facebooku albo znajomego z innej kliniki.",
+  "objection": "Recepcjonistki poczują się kontrolowane i odejdą",
+  "habit": "recepcja kończy pracę o 18:00, a telefony po godzinach przepadają"
+ },
+ {
+  "id": "P017",
+  "name": "Alma",
+  "age": 31,
+  "segment": "Właściciel-lekarz małego gabinetu (1–2 fotele, jedna osoba na recepcji albo lekarz sam oddzwania)",
+  "income": 113000,
+  "behaviour": "Sceptyk technologii",
+  "behaviour_how": "Ma ten sam system gabinetowy od lat, nie lubi zmian i kupuje dopiero, gdy zna kogoś, kto już tego używa.",
+  "objection": "Nagrywanie rozmów z pacjentami i RODO: czy to bezpieczne?",
+  "habit": "masz recepcjonistkę, która pracuje u Ciebie od 10 lat"
+ },
+ {
+  "id": "P018",
+  "name": "Freya",
+  "age": 35,
+  "segment": "Właściciel średniej kliniki (3–6 foteli, 2–3 recepcjonistki)",
+  "income": 245000,
+  "behaviour": "Gasi pożary",
+  "behaviour_how": "Nie ma czasu, recepcja jest przeciążona, zajmuje się tym, co pali się dzisiaj.",
+  "objection": "Nagrywanie rozmów z pacjentami i RODO: czy to bezpieczne?",
+  "habit": "używasz Estomedu od lat"
+ },
+ {
+  "id": "P019",
+  "name": "Harper",
+  "age": 53,
+  "segment": "Właściciel-lekarz małego gabinetu (1–2 fotele, jedna osoba na recepcji albo lekarz sam oddzwania)",
+  "income": 124000,
+  "behaviour": "Nastawiony na wzrost",
+  "behaviour_how": "Inwestuje w reklamy implantów i ortodoncji, liczy leady i konwersję na wizyty.",
+  "objection": "Recepcjonistki poczują się kontrolowane i odejdą",
+  "habit": "recepcja kończy pracę o 18:00, a telefony po godzinach przepadają"
+ },
+ {
+  "id": "P020",
+  "name": "Emma",
+  "age": 62,
+  "segment": "Właściciel średniej kliniki (3–6 foteli, 2–3 recepcjonistki)",
+  "income": 179000,
+  "behaviour": "Sceptyk technologii",
+  "behaviour_how": "Ma ten sam system gabinetowy od lat, nie lubi zmian i kupuje dopiero, gdy zna kogoś, kto już tego używa.",
+  "objection": "Mam inny system gabinetowy niż Felgdent czy IQ Dental",
+  "habit": "używasz Estomedu od lat"
+ }
+]

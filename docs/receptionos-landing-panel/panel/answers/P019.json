@@ -1,0 +1,13 @@
+{
+  "id": "P019",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "need",
+  "reason": "Płacę za reklamy implantów i ortodoncji, a po 18:00 telefony przepadają, więc tracę leady, za które już zapłaciłem. Audyt jest darmowy, nagrania zostają u mnie, więc umówię go choćby po to, żeby zobaczyć, ile tracę na zapytaniach o implant.",
+  "objection": "Mam jedną osobę na recepcji i nie mogę jej stracić. Jeśli poczuje, że ktoś ją podsłuchuje, nagrywa i co tydzień ocenia, odejdzie, a znalezienie nowej to dla mnie większy problem niż kilka nieodebranych telefonów. Do tego „top 1% klinik” i brak ceny brzmią jak coś dla dużych sieci, nie dla gabinetu na dwa fotele.",
+  "would_change_my_mind": "Gdyby po audycie okazało się, że cena dla jednego stanowiska przekracza około 2500 zł miesięcznie albo że nie da się wziąć samej asystentki po godzinach, bez cotygodniowego oceniania recepcjonistki, to nie kupię dalej.",
+  "price_too_cheap": 250,
+  "price_cheap": 700,
+  "price_expensive": 1600,
+  "price_too_expensive": 2800
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P003",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "Mam już centralę i firmę, która ogarnia mi telefony i marketing, i nie chcę kolejnego dostawcy, kolejnej umowy i kolejnego WhatsAppa do pilnowania. A ten audyt to tajemniczy klienci dzwoniący do moich dziewczyn i ocena każdej w 7 kategoriach, więc w praktyce zaczynam od tego, czego najbardziej się boję.",
+  "objection": "Recepcjonistki poczują się kontrolowane: nagrywanie każdej rozmowy, cotygodniowy raport z oceną każdej osoby, AI, która ma je zastąpić po godzinach. Dobrą recepcjonistkę szukałem miesiącami i nie zaryzykuję, że któraś odejdzie przez jakiś raport jakości.",
+  "would_change_my_mind": "Gdyby właściciel kliniki podobnej do mojej, którego znam osobiście, powiedział mi, że używa tego od pół roku, telefony po 18:00 przestały przepadać, a żadna z jego recepcjonistek nie odeszła.",
+  "price_too_cheap": 400,
+  "price_cheap": 900,
+  "price_expensive": 2000,
+  "price_too_expensive": 3500
+}

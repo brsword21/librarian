@@ -1,0 +1,13 @@
+{
+  "id": "P010",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "convenience",
+  "reason": "Pracuję na Estomedzie, więc ta asystentka i tak nie zapisze mi pacjenta, tylko zostawi notatkę, którą ktoś z recepcji musi potem przepisać. Mam jedną osobę na recepcji, która już się nie wyrabia, i nie chcę jej dokładać 5–10 telefonów kontrolnych ani nowego systemu do ogarnięcia.",
+  "objection": "Bez integracji z Estomedem to dla mnie jeszcze jedna skrzynka do pilnowania, a nie mniej roboty. Do tego „top 1% klinik” i ukryta cena brzmią jak coś dla dużych sieci, a nie dla gabinetu z dwoma fotelami.",
+  "would_change_my_mind": "Gdyby zapisywało wizyty bezpośrednio w Estomedzie i od razu na stronie była podana cena dla małego gabinetu z 1 stanowiskiem.",
+  "price_too_cheap": 150,
+  "price_cheap": 300,
+  "price_expensive": 700,
+  "price_too_expensive": 1200
+}

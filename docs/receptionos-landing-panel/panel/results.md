@@ -1,0 +1,69 @@
+# Buyer panel: receptionOS (nowy landing: AI recepcja i system dla klinik stomatologicznych)
+
+**6 buy · 14 pass** (30% buy) out of 20 simulated buyers. Seed 7, so the same cards can be dealt again.
+
+These are simulated buyers, not customers. Use this to find objections and weak spots, then confirm the big ones with real people before you spend.
+
+## By segment
+
+| group | buyers | buy rate |
+| --- | ---: | ---: |
+| Właściciel dużej kliniki lub małej sieci (2+ lokalizacje, 4+ osoby na recepcji) | 3 | 67%  (thin) |
+| Menedżer kliniki zatrudniony przez właściciela, odpowiada za recepcję i grafik | 3 | 33%  (thin) |
+| Właściciel-lekarz małego gabinetu (1–2 fotele, jedna osoba na recepcji albo lekarz sam oddzwania) | 7 | 29%  (thin) |
+| Właściciel średniej kliniki (3–6 foteli, 2–3 recepcjonistki) | 7 | 14%  (thin) |
+
+## By buying behaviour
+
+| group | buyers | buy rate |
+| --- | ---: | ---: |
+| Nastawiony na wzrost | 4 | 100%  (thin) |
+| Wczesny użytkownik | 2 | 100%  (thin) |
+| Pyta kolegów po fachu | 3 | 0%  (thin) |
+| Lojalny wobec obecnych dostawców | 2 | 0%  (thin) |
+| Liczy każdą złotówkę | 3 | 0%  (thin) |
+| Gasi pożary | 3 | 0%  (thin) |
+| Sceptyk technologii | 3 | 0%  (thin) |
+
+## By income
+
+| group | buyers | buy rate |
+| --- | ---: | ---: |
+| $93,000 to $192,000 | 7 | 43%  (thin) |
+| $192,000 and up | 7 | 29%  (thin) |
+| under $93,000 | 6 | 17%  (thin) |
+
+## Why they pass
+
+| reason | buyers | in their words |
+| --- | ---: | --- |
+| trust | 6 | "Recepcja to mój zespół i moja odpowiedzialność, więc nie wpuszczę obcych, żeby dzwonili jako fałszywi pacjenci i oceniali moje dziewczyny. Raport z nagraniami łatwo trafi do właściciela i będzie wyglądał jak ocena mnie. Nie znam nikogo z grupy, kto by z tego korzystał, a bez opinii kogoś z branży niczego nie umawiam." (P001) · "Sama oddzwaniam do nieodebranych między pacjentami, więc problem znam aż za dobrze, ale „top 1% klinik” i ukryta cena mówią mi, że to nie dla gabinetu na cztery fotele. Zanim wpuszczę obcych, żeby dzwonili do moich dziewczyn na recepcji, zapytam na grupie właścicieli, czy ktoś z podobnej kliniki to ma i ile płaci." (P005) |
+| habit | 3 | "Mam już centralę i firmę, która ogarnia mi telefony i marketing, i nie chcę kolejnego dostawcy, kolejnej umowy i kolejnego WhatsAppa do pilnowania. A ten audyt to tajemniczy klienci dzwoniący do moich dziewczyn i ocena każdej w 7 kategoriach, więc w praktyce zaczynam od tego, czego najbardziej się boję." (P003) · "Mam już centralę i firmę, która odbiera telefony po godzinach, a od lat pracuję na Estomedzie, którego oni nawet nie obsługują, więc AI i tak zostawiałoby tylko notatki. Nie potrzebuję kolejnego dostawcy, a tym bardziej takiego, który zaczyna od tego, że udaje pacjentów i dzwoni do moich dziewczyn." (P015) |
+| price | 3 | "Nie umawiam się na audyt, skoro nie wiem nawet, w jakich widełkach jest cena. Darmowy audyt to dla mnie wstęp do rozmowy z handlowcem, a ja muszę porównać koszt z dodatkową osobą na pół etatu, zanim komukolwiek dam numer do recepcji." (P004) · "Nie podają ceny, a ja nie umawiam się na audyt, żeby potem przez rozmowę handlową dowiadywać się, ile mnie to będzie kosztować co miesiąc. Mam dwa fotele, a „top 1% klinik” i trzydzieści modułów brzmi jak abonament dla dużych sieci, nie dla mnie." (P006) |
+| need | 1 | "Mam dwa fotele i sama oddzwaniam między pacjentami, a tu czytam o 'top 1% klinik' i stanowiskach w recepcji, czyli to raczej dla dużych. Do tego 5–10 udawanych telefonów na moją i tak zapchaną linię, a potem pewnie rozmowa sprzedażowa, na to nie mam teraz czasu." (P008) |
+| convenience | 1 | "Pracuję na Estomedzie, więc ta asystentka i tak nie zapisze mi pacjenta, tylko zostawi notatkę, którą ktoś z recepcji musi potem przepisać. Mam jedną osobę na recepcji, która już się nie wyrabia, i nie chcę jej dokładać 5–10 telefonów kontrolnych ani nowego systemu do ogarnięcia." (P010) |
+
+## Why they buy
+
+| reason | buyers | in their words |
+| --- | ---: | --- |
+| need | 6 | "Płacę za reklamy implantów i ortodoncji i liczę każdy lead, a nie wiem, ile z nich ginie przy telefonie w recepcji. Darmowy audyt z nagraniami pytań o implant i cennik to dla mnie konkretne dane o konwersji, które zostają u mnie, więc go umówię, choć to hasło o 'top 1%' trochę mnie odpycha." (P002) · "Płacę za reklamy implantów i ortodoncji, a telefony po 18:00 i przy zajętej linii po prostu przepadają. Darmowy audyt z nagraniami pokaże mi czarno na białym, ile leadów gubimy na telefonie, i raport zostaje u mnie, więc umówię go, choć z kupnem abonamentu poczekam." (P007) |
+
+## What would flip a no
+
+- Gdyby ktoś znajomy z innej kliniki albo z grupy na Facebooku napisał, że robił u siebie ten audyt, był uczciwy, raport dostał tylko menedżer i realnie pomógł zespołowi, a nie posłużył do rozliczania ludzi.
+- Gdyby właściciel kliniki podobnej do mojej, którego znam osobiście, powiedział mi, że używa tego od pół roku, telefony po 18:00 przestały przepadać, a żadna z jego recepcjonistek nie odeszła.
+- Cennik albo chociaż widełki na stronie za stanowisko, bez umawiania się, plus nagranie, na którym starszy pacjent rozmawia z ich AI i nie odkłada słuchawki.
+- Gdyby znajoma właścicielka podobnej kliniki, 3–5 foteli, powiedziała mi, że to u niej działa, i podała, ile płaci miesięcznie.
+- Konkretna cena na stronie dla małego gabinetu, np. jeden pakiet tylko na telefony po godzinach za stałą kwotę miesięcznie, bez długiej umowy i z możliwością rezygnacji z miesiąca na miesiąc.
+- Konkretna cena podana od razu dla małego gabinetu z jedną osobą na recepcji, żebym wiedziała, czy w ogóle warto tracić czas na audyt.
+- Widełki cenowe na stronie (np. od X zł netto za stanowisko miesięcznie) albo konkretna kwota od innej kliniki z grupy, która to ma i mówi, że się zwraca.
+- Gdyby zapisywało wizyty bezpośrednio w Estomedzie i od razu na stronie była podana cena dla małego gabinetu z 1 stanowiskiem.
+- Właściciel kliniki, którego znam albo z grupy, mówi, że używa tego od kilku miesięcy i nie ma problemu z RODO, i pokazuje mi gotową umowę powierzenia danych.
+- Pełna integracja z Estomedem z zapisem wizyt i polecenie od znajomego właściciela kliniki, który tego używa, zamiast audytu na mojej recepcji.
+- Kolega z podobnego, małego gabinetu, który powie, że to działa, recepcja się nie zbuntowała, i poda, ile płaci za jedno stanowisko.
+- Gdyby koleżanka z podobnego, małego gabinetu powiedziała mi, że używa tego od pół roku, i pokazała umowę powierzenia danych oraz to, gdzie trzymane są nagrania.
+
+Buyers say they would buy **1.0 times** in the first month on average.
+
+20 buyers gave all four price answers. Run founder-pricing's van_westendorp.py on the answers folder.

@@ -1,0 +1,13 @@
+{
+  "id": "P004",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "Nie umawiam się na audyt, skoro nie wiem nawet, w jakich widełkach jest cena. Darmowy audyt to dla mnie wstęp do rozmowy z handlowcem, a ja muszę porównać koszt z dodatkową osobą na pół etatu, zanim komukolwiek dam numer do recepcji.",
+  "objection": "Ukryta cena i to, że moi pacjenci, często starsi, którzy dzwonią w sprawie implantów za kilkanaście tysięcy, nie będą chcieli rozmawiać z robotem. Wolę, żeby taki pacjent poczekał i oddzwoniła do niego moja recepcjonistka.",
+  "would_change_my_mind": "Cennik albo chociaż widełki na stronie za stanowisko, bez umawiania się, plus nagranie, na którym starszy pacjent rozmawia z ich AI i nie odkłada słuchawki.",
+  "price_too_cheap": 250,
+  "price_cheap": 700,
+  "price_expensive": 1500,
+  "price_too_expensive": 2500
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P013",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "need",
+  "reason": "Wydaję duże pieniądze na reklamy implantów i ortodoncji, a sama między pacjentami oddzwaniam do nieodebranych, więc darmowy audyt z nagraniami, jak moja recepcja naprawdę obsługuje takie telefony, to dla mnie konkretna wiedza o tym, gdzie przepalam leady. Audyt umówię, nic nie ryzykuję, ale o zakupie zdecyduję dopiero po raporcie i cenie.",
+  "objection": "RODO. Każda rozmowa z pacjentem nagrana i spisana, często z danymi o zdrowiu: gdzie to leży, kto ma dostęp, czy AI przetwarza to poza Unią, kto podpisuje umowę powierzenia i co powiem pacjentowi i UODO, jak coś wycieknie. Do tego dziewczyny z recepcji co tydzień oceniane z nagrań, muszę wiedzieć, że to legalne wobec pracowników i że nie odejdą mi dwie najlepsze.",
+  "would_change_my_mind": "Gdyby przy umawianiu audytu nie umieli od razu pokazać umowy powierzenia danych i jasno powiedzieć, gdzie trzymają nagrania, to nie wpuszczam ich nawet na darmowy audyt.",
+  "price_too_cheap": 1000,
+  "price_cheap": 3000,
+  "price_expensive": 7000,
+  "price_too_expensive": 12000
+}

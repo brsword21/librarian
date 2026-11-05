@@ -1,0 +1,13 @@
+{
+  "id": "P008",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "need",
+  "reason": "Mam dwa fotele i sama oddzwaniam między pacjentami, a tu czytam o 'top 1% klinik' i stanowiskach w recepcji, czyli to raczej dla dużych. Do tego 5–10 udawanych telefonów na moją i tak zapchaną linię, a potem pewnie rozmowa sprzedażowa, na to nie mam teraz czasu.",
+  "objection": "Moi pacjenci nie będą chcieli rozmawiać z robotem. Jak ktoś dzwoni z bólem zęba i słyszy, że rozmawia z AI, to się rozłączy i zadzwoni do konkurencji.",
+  "would_change_my_mind": "Konkretna cena podana od razu dla małego gabinetu z jedną osobą na recepcji, żebym wiedziała, czy w ogóle warto tracić czas na audyt.",
+  "price_too_cheap": 150,
+  "price_cheap": 400,
+  "price_expensive": 900,
+  "price_too_expensive": 1500
+}

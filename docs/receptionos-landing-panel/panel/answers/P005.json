@@ -1,0 +1,13 @@
+{
+  "id": "P005",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Sama oddzwaniam do nieodebranych między pacjentami, więc problem znam aż za dobrze, ale „top 1% klinik” i ukryta cena mówią mi, że to nie dla gabinetu na cztery fotele. Zanim wpuszczę obcych, żeby dzwonili do moich dziewczyn na recepcji, zapytam na grupie właścicieli, czy ktoś z podobnej kliniki to ma i ile płaci.",
+  "objection": "Ten „bezpłatny audyt” to dla mnie po prostu wstęp do sprzedaży, a cenę poznam dopiero, jak już ktoś mnie urobi. Skoro piszą o top 1%, to pewnie liczą jak dla sieciówek, a nie dla takiego średniego gabinetu jak mój.",
+  "would_change_my_mind": "Gdyby znajoma właścicielka podobnej kliniki, 3–5 foteli, powiedziała mi, że to u niej działa, i podała, ile płaci miesięcznie.",
+  "price_too_cheap": 200,
+  "price_cheap": 600,
+  "price_expensive": 1500,
+  "price_too_expensive": 2500
+}

@@ -1,0 +1,103 @@
+{
+ "n": 20,
+ "seed": 7,
+ "customer": {
+  "business": "receptionOS (nowy landing: AI recepcja i system dla klinik stomatologicznych)",
+  "target": "Właściciele i menedżerowie prywatnych gabinetów i klinik stomatologicznych w Polsce, którzy sami decydują o tym, jak działa recepcja",
+  "where": "Polska, duże i średnie miasta",
+  "age": [
+   30,
+   62
+  ],
+  "segments": [
+   {
+    "name": "Właściciel-lekarz małego gabinetu (1–2 fotele, jedna osoba na recepcji albo lekarz sam oddzwania)",
+    "share": 0.35,
+    "income": [
+     60000,
+     130000
+    ]
+   },
+   {
+    "name": "Właściciel średniej kliniki (3–6 foteli, 2–3 recepcjonistki)",
+    "share": 0.35,
+    "income": [
+     120000,
+     300000
+    ]
+   },
+   {
+    "name": "Właściciel dużej kliniki lub małej sieci (2+ lokalizacje, 4+ osoby na recepcji)",
+    "share": 0.15,
+    "income": [
+     300000,
+     700000
+    ]
+   },
+   {
+    "name": "Menedżer kliniki zatrudniony przez właściciela, odpowiada za recepcję i grafik",
+    "share": 0.15,
+    "income": [
+     25000,
+     50000
+    ]
+   }
+  ],
+  "behaviours": [
+   {
+    "name": "Sceptyk technologii",
+    "share": 0.15,
+    "how": "Ma ten sam system gabinetowy od lat, nie lubi zmian i kupuje dopiero, gdy zna kogoś, kto już tego używa."
+   },
+   {
+    "name": "Pyta kolegów po fachu",
+    "share": 0.15,
+    "how": "Zanim cokolwiek wdroży, pyta na grupie właścicieli gabinetów na Facebooku albo znajomego z innej kliniki."
+   },
+   {
+    "name": "Liczy każdą złotówkę",
+    "share": 0.15,
+    "how": "Porównuje oferty, chce znać cenę z góry i pilnuje kosztów stałych."
+   },
+   {
+    "name": "Wczesny użytkownik",
+    "share": 0.12,
+    "how": "Lubi nowinki, był na konferencji o AI w stomatologii, testował już jakiegoś chatbota."
+   },
+   {
+    "name": "Gasi pożary",
+    "share": 0.15,
+    "how": "Nie ma czasu, recepcja jest przeciążona, zajmuje się tym, co pali się dzisiaj."
+   },
+   {
+    "name": "Lojalny wobec obecnych dostawców",
+    "share": 0.1,
+    "how": "Ma już centralę, wirtualną recepcję albo agencję marketingową i nie chce kolejnego dostawcy."
+   },
+   {
+    "name": "Nastawiony na wzrost",
+    "share": 0.18,
+    "how": "Inwestuje w reklamy implantów i ortodoncji, liczy leady i konwersję na wizyty."
+   }
+  ],
+  "objections": [
+   "Moi pacjenci nie będą chcieli rozmawiać z robotem",
+   "Ile to kosztuje? Czemu nie ma ceny na stronie?",
+   "Nie chcę, żeby ktoś obcy dzwonił do mojej recepcji jako pacjent i ją oceniał",
+   "Mam inny system gabinetowy niż Felgdent czy IQ Dental",
+   "Nagrywanie rozmów z pacjentami i RODO: czy to bezpieczne?",
+   "Recepcjonistki poczują się kontrolowane i odejdą",
+   "To dla 'top 1%', nie dla takiego gabinetu jak mój",
+   "Za dużo modułów, nie wiem, co właściwie kupuję"
+  ],
+  "habits": [
+   "przyjmujesz pacjentów 4 dni w tygodniu i między wizytami oddzwaniasz do nieodebranych połączeń",
+   "recepcja kończy pracę o 18:00, a telefony po godzinach przepadają",
+   "wieczorami czytasz grupę właścicieli gabinetów na Facebooku",
+   "płacisz za reklamy implantów na Facebooku i w Google",
+   "używasz Estomedu od lat",
+   "masz recepcjonistkę, która pracuje u Ciebie od 10 lat"
+  ]
+ },
+ "pitch": "receptionOS: „Infrastruktura AI dla top 1% klinik dentystycznych”. Strona podaje, że korzysta z niego 30+ klinik. Powstał w klinice Apolonia Dental w Szczecinie; założyciel jest na liście Forbes 30 Under 30.\nWirtualna asystentka AI odbiera telefony całą dobę: po godzinach, w weekendy i przy zajętej linii. Mówi, że jest AI, i na prośbę przełącza do recepcji. Zapisuje wizyty w Felgdencie i IQ Dental, w innych systemach zostawia recepcji notatkę. Strona podaje, że 60% spraw załatwia sama.\nDo tego: telefon, SMS, e-mail i formularze w jednej skrzynce (numer zostaje ten sam, każda rozmowa jest nagrana i spisana), co tydzień raport jakości rozmów każdej osoby z recepcji, potwierdzanie wizyt przez agenta głosowego i SMS, statystyki konwersji. Kolejne moduły (m.in. Apollo, AI manager kliniki na WhatsAppie) są we wczesnym dostępie.\nCena nie jest podana: „zależy od liczby stanowisk w recepcji, podajemy ją po bezpłatnym audycie”. Wdrożenie trwa ~2 tygodnie od decyzji, ze szkoleniem recepcji i wsparciem 24/7 na WhatsAppie.\nStrona prosi o jedno: umów bezpłatny audyt. Przez 2–3 dni dzwonią 5–10 razy do Twojej recepcji jako pacjenci (nowy pacjent, implant, ortodoncja, cennik), oceniają każdą rozmowę w 7 kategoriach i dają raport z nagraniami, który zostaje u Ciebie, nawet jeśli nic nie kupisz. Można też od razu porozmawiać głosem z ich AI na stronie.\n[Dla panelu: „kupuję” = po obejrzeniu tej strony umawiam bezpłatny audyt. Ceny podawaj w zł netto miesięcznie za abonament dla całej kliniki.]"
+}

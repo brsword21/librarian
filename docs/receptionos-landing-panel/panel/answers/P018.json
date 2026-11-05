@@ -1,0 +1,13 @@
+{
+  "id": "P018",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Każda rozmowa z pacjentem nagrywana i spisywana przez zewnętrzną firmę to dla mnie od razu pytanie o RODO, a na stronie nie widzę ani słowa o umowie powierzenia czy o tym, gdzie leżą nagrania. Do tego pracuję na Estomedzie, więc AI i tak nie zapisze wizyt, tylko dorzuci mojej przeciążonej recepcji kolejne notatki, a przy tym audyt to jeszcze 5–10 telefonów, które ktoś musi odebrać.",
+  "objection": "Nagrywanie rozmów z pacjentami i dane zdrowotne u zewnętrznej firmy: kto jest administratorem, gdzie są serwery, czy pacjent musi wyrazić zgodę i kto beknie, jak przyjdzie kontrola z UODO.",
+  "would_change_my_mind": "Polecenie od znajomego właściciela kliniki, który pracuje na Estomedzie, wdrożył to u siebie i jego inspektor ochrony danych to sprawdził i zatwierdził.",
+  "price_too_cheap": 400,
+  "price_cheap": 1000,
+  "price_expensive": 2500,
+  "price_too_expensive": 4000
+}

@@ -1,0 +1,39 @@
+{
+  "business": "receptionOS (nowy landing: AI recepcja i system dla klinik stomatologicznych)",
+  "target": "Właściciele i menedżerowie prywatnych gabinetów i klinik stomatologicznych w Polsce, którzy sami decydują o tym, jak działa recepcja",
+  "where": "Polska, duże i średnie miasta",
+  "age": [30, 62],
+  "segments": [
+    {"name": "Właściciel-lekarz małego gabinetu (1–2 fotele, jedna osoba na recepcji albo lekarz sam oddzwania)", "share": 0.35, "income": [60000, 130000]},
+    {"name": "Właściciel średniej kliniki (3–6 foteli, 2–3 recepcjonistki)", "share": 0.35, "income": [120000, 300000]},
+    {"name": "Właściciel dużej kliniki lub małej sieci (2+ lokalizacje, 4+ osoby na recepcji)", "share": 0.15, "income": [300000, 700000]},
+    {"name": "Menedżer kliniki zatrudniony przez właściciela, odpowiada za recepcję i grafik", "share": 0.15, "income": [25000, 50000]}
+  ],
+  "behaviours": [
+    {"name": "Sceptyk technologii", "share": 0.15, "how": "Ma ten sam system gabinetowy od lat, nie lubi zmian i kupuje dopiero, gdy zna kogoś, kto już tego używa."},
+    {"name": "Pyta kolegów po fachu", "share": 0.15, "how": "Zanim cokolwiek wdroży, pyta na grupie właścicieli gabinetów na Facebooku albo znajomego z innej kliniki."},
+    {"name": "Liczy każdą złotówkę", "share": 0.15, "how": "Porównuje oferty, chce znać cenę z góry i pilnuje kosztów stałych."},
+    {"name": "Wczesny użytkownik", "share": 0.12, "how": "Lubi nowinki, był na konferencji o AI w stomatologii, testował już jakiegoś chatbota."},
+    {"name": "Gasi pożary", "share": 0.15, "how": "Nie ma czasu, recepcja jest przeciążona, zajmuje się tym, co pali się dzisiaj."},
+    {"name": "Lojalny wobec obecnych dostawców", "share": 0.10, "how": "Ma już centralę, wirtualną recepcję albo agencję marketingową i nie chce kolejnego dostawcy."},
+    {"name": "Nastawiony na wzrost", "share": 0.18, "how": "Inwestuje w reklamy implantów i ortodoncji, liczy leady i konwersję na wizyty."}
+  ],
+  "objections": [
+    "Moi pacjenci nie będą chcieli rozmawiać z robotem",
+    "Ile to kosztuje? Czemu nie ma ceny na stronie?",
+    "Nie chcę, żeby ktoś obcy dzwonił do mojej recepcji jako pacjent i ją oceniał",
+    "Mam inny system gabinetowy niż Felgdent czy IQ Dental",
+    "Nagrywanie rozmów z pacjentami i RODO: czy to bezpieczne?",
+    "Recepcjonistki poczują się kontrolowane i odejdą",
+    "To dla 'top 1%', nie dla takiego gabinetu jak mój",
+    "Za dużo modułów, nie wiem, co właściwie kupuję"
+  ],
+  "habits": [
+    "przyjmujesz pacjentów 4 dni w tygodniu i między wizytami oddzwaniasz do nieodebranych połączeń",
+    "recepcja kończy pracę o 18:00, a telefony po godzinach przepadają",
+    "wieczorami czytasz grupę właścicieli gabinetów na Facebooku",
+    "płacisz za reklamy implantów na Facebooku i w Google",
+    "używasz Estomedu od lat",
+    "masz recepcjonistkę, która pracuje u Ciebie od 10 lat"
+  ]
+}

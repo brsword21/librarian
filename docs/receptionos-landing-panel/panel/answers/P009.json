@@ -1,0 +1,13 @@
+{
+  "id": "P009",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "price",
+  "reason": "Nie umówię audytu, żeby w ogóle poznać cenę, bo wiem, jak to działa: darmowy audyt, a potem handlowiec przez godzinę mi mówi, ile tracę. Najpierw zapytam wieczorem na grupie właścicieli gabinetów, kto z tego korzysta i ile realnie płaci za dwie lokalizacje.",
+  "objection": "Brak ceny na stronie. Mam 4+ osoby na recepcji w dwóch miejscach, więc 'zależy od liczby stanowisk' u mnie znaczy pewnie dużo, a ja muszę wiedzieć, czy to kolejny koszt stały na lata, czy coś, co faktycznie zastąpi część etatu.",
+  "would_change_my_mind": "Widełki cenowe na stronie (np. od X zł netto za stanowisko miesięcznie) albo konkretna kwota od innej kliniki z grupy, która to ma i mówi, że się zwraca.",
+  "price_too_cheap": 500,
+  "price_cheap": 1500,
+  "price_expensive": 3500,
+  "price_too_expensive": 6000
+}

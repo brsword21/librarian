@@ -1,0 +1,13 @@
+{
+  "id": "P011",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Audyt jest za darmo, ale to i tak jest wejście w lejek sprzedażowy firmy, o której nikt z mojej grupy na Facebooku jeszcze nie pisał. Nie znam nikogo, kto tego używa, a '30+ klinik' i Forbes na stronie to dla mnie tylko marketing.",
+  "objection": "Nagrywają i spisują każdą rozmowę z pacjentem, a w audycie dzwonią do mojej recepcji i też nagrywają moje dziewczyny. Kto jest administratorem tych danych, gdzie to leży i co powiem pacjentowi albo UODO, jak coś wycieknie? Do tego cena ukryta do czasu audytu, więc spodziewam się nacisku na sprzedaż.",
+  "would_change_my_mind": "Właściciel kliniki, którego znam albo z grupy, mówi, że używa tego od kilku miesięcy i nie ma problemu z RODO, i pokazuje mi gotową umowę powierzenia danych.",
+  "price_too_cheap": 300,
+  "price_cheap": 800,
+  "price_expensive": 2000,
+  "price_too_expensive": 3500
+}

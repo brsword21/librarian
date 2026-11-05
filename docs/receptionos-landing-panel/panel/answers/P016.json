@@ -1,0 +1,13 @@
+{
+  "id": "P016",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Telefony po 18:00 to mój realny problem, ale nikt, kogo znam, tego nie używa, ceny nie ma, a „top 1% klinik” brzmi jak coś dla dużych sieci, nie dla mnie z dwoma fotelami. Najpierw zapytam na grupie właścicieli gabinetów, zanim w ogóle ktoś zacznie dzwonić do mojej recepcji.",
+  "objection": "Mam jedną recepcjonistkę. Jeśli się dowie, że ktoś udawał pacjentów, nagrywał ją i ocenia, a potem co tydzień dostaje raport jakości, poczuje się kontrolowana i odejdzie, a znalezienie nowej to dla małego gabinetu katastrofa.",
+  "would_change_my_mind": "Kolega z podobnego, małego gabinetu, który powie, że to działa, recepcja się nie zbuntowała, i poda, ile płaci za jedno stanowisko.",
+  "price_too_cheap": 150,
+  "price_cheap": 400,
+  "price_expensive": 900,
+  "price_too_expensive": 1500
+}

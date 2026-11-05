@@ -1,0 +1,13 @@
+{
+  "id": "P012",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "need",
+  "reason": "Płacę za reklamy implantów na Facebooku i w Google, a po godzinach albo kiedy jestem przy fotelu nikt nie odbiera, więc darmowy audyt z nagraniami, jak moja recepcja obsługuje telefon o implant, to dla mnie konkret. Najpierw pogadam z ich AI na stronie, a jak nie będzie brzmieć jak drewniany chatbot, który już testowałem, umawiam audyt.",
+  "objection": "Ile to kosztuje? Czemu nie ma ceny na stronie? „Top 1% klinik” brzmi jak produkt dla dużych sieci z kilkoma recepcjonistkami, a ja mam jeden, dwa fotele i boję się, że po audycie dostanę wycenę dla korporacji i godzinę wciskania.",
+  "would_change_my_mind": "Gdyby przed audytem trzeba było odbyć długą rozmowę handlową albo cokolwiek podpisywać, odpuszczam.",
+  "price_too_cheap": 200,
+  "price_cheap": 500,
+  "price_expensive": 1200,
+  "price_too_expensive": 2000
+}

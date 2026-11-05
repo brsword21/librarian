@@ -1,0 +1,13 @@
+{
+  "id": "P017",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Nie znam nikogo, kto tego używa, a „top 1% klinik” i Forbes to nie argument dla gabinetu na dwa fotele. Nie będę wpuszczać obcej firmy, żeby udawała pacjentów i nagrywała moją recepcjonistkę, która pracuje u mnie 10 lat i robi to dobrze.",
+  "objection": "Nagrywanie i spisywanie każdej rozmowy z pacjentem to dane o zdrowiu. Nie wiem, gdzie to leży, kto ma dostęp i kto odpowiada przed UODO, jak coś wycieknie. Do tego nie wiem, czy to w ogóle działa z moim programem i ile kosztuje.",
+  "would_change_my_mind": "Gdyby koleżanka z podobnego, małego gabinetu powiedziała mi, że używa tego od pół roku, i pokazała umowę powierzenia danych oraz to, gdzie trzymane są nagrania.",
+  "price_too_cheap": 150,
+  "price_cheap": 400,
+  "price_expensive": 900,
+  "price_too_expensive": 1500
+}

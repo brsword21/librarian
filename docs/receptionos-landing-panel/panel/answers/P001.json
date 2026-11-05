@@ -1,0 +1,13 @@
+{
+  "id": "P001",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "Recepcja to mój zespół i moja odpowiedzialność, więc nie wpuszczę obcych, żeby dzwonili jako fałszywi pacjenci i oceniali moje dziewczyny. Raport z nagraniami łatwo trafi do właściciela i będzie wyglądał jak ocena mnie. Nie znam nikogo z grupy, kto by z tego korzystał, a bez opinii kogoś z branży niczego nie umawiam.",
+  "objection": "Nie chcę, żeby ktoś obcy dzwonił do mojej recepcji jako pacjent i ją oceniał. Do tego ta cena „po audycie”, czyli najpierw mam się odsłonić, a dopiero potem dowiem się, ile to kosztuje i czy szef w ogóle się zgodzi.",
+  "would_change_my_mind": "Gdyby ktoś znajomy z innej kliniki albo z grupy na Facebooku napisał, że robił u siebie ten audyt, był uczciwy, raport dostał tylko menedżer i realnie pomógł zespołowi, a nie posłużył do rozliczania ludzi.",
+  "price_too_cheap": 300,
+  "price_cheap": 800,
+  "price_expensive": 2000,
+  "price_too_expensive": 3500
+}

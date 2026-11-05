@@ -1,0 +1,13 @@
+{
+  "id": "P007",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason_code": "need",
+  "reason": "Płacę za reklamy implantów i ortodoncji, a telefony po 18:00 i przy zajętej linii po prostu przepadają. Darmowy audyt z nagraniami pokaże mi czarno na białym, ile leadów gubimy na telefonie, i raport zostaje u mnie, więc umówię go, choć z kupnem abonamentu poczekam.",
+  "objection": "Za dużo modułów i zero ceny: nie wiem, co właściwie kupuję, a właścicielowi muszę pokazać konkretną kwotę i ile dodatkowych wizyt to da. Do tego audyt wypunktuje moją recepcję, a to ja za nią odpowiadam.",
+  "would_change_my_mind": "Gdyby audyt okazał się nachalną prezentacją sprzedażową albo wymagał czasu i zgody właściciela, odpuściłabym.",
+  "price_too_cheap": 400,
+  "price_cheap": 1000,
+  "price_expensive": 2500,
+  "price_too_expensive": 4500
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P014",
+  "buys": true,
+  "purchases_first_month": 1,
+  "reason": "Audyt jest za darmo, raport z nagraniami zostaje u mnie i nic mnie to nie kosztuje poza tym, że sam chcę wiedzieć, ile telefonów po godzinach i w weekendy nam ucieka. Lubię takie rzeczy testować, a wcześniej i tak pogadam z ich AI na stronie, żeby sprawdzić, czy nie brzmi jak ten chatbot, którego już próbowałem.",
+  "reason_code": "need",
+  "objection": "Moja recepcjonistka pracuje u mnie 10 lat i jeśli dowie się, że ktoś ją potajemnie nagrywał i ocenia co tydzień w 7 kategoriach, poczuje się kontrolowana i może odejść, a jej nie zastąpi żadne AI. Do tego brak ceny na stronie, więc nie wiem, czy po audycie nie usłyszę kwoty z kosmosu.",
+  "would_change_my_mind": "Gdyby się okazało, że cotygodniowych raportów jakości dla każdej osoby z recepcji nie da się wyłączyć ani ograniczyć tylko do mnie, to bym nawet nie zaczynał od audytu.",
+  "price_too_cheap": 400,
+  "price_cheap": 1000,
+  "price_expensive": 2500,
+  "price_too_expensive": 4000
+}
